@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "overcruxweb-dev": {
+    "overcruxweb": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/overcruxweb-dev",
+            "outputPath": "dist/overcruxweb",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -52,18 +52,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "overcruxweb-dev:build"
+            "browserTarget": "overcruxweb:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "overcruxweb-dev:build:production"
+              "browserTarget": "overcruxweb:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "overcruxweb-dev:build"
+            "browserTarget": "overcruxweb:build"
           }
         },
         "test": {
@@ -100,15 +100,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "overcruxweb-dev:serve"
+            "devServerTarget": "overcruxweb:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "overcruxweb-dev:serve:production"
+              "devServerTarget": "overcruxweb:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "overcruxweb-dev"
+  "defaultProject": "overcruxweb"
 }
