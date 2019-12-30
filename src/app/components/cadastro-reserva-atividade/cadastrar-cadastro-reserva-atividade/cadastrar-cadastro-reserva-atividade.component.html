@@ -1,0 +1,115 @@
+<mat-toolbar class="subtitulo">Cadastrar Reserva da Atividade</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <!-- CADASTRO DE RESERVA -->
+        <mat-toolbar class="titulopartes">Cadastro de Reserva</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
+            <mat-form-field fxFlex="75%" fxFlexOffset="20px">
+                <input matInput maxlength="200" name="descricao" placeholder="Descrição"
+                    [(ngModel)]="cadastroReserva.descricaoCadastroReserva" >
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" >
+                <input matInput name="dataCadastroReserva" [matDatepicker]="dataCadastroReserva" placeholder="Data do Cadastro "
+                    [(ngModel)]="cadastroReserva.dataCadastroReserva" >
+                <mat-datepicker-toggle matSuffix [for]="dataCadastroReserva"></mat-datepicker-toggle>
+                <mat-datepicker #dataCadastroReserva></mat-datepicker>
+        </mat-form-field>
+
+        </div>
+       
+        <!-- CANCELAMENTO -->
+        <mat-toolbar class="titulopartes">Cancelamento do Cadastro Reserva</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field fxFlex="75%" fxFlexOffset="20px">
+                <input matInput maxlength="200" name="descricaoCancelamentoCadastro" placeholder="Descrição do Cancelamento"
+                    [(ngModel)]="cadastroReserva.descricaoCancelamentoCadastro">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" >
+                <input matInput name="dataCancelamentoCadastro" [matDatepicker]="dataCancelamentoCadastro" placeholder="Data do Cancelamento"
+                    [(ngModel)]="cadastroReserva.dataCancelamentoCadastro" >
+                <mat-datepicker-toggle matSuffix [for]="dataCancelamentoCadastro"></mat-datepicker-toggle>
+                <mat-datepicker #dataCancelamentoCadastro></mat-datepicker>
+        </mat-form-field>
+
+        </div>
+        
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+            <div fxFlex="50%">
+                <mat-toolbar class="titulopartes">Atividade</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <mat-form-field fxFlexOffset="20px" fxFlex="100%">
+                        <mat-label>Atividade:</mat-label>
+                        <mat-select [(ngModel)]="cadastroReserva.atividade.id" 
+                                    (selectionChange)=mostrarDadosAtividade($event.value)
+                                    name="atividade" 
+                                    required>
+                            <mat-option *ngFor="let m of atividades" [value]="m.id">
+                                {{m.descricao}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div fxFlex="50%">
+                <mat-toolbar class="titulopartes">Funcionário</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <mat-form-field fxFlexOffset="20px" fxFlex="100%">
+                        <mat-label>Nome</mat-label>
+                        <mat-select [(ngModel)]="cadastroReserva.pessoasFisica.id" name="pessoafisica" required>
+                            <mat-option *ngFor="let m of pessoas" [value]="m.id">
+                                {{m.nome}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                 </div>
+            </div>
+        </div>
+
+        <div *ngIf="cadastroReserva.atividade.id">
+            <dados-atividade [atividade]="cadastroReserva.atividade"></dados-atividade>
+        </div>
+
+
+        <!-- BOTOES -->
+   <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button
+            name="botaoConfirmar"
+            fxFlex="20%"
+            color="primary"
+            [disabled]="formCadastro.invalid"
+            (click)="cadastrar()"> Cadastrar
+    </button>
+
+    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
+            name="botaoConfirmar"
+            fxFlex="20%"
+            color="primary"
+            [disabled]="formCadastro.invalid"
+            (click)="atualizar()">
+            Atualizar
+    </button>
+
+    <button *ngIf="mostrarBotaoLimpar()" 
+            mat-raised-button 
+            fxFlex="20%" 
+            (click)="limpar()">
+            Limpar
+    </button>
+    <button 
+            mat-raised-button 
+            fxFlex="20%" 
+            (click)="cancelar()">
+            Cancelar
+    </button>
+</div>
+    </form>
+
+
+</div>
+

@@ -1,0 +1,116 @@
+<!-- DADOS INICIAIS -->
+<mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+<div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field style="margin-bottom: 20px" fxFlex="45%" fxFlexOffset="20px">
+    <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" [(ngModel)]="programa.nome" required>
+    <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="48%" fxFlexOffset="20px">
+    <input #descricao matInput maxlength="200" name="descricao" placeholder="Descrição:"
+      [(ngModel)]="programa.descricao">
+    <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+  </mat-form-field>
+</div>
+
+<!-- Coordenador -->
+<mat-toolbar class="titulopartes">Responsável pelo Programa</mat-toolbar>
+<div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field style="margin: 0 40px 0 20px" fxFlex="85%">
+    <mat-label>Funcionário:</mat-label>
+    <mat-select [(ngModel)]="programa.idCoordenador" name="funcionarios"
+      (selectionChange)=mostrarDadosFuncionario($event.value);>
+      <mat-option *ngFor="let f of funcionarios" [value]="f.id">
+        {{f.pessoasFisica.nome}}
+      </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+  <!-- DATA-->
+  <div fxLayout="column" fxFlex="45%">
+    <mat-toolbar class="titulopartes">Data</mat-toolbar>
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+      <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+        <input matInput name="dtImplantacao" [matDatepicker]="dtImplantacao" placeholder="Data de Implantação"
+          [(ngModel)]="programa.dataInicio" required>
+        <mat-datepicker-toggle matSuffix [for]="dtImplantacao"></mat-datepicker-toggle>
+        <mat-datepicker #dtImplantacao></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="46%">
+        <input matInput name="dtTermino" [matDatepicker]="dtTermino" placeholder="Data Fim"
+          [(ngModel)]="programa.dataFim">
+        <mat-datepicker-toggle matSuffix [for]="dtTermino"></mat-datepicker-toggle>
+        <mat-datepicker #dtTermino></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <!-- FAIXA ETÁRIA -->
+  <div fxLayout="column" fxFlex="55%">
+    <mat-toolbar class="titulopartes">Faixa Etária</mat-toolbar>
+    <div fxLayout="row" fxLayoutGap="30px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+      <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+        <input matInput type="number" maxlength="2" name="faixainicio" placeholder="Inicial:"
+          [(ngModel)]="programa.faixaEtariaInicio">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+        <input matInput type="number" maxlength="2" name="faixafim" placeholder="Final:"
+          [(ngModel)]="programa.faixaEtariaFim">
+      </mat-form-field>
+
+    </div>
+  </div>
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+
+  <!-- OBJETIVOS -->
+  <div fxLayout="column" fxFlex="46%">
+    <mat-toolbar class="titulopartes">Objetivo</mat-toolbar>
+    <mat-form-field style="margin-left: 20px" fxFlex="95%">
+      <mat-label>Objetivos:</mat-label>
+      <mat-select [(ngModel)]="programa.objetivo.idObjetivo" name="objetivo" required>
+        <mat-option *ngFor="let o of objetivos" [value]="o.idObjetivo">
+          {{o.nome}}
+        </mat-option>
+      </mat-select>
+      <mat-hint *ngIf="objetivos?.length === 0" align="start">Nenhum objetivo cadastrado</mat-hint>
+    </mat-form-field>
+  </div>
+
+</div>
+
+<mat-toolbar class="titulopartes">Outras informações</mat-toolbar>
+<div fxLayout="row" fxFlexFill>
+        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Público Alvo:</mat-label>
+                <textarea #publicoAlvo matInput name="publicoAlvo" [(ngModel)]="programa.publicoAlvo" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
+                    <mat-hint align="end">{{publicoAlvo.value.length}} / 4000</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Justificativa:</mat-label>
+                <textarea #justificativa matInput name="justificativa" [(ngModel)]="programa.justificativa" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
+                    <mat-hint align="end">{{justificativa.value.length}} / 4000</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Objetivo geral:</mat-label>
+                <textarea #objetivoGeral matInput name="objetivoGeral" [(ngModel)]="programa.objetivoGeral" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="2000"></textarea>
+                    <mat-hint align="end">{{objetivoGeral.value.length}} / 2000</mat-hint>
+            </mat-form-field>
+</div>

@@ -1,0 +1,71 @@
+<!-- SAÚDE -->
+<mat-toolbar class="titulopartes">Saúde</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <input matInput maxlength="200" name="nome" placeholder="Descrição de Problemas de Saúde do Responsável:"
+            [(ngModel)]="pessoaFisica.problemaSaude">
+    </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <input matInput maxlength="200" name="nome"
+            placeholder="Descrição dos Medicamentos Controlados Utilizados pelo Responsável:"
+            [(ngModel)]="pessoaFisica.medicamentosControlados">
+    </mat-form-field>
+
+</div>
+
+<!-- ATENDIMENTO -->
+<mat-toolbar class="titulopartes">Atendimento</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <input matInput maxlength="200" name="nome"
+            placeholder="Descrição Relevante do Atendimento do Aluno por Outro órgão da Rede:"
+            [(ngModel)]="pessoaFisica.descricaoPessoaFisicaAtendidoOrgaoRede">
+    </mat-form-field>
+
+</div>
+
+<!-- BOLSA FAMÍLIA -->
+<mat-toolbar class="titulopartes">Bolsa Família</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-checkbox name="beneficiarioBolsaFamilia" fxFlexOffset="20px"
+        [(ngModel)]="pessoaFisica.beneficiarioBolsaFamilia">Família é beneficiada pelo programa Bolsa Família.
+    </mat-checkbox>
+
+    <mat-form-field fxFlex="30%">
+        <input matInput maxlength="200" name="valorBolsaFamilia" placeholder="Valor do Beneficio:"
+            [(ngModel)]="pessoaFisica.valorBolsaFamilia" [disabled]=>
+        <span matPrefix>R$&nbsp;</span>
+    </mat-form-field>
+</div>
+
+<!-- OUTROS BENEFICIOS-->
+<mat-toolbar class="titulopartes">Outros Benefícios Sociais</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <input matInput maxlength="200" name="outrosBenSoc" placeholder="Descrição de Outros Benefícios da Família:"
+            [(ngModel)]="pessoaFisica.outrosBenSoc">
+    </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlexFill>
+    <mat-form-field fxFlex="30%">
+        <input matInput maxlength="200" name="valorOutrosBenerficiosSoc" placeholder="Valor do Beneficio:"
+            [(ngModel)]="pessoaFisica.valorOutrosBenerficiosSoc">
+        <span matPrefix>R$&nbsp;</span>
+    </mat-form-field>
+</div>
+
+<!-- OBSERVAÇÕES -->
+<mat-toolbar class="titulopartes">Observações</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
+        <mat-label>Observações:</mat-label>
+        <textarea matInput name="observacoes" [(ngModel)]="pessoaFisica.observacoes" cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" maxlength="200"></textarea>
+    </mat-form-field>
+</div>

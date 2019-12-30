@@ -1,0 +1,81 @@
+<mat-toolbar class="subtitulo">Plano de Ação</mat-toolbar>
+
+<div style="padding: 10px;">
+        <form #formCadastro="ngForm">
+
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <!-- DADOS INICIAIS -->
+                        <div fxLayout="column" fxFlex="45%">
+                                <mat-toolbar class="titulopartes">Plano de Ação</mat-toolbar>
+                                <mat-form-field style="margin-left: 20px">
+                                        <input #nome matInput maxlength="200" name="nome"
+                                                placeholder="Nome do Plano de Ação:" [(ngModel)]="planosAcao.nome"
+                                                required>
+                                        <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+                                </mat-form-field>
+                        </div>
+
+                        <!-- INICIATIVA -->
+                        <div fxLayout="column" fxFlex="55%">
+                                <mat-toolbar class="titulopartes">Iniciativa</mat-toolbar>
+                                <mat-form-field style="margin: 0 20px 20px 20px">
+                                        <mat-label>Iniciativa:</mat-label>
+                                        <mat-select [(ngModel)]="planosAcao.iniciativa.id" name="iniciativa" required>
+                                                <mat-option *ngFor="let i of iniciativas" [value]="i.id">
+                                                        {{i.nome}}
+                                                </mat-option>
+                                        </mat-select>
+                                        <mat-hint *ngIf="iniciativas?.length === 0" align="start">Nenhuma iniciativa
+                                                cadastrada</mat-hint>
+                                </mat-form-field>
+                        </div>
+                </div>
+
+                <!-- DADOS INICIAIS -->
+                <mat-toolbar class="titulopartes">Data</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                                <input matInput name="dtImplantacao" [matDatepicker]="dtImplantacao"
+                                        placeholder="Data de Início" [(ngModel)]="planosAcao.dataInicio" required>
+                                <mat-datepicker-toggle matSuffix [for]="dtImplantacao"></mat-datepicker-toggle>
+                                <mat-datepicker #dtImplantacao></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="20%">
+                                <input matInput name="dtTermino" [matDatepicker]="dtTermino" placeholder="Data Fim"
+                                        [(ngModel)]="planosAcao.dataFim">
+                                <mat-datepicker-toggle matSuffix [for]="dtTermino"></mat-datepicker-toggle>
+                                <mat-datepicker #dtTermino></mat-datepicker>
+                        </mat-form-field>
+
+                </div>
+
+
+                <!-- BOTOES -->
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                        fxFlexFill>
+                        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()">
+                                Cadastrar
+                        </button>
+
+                        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                                Atualizar
+                        </button>
+
+                        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                                Limpar
+                        </button>
+                        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                                Cancelar
+                        </button>
+
+                </div>
+        </form>
+
+
+</div>

@@ -1,0 +1,28 @@
+<mat-toolbar class="titulopartes">Dados da Pessoa Física</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <div fxFlex="8%" style="text-align: end">
+        <button name="fotoPerfil" ng mat-raised-button class="foto" [style.background-image]="getBackground()" >
+            <mat-icon class="nao-foto"></mat-icon>
+        </button>
+    </div>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px" >
+        <input matInput name="nome" placeholder="Nome do aluno" [(ngModel)]="pessoaFisica.nome" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="10%" fxFlexOffset="20px" >
+        <input matInput name="identidade" placeholder="Identidade (CI)" [(ngModel)]="pessoaFisica.identidade" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="10%" fxFlexOffset="20px" >
+        <input matInput name="orgao" placeholder="Órgão (CI)" [(ngModel)]="pessoaFisica.orgaoCi" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="10%" fxFlexOffset="20px" >
+        <input matInput name="uf" placeholder="UF (CI)" [(ngModel)]="pessoaFisica.ufCi" disabled>
+    </mat-form-field>
+
+</div>
+
+

@@ -1,0 +1,99 @@
+<mat-toolbar class="subtitulo">Origem do Aluno</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+        <mat-toolbar class="titulopartes">Encaminhamento</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                <mat-label>Selecione um aluno</mat-label>
+                <mat-select [(ngModel)]="encaminhamentoAluno.aluno.id" 
+                            name="aluno" 
+                            (selectionChange)="mostrarDadosAluno($event.value)"
+                            required>
+                    <mat-option *ngFor="let d of alunos" [value]="d.id">
+                        {{d.pessoaFisica.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%">
+                <mat-label>Selecione uma entidade social</mat-label>
+                <mat-select [(ngModel)]="encaminhamentoAluno.entidadeSocial.id" 
+                            (selectionChange)="mostrarDadosEntidadeSocial($event.value)"
+                            name="entidadeSocial" (selectionChange)="mostrarDadosAluno($event.value)"
+                            required>
+                    <mat-option *ngFor="let d of entidadesSociais" [value]="d.id">
+                        {{d.empresa.nomeFantasia}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <input matInput name="dataEncaminhaAluno" 
+                        [matDatepicker]="dataEncaminhaAluno" 
+                        placeholder="Data de encaminhamento"
+                        [(ngModel)]="encaminhamentoAluno.dataEncaminhaAluno"
+                        required>
+                <mat-datepicker-toggle matSuffix [for]="dataEncaminhaAluno"></mat-datepicker-toggle>
+                <mat-datepicker #dataEncaminhaAluno></mat-datepicker>
+            </mat-form-field>            
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex= "100%" fxFlexOffset="20px" appearance="outline" >
+                    <mat-label>Descrição do encaminhamento</mat-label>
+                    <textarea matInput #descricao
+                                name="descricao"
+                                [(ngModel)]="encaminhamentoAluno.descricao"
+                                cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize"
+                                cdkAutosizeMinRows="2"
+                                maxlength="200"></textarea>
+                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="alunoSelecionado">
+            <dados-aluno [aluno]="alunoSelecionado"></dados-aluno>
+        </div>
+                    
+        <div *ngIf="entidadeSocialSelecionada">
+            <dados-entidade-social [entidadeSocial]="entidadeSocialSelecionada"></dados-entidade-social>
+        </div>
+    
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button
+                    name="botaoConfirmar"
+                    fxFlex="20%"
+                    color="primary"
+                    [disabled]="formCadastro.invalid"
+                    (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
+                    name="botaoConfirmar"
+                    fxFlex="20%"
+                    color="primary"
+                    [disabled]="formCadastro.invalid"
+                    (click)="atualizar()">
+                    Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" 
+                    mat-raised-button 
+                    fxFlex="20%" 
+                    (click)="limpar()">
+                    Limpar
+            </button>
+            <button 
+                    mat-raised-button 
+                    fxFlex="20%" 
+                    (click)="cancelar()">
+                    Cancelar
+            </button>
+
+        </div>
+    </form>
+
+</div>
+

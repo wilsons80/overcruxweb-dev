@@ -1,0 +1,14 @@
+
+<h2 mat-dialog-title>{{pergunta}}</h2>
+
+<mat-dialog-content fxLayout="column">
+    <div style="padding-bottom: 0.5rem">
+        <label *ngIf="textoAuxiliar">{{textoAuxiliar}}</label>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <button mat-button (click)="cancela()"> {{textoCancela}}</button>
+    <button mat-button (click)="confirma()">{{textoConfirma}}</button>
+</mat-dialog-actions>
+

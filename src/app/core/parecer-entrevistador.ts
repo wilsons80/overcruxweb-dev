@@ -1,0 +1,6 @@
+export enum ParecerEntrevistador{
+    INDICADO_CONSULTA_FUTURA = "I",
+	ADEQUADO_PERFIL= "A",
+	NAO_ADEQUADO_PERFIL= "N", 
+	TOTALMENTO_ADEQUADO_PERFIL= "T",
+}

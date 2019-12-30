@@ -1,0 +1,111 @@
+<mat-toolbar class="subtitulo">Cadastro de Ocorrência de Aluno</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <mat-toolbar class="titulopartes">Dados</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                <mat-label>Selecione um aluno</mat-label>
+                <mat-select [(ngModel)]="ocorrenciaAluno.aluno.id" name="aluno" [disabled]=isAtualizar
+                    (selectionChange)=mostrarDadosAluno($event.value) required>
+                    <mat-option *ngFor="let d of listaDeAlunos" [value]="d.id">
+                        {{d.pessoaFisica.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaDeAlunos?.length === 0" align="start">Nenhum aluno cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                <mat-label>Selecione um funcionário</mat-label>
+                <mat-select [(ngModel)]="ocorrenciaAluno.funcionario.id" name="funcionario" [disabled]=isAtualizar
+                            (selectionChange)=mostrarDadosFuncionario($event.value) required>
+                    <mat-option *ngFor="let d of listaDeFuncionarios" [value]="d.id">
+                        {{d.pessoasFisica.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaDeFuncionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <mat-label>Selecione um tipo de ocorrência</mat-label>
+                <mat-select [(ngModel)]="ocorrenciaAluno.tipoOcorrenciaAluno.id" name="tipoOcorrenciaAluno"
+                            required>
+                    <mat-option *ngFor="let d of listaDeTipoOcorrencia" [value]="d.id">
+                        {{d.tipoOcorrencia}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaDeTipoOcorrencia?.length === 0" align="start">Nenhum tipo de ocorrência cadastrado
+                </mat-hint>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row">
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="25%">
+                <input matInput name="dataOcorrencia" [matDatepicker]="dataOcorrencia"
+                    placeholder="Data da ocorrência" [(ngModel)]="ocorrenciaAluno.dataOcorrencia" required>
+                <mat-datepicker-toggle matSuffix [for]="dataOcorrencia"></mat-datepicker-toggle>
+                <mat-datepicker #dataOcorrencia></mat-datepicker>
+            </mat-form-field>
+
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="25%">
+                <input matInput name="dataCiencia" [matDatepicker]="dataCiencia"
+                    placeholder="Data da ciência" [(ngModel)]="ocorrenciaAluno.dataCiencia">
+                <mat-datepicker-toggle matSuffix [for]="dataCiencia"></mat-datepicker-toggle>
+                <mat-datepicker #dataCiencia></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="50%">
+                <mat-label>Descrição da ocorrência</mat-label>
+                <input #descricao matInput name="descricao" [(ngModel)]="ocorrenciaAluno.descricao" maxlength="200"
+                    required>
+                <mat-hint align="start">{{descricao.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="50%">
+                <mat-label>Local da ocorrência</mat-label>
+                <input #local matInput name="local" [(ngModel)]="ocorrenciaAluno.local" maxlength="200">
+                <mat-hint align="start">{{local.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+        </div>
+
+
+        <div *ngIf="ocorrenciaAluno.funcionario.id" style="margin-right: 50px">
+            <dados-funcionario [funcionario]=ocorrenciaAluno.funcionario></dados-funcionario>
+        </div>
+
+        <div *ngIf="ocorrenciaAluno.aluno.id" style="margin-right: 50px">
+            <dados-aluno [aluno]=ocorrenciaAluno.aluno></dados-aluno>
+        </div>
+
+
+    </form>
+
+    <!-- BOTOES -->
+    <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+            color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+        </button>
+
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+            color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+            Atualizar
+        </button>
+
+        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+            Limpar
+        </button>
+        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+            Cancelar
+        </button>
+    </div>
+
+</div>

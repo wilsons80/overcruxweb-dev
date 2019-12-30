@@ -1,0 +1,30 @@
+<a mat-list-item (click)="toggle()" style="width: fit-content;">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}"
+            class="submenu">
+            <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Gestão de Desempenho">
+                <mat-icon>trending_up</mat-icon>
+                <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Gestão de Desempenho</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start stretch">
+                <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+            </div>
+        </div>
+    </a>
+
+    <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+        <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+            <!-- DEFINICAO METAS COLABORADOR -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().METAS_FUNCAO)" icone="launch" titulo="Definição de Metas do Colaborador" rota="home" toolTip="Definição de Metas do Colaborador"></sub-menu>
+            </div>       
+
+
+            <!-- REGISTRO DO DESEMPENHO DO COLABORADOR -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_DESEMPENHO)" icone="assignment" titulo="Registro do Desempenho do Colaborador" rota="home" toolTip="Registro do Desempenho do Colaborador"></sub-menu>
+            </div>
+           
+        </div>
+    </mat-nav-list>

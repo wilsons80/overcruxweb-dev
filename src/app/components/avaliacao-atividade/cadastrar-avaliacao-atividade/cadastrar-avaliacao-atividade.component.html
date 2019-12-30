@@ -1,0 +1,74 @@
+<mat-toolbar class="subtitulo">Avaliação da Turma</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <!-- DADOS INICIAIS -->
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex= "95%" fxFlexOffset="20px" >
+                <input #nome matInput maxlength="200"  name="nome" placeholder="Nome da Avaliação" [(ngModel)]="avaliacao.nome" required>
+                <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <!-- DATA -->
+        <mat-toolbar class="titulopartes">Data</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex= "30%" fxFlexOffset="20px" >
+                <input matInput name= "dataInicio" [matDatepicker]="dataInicio" placeholder="Data de Início" [(ngModel)]="avaliacao.dataInicio" required>
+                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicio></mat-datepicker>
+             </mat-form-field>
+
+             <mat-form-field   fxFlex= "30%">
+                <input matInput name= "dataFim" [matDatepicker]="dataFim" placeholder="Data Fim" [(ngModel)]="avaliacao.dataFim">
+                <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                <mat-datepicker #dataFim></mat-datepicker>
+             </mat-form-field>
+
+        </div>
+
+         <mat-toolbar class="titulopartes">Descrição</mat-toolbar>
+         <div fxLayout="row" fxLayoutGap="100px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px"  fxFlex="45%" appearance="outline">
+                <mat-label>Descrição da atividade:</mat-label>
+                <textarea #observacoes matInput name="observacoes" [(ngModel)]="avaliacao.descricao" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200"></textarea>
+                    <mat-hint align="end">{{observacoes.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+    </form>
+
+
+</div>
+
+
+
+
+
+
+

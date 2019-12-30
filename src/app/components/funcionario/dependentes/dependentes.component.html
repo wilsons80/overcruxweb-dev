@@ -1,0 +1,34 @@
+<mat-accordion>
+
+    <mat-expansion-panel [expanded]="openFormCadastro"
+                         (closed)="openFormCadastro = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Dependentes
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <cadastrar-dependentes #cadastrarDependente
+                             [funcionario]="funcionario">
+      </cadastrar-dependentes>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="!openFormCadastro"
+                         (opened)="listasDependentes.carregarListaDependentes()"
+                         (closed)="openFormCadastro = true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Dependentes ( {{funcionario.dependentes?.length}} )
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <listar-dependentes #listasDependentes
+                        [dependentes]="funcionario.dependentes"
+                        (onDependente)="onGetAdicionar($event); cadastrarDependente.carregarDependente($event)"
+                        (onAdicionar)="onGetAdicionar($event); cadastrarDependente.initObjetos()">
+      </listar-dependentes>
+
+    </mat-expansion-panel>
+
+</mat-accordion>

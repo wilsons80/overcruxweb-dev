@@ -1,0 +1,144 @@
+<mat-toolbar class="titulopartes">Dados da Turma</mat-toolbar>
+<div fxLayout="row" style="margin-bottom: 20px">
+    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+        <input #descricao matInput maxlength="200" name="descricao" placeholder="Descrição"
+            [(ngModel)]="turma.descricao" required>
+        <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <mat-label>Niveis da turma</mat-label>
+        <mat-select [(ngModel)]="turma.niveisTurma.id" name="nivelTurma">
+            <mat-option *ngFor="let u of niveisTurma"
+                        [value]="u.id"
+                        (selectionChange)=setNivelTurma($event.value)>
+                {{u.descricao}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+        <mat-label>Turno</mat-label>
+        <mat-select [(ngModel)]="turma.turno" name="turno">
+            <mat-option *ngFor="let u of turnos" [value]="u.id">
+                {{u.descricao}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="35%">
+        <mat-label>Unidade</mat-label>
+        <mat-select [(ngModel)]="turma.unidade.idUnidade" name="unidade" required>
+            <mat-option *ngFor="let u of unidades"
+                        [value]="u.idUnidade"
+                        (selectionChange)=setUnidade($event.value)>
+                {{u.nomeUnidade}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrada</mat-hint>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%">
+        <mat-label>Programa</mat-label>
+        <mat-select [(ngModel)]="turma.programa.id" name="programa">
+            <mat-option *ngFor="let u of programas" [value]="u.id"
+                        (selectionChange)=setPrograma($event.value)>
+                {{u.nome}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="30%">
+        <mat-label>Projeto</mat-label>
+        <mat-select [(ngModel)]="turma.projeto.id" name="projeto">
+            <mat-option *ngFor="let u of projetos" [value]="u.id"
+                       (selectionChange)=setProjeto($event.value)>
+                {{u.nome}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
+    </mat-form-field>
+
+</div>
+
+
+<mat-toolbar class="titulopartes">Período</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+        <input matInput name="dataInicioTurma" [matDatepicker]="dataInicioTurma" placeholder="Data de Início"
+            [(ngModel)]="turma.dataInicioTurma">
+        <mat-datepicker-toggle matSuffix [for]="dataInicioTurma"></mat-datepicker-toggle>
+        <mat-datepicker #dataInicioTurma></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataFimTurma" [matDatepicker]="dataFimTurma" placeholder="Data Fim"
+            [(ngModel)]="turma.dataFimTurma">
+        <mat-datepicker-toggle matSuffix [for]="dataFimTurma"></mat-datepicker-toggle>
+        <mat-datepicker #dataFimTurma></mat-datepicker>
+    </mat-form-field>
+
+    <!-- HORARIO INICIO -->
+    <mat-form-field fxFlex="15%">
+        <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
+            placeholder="Hora Início" [(ngModel)]="turma.horaInicio">
+    </mat-form-field>
+
+    <!-- HORARIO FIM -->
+    <mat-form-field fxFlex="15%">
+        <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim" placeholder="Hora Fim"
+            [(ngModel)]="turma.horaFim">
+    </mat-form-field>
+
+    <!-- CARGA HORÁRIA -->
+    <mat-form-field fxFlex="15%">
+        <input matInput type="number" name="cargaHoraria" placeholder="Carga horária"
+            [(ngModel)]="turma.numeroCargaHoraria">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="15%">
+        <input matInput type="number" name="numeroMaximoParticipantes" placeholder="Máximo Participantes"
+            [(ngModel)]="turma.numeroMaximoParticipantes">
+    </mat-form-field>
+
+</div>
+
+
+<!-- DATA PREVISTA -->
+<mat-toolbar class="titulopartes">Data Prevista</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+        <input matInput name="dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio"
+            placeholder="Data de Previsão de Início" [(ngModel)]="turma.dataPrevisaoInicio"
+            required>
+        <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
+        <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataPrevisaoTermino" [matDatepicker]="dataPrevisaoTermino"
+            placeholder="Data de Previsão de Fim" [(ngModel)]="turma.dataPrevisaoTermino">
+        <mat-datepicker-toggle matSuffix [for]="dataPrevisaoTermino"></mat-datepicker-toggle>
+        <mat-datepicker #dataPrevisaoTermino></mat-datepicker>
+    </mat-form-field>
+
+</div>
+
+
+<!-- OBSERVAÇÕES -->
+<mat-toolbar class="titulopartes">Observações</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
+        <mat-label>Observações:</mat-label>
+        <textarea #observacao matInput name="observacao" [(ngModel)]="turma.observacao" cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200"></textarea>
+        <mat-hint align="end">{{observacao.value.length}} / 200</mat-hint>
+    </mat-form-field>
+</div>

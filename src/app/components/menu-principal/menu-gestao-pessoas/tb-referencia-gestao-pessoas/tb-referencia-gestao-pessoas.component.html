@@ -1,0 +1,55 @@
+<a mat-list-item (click)="toggle()" style="width: fit-content;">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}"
+            class="submenu">
+            <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Tabelas de Referência">
+                <mat-icon>table_chart</mat-icon>
+                <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Tabelas de Referência</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start stretch">
+                <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+            </div>
+        </div>
+    </a>
+
+    <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+        <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+
+
+            <!-- FUNÇÕES - AINDA NAO TEM -->
+            <div style="padding-left: 15px">
+                <sub-menu  *ngIf="verificaAcesso(getModulos().FUNCAO)" icone="sports_hockey" titulo="Funções" rota="home" toolTip="Funções"></sub-menu>
+            </div>
+
+            <!-- COMPETÊNCIA - AINDA NAO TEM -->
+            <div style="padding-left: 15px">
+                <sub-menu  *ngIf="verificaAcesso(getModulos().ATRIBUTO_AVALIACAO_DESEMPENHO)" icone="spellcheck" titulo="Atributos da Avaliação de Desempenho" rota="home" toolTip="Atributos da Avaliação de Desempenho"></sub-menu>
+            </div>
+
+            <!-- GRAUS INSTRUCAO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().GRAUS_INSTRUCAO)" icone="share" titulo="Grau de Instrução" rota="grausinstrucao" toolTip="Grau de Instrução"></sub-menu>
+            </div>
+
+            <!-- QUESTIONARIO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().QUESTIONARIO)" icone="assignment" titulo="Questionário" rota="questionario" toolTip="Questionário"></sub-menu>
+            </div>
+
+            <!-- TALENTO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().TALENTO)" icone="grade" titulo="Talento" rota="talento" toolTip="Talento"></sub-menu>
+            </div>
+
+            <!-- CURSO DE FORMACAO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().CURSO_FORMACAO)" icone="library_books" titulo="Curso de Formação" rota="cursoformacao" toolTip="Curso de Formação"></sub-menu>
+            </div>
+
+            <!-- ACAO COMPETENCIA -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().ACAO_COMPETENCIA)" icone="directions_walk" titulo="Ações da Competência" rota="acaocompetencia" toolTip="Ações das competências do Talento do Funcionário"></sub-menu>
+            </div>            
+        </div>
+    </mat-nav-list>

@@ -1,0 +1,8 @@
+<a mat-list-item (click)="fecharMenu()" [routerLink]="getRouterLink()" routerLinkActive="router-link-active" class="submenu">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+        <div fxLayout="row" fxLayoutAlign="start stretch" [matTooltip]="toolTip">
+            <mat-icon>{{icone}}</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">{{titulo}}</span>
+        </div>
+    </div>
+</a>

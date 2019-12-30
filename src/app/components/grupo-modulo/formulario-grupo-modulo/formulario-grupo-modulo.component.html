@@ -1,0 +1,46 @@
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 20px" fxFlexFill>
+
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+        <input type="text" matInput 
+               name="modulo_{{pinModulo}}" 
+               placeholder="Módulo" 
+               [(ngModel)]="grupoModulo.modulo.descricao"
+               disabled 
+               required />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%">
+        <mat-label>Permissão</mat-label>
+        <mat-select [(ngModel)]="grupoModulo.perfilAcesso.id" 
+                    name="perfilAcesso_{{pinPerfilAcesso}}"
+                    (selectionChange)="getPerfilAcesso($event.value)"
+                    required>
+            <mat-option *ngFor="let m of listaPerfilAcesso" [value]="m.id">
+                {{m.nome}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>       
+
+    <mat-form-field fxFlex="15%">
+        <input type="text" matInput 
+               maxlength="100" 
+               [(ngModel)]="grupoModulo.nome" 
+               name="nome_{{pinNome}}"
+               placeholder="Nome do Grupo do módulo" 
+               required />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="40%">
+        <input type="text" matInput maxlength="200" 
+               [(ngModel)]="grupoModulo.descricao" 
+               name="descricao_{{pinDescricao}}"
+               placeholder="Descrição do Grupo do módulo" 
+               required />
+    </mat-form-field>
+
+    <button *ngIf="perfilAcesso.deleta"  
+             mat-button (click)="deletar()">
+        <mat-icon>delete</mat-icon>
+    </button>
+
+</div>

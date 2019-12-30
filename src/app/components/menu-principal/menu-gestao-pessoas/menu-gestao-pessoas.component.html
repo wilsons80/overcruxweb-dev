@@ -1,0 +1,43 @@
+<a mat-list-item (click)="toggle()" >
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Gestão de Pessoas">
+            <mat-icon>supervised_user_circle</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Gestão de Pessoas</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+       <!-- COLABORADORES -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().FUNCIONARIO)" icone="accessibility" titulo="Colaboradores" rota="funcionario" toolTip="Colaboradores"></sub-menu>
+
+       <!-- CONTROLE DE FREQUENCIA-->
+       <sub-menu *ngIf="verificaAcesso(getModulos().FALTAS_FUNCIONARIO)" icone="warning" titulo="Controle de Frequência" rota="faltasfuncionario" toolTip="Controle de Frequência"></sub-menu>
+       
+       <!-- PLANO DE CARGO E SALARIO --> 
+       <sub-menu *ngIf="verificaAcesso(getModulos().PLANO_CARGO_SALARIO)" icone="attach_money" titulo="Plano de Cargos e Salários" rota="home" toolTip="Plano de Cargos e Salários"></sub-menu>
+
+       <!-- SUB MENU GESTAO DESEMPENHO-->
+       <sub-menu-gestao-desempenho></sub-menu-gestao-desempenho>
+
+       <!-- PLANO DE TREINAMENTO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().PLANO_DESENVOLVIMENTO_INDIVIDUAL)" icone="assignment" titulo="Plano de Treinamento" rota="home" toolTip="Plano de Treinamento"></sub-menu>
+       
+       <!-- CONTROLE_PPRA_PCMSO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().CONTROLE_PPRA_PCMSO)" icone="drag_indicator" titulo="Controle PPRA/PCMSO" rota="home" toolTip="Controle PPRA/PCMSO"></sub-menu>
+
+       <!-- CARGO -->
+       <sub-menu  *ngIf="verificaAcesso(getModulos().CARGO)" icone="view_compact" titulo="Cargos e Salários" rota="cargo" toolTip="Cargos e Salários"></sub-menu>
+        
+
+       <!-- TABELAS REFERENCIA -->
+       <tb-referencia-gestao-pessoas></tb-referencia-gestao-pessoas>
+
+    </div>
+</mat-nav-list>
+

@@ -1,0 +1,63 @@
+<mat-toolbar class="subtitulo">Cadastro de CBO</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <mat-toolbar class="titulopartes">Dados</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex= "20%" fxFlexOffset="20px" >
+                <input matInput maxlength="10"  name="numero" placeholder="Número" [(ngModel)]="cbo.numero" 
+                       [textMask]="{mask: maskNumeroCBO}" 
+                       pattern="^\d{5}-\d{1}$"
+                       required>
+             </mat-form-field>
+            
+             <mat-form-field fxFlex= "80%">
+                <input matInput maxlength="100"  name="descricao" placeholder="Descrição do tipo" [(ngModel)]="cbo.descricaoTipo" required>
+             </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex= "100%" fxFlexOffset="20px" >
+                <input matInput maxlength="200"  name="nome" placeholder="Nome" [(ngModel)]="cbo.nomeTitulo" required>
+            </mat-form-field>
+        </div>
+
+    </form>
+
+    <!-- BOTOES -->
+   <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button
+                name="botaoConfirmar"
+                fxFlex="20%"
+                color="primary"
+                [disabled]="formCadastro.invalid"
+                (click)="cadastrar()"> Cadastrar
+        </button>
+
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
+                name="botaoConfirmar"
+                fxFlex="20%"
+                color="primary"
+                [disabled]="formCadastro.invalid"
+                (click)="atualizar()">
+                Atualizar
+        </button>
+
+        <button *ngIf="mostrarBotaoLimpar()" 
+                mat-raised-button 
+                fxFlex="20%" 
+                (click)="limpar()">
+                Limpar
+        </button>
+        <button 
+                mat-raised-button 
+                fxFlex="20%" 
+                (click)="cancelar()">
+                Cancelar
+        </button>
+    </div>
+   
+</div>

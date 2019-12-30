@@ -1,0 +1,17 @@
+.tela-login{
+    width: 30%
+}
+
+.logo{
+    background: url(../../../assets/icones/logo.png) no-repeat 0 0;
+}
+
+.painel-logo{
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+   
+    width: 265px;
+    height: 100px;
+    margin: auto;
+    
+  }

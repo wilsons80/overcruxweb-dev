@@ -1,0 +1,90 @@
+<form #formulario="ngForm">
+    <div class="painel-principal" style="padding: 10px;">
+        <div class="painel-consultar">
+            <div >
+                <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlexFill>
+
+                    <div *ngIf="colaboradorTurma.funcionario.id" style="margin-right: 50px; margin-bottom: 25px">
+                        <dados-funcionario [funcionario]=colaboradorTurma.funcionario></dados-funcionario>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 25px;" fxFlexFill>
+                        <mat-form-field fxFlex="55%" fxFlexOffset="20px">
+                            <mat-label>Selecione um funcionário</mat-label>
+                            <mat-select [(ngModel)]="colaboradorTurma.funcionario.id"
+                                        name="funcionario"
+                                        [disabled]=isAtualizar
+                                        (selectionChange)=mostrarDadosFuncionario($event.value)
+                                        required>
+                                <mat-option *ngFor="let d of listaDeFuncionarios" [value]="d.id">
+                                    {{d.pessoasFisica.nome}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="listaDeFuncionarios?.length === 0" align="start">Nenhum funcionário cadastrado
+                            </mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="30%" >
+                            <mat-label>Selecione um cargo</mat-label>
+                            <mat-select [(ngModel)]="colaboradorTurma.cargo.id"
+                                        name="cargo"
+                                        (selectionChange)=setCargo($event.value)
+                                        [disabled]="!colaboradorTurma.funcionario.id"
+                                        required>
+                                <mat-option *ngFor="let d of listaDeCargos" [value]="d.id">
+                                    {{d.nome}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="listaDeFuncionarios?.length === 0" align="start">Nenhum cargo cadastrado
+                            </mat-hint>
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                            <input matInput name="dataEntradaTurma" [matDatepicker]="dataEntradaTurma"
+                                   placeholder="Data de Entrada" [(ngModel)]="colaboradorTurma.dataEntradaTurma"
+                                   required>
+                            <mat-datepicker-toggle matSuffix [for]="dataEntradaTurma"></mat-datepicker-toggle>
+                            <mat-datepicker #dataEntradaTurma></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="15%">
+                            <input matInput name="dataSaidaTurma" [matDatepicker]="dataSaidaTurma"
+                                placeholder="Data de Saída" [(ngModel)]="colaboradorTurma.dataSaidaTurma">
+                            <mat-datepicker-toggle matSuffix [for]="dataSaidaTurma"></mat-datepicker-toggle>
+                            <mat-datepicker #dataSaidaTurma></mat-datepicker>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+<div dir="rtl" fxLayout="row" fxLayoutAlign="center center"
+     fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+
+    <button *ngIf="!isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary"
+        (click)="initObjeto()">
+        Limpar
+    </button>
+
+    <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" fxFlex="20%" color="primary"
+            [disabled]="!colaboradorTurma.funcionario.id || !colaboradorTurma.cargo.id || !colaboradorTurma.dataEntradaTurma "
+            (click)="adicionar()">
+        Adicionar
+    </button>
+
+    <button *ngIf="isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="cancelar()">
+        Cancelar
+    </button>
+
+</div>

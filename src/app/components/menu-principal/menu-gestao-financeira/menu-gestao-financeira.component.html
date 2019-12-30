@@ -1,0 +1,21 @@
+<a mat-list-item (click)="toggle()" >
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+            <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Gestão Financeira">
+                <mat-icon>account_balance</mat-icon>
+                <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Gestão Financeira</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start stretch">
+                <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+            </div>
+        </div>
+    </a>
+    <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+    
+        <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+    
+
+    
+        </div>
+    </mat-nav-list>
+    
+    

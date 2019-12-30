@@ -1,0 +1,35 @@
+<a mat-list-item (click)="toggle()" >
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Organização Interna">
+            <mat-icon>reorder</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Organização Interna</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+      
+       <!-- INSTITUICAO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().INSTITUICAO)" icone="account_balance" titulo="Instituição" rota="instituicao" toolTip="Instituição"></sub-menu>
+       
+       <!-- UNIDADE -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().UNIDADE)" icone="business" titulo="Unidade" rota="unidade" toolTip="Unidade"></sub-menu>
+       
+       <!-- DEPARTAMENTO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().DEPARTAMENTO)" icone="apartment" titulo="Departamento" rota="departamento" toolTip="Departamento"></sub-menu>
+       
+       <!-- CBO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().CBO)" icone="copyright" titulo="CBO" rota="cbo" toolTip="Código de Classificação Brasileira de Ocupações"></sub-menu>
+
+        <!-- TIPOS CONTRATAÇÕES -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_CONTRATACOES)" icone="title" titulo="Tipos contratações" rota="tiposcontratacoes" toolTip="Tipos contratações"></sub-menu>
+       
+       <!-- TABELA REFERENCIA -->
+       <tb-referencia-organizacao-interna *ngIf="verificaAcesso(getModulos().TB_REFERENCIA_ORGANIZACAO_INTERNA)"></tb-referencia-organizacao-interna>
+
+    </div>
+</mat-nav-list>

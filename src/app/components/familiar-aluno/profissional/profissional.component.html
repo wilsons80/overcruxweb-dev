@@ -1,0 +1,101 @@
+<mat-toolbar class="titulopartes">Dados profissionais</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <input matInput [(ngModel)]="familiar.pessoasFisica.profissao"
+               maxlength="100"
+               name="profissao" placeholder="Profissao">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%">
+      <input matInput [(ngModel)]="familiar.pessoasFisica.nomeEmpresaTrabalho"
+             maxlength="200"
+             name="nomeEmpresaTrabalho" placeholder="Nome da Empresa">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="25%">
+      <mat-label>Família é beneficiada pelo programa Bolsa Família ?</mat-label>
+      <mat-select [(ngModel)]="familiar.pessoasFisica.beneficiarioBolsaFamilia" name="beneficiarioBolsaFamilia">
+          <mat-option *ngFor="let m of SIM_NAO" [value]="m.flag">
+              {{m.tipo}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+</div>
+
+<!-- BENEFICIOS -->
+<mat-toolbar class="titulopartes">Benefícios</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+        <input currencyMask
+               matInput maxlength="10" name="valorBolsaFamilia"
+               placeholder="Valor bolsa familia:"
+               [(ngModel)]="familiar.pessoasFisica.valorBolsaFamilia"
+               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+            <span matPrefix>R$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="15%">
+      <input currencyMask
+             matInput maxlength="10" name="valorRenda"
+             placeholder="Valor da renda:"
+             [(ngModel)]="familiar.pessoasFisica.valorRenda"
+             [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+          <span matPrefix>R$&nbsp;</span>
+    </mat-form-field>
+</div>
+
+<!-- CONTATO -->
+<mat-toolbar class="titulopartes">Contato</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="30px" fxFlexFill>
+    <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+        <input matInput 
+               [(ngModel)]="familiar.pessoasFisica.telefoneComercial" 
+               name="telefoneComercial"
+               placeholder="Telefone Comercial" 
+               pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$"
+               [textMask]="{mask: maskPhone}">
+    </mat-form-field>
+</div>
+
+
+<!-- BENEFICIOS -->
+<mat-toolbar class="titulopartes">Benefícios</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+    <mat-label>Situação Trabalho</mat-label>
+    <mat-select [(ngModel)]="familiar.pessoasFisica.situacaoTrabalho" name="situacaoTrabalho">
+        <mat-option *ngFor="let m of SITUACAO_TRABALHO" [value]="m">
+            {{m}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field fxFlex="70%" fxFlexOffset="20px">
+    <mat-label>Classificador do motivo de não trabalhar</mat-label>
+    <mat-select [(ngModel)]="familiar.pessoasFisica.classificadorMotivoNaoTrab" name="classificadorMotivoNaoTrab">
+        <mat-option *ngFor="let m of MOTIVO_NAO_TRABALHA" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill *ngIf="familiar.pessoasFisica.classificadorMotivoNaoTrab === 'OU'">
+  <mat-form-field fxFlexOffset="20px" fxFlex= "100%" appearance="outline" >
+          <mat-label>Motivo de não trabalhar:</mat-label>
+          <textarea matInput
+                    name="motivoNaoTrab"
+                    [(ngModel)]="familiar.pessoasFisica.motivoNaoTrab"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    maxlength="200"></textarea>
+    <mat-hint align="end">{{familiar.pessoasFisica?.motivoNaoTrab?.length}} / 200</mat-hint>
+  </mat-form-field>
+</div>

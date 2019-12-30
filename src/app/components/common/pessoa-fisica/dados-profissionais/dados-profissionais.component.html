@@ -1,0 +1,55 @@
+<mat-toolbar class="titulopartes">Profissão</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <!-- <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+            <mat-label>Situação:</mat-label>
+            <mat-select [(ngModel)]="pessoaFisica.situacaoTrabalho" name="situacaoTrabalho">
+                <mat-option *ngFor="let m of situacaoTrabalho" [value]="m">
+                    {{m.tipo}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    <mat-form-field fxFlex="70%" fxFlexOffset="20px">
+        <input matInput maxlength="200" [(ngModel)]="pessoaFisica.profissao" name="profissao"
+            placeholder="Descrição da Profissão:">
+    </mat-form-field>
+</div>
+
+<!-- <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxFlexFill>
+        <mat-form-field fxFlexOffset="20px" fxFlex="68%">
+            <input matInput [(ngModel)]="pessoaFisica.nomeEmpresaTrabalho"
+                name="nomeEmpresaTrabalho" placeholder="Nome da Empresa de Trabalho:">
+        </mat-form-field>
+        <mat-form-field fxFlex="21%">
+            <input matInput maxlength="200" name="valorRenda" placeholder="Renda Mensal:"
+                [(ngModel)]="pessoaFisica.valorRenda">
+                <span matPrefix>R$&nbsp;</span>
+        </mat-form-field>
+    </div> -->
+
+<!--
+<mat-toolbar class="titulopartes">Documentos</mat-toolbar>
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <input matInput [(ngModel)]="pessoaFisica.nis" name="nis"
+            placeholder="Número do NIS:">
+    </mat-form-field>
+</div> -->
+
+<!-- 
+<mat-toolbar class="titulopartes">Não Trabalho</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <mat-label>Motivo de Não Trabalhar:</mat-label>
+        <mat-select [(ngModel)]="pessoaFisica.classificadorMotivoNaoTrab"
+            name="classificadorMotivoNaoTrab">
+            <mat-option *ngFor="let m of classificadorMotivoNaoTrab" [value]="m">
+                {{m.descricao}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="70%">
+        <input matInput [(ngModel)]="pessoaFisica.motivoNaoTrab" name="motivoNaoTrab"
+            placeholder="Outros:">
+    </mat-form-field>
+</div> -->

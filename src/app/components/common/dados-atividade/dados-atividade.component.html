@@ -1,0 +1,35 @@
+<mat-toolbar class="titulopartes">Dados da Oficina</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+        <input matInput name="dataInicio" 
+                [matDatepicker]="dataInicio"
+                placeholder="Data de Início" 
+                [(ngModel)]="atividade.dataInicio" 
+                disabled>
+        <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+        <mat-datepicker #dataInicio></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="15%">
+        <input matInput name="dataFim" 
+                [matDatepicker]="dataFim"
+                placeholder="Data de Fim" 
+                [(ngModel)]="atividade.dataFim" 
+                disabled>
+        <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+        <mat-datepicker #dataFim></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="70%">
+        <input  matInput name="atividade" 
+                placeholder="Descrição da oficina" 
+                [(ngModel)]="atividade.descricao" 
+                disabled>
+    </mat-form-field>
+
+   
+</div>
+
+
+

@@ -1,0 +1,134 @@
+<mat-toolbar class="subtitulo">Matricula de aluno na turma</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <div *ngIf="matricula.aluno.id" style="padding-top: 20px;">
+            <dados-aluno [aluno]="matricula.aluno"></dados-aluno>
+        </div>        
+
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+            <!-- ALUNO-->
+            <div fxLayout="column" fxFlex="45%">
+                <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                    <mat-label>Beneficiários:</mat-label>
+                    <mat-select [(ngModel)]="matricula.aluno.id" name="aluno"
+                                (selectionChange)="mostrarDadosAluno($event.value)" 
+                                required>
+                        <mat-option *ngFor="let i of alunos" [value]="i.id">
+                            {{i.pessoaFisica.nome}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum beneficiário cadastrado</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- TURMA -->
+            <div fxLayout="column" fxFlex="45%">
+                <mat-toolbar class="titulopartes">Turma</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                    <mat-label>Turmas:</mat-label>
+                    <mat-select [(ngModel)]="matricula.turma.id" name="turma" 
+                                (selectionChange)="carregarDadosTurma()"
+                                required>
+                        <mat-option *ngFor="let i of turmas" [value]="i.id">
+                            {{i.descricao}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="turmas?.length === 0" align="start">Nenhuma turma cadastrada</mat-hint>
+                </mat-form-field>
+            </div>
+            
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
+                <input style="margin-left: 20px" matInput name="dataInicio" [matDatepicker]="dataInicio"
+                    placeholder="Data Início" [(ngModel)]="matricula.dataInicio" required>
+                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicio></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
+                <input style="margin-left: 20px" matInput name="dataDesvinculacao" [matDatepicker]="dataDesvinculacao"
+                    placeholder="Data de desvinculação" [(ngModel)]="matricula.dataDesvinculacao">
+                <mat-datepicker-toggle matSuffix [for]="dataDesvinculacao"></mat-datepicker-toggle>
+                <mat-datepicker #dataDesvinculacao></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="70%">
+                <mat-label>Descrição desligamento:</mat-label>
+                <input #descricaoDesligamento matInput name="descricaoDesligamento"
+                    [(ngModel)]="matricula.descricaoDesligamento" maxlength="200">
+                <mat-hint align="start">{{descricaoDesligamento.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+        </div>
+
+        <mat-toolbar class="titulopartes">Oficinas matriculadas</mat-toolbar>
+
+        <div *ngIf="matricula.turma.oficinas?.length; else msgSemOficina">
+            <div fxLayout="row">
+                <div fxLayout="column" fxFlex="100%">
+    
+                    <div fxLayout="column" fxFlex="100%" *ngFor="let o of matricula.oficinas">
+                        <dados-oficina [oficina]="o" 
+                                       [oficinas]="matricula.turma.oficinas"
+                                       [perfilAcesso]="perfilAcesso"
+                                       (onDeletar)="deletarOficina($event)"></dados-oficina>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="row" 
+                 *ngIf="perfilAcesso.insere" 
+                 fxLayoutAlign="end center" 
+                 fxLayoutGap="16px"
+                 style="padding-top: 10px">
+                <div>
+                    <button matTooltip="Adicionar nova matricula" 
+                            mat-fab color="primary"
+                            (click)="novaMatricula()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ng-template #msgSemOficina>
+            <div fxLayout="row" 
+                 *ngIf="matricula.turma.id"
+                 fxLayoutAlign="center center" >
+                 <div style="text-align: center; border-style: solid; border-color: coral; width: 30%;">
+                     <span style="color: blue">
+                         Esta turma não possui oficinas.
+                     </span>
+                 </div>            
+            </div>
+        </ng-template>
+        
+
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

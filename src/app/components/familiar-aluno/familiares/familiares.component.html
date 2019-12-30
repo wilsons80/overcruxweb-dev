@@ -1,0 +1,53 @@
+<table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+    <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Familiar </th>
+        <td mat-cell *matCellDef="let element"> {{element.pessoasFisica.nome}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="situacao">
+        <th mat-header-cell *matHeaderCellDef> Situação  </th>
+        <td mat-cell *matCellDef="let element"> {{situacaoParentesco.getSituacaoParentesco(element.situacaoParentesco)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tutela">
+            <th mat-header-cell *matHeaderCellDef> Tutela  </th>
+            <td mat-cell *matCellDef="let element"> {{element.tutelaAluno ? 'Sim' : 'Não'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="transportaaluno">
+            <th mat-header-cell *matHeaderCellDef> Transporta o Aluno</th>
+            <td mat-cell *matCellDef="let element"> {{element.transportaAluno  ? 'Sim' : 'Não'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="respfinanceiro">
+            <th mat-header-cell *matHeaderCellDef> Responsável Financeiro</th>
+            <td mat-cell *matCellDef="let element"> {{element.responsavelFinanceiroPeloAluno ? 'Sim' : 'Não'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="datacadastro">
+        <th mat-header-cell *matHeaderCellDef> Data Cadastro  </th>
+        <td mat-cell *matCellDef="let element"> {{element.dataCadastro | dataSimples}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ação </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="vincular(element)">
+                <mat-icon>arrow_downward</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div [hidden]="!mostrarTabela">
+    <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+</div>
+
+<ng-template #tabelaSemDados>
+    <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 10px">
+        {{msg}}
+    </div>
+</ng-template>

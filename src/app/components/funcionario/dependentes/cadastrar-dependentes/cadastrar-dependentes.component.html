@@ -1,0 +1,174 @@
+<div style="text-align: center; border-style: solid; border-color: coral;margin-bottom: 15px;"
+     *ngIf="outroResponsavelPeloDependente">
+    <span style="color: blue">
+      {{mensagemDependente}}
+    </span>
+</div>
+
+<div ngModelGroup="dadosDependentes">    
+    <mat-toolbar class="titulopartes">Dados Pessoais</mat-toolbar>
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+            <input matInput maxlength="255" 
+                   #nomeDependente
+                   name="nomeDependente"
+                   placeholder="Nome" 
+                   [(ngModel)]="dependente.pessoaFisica.nome">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="20%">
+            <input matInput [(ngModel)]="dependente.pessoaFisica.cpf" 
+                   name="cpf" 
+                   #cpf
+                   (change)="verificarDependente(cpf.value)"
+                   placeholder="CPF"
+                   [textMask]="{mask: mascaraCpf}" 
+                   [cpfValidator]>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="20%">
+            <input matInput [(ngModel)]="dependente.pessoaFisica.nis" name="nis" placeholder="NIS"
+                [textMask]="{mask: mascaraNIS}">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="20%">
+            <mat-label>Sexo:</mat-label>
+            <mat-select [(ngModel)]="dependente.pessoaFisica.sexo" name="sexo">
+                <mat-option *ngFor="let m of sexo" [value]="m.sigla">
+                    {{m.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>        
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+            <input matInput maxlength="30" [(ngModel)]="dependente.pessoaFisica.identidade" name="identidade"
+                placeholder="Identidade">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30%">
+            <input matInput [(ngModel)]="dependente.pessoaFisica.orgaoCi" name="orgaoCi" maxlength="45"
+                placeholder="Órgão Expedidor">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="5%">
+            <mat-label>UF:</mat-label>
+            <mat-select [(ngModel)]="dependente.pessoaFisica.ufCi" name="ufCi">
+                <mat-option *ngFor="let m of ufs" [value]="m">
+                    {{m}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="22%">
+            <input matInput name="dataEmissaoCI" [matDatepicker]="dataEmissaoCI" placeholder="Data de Emissão"
+                [(ngModel)]="dependente.pessoaFisica.dataEmissaoCI">
+            <mat-datepicker-toggle matSuffix [for]="dataEmissaoCI"></mat-datepicker-toggle>
+            <mat-datepicker #dataEmissaoCI></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+
+    <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
+
+        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+            <mat-label>Possui deficiência:</mat-label>
+            <mat-select [(ngModel)]="dependente.pessoaFisica.ehDeficiente" name="ehDeficiente">
+                <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+                    {{m.tipo}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="55%">
+            <input matInput maxlength="200" name="raca"
+                placeholder="Raça: Brancos, Pardos, Negros, Indígenas e Amarelos"
+                [(ngModel)]="dependente.pessoaFisica.raca">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15%">
+            <input matInput maxlength="200" name="tipoSangue" placeholder="Descrição do tipo de sangue"
+                [(ngModel)]="dependente.pessoaFisica.tipoSangue">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15%">
+            <input matInput [(ngModel)]="dependente.pessoaFisica.celular" 
+                   name="celular" 
+                   placeholder="Celular"
+                   [textMask]="{mask: maskCelular}"
+                   pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
+        <mat-form-field fxFlex="70%" fxFlexOffset="20px">
+            <input matInput maxlength="200" name="descricaoDeficiencia" placeholder="Descrição da deficiência"
+                [(ngModel)]="dependente.pessoaFisica.descricaoDeficiencia">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15%">
+            <input matInput maxlength="45" name="cor" placeholder="Cor" [(ngModel)]="dependente.pessoaFisica.cor">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15%">
+            <input matInput name="dataNascimento" [matDatepicker]="dataNascimento" placeholder="Data de Nascimento"
+                [(ngModel)]="dependente.pessoaFisica.dataNascimento">
+            <mat-datepicker-toggle matSuffix [for]="dataNascimento"></mat-datepicker-toggle>
+            <mat-datepicker #dataNascimento></mat-datepicker>
+        </mat-form-field>
+    
+    </div>
+
+    <mat-toolbar class="titulopartes">Informações Parentesco</mat-toolbar>
+    <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
+        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+            <input matInput maxlength="45" name="descricaoGrauParentesco" 
+                   placeholder="Grau de parentesco" 
+                   [(ngModel)]="dependente.descricaoGrauParentesco">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="15%">
+            <input matInput name="dataDesligamento" [matDatepicker]="dataDesligamento" 
+                   placeholder="Data de desligamento"
+                   [(ngModel)]="dependente.dataDesligamento">
+            <mat-datepicker-toggle matSuffix [for]="dataDesligamento"></mat-datepicker-toggle>
+            <mat-datepicker #dataDesligamento></mat-datepicker>
+        </mat-form-field>        
+
+        <mat-form-field fxFlex="70%" >
+            <input matInput maxlength="45" name="descricaoDesligamento" 
+                   placeholder="Descrição do desligamento" 
+                   [(ngModel)]="dependente.descricaoDesligamento">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
+        <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+            <input matInput maxlength="45" name="descricaoOutrasInformacoes" 
+                    placeholder="Outras informações" 
+                    [(ngModel)]="dependente.descricaoOutrasInformacoes">
+        </mat-form-field>        
+    </div>
+
+    <!-- ENDEREÇO -->
+    <cadastro-endereco [dadosEndereco]="dependente.pessoaFisica" [obrigatorio]="false"></cadastro-endereco>
+
+</div>
+
+
+<div dir="rtl"  fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
+    style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+
+    <button mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="initObjetos()">
+        Limpar
+    </button>
+
+    <button mat-raised-button *ngIf="!dependente.idFuncionario" name="botaoAdicionar" fxFlex="20%" color="primary"
+        (click)="adicionar()">
+        Adicionar
+    </button>
+
+</div>

@@ -1,0 +1,47 @@
+<mat-toolbar class="subtitulo">Tipo Contratação</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+                <form #formCadastro="ngForm">
+                        
+                <!-- DADOS INICIAIS -->
+                <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="80px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                        <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                                <input #codigoTipoContratacao matInput maxlength="50" name="codigoTipoContratacao"
+                                        placeholder="Código:" [(ngModel)]="tiposContratacoes.codigoTipoContratacao" required>
+                                <mat-hint align="end">{{codigoTipoContratacao.value.length}} / 50</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 0 0 0 20px" fxFlex="55%" appearance="outline">
+                                <mat-label>Descrição:</mat-label>
+                                <textarea #descricao matInput name="descricao" [(ngModel)]="tiposContratacoes.descricaoTipoContratacao" cdkTextareaAutosize
+                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
+                                    <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+                            </mat-form-field>
+                </div>
+
+                <!-- BOTOES -->
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                        fxFlexFill>
+                        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()">
+                                Cadastrar
+                        </button>
+
+                        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                                Atualizar
+                        </button>
+
+                        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                                Limpar
+                        </button>
+                        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                                Cancelar
+                        </button>
+
+                </div>
+        </form>
+
+
+</div>

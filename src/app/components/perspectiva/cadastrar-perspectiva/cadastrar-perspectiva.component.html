@@ -1,0 +1,97 @@
+<mat-toolbar class="subtitulo">Perspectiva</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                                <!-- DADOS INICIAIS -->
+                                <div fxLayout="column" fxFlex="45%">
+                                        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+                                        <mat-form-field style="margin-left: 20px">
+                                                <input #nome matInput maxlength="200" name="nome"
+                                                        placeholder="Nome da Perspectiva:" [(ngModel)]="perspectiva.nmPerspectiva" required>
+                                                <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+                                        </mat-form-field>
+                                </div>
+        
+                                <!-- UNIDADE -->
+                                <div fxLayout="column" fxFlex="55%">
+                                        <mat-toolbar class="titulopartes">Unidade</mat-toolbar>
+                                        <mat-form-field style="margin: 0 20px 20px 20px">
+                                                <mat-label>Unidades:</mat-label>
+                                                <mat-select [(ngModel)]="perspectiva.unidade.idUnidade" name="unidades"
+                                                        required>
+                                                        <mat-option *ngFor="let i of unidades" [value]="i.idUnidade">
+                                                                {{i.siglaUnidade}} - {{i.nomeUnidade}}
+                                                        </mat-option>
+                                                </mat-select>
+                                                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhum unidade
+                                                        cadastrada</mat-hint>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+
+       
+         <!-- DATA -->
+        <mat-toolbar class="titulopartes">Data</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex= "20%" fxFlexOffset="20px" >
+                    <input matInput name= "dtImplantacao" [matDatepicker]="dtImplantacao" placeholder="Data de Implatação" [(ngModel)]="perspectiva.dtImplantacao" required>
+                    <mat-datepicker-toggle matSuffix [for]="dtImplantacao"></mat-datepicker-toggle>
+                    <mat-datepicker #dtImplantacao></mat-datepicker>
+             </mat-form-field>
+
+             <mat-form-field fxFlex= "20%">
+                    <input matInput name= "dtTermino" [matDatepicker]="dtTermino" placeholder="Data Término" [(ngModel)]="perspectiva.dtTermino">
+                    <mat-datepicker-toggle matSuffix [for]="dtTermino"></mat-datepicker-toggle>
+                    <mat-datepicker #dtTermino></mat-datepicker>
+             </mat-form-field>
+
+        </div>
+
+
+       <!-- BOTOES -->
+   <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button
+            name="botaoConfirmar"
+            fxFlex="20%"
+            color="primary"
+            [disabled]="formCadastro.invalid"
+            (click)="cadastrar()"> Cadastrar
+    </button>
+
+    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
+            name="botaoConfirmar"
+            fxFlex="20%"
+            color="primary"
+            [disabled]="formCadastro.invalid"
+            (click)="atualizar()">
+            Atualizar
+    </button>
+
+    <button *ngIf="mostrarBotaoLimpar()" 
+            mat-raised-button 
+            fxFlex="20%" 
+            (click)="limpar()">
+            Limpar
+    </button>
+    <button 
+            mat-raised-button 
+            fxFlex="20%" 
+            (click)="cancelar()">
+            Cancelar
+    </button>
+
+</div>
+    </form>
+
+
+</div>
+
+
+
+
+
+

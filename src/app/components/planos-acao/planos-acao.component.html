@@ -1,0 +1,90 @@
+<mat-toolbar class="subtitulo">Planos de Ação</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formConsultarDepartamento="ngForm">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                        <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um plano de ação:</mat-label>
+                    <mat-select fxFlexOffset="20px" [(ngModel)]="planosAcao" name="unidade">
+                        <mat-option *ngFor="let d of listaPlanosAcao" [value]="d">
+                            {{d.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+
+            </div>
+        </form>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef> Nome: </th>
+                <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="iniciativa">
+                <th mat-header-cell *matHeaderCellDef> Metas: </th>
+                <td mat-cell *matCellDef="let element"> {{element.iniciativa.nome}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="dataInicio">
+                <th mat-header-cell *matHeaderCellDef> Data início:  </th>
+                <td mat-cell *matCellDef="let element"> {{element.dataInicio | dataSimples}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="dataFim">
+                <th mat-header-cell *matHeaderCellDef> Data fim:  </th>
+                <td mat-cell *matCellDef="let element"> {{element.dataFim | dataSimples}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.deleta"  mat-button (click)="deletar(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <ng-template #tabelaSemDados>
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+        <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
+            <div>
+                <button matTooltip="Adicionar novo plano de ação" mat-fab color="primary"
+                    [routerLink]="['/planosacao/cadastrar']" routerLinkActive="router-link-active">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

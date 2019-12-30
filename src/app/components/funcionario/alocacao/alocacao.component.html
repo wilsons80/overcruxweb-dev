@@ -1,0 +1,34 @@
+<mat-accordion>
+
+    <mat-expansion-panel [expanded]="openFormCadastro"
+                         (closed)="openFormCadastro = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Alocação de Projeto/Programa
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <cadastrar-alocacao #cadastrarAlocacao
+                          [funcionario]="funcionario">
+      </cadastrar-alocacao>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="!openFormCadastro"
+                         (opened)="listasAlocacao.carregarListaAlocacao()"
+                         (closed)="openFormCadastro = true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Alocação do Programa/Projeto ( {{funcionario.alocacoesFuncionario?.length}} )
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <listar-alocacao #listasAlocacao
+                        [alocacoesFuncionario]="funcionario.alocacoesFuncionario"
+                        (onAlocacao)="onGetAdicionar($event); cadastrarAlocacao.carregarAlocacao($event)"
+                        (onAdicionar)="onGetAdicionar($event); cadastrarAlocacao.initObjetos()">
+      </listar-alocacao>
+
+    </mat-expansion-panel>
+
+</mat-accordion>

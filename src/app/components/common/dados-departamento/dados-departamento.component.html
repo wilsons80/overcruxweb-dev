@@ -1,0 +1,23 @@
+<mat-toolbar class="titulopartes">Dados do Departamento</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="20%">
+        <input  matInput name="cdUnidadeDepartamento" 
+                placeholder="Código do Departamento:" 
+                [(ngModel)]="departamento.cdUnidadeDepartamento" 
+                disabled>
+    </mat-form-field>
+   
+    <mat-form-field fxFlex="70%">
+        <input  matInput name="nomeUnidade" 
+                placeholder="Nome do Departamento:" 
+                [(ngModel)]="departamento.nmDepartamento" 
+                disabled>
+    </mat-form-field>
+
+   
+</div>
+
+
+

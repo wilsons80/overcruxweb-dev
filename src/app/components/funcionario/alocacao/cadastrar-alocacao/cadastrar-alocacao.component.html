@@ -1,0 +1,101 @@
+<form #formAlocacao="ngForm">
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  
+      <mat-form-field fxFlex="18%" fxFlexOffset="20px">
+          <input matInput name="dataInicioVinculacao" 
+                 [matDatepicker]="dataInicioVinculacao" 
+                 placeholder="Data de início"
+                 [(ngModel)]="alocacao.dataInicioVinculacao">
+          <mat-datepicker-toggle matSuffix [for]="dataInicioVinculacao"></mat-datepicker-toggle>
+          <mat-datepicker #dataInicioVinculacao></mat-datepicker>
+      </mat-form-field>
+  
+  
+      <mat-form-field fxFlex="18%" fxFlexOffset="20px">
+        <input matInput name="dataFimVinculacao" 
+               [matDatepicker]="dataFimVinculacao" 
+               placeholder="Data fim"
+               [(ngModel)]="alocacao.dataFimVinculacao">
+        <mat-datepicker-toggle matSuffix [for]="dataFimVinculacao"></mat-datepicker-toggle>
+        <mat-datepicker #dataFimVinculacao></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="15%">
+        <input currencyMask name="valorAlocacao" placeholder="Valor alocado" 
+               matInput maxlength="13"
+               [(ngModel)]="alocacao.valorAlocacao"
+               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+        <span matPrefix>R$&nbsp;</span>
+      </mat-form-field>     
+
+    </div>
+     
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <div fxFlex="20%" fxFlexOffset="20px">
+            <label>Tipo de Alocação:</label>
+            <mat-radio-group [(ngModel)]="tipoAlocacao" name="tipoAlocacao">
+                <mat-radio-button value="programa">Programa</mat-radio-button>
+                <mat-radio-button value="projeto">Projeto</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>   
+      
+    <div fxLayout="row" [fxHide]="!tipoAlocacao" fxLayoutGap="50px" 
+         fxFlexFill>
+        <div fxFlexOffset="20px" fxFlex="100%">
+
+            <mat-form-field fxFlex="60%" *ngIf="isPrograma(); else projeto">
+                <mat-label>Programa</mat-label>
+                <mat-select [(ngModel)]="alocacao.programa.id" name="programa">
+                    <mat-option *ngFor="let m of programas" [value]="m.id">
+                        {{m.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <ng-template #projeto>
+                <mat-form-field fxFlex="60%">
+                    <mat-label>Projeto</mat-label>
+                    <mat-select [(ngModel)]="alocacao.projeto.id" name="projeto">
+                        <mat-option *ngFor="let m of projetos" [value]="m.id">
+                            {{m.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-template>
+        </div>
+    
+    </div>
+   
+  </form>
+  
+  
+  <div dir="rtl" *ngIf="habilitaBotao(formAlocacao)"
+                 fxLayout="row" 
+                 fxLayoutAlign="center center" 
+                 fxLayoutGap="20px" 
+                 style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" 
+                 fxFlexFill>
+  
+      <button mat-raised-button
+              name="botaoLimpar"
+              fxFlex="20%"
+              color="primary"
+              (click)="initObjetos()">
+          Limpar
+      </button>               
+  
+      <button mat-raised-button
+              *ngIf="!alocacao.funcionario.id"
+              name="botaoAdicionar"
+              fxFlex="20%"
+              color="primary"
+              (click)="adicionar()"> 
+          Adicionar
+      </button>
+  
+  </div>
+  
+  
+  
+  

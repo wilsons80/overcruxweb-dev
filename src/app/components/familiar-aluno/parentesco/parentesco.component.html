@@ -1,0 +1,72 @@
+<mat-toolbar class="titulopartes">Dados parentesco</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+  <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+      <input matInput name="dataCadastro" [matDatepicker]="dataCadastro" placeholder="Data de cadastro:"
+             [(ngModel)]="familiar.dataCadastro" required>
+      <mat-datepicker-toggle matSuffix [for]="dataCadastro"></mat-datepicker-toggle>
+      <mat-datepicker #dataCadastro></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="20%">
+    <input matInput name="dataDesligamento" [matDatepicker]="dataDesligamento" placeholder="Data de desligamento:"
+           [(ngModel)]="familiar.dataDesligamento">
+    <mat-datepicker-toggle matSuffix [for]="dataDesligamento"></mat-datepicker-toggle>
+    <mat-datepicker #dataDesligamento></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="30%">
+    <mat-label>Situação parentesco</mat-label>
+    <mat-select [(ngModel)]="familiar.situacaoParentesco" name="situacaoParentesco">
+        <mat-option *ngFor="let m of situacaoParentesco.situacao" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 20px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
+          <mat-label>Descrição do grau de parentesco</mat-label>
+          <textarea matInput #descGrauParentesco
+                    name="descGrauParentesco"
+                    [(ngModel)]="familiar.descGrauParentesco"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    maxlength="200"></textarea>
+    <mat-hint align="end">{{descGrauParentesco.value.length}} / 200</mat-hint>
+  </mat-form-field>
+
+
+  <mat-form-field  fxFlex= "50%" appearance="outline" >
+    <mat-label>Descrição do desligamento</mat-label>
+    <textarea matInput #descDesligamento
+              name="descDesligamento"
+              [(ngModel)]="familiar.descDesligamento"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="2"
+              maxlength="200"></textarea>
+    <mat-hint align="end">{{descDesligamento.value.length}} / 200</mat-hint>
+  </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field fxFlexOffset="20px" fxFlex= "100%" appearance="outline" >
+          <mat-label>Outras informações</mat-label>
+          <textarea matInput #descOutrasInformacoes
+                    name="descOutrasInformacoes"
+                    [(ngModel)]="familiar.descOutrasInformacoes"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    maxlength="200"></textarea>
+    <mat-hint align="end">{{descOutrasInformacoes.value.length}} / 200</mat-hint>
+  </mat-form-field>
+</div>

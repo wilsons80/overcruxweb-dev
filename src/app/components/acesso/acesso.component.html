@@ -1,0 +1,112 @@
+<mat-toolbar class="subtitulo">Acesso</mat-toolbar>
+
+
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formConsultar="ngForm">
+
+            <!-- USUÁRIO -->
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um usuário:</mat-label>
+                    <mat-select fxFlexOffset="20px" [(ngModel)]="cadastroAcesso.idUsuario" name="usuario">
+                        <mat-option *ngFor="let u of usuarios" [value]="u.idUsuario">
+                            {{u.nomeCompleto}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- MODULOS -->
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                        <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um módulo:</mat-label>
+                    <mat-select fxFlexOffset="20px" [(ngModel)]="cadastroAcesso.idModulo" name="modulo">
+                        <mat-option *ngFor="let m of modulos" [value]="m.id">
+                            {{m.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- BOTOES -->
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+
+            </div>
+
+        </form>
+
+        <div fxLayout="row"  *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 10px">
+            <div>
+                <button matTooltip="Adicionar novo acesso" mat-fab color="primary"
+                    [routerLink]="['/acesso/cadastrar']" routerLinkActive="router-link-active">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+
+            <ng-container matColumnDef="nomeUsuario">
+                <th mat-header-cell *matHeaderCellDef> Usuário </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeUsuario}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="nomeModulo">
+                <th mat-header-cell *matHeaderCellDef> Módulo </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeModulo}} </td>
+              </ng-container>
+             
+              <ng-container matColumnDef="nomeUnidade">
+                <th mat-header-cell *matHeaderCellDef> Unidade </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeUnidade}} </td>
+              </ng-container>
+            
+              <ng-container matColumnDef="nomeGrupoModulo">
+                <th mat-header-cell *matHeaderCellDef> Nome Grupo Módulo </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <div [matTooltip]="element.descricaoGrupoModulo">
+                        {{element.nomeGrupoModulo}} 
+                    </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.deleta"  mat-button (click)="deletar(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <ng-template #tabelaSemDados>
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+
+    </div>
+</div>

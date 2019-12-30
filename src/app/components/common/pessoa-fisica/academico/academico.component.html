@@ -1,0 +1,164 @@
+<!-- ADMISSÃO -->
+<mat-toolbar class="titulopartes">Admissão</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <div fxFlex="15%" fxFlexOffset="20px">
+      <mat-form-field fxFlex="90%">
+          <input matInput
+                 maxlength="15"
+                 name="matricula"
+                 placeholder="Matrícula"
+                 [disabled]="isEditarMatricula"
+                 [(ngModel)]="aluno.matriculaAluno">
+      </mat-form-field>
+
+      <div style="padding-top: 14px;">
+        <button  mat-icon-button
+                 (click)="editarMatricula()"
+                 matTooltip="Editar número da matricula"
+                 >
+           <mat-icon>create</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <mat-form-field fxFlex= "50%">
+      <mat-label>Selecione a Unidade</mat-label>
+      <mat-select name="unidade" [(ngModel)]="aluno.unidade.idUnidade" required>
+          <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
+              {{u.nomeUnidade}}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="35%" >
+        <mat-label>Nível da turma</mat-label>
+        <mat-select [(ngModel)]="aluno.nivelTurma.id" name="nivelTurma">
+            <mat-option *ngFor="let m of niveisTurmas" [value]="m.id">
+                {{m.descricao}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field  fxFlexOffset="20px" fxFlex="15%">
+        <input matInput name="dataEntrada" [matDatepicker]="dataEntrada"
+               placeholder="Data de entrada"
+               [(ngModel)]="aluno.dataEntrada">
+        <mat-datepicker-toggle matSuffix [for]="dataEntrada"></mat-datepicker-toggle>
+        <mat-datepicker #dataEntrada></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+      <input matInput name="dataDesligamento" [matDatepicker]="dataDesligamento"
+             placeholder="Data de desligamento"
+             [(ngModel)]="aluno.dataDesligamento">
+      <mat-datepicker-toggle matSuffix [for]="dataDesligamento"></mat-datepicker-toggle>
+      <mat-datepicker #dataDesligamento></mat-datepicker>
+  </mat-form-field>
+
+</div>
+
+
+<!-- OUTRAS INFORMAÇÕES -->
+<mat-toolbar class="titulopartes">Outras informações</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+  <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+    <mat-label>Mora com os pais ?</mat-label>
+    <mat-select [(ngModel)]="aluno.moraPais" name="moraPais">
+        <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+    <mat-label>Pais do beneficiário são casados ?</mat-label>
+    <mat-select [(ngModel)]="aluno.paisCasados" name="paisCasados">
+        <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+    <mat-label>Aluno está matriculado na escola pública ?</mat-label>
+    <mat-select [(ngModel)]="aluno.matriculadoEscPub" name="matriculadoEscPub">
+        <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+    <mat-label>Aluno se trata de público prioritário ?</mat-label>
+    <mat-select [(ngModel)]="aluno.publicoPrioritario" name="publicoPrioritario">
+        <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+            {{m.tipo}}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
+          <mat-label>Descrição da pessoa que busca o beneficiário na escola:</mat-label>
+          <textarea matInput #message
+                  name="descBuscaEscola"
+                  [(ngModel)]="aluno.descBuscaEscola"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="2"
+                  maxlength="200"
+                  ></textarea>
+      <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" hintLabel="Máximo 200 caracteres">
+    <mat-label>Desligamento:</mat-label>
+    <textarea matInput #message
+            name="desligamento"
+            [(ngModel)]="aluno.descDesligamento"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="2"
+            maxlength="200"
+            ></textarea>
+      <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+  </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" hintLabel="Máximo 200 caracteres">
+            <mat-label>Outras informações:</mat-label>
+            <textarea matInput #message
+                    name="descOutrasInformacoes"
+                    [(ngModel)]="aluno.descOutrasInformacoes"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    maxlength="200"
+                    ></textarea>
+      <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
+      <mat-label>Observação:</mat-label>
+      <textarea matInput #message
+              name="observacoes"
+              [(ngModel)]="aluno.observacoes"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="2"
+              maxlength="2500"
+              ></textarea>
+        <mat-hint align="end">{{message.value.length}} / 2500</mat-hint>
+    </mat-form-field>    
+</div>
+

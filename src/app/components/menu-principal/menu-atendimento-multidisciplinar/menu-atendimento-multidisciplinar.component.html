@@ -1,0 +1,28 @@
+<a mat-list-item (click)="toggle()" >
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+            <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Atendimento Multidisciplinar">
+                <mat-icon>phone_missed</mat-icon>
+                <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Atendimento Multidisciplinar</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start stretch">
+                <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+            </div>
+        </div>
+    </a>
+
+    <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+    
+        <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+    
+           <!-- SUB MENU DIAGNOSTICO_MULTIDISCIPLINAR -->
+           <sub-menu-diagnostico-multidisciplinar *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_MULTIDISCIPLINAR)"></sub-menu-diagnostico-multidisciplinar>
+
+           <!-- SUB MENU PLANEJAMENTO_ATIVIDADES -->
+           <sub-menu-planejamento-atividades *ngIf="verificaAcesso(getModulos().PLANEJAMENTO_ATIVIDADES)"></sub-menu-planejamento-atividades>
+
+           <!-- ESTUDO_CASOS_RESULTADOS -->
+           <sub-menu *ngIf="verificaAcesso(getModulos().ESTUDO_CASOS_RESULTADOS)" icone="aspect_ratio" titulo="Estudo de Casos e Resultados" rota="home" toolTip="Estudo de Casos e Resultados"></sub-menu>
+    
+        </div>
+    </mat-nav-list>
+    

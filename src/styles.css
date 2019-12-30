@@ -1,0 +1,152 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+#rodape {
+  align-self: flex-end;
+  padding: 1.5rem 2rem;
+  width: auto;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.cinza {
+  color: rgba(0,0,0,0.54);
+}
+
+mat-toolbar.mat-toolbar.mat-toolbar-single-row.tituloprincipal{
+  background: rgb(213, 226, 253);
+
+}
+
+mat-toolbar.mat-toolbar.mat-toolbar-single-row.titulopartes{
+  background: rgb(241, 241, 241);
+  height: auto;
+  font-size: large;
+  color: rgb(142,142,142);
+  margin-bottom: 20px
+
+}
+
+.nav-caption{
+  display: inline-block;
+  padding-left: 6px;
+  padding-top: 3px
+}
+
+.submenu{
+  padding-left: 15px
+}
+
+
+
+/* BOTOES DA APP */
+button.mat-raised-button.mat-button-base{
+  background-color: white;
+  text-transform: uppercase;
+  color: black
+}
+
+/* BOTOES DA APP */
+button.mat-fab.mat-button-base.mat-accent.botao{
+  background-color:transparent;
+}
+
+button.mat-fab.mat-button-base{
+  background-color: black;
+  text-transform: uppercase;
+  color: white
+}
+
+
+/* TELAS DE CONSULTA */
+.painel-principal  {
+    /* margin-top: 5%; */
+    /* margin-left: 15%;
+    margin-right: 15%; */
+    /* border: 3px solid #73AD21; */
+}
+
+.center {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.painel-consultar {
+  margin: 0 25px 20px 25px;
+  /* border: 3px solid #73AD21; */
+}
+
+.painel-tabela {
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 8%;
+}
+
+mat-toolbar.mat-toolbar.mat-toolbar-single-row.subtitulo {
+  background: #ECEFF1;
+}
+
+.fixo {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+/* FONTE DE TODA A APLICAÇÃO */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* TABELA */
+
+table {
+  width: 100%;
+}
+
+tr.mat-header-row.ng-star-inserted,
+div.inserted {
+  padding: 15px 0 15px 28px;
+  background: #ECEFF1;
+  justify-content: center;
+}
+
+
+.expandido{
+  width: 250px;
+}
+
+.listamenufilhos{
+  background: lightgray;
+  width: 200px
+}
+
+/* .main_content {
+  width:100%;
+  height: calc(100vh - 100px);
+  background: #efefef;
+} */
+
+
+
+/*================================================================*/
+/* Muda a cor da linha da tabela ao passar o mouse por cima */
+tr:not(th):hover {
+  background: #F8F8FF;
+}
+
+tr:not(th):active {
+  background: #efefef;
+}
+/*================================================================*/
+
+.fixo{
+  position: sticky !important;
+  top: 0 !important; /* Sets the sticky toolbar to be on top */
+  z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+

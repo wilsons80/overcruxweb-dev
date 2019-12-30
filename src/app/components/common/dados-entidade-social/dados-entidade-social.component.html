@@ -1,0 +1,17 @@
+<mat-toolbar class="titulopartes">Dados da Entidade Social</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px" >
+        <input matInput name="codigo" placeholder="Código da entidade social" [(ngModel)]="entidadeSocial.empresa.codigo" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%">
+        <input matInput name="razaosocial" placeholder="Razão social" [(ngModel)]="entidadeSocial.empresa.nomeRazaoSocial" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="35%">
+        <input matInput name="nomefantasia" placeholder="Nome fantasia" [(ngModel)]="entidadeSocial.empresa.nomeFantasia" disabled>
+    </mat-form-field>
+
+</div>
+

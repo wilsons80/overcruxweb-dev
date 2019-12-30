@@ -1,0 +1,167 @@
+<mat-toolbar class="subtitulo">Gestão de Parcerias</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <!-- DADOS INICIAIS -->
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput maxlength="6" name="codigo" placeholder="Código da Empresa:"
+                    [(ngModel)]="empresa.codigo" required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="60%">
+                <input matInput maxlength="200" name="nomeRazaoSocial" placeholder="Razão Social:"
+                    [(ngModel)]="empresa.nomeRazaoSocial" required>
+            </mat-form-field>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                <input matInput [(ngModel)]="empresa.valorIcms" name="valorIcms" placeholder="Valor ICMS:">
+                <span matSuffix>%</span>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center"
+             style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput [(ngModel)]="empresa.cnpj" name="cnpj" placeholder="CNPJ"
+                    [textMask]="{mask: maskCNPJ}" [cnpjValidator]>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="54%">
+                <input matInput maxlength="200" name="nomeFantasia" placeholder="Nome Fantasia"
+                       [(ngModel)]="empresa.nomeFantasia">
+            </mat-form-field>
+
+            <mat-slide-toggle fxFlexOffset="20px" name="campoAtiva" [(ngModel)]="empresa.ativa">Ativa</mat-slide-toggle>
+
+        </div>
+
+
+        <!-- INSCRIÇÃO -->
+        <mat-toolbar class="titulopartes">Inscrição</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                <input type="number" matInput maxlength="20" [(ngModel)]="empresa.inscricaoEstadual"
+                    name="numeroInscricaoEstadual" placeholder="Número Inscrição Estadual:" />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="52%" fxFlexOffset="20px">
+                <input type="number" matInput maxlength="20" [(ngModel)]="empresa.inscricaoMunicipal"
+                    name="numeroInscricaoMunicipal" placeholder="Número Inscrição Municipal:" />
+            </mat-form-field>
+
+        </div>
+
+        <!-- TIPO -->
+        <mat-toolbar class="titulopartes">Tipo</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <mat-label>Tipo:</mat-label>
+                <mat-select [(ngModel)]="empresa.tipoEmpresa" name="tipoEmpresa" required>
+                    <mat-option *ngFor="let m of tiposEmpresa" [value]="m.tipo">
+                        {{m.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="52%" fxFlexOffset="20px">
+                <input type="text" matInput maxlength="200" [(ngModel)]="empresa.descricaoTipoEmpresa"
+                    name="descricaoTipoEmpresa" placeholder="Descrição:" />
+            </mat-form-field>
+
+        </div>
+
+        <!-- CATEGORIA -->
+        <mat-toolbar class="titulopartes">Categoria</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <mat-label>Categoria:</mat-label>
+                <mat-select [(ngModel)]="empresa.categoriaEmpresa" name="categoriaEmpresa">
+                    <mat-option *ngFor="let m of categoriasEmpresa" [value]="m.id">
+                        {{m.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="52%" fxFlexOffset="20px">
+                <input type="text" matInput maxlength="200" [(ngModel)]="empresa.descricaoCategoriaEmpresa"
+                    name="descricaoCategoriaEmpresa" placeholder="Descrição:" />
+            </mat-form-field>
+
+        </div>
+
+        <!-- ETAPA 1 - ENDEREÇO -->
+        <cadastro-endereco [dadosEndereco]="empresa">    
+        </cadastro-endereco>
+
+        <!-- CONTATO -->
+        <mat-toolbar class="titulopartes">Contato</mat-toolbar>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                <input matInput [(ngModel)]="empresa.telefone" 
+                       name="telefone" placeholder="Telefone"
+                       [textMask]="{mask: maskPhone}" 
+                       pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$"
+                       required>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%">
+                <input matInput [(ngModel)]="empresa.email" name="email" placeholder="Email:">
+            </mat-form-field>
+
+            <mat-checkbox name="autorizaEmail" [(ngModel)]="empresa.autorizaEmail">Autorizo o recebimento de emails.</mat-checkbox>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex="100%">
+                <input matInput 
+                       [(ngModel)]="empresa.homePage" 
+                       name="homePage" 
+                       placeholder="Home page da entidade social">
+            </mat-form-field>
+        </div>
+
+       <!-- BOTOES -->
+   <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button
+                name="botaoConfirmar"
+                fxFlex="20%"
+                color="primary"
+                [disabled]="formCadastro.invalid"
+                (click)="cadastrar()"> Cadastrar
+        </button>
+
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
+                name="botaoConfirmar"
+                fxFlex="20%"
+                color="primary"
+                [disabled]="formCadastro.invalid"
+                (click)="atualizar()">
+                Atualizar
+        </button>
+
+        <button *ngIf="mostrarBotaoLimpar()" 
+                mat-raised-button 
+                fxFlex="20%" 
+                (click)="limpar()">
+                Limpar
+        </button>
+        <button 
+                mat-raised-button 
+                fxFlex="20%" 
+                (click)="cancelar()">
+                Cancelar
+        </button>
+
+   </div>
+    </form>
+
+
+</div>

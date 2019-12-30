@@ -1,0 +1,24 @@
+
+.menu-principal-container {
+  width:100%; 
+  height: calc(100vh - 70px); 
+   background-color:white,
+   
+}
+.sidenav {
+   padding-top: 20px;
+   
+ }
+
+ .sidenav-content {
+   /* height: 100%; */
+   align-items: center;
+   justify-content: center;
+ }
+
+/* 
+ .main_content {
+  width:100%; 
+  height: calc(100vh - 100px); 
+  background: #efefef;
+} */

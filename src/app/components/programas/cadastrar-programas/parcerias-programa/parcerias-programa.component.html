@@ -1,0 +1,106 @@
+<form #formulario="ngForm">
+    <mat-accordion>
+
+        <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Dados do Parceiro</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-tab-group>
+                <mat-tab label="Parceiro"> 
+                        <dados-parceiro-programa [parceriasPrograma]=parceriasPrograma></dados-parceiro-programa>     
+                </mat-tab>
+
+                <mat-tab label="Materiais"> 
+                        <materiais-programa [listaMateriaisPrograma]=parceriasPrograma.materiaisPrograma></materiais-programa>
+                </mat-tab>
+            </mat-tab-group>
+
+            <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
+                style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+
+                <button mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="limpar()">
+                    Limpar
+                </button>
+
+                <button *ngIf="!isAtualizar"  mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid fxFlex="20%"
+                    color="primary" (click)="adicionar()">
+                    Adicionar
+                </button>
+              
+                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid fxFlex="20%"
+                    color="primary" (click)="atualizar()">
+                    Atualizar
+                </button>
+
+            </div>
+
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel [expanded]="!openFormCadastro" (opened)="carregarLista()"
+            (closed)="openFormCadastro = true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Lista de Parceiros ( {{listaParceiros?.length}} )
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
+                style="margin-top: 20px">
+
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef> Código </th>
+                    <td mat-cell *matCellDef="let element"> {{element.empresa.codigo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nomeRazaoSocial">
+                    <th mat-header-cell *matHeaderCellDef> Razão social </th>
+                    <td mat-cell *matCellDef="let element"> {{element.empresa.nomeRazaoSocial}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cnpj">
+                    <th mat-header-cell *matHeaderCellDef> CNPJ</th>
+                    <td mat-cell *matCellDef="let element"> {{element.empresa.cnpj | cnpj}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button *ngIf="perfilAcesso.deleta" mat-button (click)="deletar(element)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizarComposicao(element)">
+                            <mat-icon>create</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div [hidden]="!mostrarTabela">
+                <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+            </div>
+
+            <ng-template #tabelaSemDados>
+                <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 10px">
+                    {{msg}}
+                </div>
+            </ng-template>
+
+            <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px"
+                style="padding-top: 30px">
+                <div>
+                    <button matTooltip="Adicionar nova unidade" mat-fab color="primary" (click)="novo()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+
+        </mat-expansion-panel>
+
+    </mat-accordion>
+</form>

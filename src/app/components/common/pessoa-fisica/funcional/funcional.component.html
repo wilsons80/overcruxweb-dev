@@ -1,0 +1,177 @@
+<mat-toolbar class="titulopartes">Admissão</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+        <input matInput maxlength="250" name="nome" placeholder="Matrícula:" required
+            [(ngModel)]="funcionario.matricula">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataAdmissao" [matDatepicker]="dataAdmissao" placeholder="Data de Admissão:"
+            [(ngModel)]="funcionario.dataAdmissao" required>
+        <mat-datepicker-toggle matSuffix [for]="dataAdmissao"></mat-datepicker-toggle>
+        <mat-datepicker #dataAdmissao></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataDemissao" [matDatepicker]="dataDemissao" placeholder="Data de Demissão:"
+            [(ngModel)]="funcionario.dataDemissao">
+        <mat-datepicker-toggle matSuffix [for]="dataDemissao"></mat-datepicker-toggle>
+        <mat-datepicker #dataDemissao></mat-datepicker>
+    </mat-form-field>
+
+</div>
+
+<mat-toolbar class="titulopartes">Dados Funcionais</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+        <mat-label>Tipo de Funcionário:</mat-label>
+        <mat-select [(ngModel)]="funcionario.tipoFuncionario" name="tipoFuncionario"
+            (selectionChange)="zerarCamposEntrevista()">
+            <mat-option *ngFor="let m of tiposFuncionario.tipos" [value]="m.tipo">
+                {{m.descricao}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div *ngIf="mostrarCamposEntrevista()">
+    <mat-toolbar class="titulopartes">Entrevista</mat-toolbar>
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <mat-form-field fxFlex="96%" fxFlexOffset="20px">
+            <mat-label>Usuário Responsável pela Entrevista:</mat-label>
+            <mat-select [(ngModel)]="funcionario.funcionarioEntrevistador.id" name="funcionarioEntrevistador">
+                <mat-option *ngFor="let m of funcionarios" [value]="m.id">
+                    {{m.pessoasFisica.nome}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+            <input matInput name="dtHrEntrevista" [matDatepicker]="dtHrEntrevista" placeholder="Data da Entrevista:"
+                [(ngModel)]="funcionario.dtHrEntrevista">
+            <mat-datepicker-toggle matSuffix [for]="dtHrEntrevista"></mat-datepicker-toggle>
+            <mat-datepicker #dtHrEntrevista></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
+                placeholder="Hora:" [(ngModel)]="funcionario.horaEntrevista">
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutGap="20px" fxFlex="70%" fxLayoutAlign="start center">
+            <mat-form-field fxFlex="15%">
+                <input currencyMask name="salarioPretendido" placeholder="Salário Pretendido:" matInput
+                    [(ngModel)]="funcionario.salarioPretendido"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+            <mat-label>Parecer:</mat-label>
+            <mat-select [(ngModel)]="funcionario.parecerEntrevistador" name="parecerEntrevistador">
+                <mat-option *ngFor="let m of listaParecer" [value]="m.id">
+                    {{m.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+            <mat-label>Conclusão do Parecer:</mat-label>
+            <mat-select [(ngModel)]="funcionario.conclusaoParecer" name="conclusaoParecer">
+                <mat-option *ngFor="let m of conclusaoDoParecer" [value]="m.id">
+                    {{m.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxFlexFill>
+        <mat-form-field fxFlexOffset="20px" fxFlex="95%" style="margin-bottom: 0px" appearance="outline">
+            <mat-label>Descrição do Parecer:</mat-label>
+            <textarea matInput name="observacoes" [(ngModel)]="funcionario.descricaoParecerEntrevistador"
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+
+<!-- UNIDADE -->
+<mat-toolbar class="titulopartes">Unidade</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <mat-label>Selecione a Unidade</mat-label>
+        <mat-select name="unidade" 
+                    [(ngModel)]="funcionario.unidade.idUnidade" 
+                    required>
+            <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
+                {{u.nomeUnidade}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+
+
+<!-- EMPRESA -->
+<mat-toolbar class="titulopartes">Empresa</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <mat-label>Selecione a Empresa</mat-label>
+        <mat-select name="empresaFuncionario" 
+                    [(ngModel)]="funcionario.empresaFuncionario.id" 
+                    [required]="!funcionario.unidade.idUnidade">
+            <mat-option *ngFor="let u of empresas" [value]="u.id">
+                {{u.nomeFantasia}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+<!-- CARGO -->
+<mat-toolbar class="titulopartes">Cargo</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+        <mat-label>Selecione o Cargo</mat-label>
+        <mat-select name="cargo" [(ngModel)]="funcionario.cargo.id" required>
+            <mat-option *ngFor="let u of cargos" [value]="u.id">
+                {{u.nome}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+
+<!-- DEPARTAMENTO -->
+<mat-toolbar class="titulopartes">Departamento</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="65%" fxFlexOffset="20px">
+        <mat-label>Selecione o Departamento</mat-label>
+        <mat-select name="departamento" [(ngModel)]="funcionario.departamento.idDepartamento">
+            <mat-option *ngFor="let u of departamentos" [value]="u.idDepartamento">
+                {{u.nmDepartamento}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+        <mat-label>Desconta vale transporte:</mat-label>
+        <mat-select [(ngModel)]="funcionario.descontaValeTransporte" name="descontaValeTransporte">
+            <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+                {{m.tipo}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>   
+
+</div>

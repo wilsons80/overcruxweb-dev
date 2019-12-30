@@ -1,0 +1,164 @@
+<mat-toolbar class="subtitulo">Frequência de alunos</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formulario="ngForm">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-form-field fxFlex="70%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione uma atividade</mat-label>
+                    <mat-select fxFlexOffset="20px" [(ngModel)]="filtroBusca.atividade" name="atividade">
+                        <mat-option *ngFor="let d of atividades" [value]="d">
+                            {{d.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="30%">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Informe a data de frequência</mat-label>
+                    <input matInput
+                           fxFlexOffset="20px"
+                           [max]="maxDate"
+                           [min]="minDate"
+                           #datareferencia="ngModel"
+                           [matDatepicker]="datareferencia"
+                           name="datareferencia"
+                           [(ngModel)]="filtroBusca.dataReferencia">
+                    <mat-datepicker-toggle matSuffix [for]="datareferencia"></mat-datepicker-toggle>
+                    <mat-datepicker #datareferencia></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                <button mat-raised-button fxFlex="10%" (click)="consultar()" *ngIf="filtroBusca.atividade.id">
+                    CONSULTAR
+                </button>
+                <button mat-raised-button fxFlex="10%" style="padding-right: 20px" (click)="limpar()">
+                    LIMPAR
+                </button>
+            </div>
+
+            <div *ngIf="filtroBusca.atividade.id">
+                <dados-atividade [atividade]="filtroBusca.atividade"></dados-atividade>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
+                <div fxFlex="80%">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill *ngIf="mostrarTabela" >
+                        <mat-form-field fxFlexOffset="20px" style="width: 100%" >
+                            <mat-icon matPrefix>search</mat-icon>
+                            <mat-label fxFlexOffset="20px">Informe um valor para filtrar</mat-label>
+                            <input fxFlexOffset="20px" matInput (keyup)="applyFilter($event.target.value)" >
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxFlex="20%">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill 
+                         *ngIf="mostrarBotaoGerarListaFrequencia && isFiltroPreenchido()" class="botoes">
+                        <button mat-raised-button (click)="gerarListaFrequencia()">
+                            GERAR LISTA FREQUÊNCIA
+                        </button>
+                    </div>
+                </div>
+               
+            </div>
+            
+            <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="16px" fxFlexFill>
+                <div *ngIf="!mostrarTabela && mostrarBotaoGerarListaFrequencia && isFiltroPreenchido()" 
+                     style="width: 50%; text-align: center; border-style: solid; border-color: coral;margin-bottom: 15px;">
+                    <span style="color: blue">
+                        Não há frequência de aluno nessa atividade na data informada.
+                    </span>
+                </div>
+            </div>
+
+            <table [fxHide]="!mostrarTabela"
+                   matSort
+                   mat-table
+                   [dataSource]="dataSource"
+                   style="margin-top: 10px">
+
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Aluno </th>
+                    <td mat-cell *matCellDef="let element;  let i = index" style="width: 300px">
+                        {{element.atividadesAluno.aluno?.pessoaFisica?.nome}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="matriculaAluno">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Matrícula </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        {{element.atividadesAluno.aluno.matriculaAluno}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="datafrequencia">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Frequência </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        {{element.dataFrequencia | dataSimples}}
+                     </td>
+                </ng-container>
+
+                <ng-container matColumnDef="justificativa" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Justificativa </th>
+                    <td mat-cell *matCellDef="let element; let i = index" style="width: 400px">
+                        <span [fxHide]="!element.disabilitado" style="width: 95%">
+                            {{element.justificativa}}    
+                        </span>
+                        <mat-form-field style="width: 95%" [fxHide]="element.disabilitado">
+                            <input matInput
+                                   maxlength="45"
+                                   [ngModelOptions]="{standalone: true}"
+                                   [(ngModel)]="element.justificativa">
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="frequencia">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Presente na aula ?</th>
+                    <td mat-cell *matCellDef="let element;  let i = index" style="text-align: center;">
+                        <mat-checkbox [(ngModel)]="element.frequencia"
+                                      [disabled]="element.disabilitado"
+                                      [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let element;">
+                        <button *ngIf="perfilAcesso.altera" mat-button (click)="editar(element)">
+                            <mat-icon>create</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </form>
+
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[10, 20, 40, 80]" showFirstLastButtons></mat-paginator>
+        </div>
+
+        <div [hidden]="mostrarTabela">
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTOES -->
+    <div *ngIf="mostrarTabela" dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+
+        <button *ngIf="perfilAcesso.altera" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+            color="primary" [disabled]="formulario.invalid" (click)="atualizar()">
+            SALVAR
+        </button>
+
+    </div>
+
+</div>

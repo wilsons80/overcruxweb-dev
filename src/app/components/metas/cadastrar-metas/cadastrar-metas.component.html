@@ -1,0 +1,112 @@
+<mat-toolbar class="subtitulo">Metas</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+        <form #formCadastro="ngForm">
+
+                <!-- DATA -->
+                <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="80px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                        <mat-form-field fxFlexOffset="20px" fxFlex="40%">
+                                <input #nome matInput maxlength="200" name="nome" placeholder="Nome da Meta:"
+                                        [(ngModel)]="metas.nome" required>
+                                <mat-hint align="end">{{nome.value.length}} / 20</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                                <mat-label>Descrição :</mat-label>
+                                <textarea #descricao matInput name="descricao" [(ngModel)]="metas.descricao"
+                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+                                        maxlength="200"></textarea>
+                                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+                        </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <!-- DADOS INICIAIS -->
+                        <div fxLayout="column" fxFlex="35%">
+                                <mat-toolbar class="titulopartes">Data</mat-toolbar>
+                                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                                        fxFlexFill>
+
+                                        <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                                                <input matInput name="dtImplantacao" [matDatepicker]="dtImplantacao"
+                                                        placeholder="Data de Início" [(ngModel)]="metas.dataInicio"
+                                                        required>
+                                                <mat-datepicker-toggle matSuffix [for]="dtImplantacao">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dtImplantacao></mat-datepicker>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex="45%">
+                                                <input matInput name="dtTermino" [matDatepicker]="dtTermino"
+                                                        placeholder="Data Fim" [(ngModel)]="metas.dataFim">
+                                                <mat-datepicker-toggle matSuffix [for]="dtTermino">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dtTermino></mat-datepicker>
+                                        </mat-form-field>
+
+                                </div>
+                        </div>
+
+                        <!-- INDICADORES -->
+                        <div fxLayout="column" fxFlex="65%">
+                                <mat-toolbar class="titulopartes">Indicador</mat-toolbar>
+                                <mat-form-field style="margin: 0 20px 20px 20px">
+                                        <mat-label>Indicadores:</mat-label>
+                                        <mat-select [(ngModel)]="metas.indicadores.idIndicador" name="metas" required>
+                                                <mat-option *ngFor="let i of indicadores" [value]="i.idIndicador">
+                                                        {{i.nome}}
+                                                </mat-option>
+                                        </mat-select>
+                                        <mat-hint *ngIf="indicadores?.length === 0" align="start">Nenhum indicador
+                                                cadastrado</mat-hint>
+                                </mat-form-field>
+                        </div>
+                </div>
+
+
+                <!-- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                                <input matInput name="dtImplantacao" [matDatepicker]="dtImplantacao"
+                                        placeholder="Data de Início" [(ngModel)]="metas.dataInicio" required>
+                                <mat-datepicker-toggle matSuffix [for]="dtImplantacao"></mat-datepicker-toggle>
+                                <mat-datepicker #dtImplantacao></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="20%">
+                                <input matInput name="dtTermino" [matDatepicker]="dtTermino" placeholder="Data Fim"
+                                        [(ngModel)]="metas.dataFim">
+                                <mat-datepicker-toggle matSuffix [for]="dtTermino"></mat-datepicker-toggle>
+                                <mat-datepicker #dtTermino></mat-datepicker>
+                        </mat-form-field>
+
+                </div> -->
+
+
+                <!-- BOTOES -->
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                        fxFlexFill>
+                        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()">
+                                Cadastrar
+                        </button>
+
+                        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                                Atualizar
+                        </button>
+
+                        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                                Limpar
+                        </button>
+                        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                                Cancelar
+                        </button>
+
+                </div>
+        </form>
+
+
+</div>

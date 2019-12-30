@@ -1,0 +1,82 @@
+<mat-toolbar class="subtitulo">Turmas</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
+
+        <!------------------ DADOS TURMA ------------------------>
+        <mat-step [stepControl]="formCadastroDadosTurma">
+            <form #formCadastroDadosTurma="ngForm">
+                <ng-template matStepLabel>DADOS DA TURMA</ng-template>
+                <dados-turma [turma]='turma'></dados-turma>
+            </form>
+
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+
+        <!-- ------------------ COLABORADORES ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroColaboradores">
+            <form #formCadastroColaboradores="ngForm">
+                <ng-template matStepLabel>COLABORADORES</ng-template>
+                <colaboradores-turma [turma]='turma'></colaboradores-turma>
+            </form>
+
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+
+        <!-- ------------------ OFICINAS ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroOficinas">
+            <form #formCadastroOficinas="ngForm">
+                <ng-template matStepLabel>OFICINAS</ng-template>
+                <oficina [turma]='turma'></oficina>
+            </form>
+
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+
+        </mat-step>
+
+    </mat-horizontal-stepper>
+</div>
+
+
+
+<!-- BOTOES -->
+<div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+        color="primary"
+        [disabled]="formCadastroDadosTurma.invalid || formCadastroColaboradores.invalid || formCadastroOficinas.invalid"
+        (click)="cadastrar()"> Cadastrar
+    </button>
+
+    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+        color="primary"
+        [disabled]="formCadastroDadosTurma.invalid || formCadastroColaboradores.invalid || formCadastroOficinas.invalid"
+        (click)="atualizar()">
+        Atualizar
+    </button>
+
+    <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+        Limpar
+    </button>
+    <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+        Cancelar
+    </button>
+
+</div>

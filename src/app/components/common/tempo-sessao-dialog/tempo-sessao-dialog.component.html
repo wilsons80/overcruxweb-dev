@@ -1,0 +1,15 @@
+<div *ngIf="!sessaoExpirada">
+  <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="space-evenly center">
+    <label>Sua sessão expira em </label>
+    <label class="tempo">{{tempoSessaoService.tempoSessao}}</label>
+    <label>segundos </label>
+    <button mat-raised-button (click)="revalidarSessao()">Revalidar Sessão</button>
+  </div>
+</div>
+
+<div *ngIf="sessaoExpirada">
+  <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="center center">
+        <label>Sua sessão expirou </label>
+     <button mat-raised-button (click)="login()">Efetuar login</button>
+  </div>
+</div>

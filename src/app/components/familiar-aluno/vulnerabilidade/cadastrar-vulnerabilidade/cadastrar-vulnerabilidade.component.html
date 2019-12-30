@@ -1,0 +1,71 @@
+<form #formVulnerabilidade="ngForm">
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+            <input matInput name="dataIdentificacao" 
+                [matDatepicker]="dataIdentificacao" 
+                placeholder="Data de identificação"
+                [(ngModel)]="vulnerabilidade.dataIdentificacao">
+            <mat-datepicker-toggle matSuffix [for]="dataIdentificacao"></mat-datepicker-toggle>
+            <mat-datepicker #dataIdentificacao></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+            <input matInput name="dataSolucao" 
+                   [matDatepicker]="dataSolucao" 
+                   placeholder="Data de Solução"
+                   [(ngModel)]="vulnerabilidade.dataSolucao">
+            <mat-datepicker-toggle matSuffix [for]="dataSolucao"></mat-datepicker-toggle>
+            <mat-datepicker #dataSolucao></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+            <mat-label>Situação de Vulnerabilidade</mat-label>
+            <mat-select [(ngModel)]="vulnerabilidade.situacoesVulnerabilidade.id" 
+                        name="situacoesVulnerabilidade">
+                <mat-option *ngFor="let m of situacaoVulnerabilidades" [value]="m.id">
+                    {{m.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+            <mat-label>Solução</mat-label>
+            <mat-select [(ngModel)]="vulnerabilidade.solucoes.id" name="solucoes">
+                <mat-option *ngFor="let m of solucoes" [value]="m.id">
+                    {{m.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+            
+    </div>
+
+</form>
+
+
+<div dir="rtl" *ngIf="habilitaBotao(formVulnerabilidade)"
+                fxLayout="row" 
+                fxLayoutAlign="center center" 
+                fxLayoutGap="20px" 
+                style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" 
+                fxFlexFill>
+
+    <button mat-raised-button
+            name="botaoLimpar"
+            fxFlex="20%"
+            color="primary"
+            (click)="initObjetos()">
+        Limpar
+    </button>               
+
+    <button mat-raised-button
+            *ngIf="!vulnerabilidade.familiar.id"
+            name="botaoAdicionar"
+            fxFlex="20%"
+            color="primary"
+            (click)="adicionar()"> 
+        Adicionar
+    </button>
+
+</div>

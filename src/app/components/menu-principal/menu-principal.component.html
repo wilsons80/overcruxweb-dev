@@ -1,0 +1,57 @@
+<div fxLayout="column" fxLayoutAlign="start center" fxFlexFill>
+    <mat-nav-list>
+
+        <div fxLayout="column" fxLayoutGap="20px" >
+            <!-- FOTO PERFIL -->
+            <button mat-fab #botao fxLayoutAlign="center center" class="botao"
+                [style.background-image]="getBackground()">
+                <mat-icon class="nao-foto"></mat-icon>
+            </button>
+
+            <div fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="10px" *ngIf="autenticadorService?.usuarioEstaLogado" >
+                <label *ngIf="menuPrincipalService.expandido" >Sessão: </label>
+                <tempo-sessao></tempo-sessao>
+            </div>
+
+            <button mat-button [routerLink]="['/home']" routerLinkActive="router-link-active">
+                <mat-icon>home</mat-icon>
+            </button>
+        </div>
+
+        <mat-divider style="margin-top: 10px"></mat-divider>
+
+        <!-- MENU ORGANIZACAO INTERNA -->
+        <menu-organizacao-interna *ngIf="verificaAcesso(getModulos().ORGANIZACAO_INTERNA)"></menu-organizacao-interna>
+
+        <!-- GESTAO DESEMPENHO -->
+        <menu-estrategico *ngIf="verificaAcesso(getModulos().GESTAO_DESEMPENHO)"></menu-estrategico>
+
+        <!-- GESTÃO DE PESSOAS -->
+        <menu-gestao-pessoas *ngIf="verificaAcesso(getModulos().GESTAO_PESSOA)"></menu-gestao-pessoas>
+
+        <!-- PROGRAMAS E PROJETOS -->
+        <menu-programa-projeto *ngIf="verificaAcesso(getModulos().PROGRAMAS_PROJETOS)"></menu-programa-projeto>
+
+        <!-- SECRETARIA -->
+        <menu-secretaria *ngIf="verificaAcesso(getModulos().SECRETARIA)"></menu-secretaria>
+
+        <!-- SERVIÇO PSICOSOCIAL -->
+        <menu-sap *ngIf="verificaAcesso(getModulos().SAP)"></menu-sap>
+
+        <!-- PEDAGÓGICO -->
+        <menu-pedagogico *ngIf="verificaAcesso(getModulos().PEDAGOGICO)"></menu-pedagogico>
+
+        <!-- GESTÃO FINANCEIRA -->
+        <menu-gestao-financeira *ngIf="verificaAcesso(getModulos().GESTAO_FINANCEIRA)"></menu-gestao-financeira>
+        
+        <!-- ATENDIMENTO MULTIDISCIPLINAR -->
+        <menu-atendimento-multidisciplinar *ngIf="verificaAcesso(getModulos().ATENDIMENTO_MULTIDISCIPLINAR)"></menu-atendimento-multidisciplinar>
+
+        <mat-divider></mat-divider>
+
+        <!-- MENU DE CONFIGURAÇOES -->
+        <menu-configuracoes *ngIf="verificaAcesso(getModulos().CONFIGURACOES)"></menu-configuracoes>
+
+    </mat-nav-list>
+
+</div>

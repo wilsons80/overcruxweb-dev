@@ -1,0 +1,89 @@
+<mat-toolbar class="subtitulo">Cadastrar Talentos do Funcionário</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+         <!-- FUNCIONÁRIO -->
+         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <div fxLayout="column" fxFlex="50%" fxLayoutAlign="center stretch" fxFlexFill>
+                <mat-toolbar class="titulopartes">Funcionário</mat-toolbar>
+                <mat-form-field fxFlex="80%" style="margin-left: 20px; margin-right: 20px">
+                    <mat-label>Seleciona um funcionário:</mat-label>
+                    <mat-select [(ngModel)]="talento.funcionario.id" name="funcionario"
+                        (selectionChange)="mostrarFuncionario($event.value)" required>
+                        <mat-option *ngFor="let o of funcionarios" [value]="o.id">
+                            {{o.pessoasFisica.nome}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <!-- QUESTIONARIO -->
+            <div fxLayout="column" fxFlex="50%" fxLayoutAlign="center stretch" fxFlexFill>
+                <mat-toolbar class="titulopartes">Questionário</mat-toolbar>
+                <mat-form-field fxFlex="80%" style="margin-left: 20px; margin-right: 20px">
+                    <mat-label>Seleciona um questionário:</mat-label>
+                    <mat-select [(ngModel)]="talento.questionario.id" name="questionario" required>
+                        <mat-option *ngFor="let o of questionarios" [value]="o.id">
+                            {{o.descricao}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="questionarios?.length === 0" align="start">Nenhum questionário cadastrada
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div fxLayout="row"  *ngIf="talento.funcionario.id"  fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <dados-funcionario [funcionario]=talento.funcionario></dados-funcionario>
+        </div>
+
+        <!-- TALENTO -->
+        <mat-toolbar class="titulopartes">Talento</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                <input #respostaTalento matInput maxlength="200" name="respostaTalento"
+                    placeholder="Resposta do Talento:" [(ngModel)]="talento.respostaTalento" required>
+                <mat-hint align="end">{{respostaTalento.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                <input matInput name="dataRespostaTalento" [matDatepicker]="dataRespostaTalento" placeholder="Data:"
+                    [(ngModel)]="talento.dataRespostaTalento">
+                <mat-datepicker-toggle matSuffix [for]="dataRespostaTalento"></mat-datepicker-toggle>
+                <mat-datepicker #dataRespostaTalento></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput type="number" name="nrNotaCompetencia" placeholder="Número Nota Competência:"
+                    [(ngModel)]="talento.nrNotaCompetencia" required>
+            </mat-form-field>
+
+        </div>
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+    </form>
+
+
+</div>

@@ -1,0 +1,125 @@
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formConsultar="ngForm">
+            <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlexFill>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field fxFlex="97%" fxFlexOffset="20px">
+                        <mat-label>Selecione um material</mat-label>
+                        <mat-select [(ngModel)]="materialAtividade.material.id"
+                                    name="material"
+                                    [disabled]=isAtualizar
+                                    (selectionChange)="montarMaterial($event.value)"
+                                    required>
+                            <mat-option *ngFor="let d of listaDeMateriais" [value]="d.id">
+                                {{d.nome}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint *ngIf="listaDeMateriais?.length === 0" align="start">Nenhum material cadastrado
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+
+
+                <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <input matInput name="dataAquisicao" [matDatepicker]="dataAquisicao"
+                            placeholder="Data de aquisição" [(ngModel)]="materialAtividade.dataAquisicao">
+                        <mat-datepicker-toggle matSuffix [for]="dataAquisicao"></mat-datepicker-toggle>
+                        <mat-datepicker #dataAquisicao></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <input matInput maxlength="2" name="qtdMaterial" placeholder="Quantidade origem do material"
+                            [(ngModel)]="materialAtividade.qtdMaterial">
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                        <input currencyMask matInput maxlength="50" name="valorMaterial"
+                            placeholder="Valor do material:" [(ngModel)]="materialAtividade.valorMaterial"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <span matPrefix>R$&nbsp;</span>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <input matInput name="dataVendaMaterial" [matDatepicker]="dataVendaMaterial"
+                            placeholder="Data de venda" [(ngModel)]="materialAtividade.dataVendaMaterial">
+                        <mat-datepicker-toggle matSuffix [for]="dataVendaMaterial"></mat-datepicker-toggle>
+                        <mat-datepicker #dataVendaMaterial></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <input matInput maxlength="2" name="qtdMaterialVendida"
+                            placeholder="Quantidade vendida do material"
+                            [(ngModel)]="materialAtividade.qtdMaterialVendida">
+                    </mat-form-field>
+
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <mat-label>Forma de pagamento</mat-label>
+                        <mat-select [(ngModel)]="materialAtividade.formaPagamento" name="formaPagamento">
+                            <mat-option *ngFor="let d of formasPagamento" [value]="d.tipo">
+                                {{d.descricao}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field style="margin: 0 0 0 20px"
+                                    fxFlexOffset="20px"
+                                    fxFlex="45%"
+                                    appearance="outline">
+                        <mat-label>Observação</mat-label>
+                        <textarea #observacao matInput
+                                  name="observacao"
+                                  [(ngModel)]="materialAtividade.observacao"
+                                  cdkTextareaAutosize
+                                  #autosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="3"
+                                  maxlength="2000"></textarea>
+                        <mat-hint align="end">{{observacao.value.length}} / 200</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 0 0 0 20px"
+                                    fxFlexOffset="20px"
+                                    fxFlex="45%"
+                                    appearance="outline">
+                        <mat-label>Descrição da origem do material</mat-label>
+                        <textarea #descricaoOrigemMaterial matInput
+                                  name="descricaoOrigemMaterial"
+                                  [(ngModel)]="materialAtividade.descricaoOrigemMaterial"
+                                  cdkTextareaAutosize
+                                  #autosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="3"
+                                  maxlength="2000"></textarea>
+                        <mat-hint align="end">{{descricaoOrigemMaterial.value.length}} / 200</mat-hint>
+                    </mat-form-field>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div dir="rtl"  fxLayout="row" fxLayoutAlign="center center"
+    fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+
+
+    <button *ngIf="!isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary"
+        (click)="zerarCombos()">
+        Limpar Material
+    </button>
+
+    <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" fxFlex="20%" color="primary"
+        [disabled]=formConsultar.invalid (click)="adicionar()">
+        Adicionar Material
+    </button>
+
+    <button *ngIf="isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="cancelar()">
+        Cancelar Material
+    </button>
+
+</div>

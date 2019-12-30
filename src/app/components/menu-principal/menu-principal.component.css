@@ -1,0 +1,26 @@
+a {
+    text-decoration: none;
+    color: white;
+    width: 250px;
+}
+
+a:hover, a:active{
+    color: royalblue
+}
+
+.nav-caption{
+    display: inline-block;
+    padding-left: 6px;
+    padding-top: 3px
+}
+
+.botao{
+    height: 50px;
+    width: 50px;
+    background: url(../../../assets/img/no-profile.jpg) no-repeat 0 0;
+    background-size: cover;
+    margin: auto;
+    background-attachment: initial;
+    background-position: center;
+}
+

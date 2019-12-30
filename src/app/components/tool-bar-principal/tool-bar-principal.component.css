@@ -1,0 +1,15 @@
+  .fixo{
+    position: sticky !important;
+    top: 0 !important; /* Sets the sticky toolbar to be on top */
+    z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
+  }
+
+  .botao{
+    height: 50px;
+    width: 50px;
+    background: url(../../../assets/img/no-foto.png) no-repeat 0 0;
+    background-size: cover;
+    margin: auto;
+    background-attachment: initial;
+    background-position: center;
+}

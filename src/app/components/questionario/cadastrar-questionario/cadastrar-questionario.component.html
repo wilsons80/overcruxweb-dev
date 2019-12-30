@@ -1,0 +1,91 @@
+<mat-toolbar class="subtitulo">Cadastro de Questionários dos Talentos</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+        <form #formCadastro="ngForm">
+
+                <!-- DADOS INICIAIS -->
+                <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+                                <input #nome matInput maxlength="200" name="nome" placeholder="Descrição:"
+                                        [(ngModel)]="questionario.descricao" required>
+                                        <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+                        </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <!-- DATA -->
+                        <div id="coluna1" fxFlex="30%">
+                                <mat-toolbar class="titulopartes">Data</mat-toolbar>
+                                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                                        fxFlexFill>
+
+                                        <mat-form-field fxFlex="36%" fxFlexOffset="20px">
+                                                <input matInput name="dataInicio" [matDatepicker]="dataInicio"
+                                                        placeholder="Data de Início"
+                                                        [(ngModel)]="questionario.dataInicio" required>
+                                                <mat-datepicker-toggle matSuffix [for]="dataInicio">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dataInicio></mat-datepicker>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex="36%">
+                                                <input matInput name="dataFim" [matDatepicker]="dataFim"
+                                                        placeholder="Data Fim" [(ngModel)]="questionario.dataFim">
+                                                <mat-datepicker-toggle matSuffix [for]="dataFim">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dataFim></mat-datepicker>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+
+                        <!-- TIPO QUESTIONARIO -->
+                        <div id="coluna2" fxFlex="80%">
+                                <mat-toolbar class="titulopartes">Tipo</mat-toolbar>
+                                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                                        fxFlexFill>
+
+                                        <mat-form-field fxFlexOffset="20px" fxFlex="80%">
+                                                <mat-label>Tipo Questionário:</mat-label>
+                                                <mat-select [(ngModel)]="questionario.tipoQuestionario"
+                                                        name="tiposQuestionario" required>
+                                                        <mat-option *ngFor="let o of tiposQuestionario"
+                                                                [value]="o.tipo">
+                                                                {{o.descricao}}
+                                                        </mat-option>
+                                                </mat-select>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+
+
+                </div>
+
+                <!-- BOTOES -->
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                        fxFlexFill>
+                        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()">
+                                Cadastrar
+                        </button>
+
+                        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                                Atualizar
+                        </button>
+
+                        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                                Limpar
+                        </button>
+                        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                                Cancelar
+                        </button>
+
+                </div>
+        </form>
+
+
+</div>

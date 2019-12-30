@@ -1,0 +1,34 @@
+<mat-accordion>
+
+  <mat-expansion-panel [expanded]="openFormCadastro"
+                       (closed)="openFormCadastro = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Vulnerabilidade
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <cadastrar-vulnerabilidade #cadastrarVulnerabilidade
+                               [familiar]="familiar">
+    </cadastrar-vulnerabilidade>
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel [expanded]="!openFormCadastro"
+                       (opened)="listarVulnerabilidades.carregarLista()"
+                       (closed)="openFormCadastro = true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Lista de Vulnerabilidades ( {{familiar.vulnerabilidades.length}} )
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <listar-vulnerabilidade #listarVulnerabilidades
+                             [familiar]="familiar"
+                             (onVulnerabilidade)="onGetAdicionar($event); cadastrarVulnerabilidade.carregar($event)"
+                             (onAdicionar)="onGetAdicionar($event); cadastrarVulnerabilidade.initObjetos()">
+    </listar-vulnerabilidade>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

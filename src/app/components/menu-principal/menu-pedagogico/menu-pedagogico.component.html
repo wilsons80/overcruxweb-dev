@@ -1,0 +1,67 @@
+<a mat-list-item (click)="toggle()">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Pedagógico">
+            <mat-icon>local_library</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Pedagógico</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+        <!-- TURMA -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().TURMAS)" icone="chrome_reader_mode" titulo="Turmas" rota="turmas"
+             toolTip="Turmas"></sub-menu>            
+
+        <!-- MATRICULA NA TURMA-->
+        <sub-menu *ngIf="verificaAcesso(getModulos().MATRICULA)" icone="school" titulo="Matrícula na Turma"
+            rota="matriculas" toolTip="Matrícula na Turma"></sub-menu>
+
+        <!-- AVALIACAO ATIVIDADE -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ATIVIDADE)" icone="done_all"
+            titulo="Avaliação da Turma" rota="avaliacaoatividade" toolTip="Avaliação da Turma"></sub-menu>
+
+        <!-- OFICINA -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().OFICINA)" icone="pages" titulo="Oficinas" rota="oficinas"
+             toolTip="Oficinas"></sub-menu>            
+
+        <!-- MATRICULA NA OFICINA -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().ATIVIDADE_ALUNO)" icone="sports_handball" titulo="Matrícula na Oficina"
+            rota="atividadealuno" toolTip="Matrícula na Oficina"></sub-menu>
+
+        <!-- FREQUENCIA ALUNO-->
+        <sub-menu *ngIf="verificaAcesso(getModulos().FREQUENCIA_ALUNO)" icone="check_circle_outline"
+            titulo="Frequência do Aluno" rota="frequenciaaluno" toolTip="Frequência do Aluno"></sub-menu>
+
+        <!-- AVALIACAO ALUNO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ALUNO)" icone="done" titulo="Avaliação do Aluno"
+            rota="avaliacaoaluno" toolTip="Avaliação do Aluno"></sub-menu>
+
+        <!-- ALUNO TRABALHANDO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().ALUNO_TRABALHANDO)" icone="accessibility"
+            titulo="Cadastro Menor Aprendiz" rota="alunotrabalhando" toolTip="Cadastro Menor Aprendiz"></sub-menu>
+
+        <!-- TIPO_OCORRENCIA_ALUNO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipo de ocorrência do aluno"
+            rota="tipoocorrenciaaluno" toolTip="Tipo de ocorrência do aluno"></sub-menu>
+
+        <!-- OCORRENCIA_ALUNO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().OCORRENCIA_ALUNO)" icone="how_to_reg" titulo="Ocorrência do aluno"
+            rota="ocorrenciaaluno" toolTip="Ocorrência do aluno"></sub-menu>
+
+        <!-- NIVEIS TURMAS -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().NIVEIS_TURMAS)" icone="timeline" titulo="Níveis de turmas" 
+            rota="niveisturmas" toolTip="Níveis de Turmas"></sub-menu>
+
+
+        <!-- REPROVACAO ALUNO  
+        <sub-menu *ngIf="verificaAcesso(getModulos().REPROVACAO_ALUNO)" icone="event_busy"
+            titulo="Reprovações do Aluno " rota="reprovacaoaluno" toolTip="Reprovações do Aluno"></sub-menu>
+        -->
+
+    </div>
+</mat-nav-list>

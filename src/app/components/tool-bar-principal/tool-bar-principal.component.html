@@ -1,0 +1,59 @@
+<div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutAlign="space-evenly none" fxFlexFill class="fixo">
+    <mat-toolbar color="accent">
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+
+            <!-- ESQUERDA -->
+            <div fxLayout="row" fxLayoutAlign="space-around center">
+                <button *ngIf="mostrarMenu && toolbarPrincipalService.unidadeSelecionada" mat-button
+                    (click)="menuPrincipalToggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <a (click)="goHome()">
+                        OverCrux
+                    </a>
+                </div>
+            </div>
+
+            <!-- MEIO -->
+
+
+            <!-- DIREITA -->
+
+            <div *ngIf="mostrarMenu" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <div *ngIf="toolbarPrincipalService.unidadeSelecionada ? true : false">
+                    <!-- LOGO -->
+                    <button *ngIf="naoPossuiFoto()" mat-fab #botao fxLayoutAlign="center center"
+                        class="botao" matTooltip="Trocar a logo" [routerLink]="['/upload']"
+                        routerLinkActive="router-link-active">
+                        <mat-icon class="nao-foto"></mat-icon>
+                    </button>
+
+                    <button mat-fab *ngIf="!naoPossuiFoto()" fxLayoutAlign="center center"
+                        class="botao" matTooltip="Trocar a logo" [style.background-image]="getBackground()"
+                        [routerLink]="['/upload']" routerLinkActive="router-link-active">
+                        <mat-icon class="nao-foto"></mat-icon>
+                    </button>
+                </div>
+                <mat-form-field style="width: 300px" fxLayoutGap="20px">
+                    <mat-select name="unidade" #unidade="ngModel"
+                                matTooltip="{{toolbarPrincipalService.unidadeSelecionada?.nome}}"
+                                [(ngModel)]="toolbarPrincipalService.unidadeSelecionada"
+                                (selectionChange)="escolherUnidade($event.value.id)">
+                        <mat-option *ngFor="let u of toolbarPrincipalService.unidades" [value]="u">
+                            {{u.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-button routerLink="" routerLinkActive="router-link-active" (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    Sair
+                </button>
+            </div>
+        </div>
+    </mat-toolbar>
+    <div *ngIf="!getLoadingCompleto()">
+        <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<mat-accordion>
+
+    <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Dados da Oficina
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <cadastrar-oficinas #cadastrarOficinas [turma]="turma"></cadastrar-oficinas>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="!openFormCadastro" (opened)="listarOficinas.carregarLista()"
+        (closed)="openFormCadastro = true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Lista de Oficinas ( {{turma.oficinas?.length}} )
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <listar-oficinas #listarOficinas
+                         [oficinas]="turma.oficinas"
+                         (onAtualizarOficina)="onGetAdicionar($event); cadastrarOficinas.atualizarOficina($event)"
+                         (onAdicionar)="onGetAdicionar($event); cadastrarOficinas.initObjeto()">
+        </listar-oficinas>
+
+    </mat-expansion-panel>
+
+
+</mat-accordion>

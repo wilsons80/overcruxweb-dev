@@ -1,0 +1,92 @@
+<mat-toolbar class="subtitulo">Curso de Formação</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+        <form #formCadastro="ngForm">
+
+                <!-- DADOS INICIAIS -->
+                <mat-toolbar class="titulopartes">Dados</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                                <input matInput maxlength="200" name="nome" placeholder="Nome da curso:"
+                                        [(ngModel)]="cursoFormacao.nome" required>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                                <input matInput maxlength="200" name="nomeInstuicao" placeholder="Nome da Instituição:"
+                                        [(ngModel)]="cursoFormacao.nomeInstuicao">
+                        </mat-form-field>
+
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <!-- PESSOA -->
+                        <div id="coluna1" fxFlex="70%">
+                                <mat-toolbar class="titulopartes">Pessoa</mat-toolbar>
+                                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                                        fxFlexFill>
+                                        <mat-form-field fxFlexOffset="20px" fxFlex="95%">
+                                                <mat-label>Pessoa:</mat-label>
+                                                <mat-select [(ngModel)]="cursoFormacao.pessoaFisica.id"
+                                                        name="pessoaFisica" required>
+                                                        <mat-option *ngFor="let m of listaPessoaFisica" [value]="m.id">
+                                                                {{m.nome}}
+                                                        </mat-option>
+                                                </mat-select>
+                                                <mat-hint *ngIf="listaPessoaFisica?.length === 0" align="start">Nenhuma
+                                                        pessoa física cadastrada</mat-hint>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+
+                        <!-- DATA PREVISTA -->
+                        <div id="coluna2" fxFlex="30%">
+                                <mat-toolbar class="titulopartes">Data</mat-toolbar>
+                                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                                        fxFlexFill>
+
+                                        <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                                                <input matInput name="dataInicio" [matDatepicker]="dataInicio"
+                                                        placeholder="Data de Início"
+                                                        [(ngModel)]="cursoFormacao.dataInicio" required>
+                                                <mat-datepicker-toggle matSuffix [for]="dataInicio">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dataInicio></mat-datepicker>
+                                        </mat-form-field>
+
+                                        <mat-form-field fxFlex="30%">
+                                                <input matInput name="dtTermino" [matDatepicker]="dtTermino"
+                                                        placeholder="Data Fim" [(ngModel)]="cursoFormacao.dataFim">
+                                                <mat-datepicker-toggle matSuffix [for]="dtTermino">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #dtTermino></mat-datepicker>
+                                        </mat-form-field>
+                                </div>
+                        </div>
+                </div>
+
+                <!-- BOTOES -->
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                        fxFlexFill>
+                        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()">
+                                Cadastrar
+                        </button>
+
+                        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar"
+                                fxFlex="20%" color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                                Atualizar
+                        </button>
+
+                        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                                Limpar
+                        </button>
+                        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                                Cancelar
+                        </button>
+                </div>
+        </form>
+
+
+</div>

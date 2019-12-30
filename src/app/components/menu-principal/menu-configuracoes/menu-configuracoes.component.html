@@ -1,0 +1,32 @@
+<a mat-list-item (click)="toggle()">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Configurações">
+            <mat-icon>settings</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Configurações</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+        <!-- ACESSO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().ACESSO)" icone="lock" titulo="Acesso" rota="acesso" toolTip="Acesso"></sub-menu>
+        
+        <!-- USUARIO -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().USUARIO)" icone="person_add" titulo="Usuário" rota="usuariosistema" toolTip="Usuário"></sub-menu>
+
+        <!-- MODULO DA UNIDADE -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().GRUPO_MODULO)" icone="view_module" titulo="Módulos da Unidade" rota="grupomodulo" toolTip="Módulos da Unidade"></sub-menu>
+
+         <!-- ALTERAR SENHA -->
+         <sub-menu icone="cached" titulo="Alterar Senha" rota="novasenha" toolTip="Alterar Senha"></sub-menu>
+
+        
+        
+
+    </div>
+</mat-nav-list>

@@ -1,0 +1,35 @@
+<a mat-list-item (click)="toggle()" >
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Gestão de Desempenho">
+            <mat-icon>highlight</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Gestão de Desempenho</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+      <!-- OBJETIVOS -->
+      <sub-menu *ngIf="verificaAcesso(getModulos().OBJETIVO)"  icone="my_location" titulo="Objetivos" rota="objetivo" toolTip="Objetivos"></sub-menu>
+
+      <!-- INDICADORES -->
+      <sub-menu *ngIf="verificaAcesso(getModulos().INDICADORES)"  icone="trending_up" titulo="Indicadores" rota="indicadores" toolTip="Indicadores"></sub-menu>
+
+      <!-- METAS -->
+      <sub-menu *ngIf="verificaAcesso(getModulos().METAS)"  icone="account_tree" titulo="Metas" rota="metas" toolTip="Metas"></sub-menu>
+
+      <!-- PLANOS DE ACAO -->
+      <sub-menu  *ngIf="verificaAcesso(getModulos().PLANOS_ACAO)"  icone="list_alt" titulo="Planos de Ação" rota="planosacao" toolTip="Planos de Ação"></sub-menu>
+
+      <!-- INICIATIVAS -->
+      <sub-menu *ngIf="verificaAcesso(getModulos().INICIATIVAS)" icone="highlight" titulo="Iniciativas" rota="iniciativas" toolTip="Iniciativas"></sub-menu>
+
+      <!-- TABELAS REFERENCIA -->
+      <tb-referencia-estrategico></tb-referencia-estrategico>
+
+    </div>
+</mat-nav-list>

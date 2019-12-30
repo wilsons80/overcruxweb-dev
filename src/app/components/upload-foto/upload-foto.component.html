@@ -1,0 +1,49 @@
+
+<mat-toolbar class="subtitulo">Upload Foto</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formConsultar="ngForm" fxLayout="column" fxLayoutGap="30px">
+
+            <div fxLayout="row" class="painel-foto" [ngClass]="{'nao-foto': croppedImage == ''}" fxLayoutAlign="start center" >
+                <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
+                    [resizeToWidth]="128"
+                    format="png"
+                    roundCropper="true"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()">
+                </image-cropper>
+            </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" >
+                <button mat-raised-button (click)="uploadFile.click()"  >
+                        <mat-icon >add_photo_alternate</mat-icon>
+                        <label mat-button color="warn">
+                                SELECIONE
+                        </label>
+                </button>
+                <input #uploadFile type="file" style="display:none;" (change)="fileChangeEvent($event)"/>
+                <span>
+                    {{nomeArquivo == null ? "Nenhum arquivo selecionado" : nomeArquivo}}
+                </span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" >
+                <button mat-raised-button name="botaoConfirmar"  fxFlex= "15%" color="primary" (click)="salvar()">
+                    Salvar</button>
+
+                <button mat-raised-button fxFlex= "15%" color="primary" (click)="cancelar()">
+                    Cancelar</button>
+
+    </div>
+    </form>
+
+
+    </div>
+</div>
+
+<img [src]="croppedImage" />

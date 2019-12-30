@@ -1,0 +1,87 @@
+<mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+<div fxLayout="row" fxFlexFill>
+        <mat-form-field style="margin-bottom: 10px" fxFlex="46%" fxFlexOffset="20px">
+                <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" [(ngModel)]="projeto.nome"
+                        required>
+                <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="46%" fxFlexOffset="20px">
+                <input #descricao matInput maxlength="200" name="descricao" placeholder="Descrição:"
+                        [(ngModel)]="projeto.descricao">
+                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+        </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+        <!--DATAS -->
+        <div fxLayout="column" fxFlex="45%">
+                <mat-toolbar class="titulopartes">Datas</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                                <input matInput name="dtImplantacao" [matDatepicker]="dataInicio"
+                                        placeholder="Data de Início:" [(ngModel)]="projeto.dataInicio">
+                                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                                <mat-datepicker #dataInicio></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="40%">
+                                <input matInput name="dtTermino" [matDatepicker]="dataTermino"
+                                        placeholder="Data de Fim:" [(ngModel)]="projeto.dataFim">
+                                <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
+                                <mat-datepicker #dataTermino></mat-datepicker>
+                        </mat-form-field>
+
+                </div>
+        </div>
+
+        <!-- DATAS PREVISTAS -->
+        <div fxLayout="column" fxFlex="55%">
+                <mat-toolbar class="titulopartes">Datas Previstas</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin: 0 20px 20px 0" fxFlexFill>
+
+                        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                                <input matInput name="dtPrevistaImplantacao" [matDatepicker]="dataPrevisaoInicio"
+                                        placeholder="Data Prevista de Início:" [(ngModel)]="projeto.dataPrevisaoInicio"
+                                        required>
+                                <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
+                                <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="40%">
+                                <input style="margin-right: 20px" matInput name="dtPrevistaTermino"
+                                        [matDatepicker]="dataPrevisaoTermino" placeholder="Data Prevista de Fim:"
+                                        [(ngModel)]="projeto.dataPrevisaoTermino">
+                                <mat-datepicker-toggle matSuffix [for]="dataPrevisaoTermino"></mat-datepicker-toggle>
+                                <mat-datepicker #dataPrevisaoTermino></mat-datepicker>
+                        </mat-form-field>
+
+                </div>
+        </div>
+</div>
+
+<mat-toolbar class="titulopartes">Outras informações</mat-toolbar>
+<div fxLayout="row" fxFlexFill>
+        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Público Alvo:</mat-label>
+                <textarea #publicoAlvo matInput name="publicoAlvo" [(ngModel)]="projeto.publicoAlvo" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
+                    <mat-hint align="end">{{publicoAlvo.value.length}} / 4000</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Justificativa:</mat-label>
+                <textarea #justificativa matInput name="justificativa" [(ngModel)]="projeto.justificativa" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
+                    <mat-hint align="end">{{justificativa.value.length}} / 4000</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Objetivo geral:</mat-label>
+                <textarea #objetivoGeral matInput name="objetivoGeral" [(ngModel)]="projeto.objetivoGeral" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="2000"></textarea>
+                    <mat-hint align="end">{{objetivoGeral.value.length}} / 2000</mat-hint>
+            </mat-form-field>
+</div>

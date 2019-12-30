@@ -1,0 +1,24 @@
+<tool-bar-principal></tool-bar-principal>
+<mat-drawer-container  class="menu-principal-container" autosize >
+  <mat-drawer #menuPrincipal [opened]="mostrarMenu && toolbarPrincipalService.unidadeSelecionada" mode="side">
+    <menu-principal></menu-principal>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+   </div>
+
+  <div id="rodape" fxLayout="column" fxLayoutAlign="center center">
+    <div *ngIf="toolbarPrincipalService.nomeUsuario != undefined" style="width: 100%;" class="cinza" fxLayout="row"
+      fxLayoutAlign="center center" fxLayoutGap="10px">
+      <mat-icon>person</mat-icon>
+      <label>{{toolbarPrincipalService.nomeUsuario.toUpperCase()}}</label>
+    </div>
+    <div class="cinza" style="text-align: center; font-size: small;">
+      <br>Versão <b>{{ environment.version }}</b> - Revisão <b>{{ versions.revision }}</b>
+      <br>Última atualização <b>{{ versions.revisionDate }}</b>
+    </div>
+
+  </div>
+
+</mat-drawer-container>

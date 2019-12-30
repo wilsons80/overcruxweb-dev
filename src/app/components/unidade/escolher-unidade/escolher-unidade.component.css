@@ -1,0 +1,24 @@
+.tela-escolher-unidade{
+    margin-top: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    /* border: 3px solid #73AD21; */
+    
+}
+
+.botao{
+    height: 150px;
+    width: 150px;
+    background: url(../../../../assets/img/no-photo-available.jpeg) no-repeat 0 0; 
+    background-size: cover;
+    margin: auto;
+    background-attachment: initial;
+    background-position: center;
+    /* background-color: aliceblue; */
+}
+
+.center {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }

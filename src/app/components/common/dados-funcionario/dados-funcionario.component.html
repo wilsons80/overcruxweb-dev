@@ -1,0 +1,28 @@
+<mat-toolbar class="titulopartes">Dados do Funcionário</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <div fxFlex="8%" style="text-align: end">
+        <button name="fotoPerfil" ng mat-raised-button class="foto" [style.background-image]="getBackground()" >
+            <mat-icon class="nao-foto"></mat-icon>
+        </button>
+    </div>
+
+    <mat-form-field fxFlex="10%" fxFlexOffset="20px" >
+        <input matInput name="matricula" placeholder="Matricula" [(ngModel)]="funcionario.matricula" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px" >
+        <input matInput name="nome" placeholder="Nome do aluno" [(ngModel)]="funcionario.pessoasFisica.nome" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px" >
+        <input matInput name="nome" placeholder="Cargo" [(ngModel)]="funcionario.cargo.nome" disabled>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px" >
+        <input matInput name="tipoCargo" placeholder="Tipo do Cargo" [(ngModel)]="funcionario.cargo.tipoCargo" disabled>
+    </mat-form-field>
+
+</div>
+
+

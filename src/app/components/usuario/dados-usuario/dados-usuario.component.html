@@ -1,0 +1,84 @@
+<mat-toolbar class="titulopartes">Dados do Usuário</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="30%" fxFlexOffset="20px" >
+        <input matInput maxlength="45" 
+               name="nomeUsuario" 
+               placeholder="Login:" 
+               [(ngModel)]="usuarioSistema.nomeUsuario" 
+               required>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%" [fxHide]="isAtualizar">
+        <input matInput
+               name="senhaUsuario"
+               placeholder="Senha"
+               maxlength="100"
+               [type]="hide ? 'password' : 'text'"
+               [(ngModel)]="usuarioSistema.senhaUsuario"
+               required>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ocultar senha'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+        <input matInput name="dataInicioVigencia" 
+               [matDatepicker]="dataInicioVigencia"
+               placeholder="Data de Início Vigência" 
+               [(ngModel)]="usuarioSistema.dataInicioVigencia"
+               >
+        <mat-datepicker-toggle matSuffix [for]="dataInicioVigencia"></mat-datepicker-toggle>
+        <mat-datepicker #dataInicioVigencia></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataFimVigencia" 
+               [matDatepicker]="dataFimVigencia"
+               placeholder="Data de Fim Vigência:" 
+               [(ngModel)]="usuarioSistema.dataFimVigencia"
+               >
+        <mat-datepicker-toggle matSuffix [for]="dataFimVigencia"></mat-datepicker-toggle>
+        <mat-datepicker #dataFimVigencia></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="dataUltimoAcesso" 
+               [matDatepicker]="dataUltimoAcesso"
+               placeholder="Data Último Acesso:" 
+               [(ngModel)]="usuarioSistema.dataUltimoAcesso" 
+               disabled>
+        <mat-datepicker-toggle matSuffix [for]="dataUltimoAcesso"></mat-datepicker-toggle>
+        <mat-datepicker #dataUltimoAcesso></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="15%">
+      <input matInput maxlength="10" name="qtdAcessoNegado" placeholder="Quantidade de acesso negado:" [(ngModel)]="usuarioSistema.qtdAcessoNegado" disabled>
+    </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-checkbox  fxFlexOffset="20px" name="status" [(ngModel)]="usuarioSistema.stAtivo">Ativo ?</mat-checkbox>
+
+    <mat-checkbox name="trocasenha" [(ngModel)]="usuarioSistema.stTrocaSenha">Troca a senha ?</mat-checkbox>
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 20px;" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex= "100%" appearance="outline" >
+            <mat-label>Motivo do encerramento da vigência:</mat-label>
+            <textarea matInput #message
+                    name="encerramentovigencia"
+                    [(ngModel)]="usuarioSistema.descFimVigenciaUsuario"
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2"
+                    maxlength="200"
+                    ></textarea>
+      <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+    </mat-form-field>
+</div>

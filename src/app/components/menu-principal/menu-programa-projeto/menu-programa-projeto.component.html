@@ -1,0 +1,29 @@
+<a mat-list-item (click)="toggle()">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Programas e Projetos">
+            <mat-icon>ballot</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Programas e Projetos </span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+        <!-- PROGRAMAS -->
+        <sub-menu  *ngIf="verificaAcesso(getModulos().PROGRAMAS)"  icone="apps" titulo="Programas" rota="programas" toolTip="Programas"></sub-menu>
+
+        <!-- PROJETOS -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().PROJETO)"   icone="folder_open" titulo="Projetos" rota="projeto" toolTip="Projetos"></sub-menu>
+
+        <!-- GESTAO DE PARCERIAS -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().PARCERIAS)" icone="group_add" titulo="Gestão de Parcerias" rota="empresa" toolTip="Gestão de Parcerias"></sub-menu>
+
+        <!-- PRESTACAO DE CONTAS -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().PRESTACAO_CONTAS)" icone="monetization_on" titulo="Prestação de contas" rota="prestacaocontas" toolTip="Prestação de contas"></sub-menu>
+
+    </div>
+</mat-nav-list>

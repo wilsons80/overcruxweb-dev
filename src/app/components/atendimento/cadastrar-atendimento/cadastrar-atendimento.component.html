@@ -1,0 +1,112 @@
+<mat-toolbar class="subtitulo">Atendimento e Visitas</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- DATA DO ATENDIMENTO-->
+            <div fxLayout="column" fxFlex="15%">
+                <mat-toolbar class="titulopartes">Data do atendimento</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                    <input matInput name="dataAtendimento" [matDatepicker]="dataAtendimento" placeholder="Data:"
+                        [(ngModel)]="atendimento.dataAtendimento" required>
+                    <mat-datepicker-toggle matSuffix [for]="dataAtendimento"></mat-datepicker-toggle>
+                    <mat-datepicker #dataAtendimento></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <!-- ALUNO -->
+            <div fxLayout="column" fxFlex="80%">
+                <mat-toolbar class="titulopartes">Aluno</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                    <mat-label>Alunos:</mat-label>
+                    <mat-select [(ngModel)]="atendimento.aluno.id" name="aluno" required
+                        (selectionChange)="mostrarDadosAluno($event.value)">
+                        <mat-option *ngFor="let i of alunos" [value]="i.id">
+                            {{i.pessoaFisica.nome}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum aluno
+                        cadastrado</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div *ngIf="atendimento.aluno.id">
+                <dados-aluno [aluno]=atendimento.aluno></dados-aluno>
+            </div>
+            
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!--  DIAGNOSTICO-->
+            <div fxLayout="column" fxFlex="45%">
+                <mat-toolbar class="titulopartes">Diagnóstico</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                        <mat-label>Diagnósticos:</mat-label>
+                        <mat-select [(ngModel)]="atendimento.diagnostico.id" name="diagnostico" required>
+                                <mat-option *ngFor="let i of diagnosticos" [value]="i.id">
+                                        {{i.descricao}}
+                                </mat-option>
+                        </mat-select>
+                        <mat-hint *ngIf="diagnosticos?.length === 0" align="start">Nenhum diagnóstico
+                                cadastrado</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                        <mat-label>Descrição diagnóstico:</mat-label>
+                        <textarea #observacoes matInput name="observacoes" [(ngModel)]="atendimento.descDiagnostico" cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200"></textarea>
+                            <mat-hint align="end">{{observacoes.value.length}} / 200</mat-hint>
+                    </mat-form-field>
+
+            </div>
+
+           <!--  SOLUÇÃO-->
+           <div fxLayout="column" fxFlex="45%">
+                <mat-toolbar class="titulopartes">Solução</mat-toolbar>
+                <mat-form-field style="margin: 0 20px 20px 20px">
+                    <mat-label>Soluções</mat-label>
+                    <mat-select [(ngModel)]="atendimento.solucoes.id" name="solucoes">
+                            <mat-option *ngFor="let i of solucoes" [value]="i.id">
+                                {{i.descricao}}
+                            </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="solucoes?.length === 0" align="start">Nenhuma solução cadastrada</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                    <mat-label>Descrição solução:</mat-label>
+                    <textarea #descSolucao matInput name="observacoes" [(ngModel)]="atendimento.descSolucao" cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200"></textarea>
+                        <mat-hint align="end">{{descSolucao.value.length}} / 200</mat-hint>
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+    </form>
+
+</div>

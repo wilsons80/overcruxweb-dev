@@ -1,0 +1,34 @@
+<div fxLayout="row" fxLayoutAlign="center stretch" >
+        <form #formLogin="ngForm" class="tela-login" style="padding: 10px;">
+                <mat-icon fxLayoutAlign="center center" class="painel-logo logo"></mat-icon>
+
+                <div fxLayout="column" fxLayoutAlign="center center">
+                        Entre com seu Login e Senha
+                </div>
+
+                <mat-form-field style="width: 100%">
+                        <input matInput name="userName" [(ngModel)]="usuario.userName" placeholder="Insira seu login"
+                                required>
+                        <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field style="width: 100%">
+                                <input matInput 
+                                name="senha"
+                                [(ngModel)]="usuario.senha"
+                                placeholder="Insira sua senha" 
+                                type="password"
+                                required
+                                >
+                                <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+
+                <div class="elemento" fxLayout="column" fxLayoutAlign="space-around center"
+                        style=" padding-bottom: 20px;  padding-top: 20px;">
+                        <button  mat-raised-button style="width: 100%" color="primary" (click)="login()"
+                                [disabled]="formLogin.invalid">
+                                ACESSAR</button>
+                </div>
+
+        </form>
+</div>

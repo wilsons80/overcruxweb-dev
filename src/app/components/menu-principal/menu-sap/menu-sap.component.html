@@ -1,0 +1,33 @@
+<a mat-list-item (click)="toggle()" >
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Psicosocial">
+            <mat-icon>history</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Psicosocial</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+       <!-- AVALIAÇÃO SOCIO FAMILIAR -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_SOCIO_FAMILIAR)"  icone="dns" titulo="Avaliação Sócio Familiar" rota="home" toolTip="Avaliação Sócio Familiar"></sub-menu>
+
+       <!-- PLANO DE INTERVENCAO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().PLANO_DE_INTERVENCAO)"  icone="list_alt" titulo="Planos de Intervenção" rota="home" toolTip="Planos de Intervenção"></sub-menu>
+
+       <!-- ATENDIMENTO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().ATENDIMENTO)" icone="perm_phone_msg" titulo="Atendimento e Visitas" rota="atendimento" toolTip="Atendimento e Visitas"></sub-menu>
+      
+       <!-- DIAGNOSTICO ATENDIMENTO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_ATENDIMENTO)" icone="ballot" titulo="Diagnóstico de Atendimento" rota="diagnosticoatendimento" toolTip="Diagnóstico de Atendimento"></sub-menu>
+      
+       <!-- TABELAS REFERENCIA -->
+       <tb-referencia-sap></tb-referencia-sap>
+
+    </div>
+</mat-nav-list>
+

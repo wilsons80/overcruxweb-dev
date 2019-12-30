@@ -1,0 +1,39 @@
+<a mat-list-item (click)="toggle()" style="width: fit-content;">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}"
+        class="submenu">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Diagnóstico Multidisciplinar">
+            <mat-icon>event_note</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Diagnóstico Multidisciplinar</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+        <!-- DIAGNOSTICO_FISIOTERAPIA -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_FISIOTERAPIA)" icone="accessibility" titulo="Fisioterapia" rota="home" toolTip="Fisioterapia"></sub-menu>
+        </div>       
+        
+        <!-- DIAGNOSTICO_FONOAUDIOLOGIA -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_FONOAUDIOLOGIA)" icone="line_style" titulo="Fonoaudiologia" rota="home" toolTip="Fonoaudiologia"></sub-menu>
+        </div>       
+    
+        <!-- DIAGNOSTICO_TERAPIA_OCUPACIONAL -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_TERAPIA_OCUPACIONAL)" icone="list" titulo="Terapia Ocupacional" rota="home" toolTip="Terapia Ocupacional"></sub-menu>
+        </div>       
+    
+        <!-- DIAGNOSTICO_PSICOLOGIA -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().DIAGNOSTICO_PSICOLOGIA)" icone="sentiment_satisfied" titulo="Psicologia" rota="home" toolTip="Psicologia"></sub-menu>
+        </div>  
+
+    </div>
+</mat-nav-list>

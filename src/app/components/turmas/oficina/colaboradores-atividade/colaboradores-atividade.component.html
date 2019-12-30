@@ -1,0 +1,33 @@
+<mat-accordion>
+
+    <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Colaborador
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <cadastrar-colaboradores-atividade #cadastrarColaboradores [oficina]="oficina">
+        </cadastrar-colaboradores-atividade>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="!openFormCadastro"
+                         (opened)="listarColaboradores.carregarLista()"
+                         (closed)="openFormCadastro = true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Lista de Colaboradores ( {{oficina.colaboradoresAtividade?.length}} )
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <listar-colaboradores-atividade #listarColaboradores
+                                        [colaboradoresAtividade]="oficina.colaboradoresAtividade"
+                                        (onAtualizarColaborador)="onGetAdicionar($event); cadastrarColaboradores.atualizarColaborador($event)"
+                                        (onAdicionar)="onGetAdicionar($event); cadastrarColaboradores.zerarCombos()">
+        </listar-colaboradores-atividade>
+
+    </mat-expansion-panel>
+
+</mat-accordion>
+

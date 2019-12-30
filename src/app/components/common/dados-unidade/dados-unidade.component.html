@@ -1,0 +1,23 @@
+<mat-toolbar class="titulopartes">Dados da Unidade</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="20%">
+        <input  matInput name="siglaUnidade" 
+                placeholder="Código da Unidade:" 
+                [(ngModel)]="unidade.siglaUnidade" 
+                disabled>
+    </mat-form-field>
+   
+    <mat-form-field fxFlex="70%">
+        <input  matInput name="nomeUnidade" 
+                placeholder="Nome da Unidade:" 
+                [(ngModel)]="unidade.nomeUnidade" 
+                disabled>
+    </mat-form-field>
+
+   
+</div>
+
+
+
