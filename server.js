@@ -5,7 +5,7 @@ const proxy   = require('http-proxy-middleware');
 const app = express();
 
 const NOME_APP_DEPLOY = process.env.NOME_APP_DEPLOY;
-const URL_API         = `${process.env.PROXY_TARGET_DOMAIN}`;
+const URL_API         = `http://${process.env.PROXY_TARGET_DOMAIN}`;
 const URL_FRONTEND    =  `${process.env.URL_FRONT}/api`;
 
 const PROXY_CONFIG = {
