@@ -79,11 +79,11 @@ export class AcessoComponent implements OnInit {
     this.mostrarTabela = false;
   }
 
-  atualizar(cadastroAcesso: any) {
+  atualizar(cadastroAcesso: CadastroAcesso ) {
     this.router.navigate(['/acesso/cadastrar'], {
       queryParams: {
         idGrupoModulo: cadastroAcesso.idGrupoModulo,
-        idUnidade: cadastroAcesso.idUnidade,
+        idInstituicao: cadastroAcesso.idInstituicao,
         idModulo: cadastroAcesso.idModulo,
         idUsuario: cadastroAcesso.idUsuario
       }

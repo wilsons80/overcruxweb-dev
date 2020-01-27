@@ -12,7 +12,7 @@
                            [(ngModel)]="cadastroAcesso.idInstituicao"
                            [disabled]="isAtualizar" required
                            (selectionChange)="unidadeSelecionada()">
-                    <mat-option *ngFor="let u of unidades" [value]="u.unidade.instituicao.id">
+                    <mat-option *ngFor="let u of unidades" [value]="u.unidade">
                         {{u.unidade.siglaUnidade}} - {{u.unidade.nomeUnidade}}
                     </mat-option>
                 </mat-select>

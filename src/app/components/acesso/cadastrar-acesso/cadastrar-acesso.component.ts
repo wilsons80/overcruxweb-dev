@@ -112,6 +112,7 @@ export class CadastrarAcessoComponent implements OnInit {
     this.cadastroAcesso.idUsuario = null;
     this.cadastroAcesso.idModulo = null;
     this.cadastroAcesso.idGrupoModulo = null;
+    this.cadastroAcesso.idInstituicao = null;
     this.grupoModuloSelecionados = [];
   }
 
