@@ -71,7 +71,7 @@ export class CadastrarAcessoComponent implements OnInit {
     });
 
     this.cadastroAcesso.idGrupoModulo = this.activatedRoute.snapshot.queryParams.idGrupoModulo ? Number(this.activatedRoute.snapshot.queryParams.idGrupoModulo) : null;
-    this.cadastroAcesso.unidade = this.activatedRoute.snapshot.queryParams.unidade ? this.activatedRoute.snapshot.queryParams.unidade : null;
+    this.cadastroAcesso.idInstituicao = this.activatedRoute.snapshot.queryParams.idInstituicao ? this.activatedRoute.snapshot.queryParams.idInstituicao : null;
     this.cadastroAcesso.idModulo = this.activatedRoute.snapshot.queryParams.idModulo ? Number(this.activatedRoute.snapshot.queryParams.idModulo) : null;
     this.cadastroAcesso.idUsuario = this.activatedRoute.snapshot.queryParams.idUsuario ? Number(this.activatedRoute.snapshot.queryParams.idUsuario) : null;
 
@@ -80,7 +80,7 @@ export class CadastrarAcessoComponent implements OnInit {
       this.buscarPerfis();
     }
 
-    if (this.cadastroAcesso.unidade.instituicao.id) {
+    if (this.cadastroAcesso.idInstituicao) {
       this.unidadeSelecionada();
     }
   }
@@ -89,7 +89,7 @@ export class CadastrarAcessoComponent implements OnInit {
     if (!this.isAtualizar) {
       this.limparCamposDependendentesUnidade();
 
-      this.grupoModuloService.getAllByInstituicao(this.cadastroAcesso.unidade.instituicao.id)
+      this.grupoModuloService.getAllByInstituicao(this.cadastroAcesso.idInstituicao)
       .subscribe( (gruposModulos: GrupoModulo[]) => {
 
         // Tira os módulos PAI
@@ -104,7 +104,7 @@ export class CadastrarAcessoComponent implements OnInit {
       .subscribe((modulos: Modulo[]) => this.modulos = modulos);
     }
 
-    this.usuarioService.getUsuariosPorUnidade(this.cadastroAcesso.unidade.instituicao.id)
+    this.usuarioService.getUsuariosPorUnidade(this.cadastroAcesso.idInstituicao)
     .subscribe((usuarios: UsuarioUnidade[]) => this.usuarios = usuarios);
   }
 
@@ -130,7 +130,7 @@ export class CadastrarAcessoComponent implements OnInit {
       _.forEach(this.grupoModuloSelecionados, grupo => {
          const acesso: CadastroAcesso = new CadastroAcesso();
 
-         acesso.unidade.instituicao.id  = this.cadastroAcesso.unidade.instituicao.id;
+         acesso.idInstituicao           = this.cadastroAcesso.idInstituicao;
          acesso.idUsuario               = this.cadastroAcesso.idUsuario;
          acesso.idModulo                = grupo.modulo.id;
          acesso.idGrupoModulo           = grupo.id;
@@ -152,7 +152,7 @@ export class CadastrarAcessoComponent implements OnInit {
       this.cadastroAcesso.idGrupoModulo = null;
     } else {
       this.cadastroAcesso = {
-        unidade: new Unidade(),
+        idInstituicao: null,
         idUsuario: null,
         idModulo: null,
         idGrupoModulo: null
@@ -165,7 +165,7 @@ export class CadastrarAcessoComponent implements OnInit {
   }
 
   buscarPerfis() {
-    this.moduloService.getGrupoModulo(this.cadastroAcesso.unidade.instituicao.id, this.cadastroAcesso.idModulo)
+    this.moduloService.getGrupoModulo(this.cadastroAcesso.idInstituicao, this.cadastroAcesso.idModulo)
       .subscribe((perfis: GrupoModulo[]) => {
         this.perfis = perfis;
       });

@@ -9,4 +9,5 @@ export class PerfilAcessoUsuario{
 	nomeGrupoModulo: string;
     descricaoGrupoModulo: string;
     idUsuarioGrupo: number;
+    idInstituicao: number;
 }

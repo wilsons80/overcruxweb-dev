@@ -3,6 +3,6 @@ export class CadastroAcesso {
 
     idUsuario: number;
     idModulo: number;
-    unidade: Unidade;
+    idInstituicao: number;
     idGrupoModulo: number;
 }

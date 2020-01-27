@@ -9,10 +9,10 @@
             <mat-form-field fxFlex= "95%" fxFlexOffset="20px">
                 <mat-label>Selecione a Unidade</mat-label>
                 <mat-select name="unidade"
-                           [(ngModel)]="cadastroAcesso.unidade"
+                           [(ngModel)]="cadastroAcesso.idInstituicao"
                            [disabled]="isAtualizar" required
                            (selectionChange)="unidadeSelecionada()">
-                    <mat-option *ngFor="let u of unidades" [value]="u.unidade">
+                    <mat-option *ngFor="let u of unidades" [value]="u.unidade.instituicao.id">
                         {{u.unidade.siglaUnidade}} - {{u.unidade.nomeUnidade}}
                     </mat-option>
                 </mat-select>
@@ -26,7 +26,7 @@
              <mat-form-field fxFlex= "95%" fxFlexOffset="20px">
                 <mat-label>Selecione um usuário</mat-label>
                 <mat-select name="usuario" [(ngModel)]="cadastroAcesso.idUsuario"
-                    [disabled]="!cadastroAcesso.unidade.instituicao.id || isAtualizar" required>
+                    [disabled]="!cadastroAcesso.idInstituicao || isAtualizar" required>
                     <mat-option *ngFor="let u of usuarios" [value]="u.idUsuario">
                         {{u.nomeCompleto}}
                     </mat-option>
@@ -42,7 +42,7 @@
                                 [(ngModel)]="grupoModuloSelecionados"
                                 name="modulo_perfil"
                                 multiple
-                                [disabled]="!cadastroAcesso.unidade.instituicao.id"
+                                [disabled]="!cadastroAcesso.idInstituicao"
                                 required>
                         <mat-select-trigger>
                             {{grupoModuloSelecionados ? grupoModuloSelecionados[0]?.modulo.descricao: ''}}
