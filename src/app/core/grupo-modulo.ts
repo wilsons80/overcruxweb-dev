@@ -1,3 +1,4 @@
+import { Instituicao } from './instituicao';
 import { Unidade } from './unidade';
 import { Modulo } from './modulo';
 import { PerfilAcesso } from './perfil-acesso';
@@ -9,5 +10,6 @@ export class GrupoModulo {
 	descricao: string;
 	modulo: Modulo;
 	perfilAcesso: PerfilAcesso;
-	unidade: Unidade;
+	//unidade: Unidade;
+	instituicao: Instituicao;
 }

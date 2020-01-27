@@ -92,8 +92,8 @@ export class CadastrarAcessoComponent implements OnInit {
       .subscribe( (gruposModulos: GrupoModulo[]) => {
 
         // Tira os módulos PAI
-        const filhos = _.filter(gruposModulos, g => g.modulo.moduloPai);
-        const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) => r.modulo.moduloPai.id === f.modulo.id) );
+        const filhos = _.filter(gruposModulos, g => g.modulo.moduloPai );
+        const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.modulo.moduloPai.id === f.modulo.id) );
 
         this.grupoModulos = dados;
       });

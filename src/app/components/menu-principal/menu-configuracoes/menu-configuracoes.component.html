@@ -23,7 +23,7 @@
         <sub-menu *ngIf="verificaAcesso(getModulos().GRUPO_MODULO)" icone="view_module" titulo="Módulos da Unidade" rota="grupomodulo" toolTip="Módulos da Unidade"></sub-menu>
 
          <!-- ALTERAR SENHA -->
-         <sub-menu icone="cached" titulo="Alterar Senha" rota="novasenha" toolTip="Alterar Senha"></sub-menu>
+         <sub-menu *ngIf="verificaAcesso(getModulos().ALTERAR_SENHA)" icone="cached" titulo="Alterar Senha" rota="novasenha" toolTip="Alterar Senha"></sub-menu>
 
         
         

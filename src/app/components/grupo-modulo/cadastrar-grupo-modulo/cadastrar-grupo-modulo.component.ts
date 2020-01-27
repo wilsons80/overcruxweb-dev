@@ -1,3 +1,4 @@
+import { InstituicaoService } from './../../../services/instituicao/instituicao.service';
 import { PerfilAcessoService } from './../../../services/perfil-acesso/perfil-acesso.service';
 import { GrupoModulo } from './../../../core/grupo-modulo';
 import { Modulo } from 'src/app/core/modulo';
@@ -13,6 +14,7 @@ import { ModuloService } from 'src/app/services/modulo/modulo.service';
 import { Unidade } from 'src/app/core/unidade';
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
+import { Instituicao } from 'src/app/core/instituicao';
 
 @Component({
   selector: 'cadastrar-grupo-modulo',
@@ -31,6 +33,8 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   grupoModulo: GrupoModulo = new GrupoModulo();
   grupoModulos: GrupoModulo[];
 
+  instituicoes: Instituicao[];
+
   ////////////////////////////////////////////////////////////////////////////
 
   acesso: Acesso;
@@ -42,7 +46,8 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   modulosSelecionados: Modulo[];
   grupoModulosNovos: GrupoModulo[];
   perfilAcessoSelecionado: PerfilAcesso = new PerfilAcesso();
-  unidadeSelecionada: Unidade = new Unidade();
+  instituicaoSelecionada: Instituicao = new Instituicao();
+
 
   constructor(private grupoModuloService: GrupoModuloService,
               private activatedRoute: ActivatedRoute,
@@ -50,6 +55,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
               private usuarioUnidadeService: UsuarioUnidadeService,
               private location: Location,
               private moduloService: ModuloService,
+              private instituicaoService: InstituicaoService,
               private perfilAcessoService: PerfilAcessoService,
               private router: Router,
   ) {
@@ -79,9 +85,9 @@ export class CadastrarGrupoModuloComponent implements OnInit {
       this.isAtualizar = true;
       this.grupoModuloService.getById(id).subscribe((grupoModulo: GrupoModulo) => {
         this.grupoModulo = grupoModulo;
-        this.unidadeSelecionada = this.grupoModulo.unidade;
+        this.instituicaoSelecionada = this.grupoModulo.instituicao;
 
-        this.carregarGruposModulosDaUnidade();
+        this.carregarGruposModulosDaInstituicao();
       });
 
     } else {
@@ -94,19 +100,24 @@ export class CadastrarGrupoModuloComponent implements OnInit {
         this.modulos = modulos.filter(m => m.moduloPai);
       });
 
+      this.instituicaoService.getAll().subscribe((instituicoes: Instituicao[]) => {
+        this.instituicoes = _.filter(instituicoes, (i) => i.monstraLista);
+      });
+
     }
 
   }
 
-  carregarGruposModulosDaUnidade() {
-    this.grupoModuloService.getAllByUnidade(this.unidadeSelecionada.idUnidade).subscribe((grupoModulos: GrupoModulo[]) => {
+  carregarGruposModulosDaInstituicao() {
+    this.grupoModuloService.getAllByInstituicao(this.instituicaoSelecionada.id)
+    .subscribe((grupoModulos: GrupoModulo[]) => {
       this.grupoModulos = grupoModulos;
     });
   }
 
   limpar() {
     this.grupoModulo = new GrupoModulo();
-    this.grupoModulo.unidade = new Unidade();
+    this.grupoModulo.instituicao = new Instituicao();
     this.grupoModulo.modulo = new Modulo();
     this.grupoModulo.perfilAcesso = new PerfilAcesso();
 
@@ -114,7 +125,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
     this.modulosSelecionados = [];
     this.grupoModulosNovos = [];
     this.perfilAcessoSelecionado = new PerfilAcesso();
-    this.unidadeSelecionada = new Unidade();
+    this.instituicaoSelecionada = new Instituicao();
   }
 
 
@@ -138,7 +149,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
     let jaCadastrado = false;
 
     this.grupoModulosNovos.forEach(gm => {
-      this.grupoModulo.unidade = gm.unidade;
+      this.grupoModulo.instituicao = gm.instituicao;
       this.grupoModulo.modulo = gm.modulo;
       this.grupoModulo.perfilAcesso = gm.perfilAcesso;
 
@@ -171,7 +182,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   isJaAdicionada(): boolean {
     const grupoNovo = this.grupoModulos.find(grupo => grupo.modulo.id === this.grupoModulo.modulo.id
                                              &&
-                                             grupo.unidade.idUnidade === this.grupoModulo.unidade.idUnidade
+                                             grupo.instituicao.id === this.grupoModulo.instituicao.id
                                              &&
                                              grupo.perfilAcesso.id === this.grupoModulo.perfilAcesso.id);
 
@@ -187,7 +198,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
     let jaCadastrado = false;
     // Valida se algum grupo selecionado já está cadastrado no BD.
     this.modulosSelecionados.forEach(modulo => {
-      this.grupoModulo.unidade = this.unidadeSelecionada;
+      this.grupoModulo.instituicao = this.instituicaoSelecionada;
       this.grupoModulo.modulo = modulo;
       this.grupoModulo.perfilAcesso = this.perfilAcessoSelecionado;
 
@@ -205,7 +216,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
 
     _.forEach(this.modulosSelecionados, moduloSelecionado => {
       const grupoJaAdicionado = _.find(this.grupoModulosNovos, (gm: GrupoModulo) => {
-        return gm.unidade.idUnidade === this.unidadeSelecionada.idUnidade
+        return gm.instituicao.id === this.instituicaoSelecionada.id
                &&
                gm.modulo.id === moduloSelecionado.id
                &&
@@ -214,11 +225,11 @@ export class CadastrarGrupoModuloComponent implements OnInit {
 
       if (!grupoJaAdicionado) {
         const grupoModuloNovo: GrupoModulo = new GrupoModulo();
-        grupoModuloNovo.unidade = new Unidade();
+        grupoModuloNovo.instituicao = new Instituicao();
         grupoModuloNovo.perfilAcesso = new PerfilAcesso();
         grupoModuloNovo.modulo = new Modulo();
 
-        Object.assign(grupoModuloNovo.unidade, this.unidadeSelecionada);
+        Object.assign(grupoModuloNovo.instituicao, this.instituicaoSelecionada);
         Object.assign(grupoModuloNovo.perfilAcesso, this.perfilAcessoSelecionado);
         Object.assign(grupoModuloNovo.modulo, moduloSelecionado);
 

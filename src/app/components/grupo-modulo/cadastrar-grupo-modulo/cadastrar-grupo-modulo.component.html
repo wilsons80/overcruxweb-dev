@@ -7,12 +7,12 @@
 
                     <mat-form-field fxFlex="25%" 
                                     fxFlexOffset="20px">
-                        <mat-label>Unidade</mat-label>
-                        <mat-select [(ngModel)]="unidadeSelecionada" 
+                        <mat-label>Instituição</mat-label>
+                        <mat-select [(ngModel)]="instituicaoSelecionada" 
                                     [disabled]="isAtualizar"
-                                    name="unidade" 
+                                    name="instituicao" 
                                     required 
-                                    (selectionChange)="carregarGruposModulosDaUnidade()"> 
+                                    (selectionChange)="carregarGruposModulosDaInstituicao()"> 
                             <mat-option *ngFor="let m of unidades" [value]="m.unidade">
                                 {{m.unidade.nomeUnidade}}
                             </mat-option>
@@ -23,7 +23,7 @@
                         <mat-label>Permissão</mat-label>
                         <mat-select [(ngModel)]="perfilAcessoSelecionado" 
                                     name="perfilAcessoSelecionado"
-                                    [disabled]="!unidadeSelecionada.idUnidade || modulosSelecionados.length > 0"
+                                    [disabled]="!instituicaoSelecionada.id || modulosSelecionados.length > 0"
                                     required>
                             <mat-option *ngFor="let m of perfisAcesso" [value]="m">
                                 {{m.nome}}
