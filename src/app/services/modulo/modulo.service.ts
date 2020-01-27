@@ -15,16 +15,12 @@ export class ModuloService extends BaseService<Modulo> {
     super(http, Rotas.MODULO);
   }
 
-  getModulosPorUnidade(idUnidade: number) {
-    return this.http.get(moduloRootPath + `unidade/${idUnidade}`);
+  getUsuariosPorInstituicaoLogada() {
+    return this.http.get(moduloRootPath + `instituicao`);
   }
 
-  getUsuariosPorUnidadeLogada() {
-    return this.http.get(moduloRootPath + `unidade`);
-  }
-
-  getGrupoModulo(idUnidade: number, idModulo: number) {
-    return this.http.get(moduloRootPath + `${idModulo}/unidade/${idUnidade}`);
+  getGrupoModulo(idInstituicao: number, idModulo: number) {
+    return this.http.get(moduloRootPath + `${idModulo}/instituicao/${idInstituicao}`);
   }
 
 }

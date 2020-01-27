@@ -23,7 +23,7 @@ import * as _ from 'lodash';
   styleUrls: ['./acesso.component.css']
 })
 export class AcessoComponent implements OnInit {
-  
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   cadastroAcesso: CadastroAcesso = new CadastroAcesso();
@@ -83,7 +83,7 @@ export class AcessoComponent implements OnInit {
     this.router.navigate(['/acesso/cadastrar'], {
       queryParams: {
         idGrupoModulo: cadastroAcesso.idGrupoModulo,
-        idUnidade: cadastroAcesso.idUnidade,
+        idUnidade: cadastroAcesso.unidade.idUnidade,
         idModulo: cadastroAcesso.idModulo,
         idUsuario: cadastroAcesso.idUsuario
       }
@@ -127,7 +127,7 @@ export class AcessoComponent implements OnInit {
       this.usuarios = usuarios;
     });
 
-    this.moduloService.getUsuariosPorUnidadeLogada().subscribe((modulos: Modulo[]) => {
+    this.moduloService.getUsuariosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
       this.modulos = modulos;
     });
   }

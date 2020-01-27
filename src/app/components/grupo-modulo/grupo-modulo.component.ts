@@ -72,11 +72,11 @@ export class GrupoModuloComponent implements OnInit {
   }
 
   consultar() {
-    const idUnidadeBusca = this.usuarioUnidade.unidade ? this.usuarioUnidade.unidade.idUnidade : '';
+    const idInstituicaoBusca = this.usuarioUnidade.unidade.instituicao ? this.usuarioUnidade.unidade.instituicao.id : '';
     const idModuloBusca  = this.modulo ? this.modulo.id : '';
 
-    if (idUnidadeBusca || idModuloBusca) {
-      this.grupoModuloService.getAllByUnidadeAndModulo(idUnidadeBusca, idModuloBusca)
+    if (idInstituicaoBusca || idModuloBusca) {
+      this.grupoModuloService.getAllByInstituicaoAndModulo(idInstituicaoBusca, idModuloBusca)
       .subscribe((gruposModulos: GrupoModulo[]) => {
         this.verificaMostrarTabela(gruposModulos);
       });

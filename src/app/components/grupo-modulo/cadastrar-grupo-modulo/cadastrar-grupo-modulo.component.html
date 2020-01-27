@@ -5,14 +5,14 @@
             <mat-toolbar class="subtitulo">Cadastro de Módulos da Unidade</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                    <mat-form-field fxFlex="25%" 
+                    <mat-form-field fxFlex="25%"
                                     fxFlexOffset="20px">
                         <mat-label>Instituição</mat-label>
-                        <mat-select [(ngModel)]="instituicaoSelecionada" 
+                        <mat-select [(ngModel)]="instituicaoSelecionada"
                                     [disabled]="isAtualizar"
-                                    name="instituicao" 
-                                    required 
-                                    (selectionChange)="carregarGruposModulosDaInstituicao()"> 
+                                    name="instituicao"
+                                    required
+                                    (selectionChange)="carregarGruposModulosDaInstituicao()">
                             <mat-option *ngFor="let m of unidades" [value]="m.unidade">
                                 {{m.unidade.nomeUnidade}}
                             </mat-option>
@@ -21,7 +21,7 @@
 
                     <mat-form-field fxFlex="30%">
                         <mat-label>Permissão</mat-label>
-                        <mat-select [(ngModel)]="perfilAcessoSelecionado" 
+                        <mat-select [(ngModel)]="perfilAcessoSelecionado"
                                     name="perfilAcessoSelecionado"
                                     [disabled]="!instituicaoSelecionada.id || modulosSelecionados.length > 0"
                                     required>
@@ -29,11 +29,11 @@
                                 {{m.nome}}
                             </mat-option>
                         </mat-select>
-                    </mat-form-field>                       
-                   
+                    </mat-form-field>
+
                     <mat-form-field fxFlex="45%">
-                        <mat-select placeholder="Módulos" 
-                                    [(ngModel)]="modulosSelecionados" 
+                        <mat-select placeholder="Módulos"
+                                    [(ngModel)]="modulosSelecionados"
                                     name="modulos"
                                     multiple
                                     (selectionChange)="addModulo()"
@@ -47,9 +47,9 @@
                             </mat-select-trigger>
                             <mat-option *ngFor="let m of modulos" [value]="m">{{m.descricao}}</mat-option>
                         </mat-select>
-                    </mat-form-field>                    
-                    
-                 
+                    </mat-form-field>
+
+
             </div>
 
             <mat-toolbar class="subtitulo" *ngIf="grupoModulosNovos.length > 0">Módulos selecionados</mat-toolbar>
@@ -60,45 +60,45 @@
                                          [listaPerfilAcesso]="perfisAcesso"
                                          (onDeletar)="deletar($event)">
                 </formulario-grupo-modulo>
-                
+
             </div>
-           
+
         </div>
 
 
 
         <ng-template #divAlterar>
             <mat-toolbar class="subtitulo">Alteração de Módulo da Unidade</mat-toolbar>
-            <div fxLayout="row" 
-                fxLayoutGap="50px" 
-                style="margin-top: 10px; margin-bottom: 10px" 
+            <div fxLayout="row"
+                fxLayoutGap="50px"
+                style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
-   
-               <mat-form-field fxFlex="45%" 
+
+               <mat-form-field fxFlex="45%"
                                fxFlexOffset="20px">
-                   <input type="text" 
-                          matInput 
-                          [(ngModel)]="grupoModulo.unidade.nomeUnidade"
-                          name="unidade" 
-                          placeholder="Unidade" 
+                   <input type="text"
+                          matInput
+                          [(ngModel)]="grupoModulo.instituicao.nome"
+                          name="instituicao"
+                          placeholder="Instituição"
                           disabled
                           required/>
                </mat-form-field>
-   
-               <mat-form-field fxFlex="35%" 
+
+               <mat-form-field fxFlex="35%"
                                fxFlexOffset="20px">
-                   <input type="text" 
-                          matInput 
+                   <input type="text"
+                          matInput
                           [(ngModel)]="grupoModulo.modulo.descricao"
-                          name="modulo" 
-                          placeholder="Módulo" 
+                          name="modulo"
+                          placeholder="Módulo"
                           disabled
                           required/>
                </mat-form-field>
            </div>
-           
+
            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-           
+
                <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                    <mat-label>Permissão</mat-label>
                    <mat-select [(ngModel)]="grupoModulo.perfilAcesso.id" name="perfilAcesso" required>
@@ -107,17 +107,17 @@
                        </mat-option>
                    </mat-select>
                </mat-form-field>
-   
+
                <mat-form-field fxFlex="55%" fxFlexOffset="20px">
-                   <input type="text" 
-                          matInput maxlength="100" 
+                   <input type="text"
+                          matInput maxlength="100"
                           [(ngModel)]="grupoModulo.nome"
-                          name="nome" 
-                          placeholder="Nome do Grupo do módulo da unidade" 
+                          name="nome"
+                          placeholder="Nome do Grupo do módulo da unidade"
                           required/>
                </mat-form-field>
-           </div>            
-       
+           </div>
+
            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 20px;" fxFlexFill>
                <mat-form-field fxFlexOffset="20px" fxFlex= "100%" appearance="outline" >
                        <mat-label>Descrição do Grupo do módulo da unidade</mat-label>
@@ -133,10 +133,10 @@
                  <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
                </mat-form-field>
            </div>
-   
+
 
         </ng-template>
-        
+
 
 
        <!-- BOTOES -->
@@ -148,7 +148,7 @@
                     [disabled]="formulario.invalid"
                     (click)="cadastrar()"> Cadastrar
             </button>
-        
+
             <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button
                     name="botaoConfirmar"
                     fxFlex="20%"
@@ -157,22 +157,22 @@
                     (click)="atualizar()">
                     Atualizar
             </button>
-        
-            <button *ngIf="mostrarBotaoLimpar()" 
-                    mat-raised-button 
-                    fxFlex="20%" 
+
+            <button *ngIf="mostrarBotaoLimpar()"
+                    mat-raised-button
+                    fxFlex="20%"
                     (click)="limpar()">
                     Limpar
             </button>
-            <button 
-                    mat-raised-button 
-                    fxFlex="20%" 
+            <button
+                    mat-raised-button
+                    fxFlex="20%"
                     (click)="cancelar()">
                     Cancelar
             </button>
-    
+
         </div>
-    
+
     </form>
-    
+
 <div>
