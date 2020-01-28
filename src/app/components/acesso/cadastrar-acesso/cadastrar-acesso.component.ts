@@ -1,4 +1,4 @@
-import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-unidade.service';
+import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroAcesso } from 'src/app/core/cadastro-acesso';
@@ -10,10 +10,10 @@ import { GrupoModulo } from './../../../core/grupo-modulo';
 import { AcessoService } from './../../../services/acesso/acesso.service';
 import { ModuloService } from './../../../services/modulo/modulo.service';
 import { UsuarioService } from './../../../services/usuario/usuario.service';
-import { UsuariosUnidades } from 'src/app/core/usuarios-unidades';
 import { GrupoModuloService } from 'src/app/services/grupo-modulo/grupo-modulo.service';
 import * as _ from 'lodash';
-import { Unidade } from 'src/app/core/unidade';
+import { Instituicao } from 'src/app/core/instituicao';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class CadastrarAcessoComponent implements OnInit {
   usuarios: UsuarioUnidade[];
   modulos: Modulo[];
   perfis: GrupoModulo[];
-  unidades: UsuariosUnidades[];
+  instituicoes: Instituicao[];
 
   grupoModulo: GrupoModulo = new GrupoModulo();
   grupoModulos: GrupoModulo[];
@@ -35,7 +35,9 @@ export class CadastrarAcessoComponent implements OnInit {
 
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -50,28 +52,30 @@ export class CadastrarAcessoComponent implements OnInit {
     private toastService: ToastService,
     private usuarioService: UsuarioService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private usuarioUnidadeService: UsuarioUnidadeService
-  ) { }
+    private instituicaoService: InstituicaoService,
+    private router: Router
+  ) {
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
-    if(!this.perfilAcesso.insere){
+    if (!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;
     }
 
-    if(!this.perfilAcesso.altera){
+    if (!this.perfilAcesso.altera){
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.usuarioUnidadeService.getUnidadesUsuarioLogadoTemAcesso()
-      .subscribe((usuarioUnidade: UsuariosUnidades[]) => {
-        this.unidades = usuarioUnidade;
-    });
+    this.instituicaoService.getInstituicoesComAcesso().subscribe((instituicoes: Instituicao[]) => {
+      this.instituicoes = instituicoes;
+  });
+
 
     this.cadastroAcesso.idGrupoModulo = this.activatedRoute.snapshot.queryParams.idGrupoModulo ? Number(this.activatedRoute.snapshot.queryParams.idGrupoModulo) : null;
-    this.cadastroAcesso.idInstituicao = this.activatedRoute.snapshot.queryParams.idInstituicao ? this.activatedRoute.snapshot.queryParams.idInstituicao : null;
+    this.cadastroAcesso.idInstituicao = this.activatedRoute.snapshot.queryParams.idInstituicao ? Number(this.activatedRoute.snapshot.queryParams.idInstituicao) : null;
     this.cadastroAcesso.idModulo = this.activatedRoute.snapshot.queryParams.idModulo ? Number(this.activatedRoute.snapshot.queryParams.idModulo) : null;
     this.cadastroAcesso.idUsuario = this.activatedRoute.snapshot.queryParams.idUsuario ? Number(this.activatedRoute.snapshot.queryParams.idUsuario) : null;
 
@@ -81,11 +85,11 @@ export class CadastrarAcessoComponent implements OnInit {
     }
 
     if (this.cadastroAcesso.idInstituicao) {
-      this.unidadeSelecionada();
+      this.instituicaoSelecionada();
     }
   }
 
-  unidadeSelecionada() {
+  instituicaoSelecionada() {
     if (!this.isAtualizar) {
       this.limparCamposDependendentesUnidade();
 
@@ -112,7 +116,6 @@ export class CadastrarAcessoComponent implements OnInit {
     this.cadastroAcesso.idUsuario = null;
     this.cadastroAcesso.idModulo = null;
     this.cadastroAcesso.idGrupoModulo = null;
-    this.cadastroAcesso.idInstituicao = null;
     this.grupoModuloSelecionados = [];
   }
 

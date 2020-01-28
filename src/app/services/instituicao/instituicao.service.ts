@@ -13,4 +13,8 @@ export class InstituicaoService extends BaseService<Instituicao> {
     super(http, Rotas.INSTITUICAO);
   }
 
+  getInstituicoesComAcesso() {
+    return this.http.get(`${Rotas.INSTITUICAO}usuariologado`);
+  }
+
 }

@@ -3,17 +3,17 @@
     <form #formCadastro="ngForm">
 
         <!-- UNIDADE -->
-        <mat-toolbar class="titulopartes">Unidade</mat-toolbar>
+        <mat-toolbar class="titulopartes">Instituição</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <mat-form-field fxFlex= "95%" fxFlexOffset="20px">
-                <mat-label>Selecione a Unidade</mat-label>
-                <mat-select name="unidade"
+                <mat-label>Selecione a Instituição</mat-label>
+                <mat-select name="instituicao"
                            [(ngModel)]="cadastroAcesso.idInstituicao"
                            [disabled]="isAtualizar" required
-                           (selectionChange)="unidadeSelecionada()">
-                    <mat-option *ngFor="let u of unidades" [value]="u.unidade">
-                        {{u.unidade.siglaUnidade}} - {{u.unidade.nomeUnidade}}
+                           (selectionChange)="instituicaoSelecionada()">
+                    <mat-option *ngFor="let u of instituicoes" [value]="u.id">
+                        {{u.nome}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

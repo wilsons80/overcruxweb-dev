@@ -15,6 +15,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { switchMap } from 'rxjs/operators';
 import { Menu } from 'src/app/core/menu';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class AcessoComponent implements OnInit {
   dataSource: MatTableDataSource<PerfilAcessoUsuario> = new MatTableDataSource();
   msg: string;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   constructor(
     private dialog: MatDialog,
@@ -49,10 +51,12 @@ export class AcessoComponent implements OnInit {
     private acessoService: AcessoService,
     private router: Router,
     private menuService: MenuService
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
     this.consultar();
