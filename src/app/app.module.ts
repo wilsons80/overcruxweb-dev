@@ -1,3 +1,4 @@
+import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
 import { OficinaModule } from './components/oficina/oficina.module';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { registerLocaleData } from '@angular/common';
@@ -115,6 +116,7 @@ registerLocaleData(localePt, 'pt-BR');
     ConfirmDialogComponent,
     AcessoRestritoComponent,
     TempoSessaoDialogComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -203,7 +205,8 @@ registerLocaleData(localePt, 'pt-BR');
     OficinaModule,
     MatriculaModule,
     PrestacaoContasModule,
-    PlanoCargoSalarioModule
+    PlanoCargoSalarioModule,
+    MovimentacoesModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
