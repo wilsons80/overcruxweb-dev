@@ -21,5 +21,8 @@ export class UsuarioService extends BaseService<Usuario> {
     return this.http.get(Rotas.USUARIO + `unidade/${idUnidade}`);
   }
 
+  getUsuariosPorInstituicao(idInstituicao: number ) {
+    return this.http.get(Rotas.USUARIO + `instituicao/${idInstituicao}`);
+  }
 }
 

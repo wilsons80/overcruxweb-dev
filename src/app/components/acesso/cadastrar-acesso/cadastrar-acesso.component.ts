@@ -108,7 +108,7 @@ export class CadastrarAcessoComponent implements OnInit {
       .subscribe((modulos: Modulo[]) => this.modulos = modulos);
     }
 
-    this.usuarioService.getUsuariosPorUnidade(this.cadastroAcesso.idInstituicao)
+    this.usuarioService.getUsuariosPorInstituicao(this.cadastroAcesso.idInstituicao)
     .subscribe((usuarios: UsuarioUnidade[]) => this.usuarios = usuarios);
   }
 
