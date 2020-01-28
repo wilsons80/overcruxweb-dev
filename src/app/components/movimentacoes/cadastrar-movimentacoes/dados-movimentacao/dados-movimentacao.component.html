@@ -1,0 +1,64 @@
+<mat-toolbar class="subtitulo">Dados Iniciais</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+         
+            <!-- EMPRESAS -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Empresa:</mat-label>
+                <mat-select name="empresa">
+                    <mat-option *ngFor="let i of empresas">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
+                    cadastrada</mat-hint>
+            </mat-form-field>
+
+            <!-- TIPO MOVIMENTACAO -->
+            <mat-form-field fxFlex="30%">
+                <mat-label>Tipo de Movimentação:</mat-label>
+                <mat-select name="tiposMovimentacao" required>
+                    <mat-option *ngFor="let i of tiposMovimentacao">
+                        {{i.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- DATA MOVIMENTACAO -->
+            <mat-form-field fxFlex="30%">
+                <input matInput name="dataMovimentacao" [matDatepicker]="dataMovimentacao" placeholder="Data de Início">
+                <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataMovimentacao></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+      
+        <div fxLayout="row"  fxLayoutGap="50px" fxFlexFill>
+
+            <mat-form-field style="margin-left: 20px" fxFlex="30%" appearance="outline">
+                <mat-label>Descrição:</mat-label>
+                <textarea matInput #message name="descricao"  cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200" required>
+                     </textarea>
+                <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field  fxFlexOffset="20px" fxFlex="30%">
+                <input #numeroDocumento matInput maxlength="200" name="numeroDocumento" placeholder="Número documento:"
+                         required>
+                <mat-hint align="end">{{numeroDocumento.value.length}} / 200</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="30%">
+            <input matInput name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data de Início">
+            <mat-datepicker-toggle matSuffix [for]="dataDocumento">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dataDocumento></mat-datepicker>
+        </mat-form-field>
+        </div>
+    </form>
+
+</div>
