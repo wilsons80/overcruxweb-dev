@@ -1,1 +1,93 @@
-<p>cadastrar-movimentacoes works!</p>
+<mat-toolbar class="subtitulo">Colaboradores</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
+
+        <!------------------ MOVIMENTAÇÃO ------------------------>
+        <mat-step [stepControl]="formCadastroDadosPessoais">
+            <form #formCadastroDadosPessoais="ngForm">
+                <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
+
+
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                    fxFlexFill>
+                    <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+
+        <!-- ------------------ ITENS  ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroEscolaridade">
+            <form #formCadastroEscolaridade="ngForm">
+                <ng-template matStepLabel>ITENS</ng-template>
+
+
+            </form>
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+
+        <!-- ------------------ FATURAS ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroDocumentos">
+            <form #formCadastroDocumentos="ngForm">
+                <ng-template matStepLabel>FATURAS</ng-template>
+
+
+            </form>
+
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+
+        <!------------------ PAGAMENTOS ------------------------>
+        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroDadosProfissionais">
+            <form #formCadastroDadosProfissionais="ngForm">
+                <ng-template matStepLabel>DADOS PROFISSIONAIS</ng-template>
+
+
+            </form>
+
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+
+    </mat-horizontal-stepper>
+</div>
+
+
+
+<!-- BOTOES -->
+<div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+    <button mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary"> Cadastrar
+    </button>
+    <button mat-raised-button fxFlex="20%">
+        Limpar
+    </button>
+    <button mat-raised-button fxFlex="20%">
+        Cancelar
+    </button>
+
+</div>
