@@ -4,11 +4,10 @@
     <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
 
         <!------------------ MOVIMENTAÇÃO ------------------------>
-        <mat-step [stepControl]="formCadastroDadosPessoais">
-            <form #formCadastroDadosPessoais="ngForm">
+        <mat-step [stepControl]="formDadosMovimentacao">
+            <form #formDadosMovimentacao="ngForm">
                 <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
-
-
+                <dados-movimentacao></dados-movimentacao>
                 <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                     fxFlexFill>
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
@@ -19,11 +18,10 @@
         </mat-step>
 
         <!-- ------------------ ITENS  ------------------------ -->
-        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroEscolaridade">
-            <form #formCadastroEscolaridade="ngForm">
+        <mat-step style="padding-bottom: 20px" [stepControl]="formItens">
+            <form #formItens="ngForm">
                 <ng-template matStepLabel>ITENS</ng-template>
-
-
+                <itens-movimentacao></itens-movimentacao>
             </form>
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                 fxFlexFill>
@@ -37,11 +35,10 @@
         </mat-step>
 
         <!-- ------------------ FATURAS ------------------------ -->
-        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroDocumentos">
-            <form #formCadastroDocumentos="ngForm">
+        <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
+            <form #formFaturas="ngForm">
                 <ng-template matStepLabel>FATURAS</ng-template>
-
-
+                <faturas-movimentacao></faturas-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -56,11 +53,10 @@
         </mat-step>
 
         <!------------------ PAGAMENTOS ------------------------>
-        <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroDadosProfissionais">
-            <form #formCadastroDadosProfissionais="ngForm">
-                <ng-template matStepLabel>DADOS PROFISSIONAIS</ng-template>
-
-
+        <mat-step style="padding-bottom: 20px" [stepControl]="formPagamentos">
+            <form #formPagamentos="ngForm">
+                <ng-template matStepLabel>PAGAMENTOS</ng-template>
+                <pagamentos-movimentacao></pagamentos-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
