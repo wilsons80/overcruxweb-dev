@@ -51,7 +51,7 @@ export class AcessoComponent implements OnInit {
     private acessoService: AcessoService,
     private router: Router,
     private menuService: MenuService
-  ) { 
+  ) {
     this.carregarPerfil = new CarregarPerfil();
   }
 
@@ -86,7 +86,7 @@ export class AcessoComponent implements OnInit {
   atualizar(cadastroAcesso: CadastroAcesso ) {
     this.router.navigate(['/acesso/cadastrar'], {
       queryParams: {
-        idGrupoModulo: cadastroAcesso.idGrupoModulo,
+        idPerfilAcesso: cadastroAcesso.idPerfilAcesso,
         idInstituicao: cadastroAcesso.idInstituicao,
         idModulo: cadastroAcesso.idModulo,
         idUsuario: cadastroAcesso.idUsuario
@@ -115,7 +115,7 @@ export class AcessoComponent implements OnInit {
             return this.menuService.getMenuPrincipal();
           })
 
-        ).subscribe((menu:Menu[]) => {
+        ).subscribe((menu: Menu[]) => {
           this.controleMenuService.acessos = menu;
         })
       } else {

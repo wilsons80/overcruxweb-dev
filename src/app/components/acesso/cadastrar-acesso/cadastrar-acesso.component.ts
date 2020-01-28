@@ -1,3 +1,5 @@
+import { PerfilAcessoService } from './../../../services/perfil-acesso/perfil-acesso.service';
+import { PerfilAcesso } from 'src/app/core/perfil-acesso';
 import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,12 +28,11 @@ export class CadastrarAcessoComponent implements OnInit {
 
   usuarios: UsuarioUnidade[];
   modulos: Modulo[];
-  perfis: GrupoModulo[];
+  perfis: PerfilAcesso[];
   instituicoes: Instituicao[];
 
   grupoModulo: GrupoModulo = new GrupoModulo();
-  grupoModulos: GrupoModulo[];
-  grupoModuloSelecionados: GrupoModulo[];
+  moduloSelecionados: Modulo[];
 
   isAtualizar = false;
 
@@ -47,7 +48,7 @@ export class CadastrarAcessoComponent implements OnInit {
 
   constructor(
     private acessoService: AcessoService,
-    private grupoModuloService: GrupoModuloService,
+    private perfilAcessoService: PerfilAcessoService,
     private moduloService: ModuloService,
     private toastService: ToastService,
     private usuarioService: UsuarioService,
@@ -74,15 +75,16 @@ export class CadastrarAcessoComponent implements OnInit {
   });
 
 
-    this.cadastroAcesso.idGrupoModulo = this.activatedRoute.snapshot.queryParams.idGrupoModulo ? Number(this.activatedRoute.snapshot.queryParams.idGrupoModulo) : null;
+    this.cadastroAcesso.idPerfilAcesso = this.activatedRoute.snapshot.queryParams.idPerfilAcesso ? Number(this.activatedRoute.snapshot.queryParams.idPerfilAcesso) : null;
     this.cadastroAcesso.idInstituicao = this.activatedRoute.snapshot.queryParams.idInstituicao ? Number(this.activatedRoute.snapshot.queryParams.idInstituicao) : null;
     this.cadastroAcesso.idModulo = this.activatedRoute.snapshot.queryParams.idModulo ? Number(this.activatedRoute.snapshot.queryParams.idModulo) : null;
     this.cadastroAcesso.idUsuario = this.activatedRoute.snapshot.queryParams.idUsuario ? Number(this.activatedRoute.snapshot.queryParams.idUsuario) : null;
 
-    if (this.cadastroAcesso.idGrupoModulo) {
+    if (this.cadastroAcesso.idPerfilAcesso) {
       this.isAtualizar = true;
-      this.buscarPerfis();
     }
+
+    this.buscarPerfis();
 
     if (this.cadastroAcesso.idInstituicao) {
       this.instituicaoSelecionada();
@@ -90,23 +92,18 @@ export class CadastrarAcessoComponent implements OnInit {
   }
 
   instituicaoSelecionada() {
+
     if (!this.isAtualizar) {
       this.limparCamposDependendentesUnidade();
-
-      this.grupoModuloService.getAllByInstituicao(this.cadastroAcesso.idInstituicao)
-      .subscribe( (gruposModulos: GrupoModulo[]) => {
-
-        // Tira os módulos PAI
-        const filhos = _.filter(gruposModulos, g => g.modulo.moduloPai );
-        const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.modulo.moduloPai.id === f.modulo.id) );
-
-        this.grupoModulos = dados;
-      });
-
-    } else {
-      this.moduloService.getUsuariosPorInstituicaoLogada()
-      .subscribe((modulos: Modulo[]) => this.modulos = modulos);
     }
+
+    this.moduloService.getUsuariosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
+      // Tira os módulos PAI
+      //const filhos = _.filter(modulos, m => m.moduloPai );
+      //const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.moduloPai.id === f.id) );
+
+      this.modulos = modulos;
+    });
 
     this.usuarioService.getUsuariosPorInstituicao(this.cadastroAcesso.idInstituicao)
     .subscribe((usuarios: UsuarioUnidade[]) => this.usuarios = usuarios);
@@ -115,8 +112,8 @@ export class CadastrarAcessoComponent implements OnInit {
   limparCamposDependendentesUnidade() {
     this.cadastroAcesso.idUsuario = null;
     this.cadastroAcesso.idModulo = null;
-    this.cadastroAcesso.idGrupoModulo = null;
-    this.grupoModuloSelecionados = [];
+    this.cadastroAcesso.idPerfilAcesso = null;
+    this.moduloSelecionados = [];
   }
 
 
@@ -128,16 +125,16 @@ export class CadastrarAcessoComponent implements OnInit {
   }
 
   cadastrar() {
-    if (this.grupoModuloSelecionados && this.grupoModuloSelecionados.length > 0 ) {
+    if (this.moduloSelecionados && this.moduloSelecionados.length > 0 ) {
       const grupoAceso: CadastroAcesso[] = [];
 
-      _.forEach(this.grupoModuloSelecionados, grupo => {
+      _.forEach(this.moduloSelecionados, modulo => {
          const acesso: CadastroAcesso = new CadastroAcesso();
 
          acesso.idInstituicao           = this.cadastroAcesso.idInstituicao;
          acesso.idUsuario               = this.cadastroAcesso.idUsuario;
-         acesso.idModulo                = grupo.modulo.id;
-         acesso.idGrupoModulo           = grupo.id;
+         acesso.idModulo                = modulo.id;
+         acesso.idPerfilAcesso          = this.cadastroAcesso.idPerfilAcesso;
 
          grupoAceso.push(acesso);
       });
@@ -150,16 +147,16 @@ export class CadastrarAcessoComponent implements OnInit {
   }
 
   limpar() {
-    this.grupoModuloSelecionados = [];
+    this.moduloSelecionados = [];
 
     if (this.isAtualizar) {
-      this.cadastroAcesso.idGrupoModulo = null;
+      this.cadastroAcesso.idPerfilAcesso = null;
     } else {
       this.cadastroAcesso = {
         idInstituicao: null,
         idUsuario: null,
         idModulo: null,
-        idGrupoModulo: null
+        idPerfilAcesso: null
       }
     }
   }
@@ -169,10 +166,9 @@ export class CadastrarAcessoComponent implements OnInit {
   }
 
   buscarPerfis() {
-    this.moduloService.getGrupoModulo(this.cadastroAcesso.idInstituicao, this.cadastroAcesso.idModulo)
-      .subscribe((perfis: GrupoModulo[]) => {
-        this.perfis = perfis;
-      });
+    this.perfilAcessoService.getAll().subscribe((perfis: PerfilAcesso[]) => {
+      this.perfis = perfis;
+    });
   }
 
 

@@ -4,5 +4,5 @@ export class CadastroAcesso {
     idUsuario: number;
     idModulo: number;
     idInstituicao: number;
-    idGrupoModulo: number;
+    idPerfilAcesso: number;
 }

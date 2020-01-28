@@ -35,23 +35,39 @@
         </div>
 
         <div *ngIf="!isAtualizar; else divAlterar">
-            <mat-toolbar class="titulopartes">Módulos / Perfil de Acesso</mat-toolbar>
+
+            <!-- PERFIL -->
+            <mat-toolbar class="titulopartes">Perfil</mat-toolbar>
+            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field fxFlex= "95%" fxFlexOffset="20px">
+                    <mat-label>Escolha o perfil</mat-label>
+                    <mat-select name="perfil" [(ngModel)]="cadastroAcesso.idPerfilAcesso"
+                        [disabled]="!cadastroAcesso.idInstituicao" required>
+                        <mat-option *ngFor="let p of perfis" [value]="p.id">
+                            {{p.nome}}
+                        </mat-option>
+                    </mat-select>
+
+                </mat-form-field>
+            </div>
+
+            <mat-toolbar class="titulopartes">Módulos</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
                 <mat-form-field fxFlex="95%" fxFlexOffset="20px">
-                    <mat-select placeholder="Módulos / Perfil de Acesso"
-                                [(ngModel)]="grupoModuloSelecionados"
+                    <mat-select placeholder="Módulos"
+                                [(ngModel)]="moduloSelecionados"
                                 name="modulo_perfil"
                                 multiple
                                 [disabled]="!cadastroAcesso.idInstituicao"
                                 required>
                         <mat-select-trigger>
-                            {{grupoModuloSelecionados ? grupoModuloSelecionados[0]?.modulo.descricao: ''}}
-                            <span *ngIf="grupoModuloSelecionados?.length > 1">
-                                (+{{grupoModuloSelecionados.length - 1}} {{grupoModuloSelecionados?.length === 2 ? 'outro' : 'outros'}})
+                            {{moduloSelecionados ? moduloSelecionados[0]?.descricao: ''}}
+                            <span *ngIf="moduloSelecionados?.length > 1">
+                                (+{{moduloSelecionados.length - 1}} {{moduloSelecionados?.length === 2 ? 'outro' : 'outros'}})
                             </span>
                         </mat-select-trigger>
-                        <mat-option *ngFor="let m of grupoModulos" [value]="m">
-                            {{m.modulo.descricao}} - {{m.descricao}}
+                        <mat-option *ngFor="let m of modulos" [value]="m">
+                            {{m.nome}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -84,10 +100,10 @@
             <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
                     <mat-form-field fxFlex= "95%" fxFlexOffset="20px">
                     <mat-label>Escolha o perfil</mat-label>
-                    <mat-select name="perfil" [(ngModel)]="cadastroAcesso.idGrupoModulo"
-                        [disabled]="!cadastroAcesso.idModulo" required>
+                    <mat-select name="perfil" [(ngModel)]="cadastroAcesso.idPerfilAcesso"
+                                [disabled]="!cadastroAcesso.idModulo" required>
                         <mat-option *ngFor="let p of perfis" [value]="p.id">
-                            {{p.descricao}}
+                            {{p.nome}}
                         </mat-option>
                     </mat-select>
 
