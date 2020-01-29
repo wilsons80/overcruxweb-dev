@@ -1,9 +1,10 @@
-<mat-toolbar class="subtitulo">Dados Iniciais</mat-toolbar>
-
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
+
+        <!-- DADOS INICIAIS -->
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-         
+
             <!-- EMPRESAS -->
             <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Empresa:</mat-label>
@@ -35,30 +36,74 @@
             </mat-form-field>
 
         </div>
-      
-        <div fxLayout="row"  fxLayoutGap="50px" fxFlexFill>
 
-            <mat-form-field style="margin-left: 20px" fxFlex="30%" appearance="outline">
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                 <mat-label>Descrição:</mat-label>
-                <textarea matInput #message name="descricao"  cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200" required>
-                     </textarea>
+                <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="3" maxlength="200" required>
+                </textarea>
                 <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
             </mat-form-field>
-
-            <mat-form-field  fxFlexOffset="20px" fxFlex="30%">
-                <input #numeroDocumento matInput maxlength="200" name="numeroDocumento" placeholder="Número documento:"
-                         required>
-                <mat-hint align="end">{{numeroDocumento.value.length}} / 200</mat-hint>
-        </mat-form-field>
-
-        <mat-form-field fxFlex="30%">
-            <input matInput name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data de Início">
-            <mat-datepicker-toggle matSuffix [for]="dataDocumento">
-            </mat-datepicker-toggle>
-            <mat-datepicker #dataDocumento></mat-datepicker>
-        </mat-form-field>
         </div>
+
+        <!-- DOCUMENTOS -->
+        <mat-toolbar class="titulopartes">Documentos</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #numeroDocumento matInput maxlength="20" name="numeroDocumento" placeholder="Número documento:">
+                <mat-hint align="end">{{numeroDocumento.value.length}} / 20</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30%">
+                <input matInput name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data do documento:">
+                <mat-datepicker-toggle matSuffix [for]="dataDocumento">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataDocumento></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="15%">
+                <input currencyMask name="valorAlocacao" placeholder="Valor:" matInput maxlength="13"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+
+        <!-- OUTRAS INFORMACOES -->
+        <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Programa:</mat-label>
+                <mat-select name="programa">
+                    <mat-option *ngFor="let i of programas">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Projeto:</mat-label>
+                <mat-select name="projeto">
+                    <mat-option *ngFor="let i of projetos">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto
+                    cadastrado</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxFlexFill>
+        <mat-form-field fxFlex="46%" fxFlexOffset="20px">
+            <input type="number" matInput maxlength="3" 
+                name="qtdParcelas" placeholder="Quantidade de parcelas da movimentação:" />
+        </mat-form-field>
+    </div>
+
     </form>
 
 </div>

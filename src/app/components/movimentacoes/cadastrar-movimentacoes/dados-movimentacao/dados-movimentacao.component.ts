@@ -8,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DadosMovimentacaoComponent implements OnInit {
 
-  empresas = [{nome:'Empresa 1'}, {nome: 'Empresa 2'}];
+  empresas  = [{nome:'Empresa 1'}, {nome: 'Empresa 2'}];
+  projetos  = [{nome:'Projeto 1'}, {nome: 'Projeto 2'}];
+  programas = [{nome:'Programa 1'}, {nome: 'Programa 2'}];
+
   tiposMovimentacao = [{id: 'E', descricao: 'ENTRADA'},{id: 'S', descricao: 'SAÍDA'}]
 
   constructor() { }

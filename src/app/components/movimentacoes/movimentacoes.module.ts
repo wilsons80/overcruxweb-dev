@@ -9,6 +9,7 @@ import { DadosMovimentacaoComponent } from './cadastrar-movimentacoes/dados-movi
 import { ItensMovimentacaoComponent } from './cadastrar-movimentacoes/itens-movimentacao/itens-movimentacao.component';
 import { FaturasMovimentacaoComponent } from './cadastrar-movimentacoes/faturas-movimentacao/faturas-movimentacao.component';
 import { PagamentosMovimentacaoComponent } from './cadastrar-movimentacoes/pagamentos-movimentacao/pagamentos-movimentacao.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PagamentosMovimentacaoComponent } from './cadastrar-movimentacoes/pagam
   imports: [
     CommonModule,
     MovimentacoesRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    NgxCurrencyModule
   ]
 })
 export class MovimentacoesModule { }
