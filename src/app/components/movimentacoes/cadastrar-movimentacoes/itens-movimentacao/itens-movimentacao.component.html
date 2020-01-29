@@ -1,1 +1,75 @@
-<p>itens-movimentacao works!</p>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <!-- DADOS INICIAIS -->
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- MATERIAL -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Material:</mat-label>
+                <mat-select name="material">
+                    <mat-option *ngFor="let i of materiais">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum material
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+            <!-- CATEGORIAS -->
+            <mat-form-field fxFlex="30%">
+                <mat-label>Categoria:</mat-label>
+                <mat-select name="categoria" required>
+                    <mat-option *ngFor="let i of categorias">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- PEDIDO MATERIAL -->
+            <mat-form-field fxFlex="30%">
+                <mat-label>Pedido Material:</mat-label>
+                <mat-select name="pedidoMaterial" required>
+                    <mat-option *ngFor="let i of pedidosMaterial">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" style="padding-top: 20px; padding-bottom: 20px;" fxLayoutGap="50px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
+                <mat-label>Descrição item movimentação:</mat-label>
+                <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="3" maxlength="200" required>
+                </textarea>
+                <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px">
+            <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                <input [(ngModel)]="valorUnitario" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="10%" >
+                <input type="number" [(ngModel)]="quantidade" matInput maxlength="3" name="qtdParcelas"
+                    placeholder="Quantidade:" />
+            </mat-form-field>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                <input currencyMask name="valorTotal" 
+                placeholder="Valor Total:" matInput maxlength="13"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" disabled />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+        </div>
+    </form>
+
+</div>
