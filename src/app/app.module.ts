@@ -1,3 +1,4 @@
+import { MovimentacoesMateriaisModule } from './components/movimentacoes-materiais/movimentacoes-materiais.module';
 import { CotacoesMateriaisModule } from './components/cotacoes-materiais/cotacoes-materiais.module';
 import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
 import { OficinaModule } from './components/oficina/oficina.module';
@@ -88,7 +89,6 @@ import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl/portugue
 import { MaterialModule } from './components/material/material.module';
 import { MatriculaModule } from './components/matricula/matricula.module';
 import { PrestacaoContasModule } from './components/prestacao-contas/prestacao-contas.module';
-import { PlanoCargoSalarioComponent } from './components/plano-cargo-salario/plano-cargo-salario.component';
 import { PlanoCargoSalarioModule } from './components/plano-cargo-salario/plano-cargo-salario.module';
 import { CategoriasContabeisModule } from './components/categorias-contabeis/categorias-contabeis.module';
 
@@ -210,7 +210,8 @@ registerLocaleData(localePt, 'pt-BR');
     PlanoCargoSalarioModule,
     MovimentacoesModule,
     CategoriasContabeisModule,
-    CotacoesMateriaisModule
+    CotacoesMateriaisModule,
+    MovimentacoesMateriaisModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
