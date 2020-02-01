@@ -91,6 +91,7 @@ import { MatriculaModule } from './components/matricula/matricula.module';
 import { PrestacaoContasModule } from './components/prestacao-contas/prestacao-contas.module';
 import { PlanoCargoSalarioModule } from './components/plano-cargo-salario/plano-cargo-salario.module';
 import { CategoriasContabeisModule } from './components/categorias-contabeis/categorias-contabeis.module';
+import { FuncoesModule } from './components/funcoes/funcoes.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -211,7 +212,8 @@ registerLocaleData(localePt, 'pt-BR');
     MovimentacoesModule,
     CategoriasContabeisModule,
     CotacoesMateriaisModule,
-    MovimentacoesMateriaisModule
+    MovimentacoesMateriaisModule,
+    FuncoesModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
