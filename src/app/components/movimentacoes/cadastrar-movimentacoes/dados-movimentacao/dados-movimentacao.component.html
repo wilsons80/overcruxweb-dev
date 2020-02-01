@@ -42,7 +42,7 @@
             <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                 <mat-label>Descrição:</mat-label>
                 <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="3" maxlength="200" required>
+                    cdkAutosizeMinRows="3" maxlength="200">
                 </textarea>
                 <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
             </mat-form-field>

@@ -89,6 +89,7 @@ import { MatriculaModule } from './components/matricula/matricula.module';
 import { PrestacaoContasModule } from './components/prestacao-contas/prestacao-contas.module';
 import { PlanoCargoSalarioComponent } from './components/plano-cargo-salario/plano-cargo-salario.component';
 import { PlanoCargoSalarioModule } from './components/plano-cargo-salario/plano-cargo-salario.module';
+import { CategoriasContabeisModule } from './components/categorias-contabeis/categorias-contabeis.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -206,7 +207,8 @@ registerLocaleData(localePt, 'pt-BR');
     MatriculaModule,
     PrestacaoContasModule,
     PlanoCargoSalarioModule,
-    MovimentacoesModule
+    MovimentacoesModule,
+    CategoriasContabeisModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

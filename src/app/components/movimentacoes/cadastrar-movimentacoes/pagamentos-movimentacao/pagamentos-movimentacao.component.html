@@ -15,8 +15,8 @@
                     <!-- FATURAS -->
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Fatura:</mat-label>
-                        <mat-select name="fatura">
-                            <mat-option *ngFor="let i of faturas">
+                        <mat-select name="fatura" required>
+                            <mat-option *ngFor="let i of faturas" >
                                 {{i.data}} - R$: {{i.valor}}
                             </mat-option>
                         </mat-select>
@@ -63,7 +63,9 @@
                     <!-- DATA -->
                     <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                         <input matInput name="dataPagamento" [matDatepicker]="dataPagamento"
-                            placeholder="Data do pagamento">
+                            placeholder="Data do pagamento"
+                            required
+                            >
                         <mat-datepicker-toggle matSuffix [for]="dataPagamento">
                         </mat-datepicker-toggle>
                         <mat-datepicker #dataPagamento></mat-datepicker>
