@@ -3,7 +3,7 @@
 
         <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
             <mat-expansion-panel-header>
-                <mat-panel-title>Dados do Item</mat-panel-title>
+                <mat-panel-title>Dados da fatura</mat-panel-title>
             </mat-expansion-panel-header>
 
             <form #formCadastro="ngForm">
@@ -65,7 +65,7 @@
             (closed)="openFormCadastro = true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Lista de Itens ( {{listaFaturas?.length}} )
+                    Lista de Faturas ( {{listaFaturas?.length}} )
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
@@ -80,7 +80,7 @@
 
                 <ng-container matColumnDef="valorFatura">
                     <th mat-header-cell *matHeaderCellDef> Valor da Fatura </th>
-                    <td mat-cell *matCellDef="let element"> {{element.valorFatura}} </td>
+                    <td mat-cell *matCellDef="let element"> R$: {{element.valorFatura}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="numeroParcelas">

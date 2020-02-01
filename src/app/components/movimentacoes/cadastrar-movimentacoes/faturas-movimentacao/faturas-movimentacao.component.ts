@@ -41,12 +41,12 @@ export class FaturasMovimentacaoComponent implements OnInit {
     const fatura1 = new FaturaMovimentacao;
     fatura1.dataVencimento = new Date();
     fatura1.valorFatura = 200;
-    fatura1.numeroParcela = 2;
+    fatura1.numeroParcelas = 2;
     
     const fatura = new FaturaMovimentacao;
     fatura.dataVencimento = new Date();
     fatura.valorFatura = 100;
-    fatura.numeroParcela = 12;
+    fatura.numeroParcelas = 12;
 
     this.listaFaturas.push(fatura);
     this.listaFaturas.push(fatura1);

@@ -23,7 +23,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   pedidosMaterial = [{ nome: "Pedido 1" }, { nome: "Pedido 2" }];
 
   
-  displayedColumns: string[] = ['categoria','material', 'qtdMaterial', 'valorUnitarioItem', 'valorTotalItem'];
+  displayedColumns: string[] = ['categoria','material', 'qtdMaterial', 'valorUnitarioItem', 'valorTotalItem','acoes'];
   dataSource: MatTableDataSource<ItemMovimentacao> = new MatTableDataSource();
 
  
