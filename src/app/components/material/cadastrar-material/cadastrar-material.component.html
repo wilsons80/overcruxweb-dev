@@ -27,8 +27,11 @@
                          [(ngModel)]="material.numeroTombamento" required>
                     <mat-hint align="end">{{numeroTombamento.value.length}} / 20</mat-hint>
                </mat-form-field>
-
-
+          </div>
+          <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+               <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+                    <input type=number #qtdLimite matInput min=0 name="qtdLimite" placeholder="Quantidade limite:" />
+               </mat-form-field>
           </div>
 
           <!--UNIDADE -->
