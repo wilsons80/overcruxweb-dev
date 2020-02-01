@@ -1,0 +1,87 @@
+<div class="painel-principal" style="padding: 10px;">
+
+    <!-- DESCRICAO -->
+    <mat-toolbar class="titulopartes">Descrição</mat-toolbar>
+    <div fxLayout="row" style="margin-bottom: 20px" class="espaco" fxLayoutAlign="start start" fxLayoutGap="20px"
+        fxFlexFill>
+
+        <div id="row_dados" fxFlex="85%" fxFlexFill>
+            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <input #nome matInput maxlength="200" [(ngModel)]="instituicao.nome" name="nome"
+                        placeholder="Nome da Instituição:" required>
+                    <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+                </mat-form-field>
+
+            </div>
+        </div>
+
+        <!-- FOTO PERFIL -->
+        <div fxFlex="16%" style="text-align: center">
+            <button name="fotoPerfil" mat-fab class="botao" (click)="uploadFile.click()"
+                [style.background-image]="getBackground()">
+                <mat-icon class="nao-foto"></mat-icon>
+            </button>
+            <input #uploadFile type="file" style="display:none;" (change)="fileChangeEvent($event)" />
+        </div>
+    </div>
+
+    <!-- OUTRAS INFORMACOES -->
+    <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Área de Atuação:</mat-label>
+            <textarea #areaAtuacao matInput name="areaAtuacao" [(ngModel)]="instituicao.areaAtuacao" cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="2000"></textarea>
+            <mat-hint align="end">{{areaAtuacao.value.length}} / 2000</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Apresentação:</mat-label>
+            <textarea #apresentacao matInput name="apresentacao" [(ngModel)]="instituicao.apresentacao"
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="2000"></textarea>
+            <mat-hint align="end">{{apresentacao.value.length}} / 2000</mat-hint>
+        </mat-form-field>
+
+
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Finalidades Estatutárias:</mat-label>
+            <textarea #finalidadesEstatutarias matInput name="finalidadesEstatutarias"
+                [(ngModel)]="instituicao.finalidadesEstatutarias" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="3" maxlength="1000"></textarea>
+            <mat-hint align="end">{{finalidadesEstatutarias.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Missão:</mat-label>
+            <textarea #missao matInput name="missao" [(ngModel)]="instituicao.missao" cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="1000"></textarea>
+            <mat-hint align="end">{{missao.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Valores:</mat-label>
+            <textarea #valores matInput name="valores" [(ngModel)]="instituicao.valores" cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="1000"></textarea>
+            <mat-hint align="end">{{valores.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45%" fxFlexOffset="20px" appearance="outline">
+            <mat-label>Visão:</mat-label>
+            <textarea #visao matInput name="visao" [(ngModel)]="instituicao.visao" cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="1000"></textarea>
+            <mat-hint align="end">{{visao.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+    </div>
+</div>
