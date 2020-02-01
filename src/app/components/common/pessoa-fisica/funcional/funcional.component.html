@@ -106,9 +106,7 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="95%" fxFlexOffset="20px">
         <mat-label>Selecione a Unidade</mat-label>
-        <mat-select name="unidade" 
-                    [(ngModel)]="funcionario.unidade.idUnidade" 
-                    required>
+        <mat-select name="unidade" [(ngModel)]="funcionario.unidade.idUnidade" required>
             <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
                 {{u.nomeUnidade}}
             </mat-option>
@@ -124,9 +122,8 @@
 
     <mat-form-field fxFlex="95%" fxFlexOffset="20px">
         <mat-label>Selecione a Empresa</mat-label>
-        <mat-select name="empresaFuncionario" 
-                    [(ngModel)]="funcionario.empresaFuncionario.id" 
-                    [required]="!funcionario.unidade.idUnidade">
+        <mat-select name="empresaFuncionario" [(ngModel)]="funcionario.empresaFuncionario.id"
+            [required]="!funcionario.unidade.idUnidade">
             <mat-option *ngFor="let u of empresas" [value]="u.id">
                 {{u.nomeFantasia}}
             </mat-option>
@@ -172,6 +169,31 @@
                 {{m.tipo}}
             </mat-option>
         </mat-select>
-    </mat-form-field>   
+    </mat-form-field>
 
+</div>
+
+<!-- JORNADA DE TRABALHO -->
+<mat-toolbar class="titulopartes">Jornada de Trabalho</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field>
+        <input matInput mat-hide-icons="calendar" type="time" name="horaInicio" placeholder="Hora Início:">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput mat-hide-icons="calendar" type="time" name="horaFim" placeholder="Hora Fim:">
+    </mat-form-field>
+
+</div>
+
+<!-- INFORMACOES COMPLEMENTARES -->
+<mat-toolbar class="titulopartes">Informações Complementares</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <!-- #EMAIL  -->
+    <mat-form-field fxFlexOffset="20px" fxFlex="40%">
+        <input maxlength="100" matInput type="email" name="email"
+            placeholder="Email Profissional:" email>
+    </mat-form-field>
 </div>
