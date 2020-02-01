@@ -1,4 +1,6 @@
+import { CategoriasContabeis } from './../../core/categorias-contabeis';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'categorias-contabeis',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriasContabeisComponent implements OnInit {
 
+  categorias=[]
+  mostrarTabela= false;
+
+  displayedColumns: string[] = ['DataAtendimento', 'Aluno', 'Diagnostico', 'acoes'];
+  dataSource: MatTableDataSource<CategoriasContabeis> = new MatTableDataSource();
+
+  msg = "Nenhuma categoria contábil cadastrada."
+ 
   constructor() { }
 
   ngOnInit() {
   }
+
+  consultar(){}
+  limpar(){}
+  deletar(){}
+  atualizar(){}
 
 }

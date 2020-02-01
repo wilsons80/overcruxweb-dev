@@ -6,8 +6,8 @@ import { NgModule } from '@angular/core';
 
 
 const routes: Routes = [
-  {path: 'categoriascontabeis/cadastrar', component: CadastrarCategoriasContabeisComponent},
-  {path: 'categoriascontabeis', component: CategoriasContabeisComponent}
+  {path: 'categoriascontabeis/cadastrar', component: CadastrarCategoriasContabeisComponent, canActivate: [AuthGuard]},
+  {path: 'categoriascontabeis', component: CategoriasContabeisComponent,canActivate: [AuthGuard]}
 ];
 
 @NgModule({

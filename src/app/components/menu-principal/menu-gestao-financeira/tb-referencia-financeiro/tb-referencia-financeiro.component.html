@@ -1,0 +1,25 @@
+<a mat-list-item (click)="toggle()" style="width: fit-content;">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}"
+            class="submenu">
+            <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Tabelas de Referência">
+                <mat-icon>table_chart</mat-icon>
+                <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Tabelas de Referência</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start stretch">
+                <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+            </div>
+        </div>
+    </a>
+
+    <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+        <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+            <!-- CATEGORIAS CONTÁBEIS-->
+            <div style="padding-left: 15px">
+                <!-- <sub-menu *ngIf="verificaAcesso(getModulos().CATEGORIAS_CONTABEIS)" icone="pages" titulo="Categorias Contábeis" rota="categoriacontabeis" toolTip="Categorias Contábeis"></sub-menu> -->
+                <sub-menu icone="toc" titulo="Categorias Contábeis" rota="categoriascontabeis" toolTip="Categorias Contábeis"></sub-menu>
+            </div>
+        
+        </div>
+    </mat-nav-list>

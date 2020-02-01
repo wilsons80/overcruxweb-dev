@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastrarCategoriasContabeisComponent implements OnInit {
 
+  categorias:any =[];
+
+  tipos= [
+    {id: "D", descricao:"DESPESA"},
+    {id: "R", descricao:"RECEITA"},
+  ]
+
   constructor() { }
 
   ngOnInit() {

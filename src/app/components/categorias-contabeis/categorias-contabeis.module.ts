@@ -1,3 +1,4 @@
+import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { CategoriasContabeisRoutingModule } from './categorias-contabeis-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { CadastrarCategoriasContabeisComponent } from './cadastrar-categorias-co
   declarations: [CategoriasContabeisComponent, CadastrarCategoriasContabeisComponent],
   imports: [
     CommonModule,
-    CategoriasContabeisRoutingModule
+    CategoriasContabeisRoutingModule,
+    MaterialCommonModule
   ]
 })
 export class CategoriasContabeisModule { }

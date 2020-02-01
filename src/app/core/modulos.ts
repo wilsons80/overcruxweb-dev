@@ -96,4 +96,5 @@ export enum Modulos{
     , ALTERAR_SENHA                         = 'ALTERAR_SENHA'
  
     , MOVIMENTACOES                         = 'MOVIMENTACOES'
+    , CATEGORIAS_CONTABEIS                  = 'CATEGORIAS_CONTABEIS'
 }

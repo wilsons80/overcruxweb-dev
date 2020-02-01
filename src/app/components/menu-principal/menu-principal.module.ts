@@ -24,6 +24,7 @@ import { MenuGestaoFinanceiraComponent } from './menu-gestao-financeira/menu-ges
 import { MenuAtendimentoMultidisciplinarComponent } from './menu-atendimento-multidisciplinar/menu-atendimento-multidisciplinar.component';
 import { SubMenuDiagnosticoMultidisciplinarComponent } from './menu-atendimento-multidisciplinar/sub-menu-diagnostico-multidisciplinar/sub-menu-diagnostico-multidisciplinar.component';
 import { SubMenuPlanejamentoAtividadesComponent } from './menu-atendimento-multidisciplinar/sub-menu-planejamento-atividades/sub-menu-planejamento-atividades.component';
+import { TbReferenciaFinanceiroComponent } from './menu-gestao-financeira/tb-referencia-financeiro/tb-referencia-financeiro.component';
 
 
 
@@ -42,6 +43,7 @@ import { SubMenuPlanejamentoAtividadesComponent } from './menu-atendimento-multi
     TbReferenciaSecretariaComponent,
     TbReferenciaSapComponent,
     TbReferenciaOrganizacaoInternaComponent,
+    TbReferenciaFinanceiroComponent,
     MenuProgramaProjetoComponent,
     TbReferenciaEstrategicoComponent,
     SubMenuGestaoDesempenhoComponent,
