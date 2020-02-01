@@ -94,4 +94,6 @@ export enum Modulos{
     , PLANEJAMENTO_PSICOLOGIA               = 'PLANEJAMENTO_PSICOLOGIA'
     , ESTUDO_CASOS_RESULTADOS               = 'ESTUDO_CASOS_RESULTADOS'
     , ALTERAR_SENHA                         = 'ALTERAR_SENHA'
+ 
+    , MOVIMENTACOES                         = 'MOVIMENTACOES'
 }
