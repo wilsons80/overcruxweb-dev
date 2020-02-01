@@ -20,18 +20,18 @@
             <!-- #NUMERO TOMBRAMENTO  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="20%">
                 <input #numeroTombamento matInput maxlength="20" name="numeroTombamento"
-                    placeholder="Número tombamento:" required>
+                    placeholder="Número tombamento:">
             </mat-form-field>
 
             <!-- #QUANTIDADE  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="8%">
-                <input #quantidade matInput min=0 name="quantidade" placeholder="Quantidade:" required>
+                <input #quantidade matInput min=0 name="quantidade" placeholder="Quantidade:">
             </mat-form-field>
 
             <!-- #TIPO MOVIMENTACAO -->
             <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Tipo Movimentação:</mat-label>
-                <mat-select name="tipoMovimentacao">
+                <mat-select name="tipoMovimentacao" required>
                     <mat-option *ngFor="let i of tiposMovimentacoes">
                         {{i.descricao}}
                     </mat-option>
