@@ -1,3 +1,4 @@
+import { CotacoesMateriaisModule } from './components/cotacoes-materiais/cotacoes-materiais.module';
 import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
 import { OficinaModule } from './components/oficina/oficina.module';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -208,7 +209,8 @@ registerLocaleData(localePt, 'pt-BR');
     PrestacaoContasModule,
     PlanoCargoSalarioModule,
     MovimentacoesModule,
-    CategoriasContabeisModule
+    CategoriasContabeisModule,
+    CotacoesMateriaisModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

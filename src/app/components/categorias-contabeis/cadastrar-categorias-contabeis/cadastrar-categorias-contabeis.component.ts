@@ -9,6 +9,11 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
 
   categorias:any =[];
 
+  isAtualizar = false;
+  mostrarBotaoCadastrar = true;
+  mostrarBotaoAtualizar = false;
+  
+
   tipos= [
     {id: "D", descricao:"DESPESA"},
     {id: "R", descricao:"RECEITA"},
@@ -16,7 +21,12 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
+  cadastrar(){}
+  atualizar(){}
+  limpar(){}
+  cancelar(){}
+  mostrarBotaoLimpar(){return true;}
 
 }

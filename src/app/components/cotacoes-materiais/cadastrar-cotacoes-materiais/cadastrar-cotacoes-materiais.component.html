@@ -1,0 +1,113 @@
+<mat-toolbar class="subtitulo">Categorias Contábeis</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- MATERIAIS -->
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                <mat-label>Material:</mat-label>
+                <mat-select name="material" required>
+                    <mat-option *ngFor="let i of materiais">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum material
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+
+            <!-- PEDIDOS -->
+            <mat-form-field fxFlex="30%">
+                <mat-label>Pedido:</mat-label>
+                <mat-select name="empresa">
+                    <mat-option *ngFor="let i of pedidos">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="pedidos?.length === 0" align="start">Nenhum pedido
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+            <!-- EMPRESA -->
+            <mat-form-field fxFlex="30%">
+                <mat-label>Empresa:</mat-label>
+                <mat-select name="empresa" required>
+                    <mat-option *ngFor="let i of empresas">
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
+                    cadastrada</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">Datas</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- #DATA COTACAO  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                <input matInput name="dataCotacao" [matDatepicker]="dataCotacao" placeholder="Data da Cotação" required>
+                <mat-datepicker-toggle matSuffix [for]="dataCotacao">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataCotacao></mat-datepicker>
+            </mat-form-field>
+
+            <!-- #DATA VALIDADE DA COTACAO  -->
+            <mat-form-field fxFlex="20%">
+                <input matInput name="dataValidadeCotacao" [matDatepicker]="dataValidadeCotacao"
+                    placeholder="Data de Validade">
+                <mat-datepicker-toggle matSuffix [for]="dataValidadeCotacao">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataValidadeCotacao></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">Valor</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <!-- #VALOR UNITARIO  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                <input currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <!-- #QUANTIDADE  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="10%">
+                <input #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
+            </mat-form-field>
+
+            <!-- #VALOR TOTAL  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                <input currencyMask name="valorTotal" placeholder="Valor Total:" matInput maxlength="13"
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                    disabled
+                    />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </form>
+</div>

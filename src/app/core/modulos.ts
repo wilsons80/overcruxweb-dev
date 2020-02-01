@@ -97,4 +97,5 @@ export enum Modulos{
  
     , MOVIMENTACOES                         = 'MOVIMENTACOES'
     , CATEGORIAS_CONTABEIS                  = 'CATEGORIAS_CONTABEIS'
+    , COTACOES_MATERIAIS                    = 'COTACOES_MATERIAIS'
 }
