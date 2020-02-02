@@ -6,9 +6,10 @@ import { InstituicaoComponent } from './instituicao.component';
 import { CadastrarInstituicaoComponent } from './cadastrar-instituicao/cadastrar-instituicao.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosInstituicaoComponent } from './cadastrar-instituicao/dados-instituicao/dados-instituicao.component';
+import { FuncoesInstituicaoComponent } from './cadastrar-instituicao/funcoes-instituicao/funcoes-instituicao.component';
 
 @NgModule({
-  declarations: [InstituicaoComponent, CadastrarInstituicaoComponent, DadosInstituicaoComponent],
+  declarations: [InstituicaoComponent, CadastrarInstituicaoComponent, DadosInstituicaoComponent, FuncoesInstituicaoComponent],
   imports: [
     CommonModule,
     InstituicaoRoutingModule,
