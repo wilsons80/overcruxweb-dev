@@ -25,6 +25,6 @@ export class MovimentacoesMateriaisComponent implements OnInit {
 
   consultar(){}
   limpar(){}
-  deletar(){}
-  atualizar(){}
+  deletar(element){}
+  atualizar(element){}
 }
