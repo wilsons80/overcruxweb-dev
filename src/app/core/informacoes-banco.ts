@@ -1,4 +1,4 @@
 export class InformacoesBanco{
-    numero:number
+    numero:string
     nome:string
 }
