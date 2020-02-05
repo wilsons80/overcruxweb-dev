@@ -14,4 +14,5 @@ export class ColaboradoresProjeto  {
 	cargo: Cargo;
 	tiposContratacoes:TiposContratacoes
 	usuarioAlteracao: number;
+	percentual: number;
 }

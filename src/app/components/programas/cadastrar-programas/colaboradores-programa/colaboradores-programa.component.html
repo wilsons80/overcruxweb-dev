@@ -18,7 +18,7 @@
                         <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50%" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="50%">
                         <mat-label>Cargo:</mat-label>
                         <mat-select [(ngModel)]="colaboradoresPrograma.cargo.id" name="cargo" required (selectionChange)="verificaComposicaoCargo()">
                             <mat-option *ngFor="let m of cargos" [value]="m.id">
@@ -42,18 +42,26 @@
                         <mat-hint *ngIf="listaTiposContratacoes?.length === 0" align="start">Nenhum tipo contratação cadastrado</mat-hint>
                     </mat-form-field>
                     
-                        <mat-form-field fxFlex= "15%" fxFlexOffset="20px" >
-                                <input matInput name= "dtImplantacao" [matDatepicker]="dataInicio" placeholder="Data de entrada:" [(ngModel)]="colaboradoresPrograma.dataInicio" required>
-                                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                                <mat-datepicker #dataInicio></mat-datepicker>
-                         </mat-form-field>
-            
-                         <mat-form-field fxFlex= "15%">
-                                <input matInput name= "dtTermino" [matDatepicker]="dataTermino" placeholder="Data de saída:" [(ngModel)]="colaboradoresPrograma.dataFim">
-                                <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
-                                <mat-datepicker #dataTermino></mat-datepicker>
-                         </mat-form-field>
-                    </div>
+                    <mat-form-field fxFlex="20%">
+                        <input matInput name= "dtImplantacao" [matDatepicker]="dataInicio" placeholder="Data de entrada:" [(ngModel)]="colaboradoresPrograma.dataInicio" required>
+                        <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                        <mat-datepicker #dataInicio></mat-datepicker>
+                    </mat-form-field>
+    
+                    <mat-form-field fxFlex="20%">
+                        <input matInput name= "dtTermino" [matDatepicker]="dataTermino" placeholder="Data de saída:" [(ngModel)]="colaboradoresPrograma.dataFim">
+                        <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
+                        <mat-datepicker #dataTermino></mat-datepicker>
+                    </mat-form-field>
+                </div>
+    
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                        <input matInput type="number" maxlength="3" name="percentual"
+                            placeholder="Valor em Percentual de participação"
+                            [(ngModel)]="colaboradoresPrograma.percentual">
+                    </mat-form-field>
+                </div>
     
                 
                 <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"

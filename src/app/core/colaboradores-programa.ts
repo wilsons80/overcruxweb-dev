@@ -10,6 +10,7 @@ export class ColaboradoresPrograma {
 	funcionario: Funcionario;
 	programa: Programa;
 	cargo: Cargo;
-	tiposContratacoes:TiposContratacoes
+	tiposContratacoes: TiposContratacoes;
 	usuarioAlteracao: number;
+	percentual: number;
 }

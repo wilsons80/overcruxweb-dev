@@ -5,8 +5,18 @@
         <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
+            <!-- TIPO -->
+            <mat-form-field fxFlex="10%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Tipo:</mat-label>
+                <mat-select name="tipo" required>
+                    <mat-option *ngFor="let i of tipos">
+                        {{i.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>            
+
             <!-- CATEGORIA SUPERIOR -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" >
                 <mat-label>Categoria Superior:</mat-label>
                 <mat-select name="categorias">
                     <mat-option *ngFor="let i of categorias">
@@ -18,20 +28,11 @@
             </mat-form-field>
 
             <!-- NOME -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="50%">
+            <mat-form-field fxFlex="50%">
                 <input #nome matInput maxlength="100" name="nome" placeholder="Nome:" required>
                 <mat-hint align="end">{{nome.value.length}} / 100</mat-hint>
             </mat-form-field>
 
-            <!-- TIPO -->
-            <mat-form-field fxFlex="10%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Tipo:</mat-label>
-                <mat-select name="tipo" required>
-                    <mat-option *ngFor="let i of tipos">
-                        {{i.descricao}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
         </div>
 
         <div fxLayout="row" fxFlexFill>
