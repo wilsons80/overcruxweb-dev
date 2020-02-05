@@ -1,25 +1,42 @@
-
 <mat-toolbar class="subtitulo">Contas Bancárias</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
-    	
-    	 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
         <!-- BANCOS -->
-         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                 <mat-label>Banco:</mat-label>
                 <mat-select name="cargo">
-                    <mat-option *ngFor="let m of listaBancos" >
+                    <mat-option *ngFor="let m of listaBancos">
+                        {{m.numero}} - {{m.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaBancos?.length === 0" align="start">Nenhum banco cadastrado</mat-hint>
+            </mat-form-field>
+
+            <!-- AGENCIA -->
+            <mat-form-field fxFlex="10%">
+                <input matInput maxlength="20" name="agencia" placeholder="Agência:">
+            </mat-form-field>
+
+            <!-- CONTA -->
+            <mat-form-field fxFlex="20%">
+                <input matInput maxlength="20" name="conta" placeholder="Conta Corrente:">
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                <mat-label>Banco:</mat-label>
+                <mat-select name="cargo">
+                    <mat-option *ngFor="let m of listaBancos">
                         {{m.numero}} - {{m.nome}}
                     </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="listaBancos?.length === 0" align="start">Nenhum banco cadastrado</mat-hint>
             </mat-form-field>
         </div>
-
-        
-
-
 
     </form>
 </div>
