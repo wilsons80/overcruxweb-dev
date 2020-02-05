@@ -4,8 +4,22 @@
     <form #formCadastro="ngForm">
     	
     	 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-        	
+        <!-- BANCOS -->
+         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                <mat-label>Banco:</mat-label>
+                <mat-select name="cargo">
+                    <mat-option *ngFor="let m of listaBancos" >
+                        {{m.numero}} - {{m.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaBancos?.length === 0" align="start">Nenhum banco cadastrado</mat-hint>
+            </mat-form-field>
         </div>
+
+        
+
+
+
     </form>
 </div>
