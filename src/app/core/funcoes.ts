@@ -6,3 +6,5 @@ export class Funcoes{
     unidade:Unidade;
     instituicao:Instituicao;
 }
+
+//TODO ARRUMAR TIPAGEM DEPOIS

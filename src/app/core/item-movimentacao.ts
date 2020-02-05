@@ -9,3 +9,5 @@ export class ItemMovimentacao{
     valorUnitarioItem :any   
     valorTotalItem:any       
 }
+
+//TODO ARRUMAR TIPAGEM DEPOIS

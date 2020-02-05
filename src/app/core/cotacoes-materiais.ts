@@ -10,3 +10,5 @@ export class CotacoesMateriais{
     valorTotalCotacao:number;
     
 }
+
+//TODO ARRUMAR TIPAGEM DEPOIS

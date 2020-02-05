@@ -21,3 +21,5 @@ export class MovimentacoesMateriais{
     descricaoMovimentacaoMaterial;
     numeroTombamento:string;
 }
+
+//TODO ARRUMAR TIPAGEM DEPOIS

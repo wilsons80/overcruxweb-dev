@@ -1,3 +1,4 @@
+import { ContasBancariasModule } from './components/contas-bancarias/contas-bancarias.module';
 import { MovimentacoesMateriaisModule } from './components/movimentacoes-materiais/movimentacoes-materiais.module';
 import { CotacoesMateriaisModule } from './components/cotacoes-materiais/cotacoes-materiais.module';
 import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
@@ -213,7 +214,8 @@ registerLocaleData(localePt, 'pt-BR');
     CategoriasContabeisModule,
     CotacoesMateriaisModule,
     MovimentacoesMateriaisModule,
-    FuncoesModule
+    FuncoesModule,
+    ContasBancariasModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

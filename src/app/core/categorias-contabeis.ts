@@ -5,3 +5,5 @@ export class CategoriasContabeis{
    nomeCategoria:string
    descricaoCategoria:string
 }
+
+//TODO ARRUMAR TIPAGEM DEPOIS
