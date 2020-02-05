@@ -9,7 +9,7 @@
         <div id="row_dados" fxFlex="85%" fxFlexFill>
 
             <div fxLayout="row" fxLayoutGap="20px">
-                <mat-form-field fxFlex="58%" fxFlexOffset="20px">
+                <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                     <input matInput maxlength="255" name="nome" placeholder="Nome Completo:"
                         [(ngModel)]="pessoaFisica.nome" required>
                 </mat-form-field>
@@ -20,6 +20,27 @@
                     <mat-datepicker-toggle matSuffix [for]="dataNascimento"></mat-datepicker-toggle>
                     <mat-datepicker #dataNascimento></mat-datepicker>
                 </mat-form-field>
+
+
+                <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                    <input #campoCidade
+                           matInput maxlength="200"
+                           [(ngModel)]="pessoaFisica.cidadeNaturalidade"
+                           name="cidadeNaturalidade"
+                           placeholder="Cidade Naturalidade">
+                    <mat-hint align="end">{{campoCidade.value.length}} / 200</mat-hint>
+                </mat-form-field>
+            
+                <mat-form-field fxFlex="10%">
+                    <mat-label>UF</mat-label>
+                    <mat-select name="ufNascimento" [(ngModel)]="pessoaFisica.ufNascimento">
+                        <mat-option *ngFor="let e of ufs" [value]="e">
+                            {{e}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
             </div>
 
             <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>

@@ -10,6 +10,7 @@ export class PessoaFisica{
     descricaoPessoaFisicaAtendidoOrgaoRede: string;
     bairro:string;
     cidade:string;
+    cidadeNaturalidade:string;
     condicaoMoradia:string;
     cor:string;
     cursoEscola:string;
@@ -87,5 +88,5 @@ export class PessoaFisica{
    ufCTS: string;
    dataEmissaoCI: Date;
    vencimentoCNH: Date;
-
+   origemRendaFamiliar: string;
 }
