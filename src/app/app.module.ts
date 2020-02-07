@@ -1,8 +1,3 @@
-import { ContasBancariasModule } from './components/contas-bancarias/contas-bancarias.module';
-import { MovimentacoesMateriaisModule } from './components/movimentacoes-materiais/movimentacoes-materiais.module';
-import { CotacoesMateriaisModule } from './components/cotacoes-materiais/cotacoes-materiais.module';
-import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
-import { OficinaModule } from './components/oficina/oficina.module';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -32,6 +27,7 @@ import { AvaliacaoAlunoModule } from './components/avaliacao-aluno/avaliacao-alu
 import { AvaliacaoAtividadeModule } from './components/avaliacao-atividade/avaliacao-atividade.module';
 import { CadastroReservaAtividadeModule } from './components/cadastro-reserva-atividade/cadastro-reserva-atividade.module';
 import { CargoModule } from './components/cargo/cargo.module';
+import { CategoriasContabeisModule } from './components/categorias-contabeis/categorias-contabeis.module';
 import { CboModule } from './components/cbo/cbo.module';
 import { AuthInterceptor } from './components/common/auth-interceptor/auth-interceptor';
 import { ConfirmDialogComponent } from './components/common/confirm-dialog/confirm-dialog.component';
@@ -42,6 +38,8 @@ import { LoadingPopupModule } from './components/common/loading-popup/loading-po
 import { PaginaNaoEncontradaComponent } from './components/common/pagina-nao-encontrada/pagina-nao-encontrada.component';
 import { TempoSessaoDialogComponent } from './components/common/tempo-sessao-dialog/tempo-sessao-dialog.component';
 import { CondicaoMoradiaModule } from './components/condicao-moradia/condicao-moradia.module';
+import { ContasBancariasModule } from './components/contas-bancarias/contas-bancarias.module';
+import { CotacoesMateriaisModule } from './components/cotacoes-materiais/cotacoes-materiais.module';
 import { CursoFormacaoModule } from './components/curso-formacao/curso-formacao.module';
 import { DepartamentoModule } from './components/departamento/departamento.module';
 import { DiagnosticoAtendimentoModule } from './components/diagnostico-atendimento/diagnostico-atendimento.module';
@@ -53,6 +51,7 @@ import { FaltasFuncionarioModule } from './components/faltas-funcionario/faltas-
 import { FamiliarAlunoModule } from './components/familiar-aluno/familiar-aluno.module';
 import { FrequenciaAlunoModule } from './components/frequencia-aluno/frequencia-aluno.module';
 import { FuncionarioModule } from './components/funcionario/funcionario.module';
+import { FuncoesModule } from './components/funcoes/funcoes.module';
 import { GrausInstrucaoModule } from './components/graus-instrucao/graus-instrucao.module';
 import { GrupoModuloModule } from './components/grupo-modulo/grupo-modulo.module';
 import { HomeModule } from './components/home/home.module';
@@ -60,15 +59,22 @@ import { IndicadoresModule } from './components/indicadores/indicadores.module';
 import { IniciativasModule } from './components/iniciativas/iniciativas.module';
 import { InstituicaoModule } from './components/instituicao/instituicao.module';
 import { LoginModule } from './components/login/login.module';
+import { MaterialModule } from './components/material/material.module';
+import { MatriculaModule } from './components/matricula/matricula.module';
 import { MenuPrincipalModule } from './components/menu-principal/menu-principal.module';
 import { MetasModule } from './components/metas/metas.module';
+import { MovimentacoesMateriaisModule } from './components/movimentacoes-materiais/movimentacoes-materiais.module';
+import { MovimentacoesModule } from './components/movimentacoes/movimentacoes.module';
 import { NiveisTurmasModule } from './components/niveis-turmas/niveis-turmas.module';
 import { NovaSenhaModule } from './components/nova-senha/nova-senha.module';
 import { ObjetivoModule } from './components/objetivo/objetivo.module';
 import { OcorrenciaAlunoModule } from './components/ocorrencia-aluno/ocorrencia-aluno.module';
+import { OficinaModule } from './components/oficina/oficina.module';
 import { ParticipanteAtendimentoModule } from './components/participante-atendimento/participante-atendimento.module';
 import { PerspectivaModule } from './components/perspectiva/perspectiva.module';
+import { PlanoCargoSalarioModule } from './components/plano-cargo-salario/plano-cargo-salario.module';
 import { PlanosAcaoModule } from './components/planos-acao/planos-acao.module';
+import { PrestacaoContasModule } from './components/prestacao-contas/prestacao-contas.module';
 import { ProgramasModule } from './components/programas/programas.module';
 import { ProjetoModule } from './components/projeto/projeto.module';
 import { QuestionarioModule } from './components/questionario/questionario.module';
@@ -87,12 +93,6 @@ import { UploadFotoModule } from './components/upload-foto/upload-foto.module';
 import { UsuarioModule } from './components/usuario/usuario.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl/portuguese-paginator-intl.component';
-import { MaterialModule } from './components/material/material.module';
-import { MatriculaModule } from './components/matricula/matricula.module';
-import { PrestacaoContasModule } from './components/prestacao-contas/prestacao-contas.module';
-import { PlanoCargoSalarioModule } from './components/plano-cargo-salario/plano-cargo-salario.module';
-import { CategoriasContabeisModule } from './components/categorias-contabeis/categorias-contabeis.module';
-import { FuncoesModule } from './components/funcoes/funcoes.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -120,7 +120,6 @@ registerLocaleData(localePt, 'pt-BR');
     ConfirmDialogComponent,
     AcessoRestritoComponent,
     TempoSessaoDialogComponent,
-    
   ],
   imports: [
     BrowserModule,

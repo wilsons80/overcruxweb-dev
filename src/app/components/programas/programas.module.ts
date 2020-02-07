@@ -13,6 +13,7 @@ import { MateriaisProgramaComponent } from './cadastrar-programas/parcerias-prog
 import { ParceriasProgramaComponent } from './cadastrar-programas/parcerias-programa/parcerias-programa.component';
 import { ProgramasRoutingModule } from './programas-routing.module';
 import { ProgramasComponent } from './programas.component';
+import { DadosContasBancariasModule } from '../common/dados-contas-bancarias/dados-contas-bancarias.module';
 
 
 
@@ -33,7 +34,8 @@ import { ProgramasComponent } from './programas.component';
     MaterialCommonModule,
     DadosFuncionarioModule,
     UnidadesMultiplasModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    DadosContasBancariasModule
   ]
 })
 export class ProgramasModule { }

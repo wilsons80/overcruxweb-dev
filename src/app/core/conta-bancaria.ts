@@ -6,7 +6,7 @@ export class ContaBancaria{
     tipoContaBancaria:string
     numeroAgencia:string
     numeroContaBancaria:number
-    contaBancarioTO:InformacoesBanco
+    informacoesBanco:InformacoesBanco
     unidade:Unidade
     
 }

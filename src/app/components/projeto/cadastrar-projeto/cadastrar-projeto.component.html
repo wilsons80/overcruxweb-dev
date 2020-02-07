@@ -84,6 +84,9 @@
                                 <parcerias-projeto [listaParceiros]= projeto.parceriasProjeto></parcerias-projeto>
                                 <div dir="rtl" fxLayoutGap="20px"
                                         style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+                                        <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                                                <mat-icon>chevron_right</mat-icon>
+                                        </button>
                                         <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
                                                 <mat-icon>chevron_left</mat-icon>
                                         </button>
@@ -92,13 +95,11 @@
                 </mat-step>
               
 
-                <!------------------  Materiais do Projeto ------------------------>
-                <!-- <mat-step [stepControl]="formCadastroMateriais">
+                <!------------------  Contas Bancárias ------------------------>
+                <mat-step [stepControl]="formCadastroMateriais">
                         <form #formCadastroMateriais="ngForm" matStepperIcon="phone">
-                                <ng-template matStepLabel>MATERIAIS</ng-template>
-                                <materiais-projeto [projeto]=projeto
-                                                    [listaMateriaisProjeto]=projeto.materiaisProjeto
-                                ></materiais-projeto>
+                                <ng-template matStepLabel>CONTAS BANCÁRIAS</ng-template>
+                                <dados-contas-bancarias></dados-contas-bancarias>
                                 <div dir="rtl" fxLayoutGap="20px"
                                         style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
                                         <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
@@ -106,7 +107,7 @@
                                         </button>
                                 </div>
                         </form>
-                </mat-step> -->
+                </mat-step>
 
         </mat-horizontal-stepper>
 

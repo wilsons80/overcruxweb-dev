@@ -84,10 +84,27 @@
                                 <parcerias-programa [listaParceiros]= programa.parceriasPrograma></parcerias-programa>
                                 <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                                 fxFlexFill>
+                                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                                        <mat-icon>chevron_right</mat-icon>
+                                    </button>
                               <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
                                   <mat-icon>chevron_left</mat-icon>
                               </button>
                           </div>
+                        </form>
+                </mat-step>
+
+                <!------------------  Contas Bancárias ------------------------>
+                <mat-step [stepControl]="formCadastroMateriais">
+                        <form #formCadastroMateriais="ngForm" matStepperIcon="phone">
+                                <ng-template matStepLabel>CONTAS BANCÁRIAS</ng-template>
+                                <dados-contas-bancarias></dados-contas-bancarias>
+                                <div dir="rtl" fxLayoutGap="20px"
+                                        style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+                                        <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                                                <mat-icon>chevron_left</mat-icon>
+                                        </button>
+                                </div>
                         </form>
                 </mat-step>
 

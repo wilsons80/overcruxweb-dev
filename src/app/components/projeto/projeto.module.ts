@@ -12,6 +12,7 @@ import { ProjetoRoutingModule } from './projeto-routing.module';
 import { ProjetoComponent } from './projeto.component';
 import { DadosParceiroComponent } from './cadastrar-projeto/parcerias-projeto/dados-parceiro/dados-parceiro.component';
 import { MateriaisProjetoComponent } from './cadastrar-projeto/parcerias-projeto/materiais-projeto/materiais-projeto.component';
+import { DadosContasBancariasModule } from '../common/dados-contas-bancarias/dados-contas-bancarias.module';
 
 
 
@@ -31,7 +32,8 @@ import { MateriaisProjetoComponent } from './cadastrar-projeto/parcerias-projeto
     ProjetoRoutingModule,
     MaterialCommonModule,
     UnidadesMultiplasModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    DadosContasBancariasModule
   ]
 })
 export class ProjetoModule { }
