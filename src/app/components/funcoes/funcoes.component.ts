@@ -1,3 +1,4 @@
+import { FuncoesService } from './../../services/funcoes/funcoes.service';
 import { Funcoes } from './../../core/funcoes';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
@@ -20,20 +21,28 @@ export class FuncoesComponent implements OnInit {
   funcoes: Funcoes = new Funcoes();
   msg: string;
 
-  displayedColumns: string[] = ['id', 'nome', 'unidade', 'acoes'];
+  displayedColumns: string[] = ['id', 'nome', 'unidade','valor', 'acoes'];
   dataSource: MatTableDataSource<Funcoes> = new MatTableDataSource();
-  perfilAcesso: Acesso;
+  
+  perfilAcesso: Acesso = {
+    insere:true,
+    altera:true,
+    consulta:true,
+    deleta:true,
+    idModulo:186,
+    nomeModulo:"FUNCAO"
+  };
 
 
   constructor(
-    private departamentoService: DepartamentoService,
+    private funcoesService: FuncoesService,
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+   // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
@@ -48,7 +57,7 @@ export class FuncoesComponent implements OnInit {
 
   consultar() {
     if (this.funcoes.id) {
-      this.departamentoService.getById(this.funcoes.id).subscribe((funcoes: Funcoes) => {
+      this.funcoesService.getById(this.funcoes.id).subscribe((funcoes: Funcoes) => {
         if (!funcoes) {
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -83,7 +92,7 @@ export class FuncoesComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-        this.departamentoService.excluir(funcoes.id).subscribe(() => {
+        this.funcoesService.excluir(funcoes.id).subscribe(() => {
           this.funcoes.id = null;
           this.consultar();
         })
@@ -96,7 +105,7 @@ export class FuncoesComponent implements OnInit {
   }
 
   getAll() {
-    this.departamentoService.getAll().subscribe((listaFuncoes: Funcoes[]) => {
+    this.funcoesService.getAll().subscribe((listaFuncoes: Funcoes[]) => {
       this.listaFuncoes = listaFuncoes;
       this.dataSource.data = listaFuncoes ? listaFuncoes : [];
       this.verificaMostrarTabela(listaFuncoes);

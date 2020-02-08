@@ -1,3 +1,4 @@
+import { NgxCurrencyModule } from 'ngx-currency';
 import { MaterialCommonModule } from './../../material-modules/material-common.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,7 +16,8 @@ import { CadastrarFuncoesComponent } from './cadastrar-funcoes/cadastrar-funcoes
   imports: [
     CommonModule,
     FuncoesRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    NgxCurrencyModule
   ]
 })
 export class FuncoesModule { }

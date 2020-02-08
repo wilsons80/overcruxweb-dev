@@ -1,9 +1,13 @@
+import { Unidade } from 'src/app/core/unidade';
+import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
+import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { Component, OnInit } from '@angular/core';
 import { FuncoesService } from 'src/app/services/funcoes/funcoes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Funcoes } from 'src/app/core/funcoes';
 import { Acesso } from 'src/app/core/acesso';
+import { Instituicao } from 'src/app/core/instituicao';
 
 @Component({
   selector: 'cadastrar-funcoes',
@@ -12,11 +16,21 @@ import { Acesso } from 'src/app/core/acesso';
 })
 export class CadastrarFuncoesComponent implements OnInit {
 
+  unidades:Unidade[];
+  instituicoes:Instituicao[];
+
   funcao: Funcoes;
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = {
+    insere:true,
+    altera:true,
+    consulta:true,
+    deleta:true,
+    idModulo:186,
+    nomeModulo:"FUNCAO"
+  };
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -24,14 +38,16 @@ export class CadastrarFuncoesComponent implements OnInit {
     private funcoesService: FuncoesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private unidadeService:UnidadeService,
+    private instituicaoService:InstituicaoService
 
   ) { }
 
   ngOnInit() {
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    //this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -40,6 +56,15 @@ export class CadastrarFuncoesComponent implements OnInit {
     if (!this.perfilAcesso.altera) {
       this.mostrarBotaoAtualizar = false;
     }
+
+    this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
+      this.unidades = unidades;
+    })
+    
+    this.instituicaoService.getInstituicoesComAcesso().subscribe((instituicoes: Instituicao[]) => {
+      this.instituicoes = instituicoes;
+    })
+
    
     let id: number;
     id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
@@ -83,6 +108,8 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   inicializarObjetos() {
     this.funcao = new Funcoes();
+    this.funcao.instituicao = new Instituicao();
+    this.funcao.unidade = new Unidade();
   }
 
   mostrarBotaoLimpar() {
