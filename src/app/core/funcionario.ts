@@ -31,4 +31,8 @@ export class Funcionario {
 	departamento: Departamento;
 	alocacoesFuncionario: AlocacaoFuncionario[];
 	dependentes: Dependentes[];
+	horaInicioJornada: string;
+	horaFimJornada: string;
+	emailProfissional:string;
+
 }
