@@ -89,4 +89,6 @@ export class PessoaFisica{
    dataEmissaoCI: Date;
    vencimentoCNH: Date;
    origemRendaFamiliar: string;
+
+   emailProfissional:string;
 }
