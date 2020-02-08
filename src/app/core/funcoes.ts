@@ -7,4 +7,3 @@ export class Funcoes{
     instituicao:Instituicao;
 }
 
-//TODO ARRUMAR TIPAGEM DEPOIS

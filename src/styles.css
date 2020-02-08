@@ -102,10 +102,12 @@ mat-toolbar.mat-toolbar.mat-toolbar-single-row.subtitulo {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+
 /* TABELA */
 
 table {
   width: 100%;
+
 }
 
 tr.mat-header-row.ng-star-inserted,
@@ -149,4 +151,6 @@ tr:not(th):active {
   top: 0 !important; /* Sets the sticky toolbar to be on top */
   z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
 }
+
+
 

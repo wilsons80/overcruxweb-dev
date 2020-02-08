@@ -53,5 +53,6 @@ export enum Rotas {
     TURMAS                          = 'api/turmas/',
     MATERIAIS                       = 'api/materiais/',
     OFICINA                         = 'api/oficinas/',
-    PLANO_CARGO_SALARIO             = 'api/planoscargosalario/'
+    PLANO_CARGO_SALARIO             = 'api/planoscargosalario/',
+    FUNCOES                         = 'api/funcoes/'
 }

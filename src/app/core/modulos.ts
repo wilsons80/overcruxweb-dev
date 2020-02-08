@@ -1,3 +1,4 @@
+import { Funcoes } from './funcoes';
 export enum Modulos{
      ADMINISTRATIVO                  	    = 'ADMINISTRATIVO'
      ,ACAO_COMPETENCIA                	    = 'ACAO_COMPETENCIA'
@@ -99,4 +100,5 @@ export enum Modulos{
     , CATEGORIAS_CONTABEIS                  = 'CATEGORIAS_CONTABEIS'
     , COTACOES_MATERIAIS                    = 'COTACOES_MATERIAIS'
     , MOVIMENTACOES_MATERIAIS               = 'MOVIMENTACOES_MATERIAIS'
+    , FUNCOES                               = 'FUNCOES'
 }
