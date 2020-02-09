@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { ArquivoPessoaFisicaService } from './../../../services/arquivo-pessoa-fisica/arquivo-pessoa-fisica.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Funcionario } from './../../../core/funcionario';
 import { PessoaFisica } from './../../../core/pessoa-fisica';
 import { FuncionarioService } from './../../../services/funcionario/funcionario.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FileUtils } from 'src/app/utils/file-utils';
@@ -36,7 +37,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
   constructor(
     private funcionarioService: FuncionarioService,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private toastService: ToastService,
     private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
     private fileUtils: FileUtils,
@@ -60,6 +61,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
  
 
     let idFuncionario: number;
+
     idFuncionario = this.activatedRoute.snapshot.queryParams.idFuncionario ? this.activatedRoute.snapshot.queryParams.idFuncionario : null;
     if (idFuncionario) {
       this.isAtualizar = true;
@@ -104,7 +106,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
       })
 
     ).subscribe(() => {
-      this.location.back();
+      this.router.navigate(['funcionario']);
       this.toastService.showSucesso('Funcionário cadastrado com sucesso');
     })
   }
@@ -144,7 +146,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
   }
 
   cancelar() {
-    this.location.back();
+    this.router.navigate(['funcionario']);
   }
 
   atualizar() {
@@ -161,7 +163,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
       })
 
     ).subscribe(() => {
-      this.location.back();
+      this.router.navigate(['funcionario']);
       this.toastService.showSucesso('Funcionário atualizado com sucesso');
     });
 
