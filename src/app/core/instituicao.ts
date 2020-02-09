@@ -14,5 +14,4 @@ export class Instituicao {
 	foto?: any;
 	urlFoto?: any;
 	isFotoChanged?: boolean;
-
 }

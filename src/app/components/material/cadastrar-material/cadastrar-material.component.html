@@ -21,17 +21,20 @@
                          </mat-option>
                     </mat-select>
                </mat-form-field>
-               
-               <mat-form-field fxFlex="15%" fxFlexOffset="20px">
-                    <input #numeroTombamento matInput maxlength="20" name="nome" placeholder="Número do tombamento:"
-                         [(ngModel)]="material.numeroTombamento" required>
-                    <mat-hint align="end">{{numeroTombamento.value.length}} / 20</mat-hint>
-               </mat-form-field>
           </div>
           <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
                <mat-form-field fxFlex="25%" fxFlexOffset="20px">
-                    <input type=number #qtdLimite matInput min=0 name="qtdLimite" placeholder="Quantidade limite:" />
+                    <input type=number #qtdLimite [(ngModel)]="material.quantidadeLimitePedido" matInput min=0 name="quantidadeLimitePedido" placeholder="Quantidade limite:" />
                </mat-form-field>
+              
+               <mat-form-field fxFlex="25%" fxFlexOffset="20px">
+                    <input type=number [(ngModel)]="material.numeroVidaUtil" #qtdLimite matInput min=0 name="numeroVidaUtil" placeholder="Vida Útil (Meses):" />
+               </mat-form-field>
+
+               <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                    <input type=number min=0 matInput [(ngModel)]="material.valorDepreciacao" name="valorDepreciacao" placeholder="Depreciação Ano:">
+                    <span matSuffix>%</span>
+                </mat-form-field>
           </div>
 
           <!--UNIDADE -->

@@ -6,6 +6,8 @@ export class Material{
 	nomeNotaFiscal:string;	
 	codigoUnidadeMedida:string;	
 	descricaoUnidadeMedida:string;	
-	numeroTombamento:string;
+	quantidadeLimitePedido:number;
+	numeroVidaUtil:number;
+	valorDepreciacao:number;
 
 }

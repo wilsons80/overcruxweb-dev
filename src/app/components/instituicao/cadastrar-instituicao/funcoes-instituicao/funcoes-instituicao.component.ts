@@ -19,7 +19,6 @@ export class FuncoesInstituicaoComponent implements OnInit {
 
   listaFuncoes = [{ nome: "FUNÇÃO 1" }, { nome: "FUNÇÃO 2" }];
   funcionarios = [{ nome: "FUNCIONÁRIO 1" }, { nome: "FUNCIONÁRIO 2" }];
-  pedidosMaterial = [{ nome: "Pedido 1" }, { nome: "Pedido 2" }];
 
   
   displayedColumns: string[] = ['categoria','material', 'qtdMaterial', 'valorUnitarioItem', 'valorTotalItem','acoes'];
