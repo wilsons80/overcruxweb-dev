@@ -131,7 +131,7 @@ export class AcessoComponent implements OnInit {
       this.usuarios = usuarios;
     });
 
-    this.moduloService.getUsuariosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
+    this.moduloService.getModulosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
       this.modulos = modulos;
     });
   }

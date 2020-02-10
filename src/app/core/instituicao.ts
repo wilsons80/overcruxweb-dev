@@ -4,7 +4,7 @@ export class Instituicao {
 	nome: string;
 	arquivo: number;
 	usuarioAlteracao: number;
-	monstraLista: boolean;
+	mostraLista: boolean;
 	areaAtuacao:string;
 	apresentacao:string;
 	visao:string;

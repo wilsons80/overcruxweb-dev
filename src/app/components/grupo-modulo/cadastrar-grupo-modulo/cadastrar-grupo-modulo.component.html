@@ -2,22 +2,23 @@
     <form #formulario="ngForm">
 
         <div *ngIf="!isAtualizar; else divAlterar">
-            <mat-toolbar class="subtitulo">Cadastro de Módulos da Unidade</mat-toolbar>
+            <mat-toolbar class="subtitulo">Cadastro de Módulos da Instituição</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                    <mat-form-field fxFlex="25%"
-                                    fxFlexOffset="20px">
+
+                    <mat-form-field fxFlex= "25%" fxFlexOffset="20px">
                         <mat-label>Instituição</mat-label>
-                        <mat-select [(ngModel)]="instituicaoSelecionada"
-                                    [disabled]="isAtualizar"
-                                    name="instituicao"
+                        <mat-select name="instituicao"
+                                    [(ngModel)]="instituicaoSelecionada.id"
+                                    [disabled]="isAtualizar" 
                                     required
                                     (selectionChange)="carregarGruposModulosDaInstituicao()">
-                            <mat-option *ngFor="let m of unidades" [value]="m.unidade">
-                                {{m.unidade.nomeUnidade}}
+                            <mat-option *ngFor="let u of instituicoes" [value]="u.id">
+                                {{u.nome}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+
 
                     <mat-form-field fxFlex="30%">
                         <mat-label>Permissão</mat-label>
@@ -68,7 +69,7 @@
 
 
         <ng-template #divAlterar>
-            <mat-toolbar class="subtitulo">Alteração de Módulo da Unidade</mat-toolbar>
+            <mat-toolbar class="subtitulo">Alteração de Módulo da Instituição</mat-toolbar>
             <div fxLayout="row"
                 fxLayoutGap="50px"
                 style="margin-top: 10px; margin-bottom: 10px"

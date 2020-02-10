@@ -15,7 +15,7 @@ export class ModuloService extends BaseService<Modulo> {
     super(http, Rotas.MODULO);
   }
 
-  getUsuariosPorInstituicaoLogada() {
+  getModulosPorInstituicaoLogada() {
     return this.http.get(moduloRootPath + `instituicao`);
   }
 

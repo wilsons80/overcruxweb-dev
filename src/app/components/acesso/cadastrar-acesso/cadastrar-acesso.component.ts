@@ -97,7 +97,7 @@ export class CadastrarAcessoComponent implements OnInit {
       this.limparCamposDependendentesUnidade();
     }
 
-    this.moduloService.getUsuariosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
+    this.moduloService.getModulosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
       // Tira os módulos PAI
       //const filhos = _.filter(modulos, m => m.moduloPai );
       //const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.moduloPai.id === f.id) );

@@ -26,7 +26,6 @@ export class CadastrarGrupoModuloComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////
   // Campos de combos
-  unidades: UsuariosUnidades[];
   modulos: Modulo[];
   perfisAcesso: PerfilAcesso[];
 
@@ -79,9 +78,20 @@ export class CadastrarGrupoModuloComponent implements OnInit {
       this.perfisAcesso = perfisAcesso;
     });
 
+    this.instituicaoService.getAll().subscribe((instituicoes: Instituicao[]) => {
+      this.instituicoes = _.filter(instituicoes, (i) => i.mostraLista);
+    });
+
+    this.moduloService.getModulosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
+      // Tira os módulos PAI
+      //const filhos = _.filter(modulos, m => m.moduloPai );
+      //const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.moduloPai.id === f.id) );
+
+      this.modulos = modulos;
+    });    
+
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
-
       this.isAtualizar = true;
       this.grupoModuloService.getById(id).subscribe((grupoModulo: GrupoModulo) => {
         this.grupoModulo = grupoModulo;
@@ -89,22 +99,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
 
         this.carregarGruposModulosDaInstituicao();
       });
-
-    } else {
-
-      this.usuarioUnidadeService.getUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: UsuariosUnidades[]) => {
-        this.unidades = unidades;
-      });
-
-      this.moduloService.getAll().subscribe((modulos: Modulo[]) => {
-        this.modulos = modulos.filter(m => m.moduloPai);
-      });
-
-      this.instituicaoService.getAll().subscribe((instituicoes: Instituicao[]) => {
-        this.instituicoes = _.filter(instituicoes, (i) => i.monstraLista);
-      });
-
-    }
+    } 
 
   }
 
@@ -114,6 +109,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
       this.grupoModulos = grupoModulos;
     });
   }
+
 
   limpar() {
     this.grupoModulo = new GrupoModulo();
