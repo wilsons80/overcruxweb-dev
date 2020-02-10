@@ -23,14 +23,7 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso = {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:186,
-    nomeModulo:"FUNCAO"
-  };
+  perfilAcesso: Acesso;
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -47,7 +40,7 @@ export class CadastrarFuncoesComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
 
-    //this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

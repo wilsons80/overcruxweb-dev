@@ -8,8 +8,8 @@ import { Modulos } from 'src/app/core/modulos';
 
 
 const routes: Routes = [
-  {path:'funcoes/cadastrar', component: CadastrarFuncoesComponent, canActivate: [AuthGuard]},
-  {path:'funcoes', component: FuncoesComponent, canActivate: [AuthGuard]},
+  {path:'funcoes/cadastrar', component: CadastrarFuncoesComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.FUNCOES} },
+  {path:'funcoes', component: FuncoesComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.FUNCOES} },
 ];
 
 @NgModule({
