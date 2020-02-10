@@ -59,7 +59,7 @@ export class GrupoModuloComponent implements OnInit {
     });
 
     this.moduloService.getAll().subscribe((modulos: Modulo[]) => {
-      this.modulos = modulos.filter(m => m.moduloPai);
+      this.modulos = modulos;
     });
   }
 

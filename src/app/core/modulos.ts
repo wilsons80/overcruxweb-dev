@@ -64,7 +64,7 @@ export enum Modulos{
     , PEDAGOGICO                            = 'PEDAGOGICO'
     , CONFIGURACOES                         = 'CONFIGURACOES'
     , PLANO_DESENVOLVIMENTO_INDIVIDUAL      = 'PLANO_DESENVOLVIMENTO_INDIVIDUAL'
-    , FUNCAO                                = 'FUNCAO'
+    //, FUNCAO                                = 'FUNCAO'
     , COMPETENCIA                           = 'COMPETENCIA'
     , ATRIBUTO_AVALIACAO_DESEMPENHO         = 'ATRIBUTO_AVALIACAO_DESEMPENHO'
     , CBO                                   = 'CBO'

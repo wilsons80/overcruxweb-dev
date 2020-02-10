@@ -82,11 +82,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
       this.instituicoes = _.filter(instituicoes, (i) => i.mostraLista);
     });
 
-    this.moduloService.getModulosPorInstituicaoLogada().subscribe((modulos: Modulo[]) => {
-      // Tira os módulos PAI
-      //const filhos = _.filter(modulos, m => m.moduloPai );
-      //const dados: any = filhos.filter((f: any) => !filhos.find( (r: any) =>  r.moduloPai.id === f.id) );
-
+    this.moduloService.getAll().subscribe((modulos: Modulo[]) => {
       this.modulos = modulos;
     });    
 
@@ -97,10 +93,11 @@ export class CadastrarGrupoModuloComponent implements OnInit {
         this.grupoModulo = grupoModulo;
         this.instituicaoSelecionada = this.grupoModulo.instituicao;
 
-        this.carregarGruposModulosDaInstituicao();
       });
+    } else {
+      this.carregarGruposModulosDaInstituicao();
     } 
-
+    
   }
 
   carregarGruposModulosDaInstituicao() {
