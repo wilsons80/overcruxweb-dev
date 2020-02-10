@@ -23,15 +23,7 @@ export class CategoriasContabeisComponent implements OnInit {
   displayedColumns: string[] = ['id', 'tipo', 'nome', 'acoes'];
   dataSource: MatTableDataSource<CategoriasContabeis> = new MatTableDataSource();
 
-  perfilAcesso: Acesso = {
-    insere: true,
-    altera: true,
-    consulta: true,
-    deleta: true,
-    idModulo: 187,
-    nomeModulo: "CATEGORIAS_CONTABEIS"
-  };
-
+  perfilAcesso: Acesso;
 
   constructor(
     private categoriasContabeisService: CategoriasContabeisService,
@@ -41,9 +33,7 @@ export class CategoriasContabeisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //TODO ESPERANDO CORREÇÃO DE BUG
-    // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
-
+    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

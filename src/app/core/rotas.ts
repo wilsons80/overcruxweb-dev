@@ -56,4 +56,5 @@ export enum Rotas {
     PLANO_CARGO_SALARIO             = 'api/planoscargosalario/',
     FUNCOES                         = 'api/funcoes/',
     CATEGORIAS_CONTABEIS            = 'api/categoriascontabeis/',
+    COTACOES_MATERIAIS              = 'api/cotacoesmateriais/',
 }
