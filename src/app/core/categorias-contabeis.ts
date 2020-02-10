@@ -1,9 +1,8 @@
 export class CategoriasContabeis{
-   id:number
-   categoriaSuperior:any;
-   tipoCategoria:any
-   nomeCategoria:string
-   descricaoCategoria:string
+   id:number;
+   categoriaSuperior:CategoriasContabeis;
+	tipo:string;	
+	nome:string;
+	descricaoCategoria:string;
 }
 
-//TODO ARRUMAR TIPAGEM DEPOIS

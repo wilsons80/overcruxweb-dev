@@ -1,6 +1,10 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Acesso } from 'src/app/core/acesso';
+import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
+import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CategoriasContabeis } from './../../core/categorias-contabeis';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'categorias-contabeis',
@@ -9,22 +13,113 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class CategoriasContabeisComponent implements OnInit {
 
-  categorias=[]
-  mostrarTabela= false;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['DataAtendimento', 'Aluno', 'Diagnostico', 'acoes'];
+  listaCategoriasContabeis: CategoriasContabeis[];
+  mostrarTabela: boolean = false;
+  categoriasContabeis: CategoriasContabeis = new CategoriasContabeis();
+  msg: string;
+
+  displayedColumns: string[] = ['id', 'tipo', 'nome', 'acoes'];
   dataSource: MatTableDataSource<CategoriasContabeis> = new MatTableDataSource();
 
-  msg = "Nenhuma categoria contábil cadastrada."
- 
-  constructor() { }
+  perfilAcesso: Acesso = {
+    insere: true,
+    altera: true,
+    consulta: true,
+    deleta: true,
+    idModulo: 187,
+    nomeModulo: "CATEGORIAS_CONTABEIS"
+  };
+
+
+  constructor(
+    private categoriasContabeisService: CategoriasContabeisService,
+    private router: Router,
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    //TODO ESPERANDO CORREÇÃO DE BUG
+    // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+
+    this.dataSource.paginator = this.paginator;
+    this.getAll();
   }
 
-  consultar(){}
-  limpar(){}
-  deletar(element){}
-  atualizar(element){}
+
+  limpar() {
+    this.mostrarTabela = false;
+    this.categoriasContabeis = new CategoriasContabeis()
+    this.dataSource.data = [];
+  }
+
+  consultar() {
+    if (this.categoriasContabeis.id) {
+      this.categoriasContabeisService.getById(this.categoriasContabeis.id).subscribe((categoriasContabeis: CategoriasContabeis) => {
+        if (!categoriasContabeis) {
+          this.mostrarTabela = false
+          this.msg = "Nenhum registro para a pesquisa selecionada"
+        } else {
+          this.dataSource.data = [categoriasContabeis];
+          this.mostrarTabela = true;
+        }
+      })
+    } else {
+      this.getAll();
+    }
+
+  }
+
+
+  atualizar(categoriasContabeis: CategoriasContabeis) {
+    this.router.navigate(['/categoriascontabeis/cadastrar'], { queryParams: { id: categoriasContabeis.id } });
+  }
+
+  deletar(categoriasContabeis: CategoriasContabeis) {
+    this.chamaCaixaDialogo(categoriasContabeis);
+  }
+
+  chamaCaixaDialogo(categoriasContabeis: CategoriasContabeis) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      pergunta: `Certeza que deseja excluir ?`,
+      textoConfirma: 'SIM',
+      textoCancela: 'NÃO'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(confirma => {
+      if (confirma) {
+        this.categoriasContabeisService.excluir(categoriasContabeis.id).subscribe(() => {
+          this.categoriasContabeis.id = null;
+          this.consultar();
+        })
+
+      } else {
+        dialogRef.close();
+      }
+    }
+    );
+  }
+
+  getAll() {
+    this.categoriasContabeisService.getAll().subscribe((listaCategoriasContabeis: CategoriasContabeis[]) => {
+      this.listaCategoriasContabeis = listaCategoriasContabeis;
+      this.dataSource.data = listaCategoriasContabeis ? listaCategoriasContabeis : [];
+      this.verificaMostrarTabela(listaCategoriasContabeis);
+    })
+  }
+
+  verificaMostrarTabela(listaCategoriasContabeis: CategoriasContabeis[]) {
+    if (!listaCategoriasContabeis || listaCategoriasContabeis.length == 0) {
+      this.mostrarTabela = false;
+      this.msg = "Nenhuma categoria contábil cadastrada."
+    } else {
+      this.mostrarTabela = true;
+    }
+  }
+
 
 }
