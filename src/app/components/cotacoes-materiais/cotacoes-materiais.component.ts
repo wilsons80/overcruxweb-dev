@@ -27,14 +27,15 @@ export class CotacoesMateriaisComponent implements OnInit {
   displayedColumns: string[] = ['id', 'material', 'dataCotacao', 'dataValidadeCotacao', 'valorTotalCotacao', 'acoes'];
   dataSource: MatTableDataSource<CotacoesMateriais> = new MatTableDataSource();
 
-  perfilAcesso: Acesso = {
-    insere: true,
-    altera: true,
-    consulta: true,
-    deleta: true,
-    idModulo: 188,
-    nomeModulo: "COTACOES_MATERIAIS"
-  };
+  perfilAcesso: Acesso;
+  //  = {
+  //   insere: true,
+  //   altera: true,
+  //   consulta: true,
+  //   deleta: true,
+  //   idModulo: 188,
+  //   nomeModulo: "COTACOES_MATERIAIS"
+  // };
 
 
   constructor(

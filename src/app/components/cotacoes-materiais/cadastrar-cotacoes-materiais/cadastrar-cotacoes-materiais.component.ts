@@ -26,14 +26,15 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-    perfilAcesso: Acesso = {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:189,
-    nomeModulo:"COTACOES_MATERIAIS"
-  };
+    perfilAcesso: Acesso;
+  //    = {
+  //   insere:true,
+  //   altera:true,
+  //   consulta:true,
+  //   deleta:true,
+  //   idModulo:189,
+  //   nomeModulo:"COTACOES_MATERIAIS"
+  // };
 
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
