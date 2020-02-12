@@ -5,6 +5,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { AcoesAtividadeService } from 'src/app/services/acoes-atividade/acoes-atividade.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-acoes-atividade',
@@ -17,23 +18,27 @@ export class AcoesAtividadeComponent implements OnInit {
 
   listaAcoesAtividade: Acoes[];
   acoesAtividade: Acoes = new Acoes();
-  msg:string;
-  perfilAcesso: Acesso;
+  msg: string;
+  carregarPerfil: CarregarPerfil;
+  perfilAcesso: Acesso = new Acesso();
 
   mostrarTabela = false;
 
-  displayedColumns: string[] = ['nome', 'dataInicio', 'atividade', 'acoes'];
+  displayedColumns: string[] = ['descricao', 'dataInicio', 'dataFim', 'dataPrevisaoFim', 'dataPrevisaoInicio', 'acoes'];
   dataSource: MatTableDataSource<Acoes> = new MatTableDataSource();
 
   constructor(
     private atividadeService: AcoesAtividadeService,
     private router: Router,
     private dialog: MatDialog,
-    private activatedRoute:ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
+
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

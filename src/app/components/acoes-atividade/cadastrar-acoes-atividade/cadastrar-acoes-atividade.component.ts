@@ -7,6 +7,9 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acoes } from './../../../core/acoes';
 import { AcoesAtividadeService } from './../../../services/acoes-atividade/acoes-atividade.service';
 import * as _ from 'lodash';
+import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
+import { Funcionario } from 'src/app/core/funcionario';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-acoes-atividade',
@@ -18,12 +21,15 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
   acoes: Acoes = new Acoes();
 
   atividades: Atividade[];
+  funcionarios: Funcionario[];
 
-  perfilAcesso: Acesso;
+  carregarPerfil: CarregarPerfil;
+  perfilAcesso: Acesso = new Acesso();
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
-  isAtualizar: boolean = false;
+  isAtualizar = false;
+
 
   constructor(
     private acoesAtividadeService: AcoesAtividadeService,
@@ -31,13 +37,15 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
     private atividadeService: AtividadeService,
+    private funcionarioService: FuncionarioService
   ) {
     this.acoes.atividade = new Atividade();
+    this.carregarPerfil = new CarregarPerfil();
   }
 
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -50,13 +58,20 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
       this.atividades = atividades;
     })
 
+    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
+      this.funcionarios = funcionarios;
+    });
 
-    let idAcoesAtividade: number;
-    idAcoesAtividade = this.activatedRoute.snapshot.queryParams.idAcoesAtividade ? this.activatedRoute.snapshot.queryParams.idAcoesAtividade : null;
+    this.acoes.funcionarioAprovaAcao = new Funcionario();
+    this.acoes.funcionarioExecutaAcao = new Funcionario();
+    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
+
+
+    const idAcoesAtividade = this.activatedRoute.snapshot.queryParams.idAcoesAtividade ? this.activatedRoute.snapshot.queryParams.idAcoesAtividade : null;
     if (idAcoesAtividade) {
       this.isAtualizar = true;
       this.acoesAtividadeService.getById(idAcoesAtividade).subscribe((acoes: Acoes) => {
-        this.acoes = acoes
+        this.acoes = acoes;
       });
     }
 
@@ -80,14 +95,14 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
   }
 
   validarDatas(): boolean {
-    if (this.acoes.dataInicio.getTime() < new Date(this.acoes.atividade.dataInicio).getTime()) {
+    if (this.acoes.dataInicio && new Date(this.acoes.dataInicio).getTime() < new Date(this.acoes.atividade.dataInicio).getTime()) {
       this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
       return false;
     }
 
     if (this.acoes.atividade.dataFim) {
       if (this.acoes.dataInicio &&
-        this.acoes.dataInicio.getTime() > new Date(this.acoes.atividade.dataFim).getTime()) {
+        new Date(this.acoes.dataInicio).getTime() > new Date(this.acoes.atividade.dataFim).getTime()) {
         this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
         return false;
       }
@@ -135,6 +150,24 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
   mostrarDadosAtividade(idAtividade) {
     this.acoes.atividade = _.cloneDeep(_.find(this.atividades, (a: Atividade) => a.id === idAtividade));
+  }
+
+
+  carregarDadosFuncionarioAprovacao() {
+    if (this.acoes.funcionarioAprovaAcao.id) {
+      this.acoes.funcionarioAprovaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioAprovaAcao.id));
+    }
+  }
+
+  carregarDadosFuncionarioExecucao() {
+    if (this.acoes.funcionarioExecutaAcao.id) {
+      this.acoes.funcionarioExecutaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioExecutaAcao.id));
+    }
+  }
+  carregarDadosFuncionarioPlanejamento() {
+    if (this.acoes.funcionarioPlanejamentoAcao.id) {
+      this.acoes.funcionarioPlanejamentoAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioPlanejamentoAcao.id));
+    }
   }
 
 }
