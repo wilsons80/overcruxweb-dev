@@ -57,4 +57,5 @@ export enum Rotas {
     FUNCOES                         = 'api/funcoes/',
     CATEGORIAS_CONTABEIS            = 'api/categoriascontabeis/',
     COTACOES_MATERIAIS              = 'api/cotacoesmateriais/',
+    PEDIDOS                         = 'api/pedidos/',
 }

@@ -7,12 +7,13 @@
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um material</mat-label>
-                    <mat-select fxFlexOffset="20px"  name="materiais">
-                        <mat-option *ngFor="let d of materiais" [value]="d">
-                            {{ d}}
+                    <mat-select  [(ngModel)]="idMaterial" fxFlexOffset="20px"  name="materiais">
+                        <mat-option *ngFor="let d of listaMateriais" [value]="d.id">
+                            {{d.nome}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <mat-hint *ngIf="listaMateriais?.length === 0" align="start" >Nenhum material cadastrado</mat-hint>
             </div>
 
 
@@ -32,20 +33,29 @@
 
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
-            <ng-container matColumnDef="DataAtendimento">
-                <th mat-header-cell *matHeaderCellDef> Data de Atendimento: </th>
-                <td mat-cell *matCellDef="let element"> {{element.dataAtendimento | dataSimples}} </td>
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID: </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
 
-            <ng-container matColumnDef="Aluno">
+            <ng-container matColumnDef="material">
                 <th mat-header-cell *matHeaderCellDef> Aluno: </th>
-                <td mat-cell *matCellDef="let element"> {{element.aluno?.pessoaFisica.nome}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.material.nome}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="Diagnostico">
+            <ng-container matColumnDef="dataCotacao">
                 <th mat-header-cell *matHeaderCellDef> Diagnóstico: </th>
-                <td mat-cell *matCellDef="let element"> {{element.diagnostico?.descricao }} </td>
+                <td mat-cell *matCellDef="let element"> {{element.dataCotacao | dataSimples }} </td>
+            </ng-container>
+            <ng-container matColumnDef="dataValidadeCotacao">
+                <th mat-header-cell *matHeaderCellDef> Diagnóstico: </th>
+                <td mat-cell *matCellDef="let element"> {{element.dataValidadeCotacao | dataSimples }} </td>
+            </ng-container>
+            <ng-container matColumnDef="valorTotalCotacao">
+                <th mat-header-cell *matHeaderCellDef> Diagnóstico: </th>
+                <td mat-cell *matCellDef="let element"> {{element.valorTotalCotacao | currency: 'BRL'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="acoes">

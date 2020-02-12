@@ -1,8 +1,12 @@
+import { Material } from './material';
+import { Empresa } from './empresa';
+import { Pedido } from './pedido';
+
 export class CotacoesMateriais{
     id:number
-    material:any
-    pedido:any;
-    empresa:any
+    material:Material
+    pedido:Pedido
+    empresa:Empresa
     dataCotacao:Date;
     dataValidadeCotacao:Date
     qtdMaterial:number
@@ -10,5 +14,3 @@ export class CotacoesMateriais{
     valorTotalCotacao:number;
     
 }
-
-//TODO ARRUMAR TIPAGEM DEPOIS

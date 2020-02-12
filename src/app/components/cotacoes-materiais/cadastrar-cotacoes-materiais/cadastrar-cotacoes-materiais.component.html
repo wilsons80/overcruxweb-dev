@@ -8,8 +8,8 @@
             <!-- MATERIAIS -->
             <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                 <mat-label>Material:</mat-label>
-                <mat-select name="material" required>
-                    <mat-option *ngFor="let i of materiais">
+                <mat-select [(ngModel)]="cotacoesMaterial.material" name="material" required>
+                    <mat-option *ngFor="let i of materiais" [value]="i.id">
                         {{i.nome}}
                     </mat-option>
                 </mat-select>
@@ -20,9 +20,9 @@
             <!-- PEDIDOS -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Pedido:</mat-label>
-                <mat-select name="empresa">
+                <mat-select [(ngModel)]="cotacoesMaterial.pedido" name="pedido">
                     <mat-option *ngFor="let i of pedidos">
-                        {{i.nome}}
+                        {{i.descricao}}
                     </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="pedidos?.length === 0" align="start">Nenhum pedido
@@ -32,9 +32,9 @@
             <!-- EMPRESA -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Empresa:</mat-label>
-                <mat-select name="empresa" required>
-                    <mat-option *ngFor="let i of empresas">
-                        {{i.nome}}
+                <mat-select [(ngModel)]="cotacoesMaterial.empresa" name="empresa" required>
+                    <mat-option *ngFor="let i of empresas" [value]=i.id>
+                        {{i.nomeFantasia}}
                     </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
@@ -47,7 +47,7 @@
 
             <!-- #DATA COTACAO  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                <input matInput name="dataCotacao" [matDatepicker]="dataCotacao" placeholder="Data da Cotação" required>
+                <input matInput [(ngModel)]="cotacoesMaterial.dataCotacao" name="dataCotacao" [matDatepicker]="dataCotacao" placeholder="Data da Cotação" required>
                 <mat-datepicker-toggle matSuffix [for]="dataCotacao">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataCotacao></mat-datepicker>
@@ -55,7 +55,7 @@
 
             <!-- #DATA VALIDADE DA COTACAO  -->
             <mat-form-field fxFlex="20%">
-                <input matInput name="dataValidadeCotacao" [matDatepicker]="dataValidadeCotacao"
+                <input [(ngModel)]="cotacoesMaterial.dataValidadeCotacao" matInput name="dataValidadeCotacao" [matDatepicker]="dataValidadeCotacao"
                     placeholder="Data de Validade">
                 <mat-datepicker-toggle matSuffix [for]="dataValidadeCotacao">
                 </mat-datepicker-toggle>
@@ -67,19 +67,19 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <!-- #VALOR UNITARIO  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                <input currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                <input (ngModelChange)="multiplicar()" [(ngModel)]="cotacoesMaterial.valorUnitarioCotacao" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
             <!-- #QUANTIDADE  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="10%">
-                <input #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
+                <input (input)="multiplicar()" [(ngModel)]="cotacoesMaterial.qtdMaterial" #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
             </mat-form-field>
 
             <!-- #VALOR TOTAL  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                <input currencyMask name="valorTotal" placeholder="Valor Total:" matInput maxlength="13"
+                <input [(ngModel)]="cotacoesMaterial.valorTotalCotacao" currencyMask name="valorTotal" placeholder="Valor Total:" matInput maxlength="13"
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
                     disabled
                     />

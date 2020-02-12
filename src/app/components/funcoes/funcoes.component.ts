@@ -24,14 +24,15 @@ export class FuncoesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'unidade','valor', 'acoes'];
   dataSource: MatTableDataSource<Funcoes> = new MatTableDataSource();
   
-  perfilAcesso: Acesso = {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:186,
-    nomeModulo:"FUNCAO"
-  };
+   perfilAcesso: Acesso;
+   //= {
+  //   insere:true,
+  //   altera:true,
+  //   consulta:true,
+  //   deleta:true,
+  //   idModulo:186,
+  //   nomeModulo:"FUNCAO"
+  // };
 
 
   constructor(
@@ -42,7 +43,7 @@ export class FuncoesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+   this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

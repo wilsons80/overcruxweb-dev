@@ -1,7 +1,12 @@
-import { Material } from 'src/app/core/material';
+import { Material } from './../../core/material';
+import { CotacoesMateriaisService } from './../../services/cotacoes-materiais/cotacoes-materiais.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Acesso } from 'src/app/core/acesso';
+import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CotacoesMateriais } from './../../core/cotacoes-materiais';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MaterialService } from 'src/app/services/material/material.service';
 
 @Component({
   selector: 'cotacoes-materiais',
@@ -10,23 +15,120 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class CotacoesMateriaisComponent implements OnInit {
 
-  materiais=[]
-  mostrarTabela= false;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['DataAtendimento', 'Aluno', 'Diagnostico', 'acoes'];
-  dataSource: MatTableDataSource<Material> = new MatTableDataSource();
+  listaCotacoesMateriais: CotacoesMateriais[];
+  listaMateriais: Material[];
+  mostrarTabela: boolean = false;
+  cotacoesMateriais: CotacoesMateriais = new CotacoesMateriais();
+  idMaterial: number;
+  msg: string;
 
-  msg = "Nenhum material cadastrado."
+  displayedColumns: string[] = ['id', 'material', 'dataCotacao', 'dataValidadeCotacao', 'valorTotalCotacao', 'acoes'];
+  dataSource: MatTableDataSource<CotacoesMateriais> = new MatTableDataSource();
 
-  constructor() { }
+  perfilAcesso: Acesso = {
+    insere: true,
+    altera: true,
+    consulta: true,
+    deleta: true,
+    idModulo: 188,
+    nomeModulo: "COTACOES_MATERIAIS"
+  };
+
+
+  constructor(
+    private cotacoesMateriaisService: CotacoesMateriaisService,
+    private materialService: MaterialService,
+    private router: Router,
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+
+    this.dataSource.paginator = this.paginator;
+    this.getAll();
   }
 
 
-  consultar(){}
-  limpar(){}
-  deletar(element){}
-  atualizar(element){}
+  limpar() {
+    this.mostrarTabela = false;
+    this.cotacoesMateriais = new CotacoesMateriais()
+    this.dataSource.data = [];
+  }
+
+  consultar() {
+    if (this.idMaterial) {
+      this.cotacoesMateriaisService.getPorMaterial(this.idMaterial).subscribe((cotacoesMateriais: CotacoesMateriais) => {
+        if (!cotacoesMateriais) {
+          this.mostrarTabela = false
+          this.msg = "Nenhum registro para a pesquisa selecionada"
+        } else {
+          this.dataSource.data = [cotacoesMateriais];
+          this.mostrarTabela = true;
+        }
+      },
+        (retorno) => {
+          this.mostrarTabela = false
+          this.msg = retorno.error.mensagem
+        }
+      )
+    } else {
+      this.getAll();
+    }
+  }
+
+
+  atualizar(cotacoesMateriais: CotacoesMateriais) {
+    this.router.navigate(['/cotacoesmateriais/cadastrar'], { queryParams: { id: cotacoesMateriais.id } });
+  }
+
+  deletar(cotacoesMateriais: CotacoesMateriais) {
+    this.chamaCaixaDialogo(cotacoesMateriais);
+  }
+
+  chamaCaixaDialogo(cotacoesMateriais: CotacoesMateriais) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      pergunta: `Certeza que deseja excluir ?`,
+      textoConfirma: 'SIM',
+      textoCancela: 'NÃO'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(confirma => {
+      if (confirma) {
+        this.cotacoesMateriaisService.excluir(cotacoesMateriais.id).subscribe(() => {
+          this.cotacoesMateriais.id = null;
+          this.consultar();
+        })
+
+      } else {
+        dialogRef.close();
+      }
+    }
+    );
+  }
+
+  getAll() {
+    this.cotacoesMateriaisService.getAll().subscribe((listaCotacoesMateriais: CotacoesMateriais[]) => {
+      this.listaCotacoesMateriais = listaCotacoesMateriais;
+      this.dataSource.data = listaCotacoesMateriais ? listaCotacoesMateriais : [];
+      this.verificaMostrarTabela(listaCotacoesMateriais);
+    })
+   
+    this.materialService.getAll().subscribe((listaMateriais:Material[]) => this.listaMateriais = listaMateriais);
+  }
+
+  verificaMostrarTabela(listaCotacoesMateriais: CotacoesMateriais[]) {
+    if (!listaCotacoesMateriais || listaCotacoesMateriais.length == 0) {
+      this.mostrarTabela = false;
+      this.msg = "Nenhuma cotação cadastrada."
+    } else {
+      this.mostrarTabela = true;
+    }
+  }
 
 }
