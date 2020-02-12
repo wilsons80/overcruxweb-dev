@@ -8,7 +8,7 @@
             <!-- MATERIAIS -->
             <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                 <mat-label>Material:</mat-label>
-                <mat-select [(ngModel)]="cotacoesMaterial.material" name="material" required>
+                <mat-select [(ngModel)]="cotacoesMaterial.material.id" name="material" required>
                     <mat-option *ngFor="let i of materiais" [value]="i.id">
                         {{i.nome}}
                     </mat-option>
@@ -20,7 +20,7 @@
             <!-- PEDIDOS -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Pedido:</mat-label>
-                <mat-select [(ngModel)]="cotacoesMaterial.pedido" name="pedido">
+                <mat-select [(ngModel)]="cotacoesMaterial.pedido.id" name="pedido" required>
                     <mat-option *ngFor="let i of pedidos">
                         {{i.descricao}}
                     </mat-option>
@@ -32,7 +32,7 @@
             <!-- EMPRESA -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Empresa:</mat-label>
-                <mat-select [(ngModel)]="cotacoesMaterial.empresa" name="empresa" required>
+                <mat-select [(ngModel)]="cotacoesMaterial.empresa.id" name="empresa" required>
                     <mat-option *ngFor="let i of empresas" [value]=i.id>
                         {{i.nomeFantasia}}
                     </mat-option>
@@ -74,7 +74,7 @@
 
             <!-- #QUANTIDADE  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="10%">
-                <input (input)="multiplicar()" [(ngModel)]="cotacoesMaterial.qtdMaterial" #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
+                <input (input)="multiplicar()" [(ngModel)]="cotacoesMaterial.quantidadeMaterial" #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
             </mat-form-field>
 
             <!-- #VALOR TOTAL  -->

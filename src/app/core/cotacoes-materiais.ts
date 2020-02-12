@@ -9,8 +9,7 @@ export class CotacoesMateriais{
     empresa:Empresa
     dataCotacao:Date;
     dataValidadeCotacao:Date
-    qtdMaterial:number
+    quantidadeMaterial:number
     valorUnitarioCotacao:number;
     valorTotalCotacao:number;
-    
 }

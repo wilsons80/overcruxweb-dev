@@ -123,7 +123,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
     this.cotacoesMaterial.empresa = new Empresa();
     this.cotacoesMaterial.valorTotalCotacao = 0;
     this.cotacoesMaterial.valorUnitarioCotacao = 0;
-    this.cotacoesMaterial.qtdMaterial = 0;
+    this.cotacoesMaterial.quantidadeMaterial = 0;
   }
 
   mostrarBotaoLimpar() {
@@ -136,7 +136,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   multiplicar(){
     this.cotacoesMaterial.valorTotalCotacao = this.cotacoesMaterial.valorUnitarioCotacao 
-                  * this.cotacoesMaterial.qtdMaterial;
+                  * this.cotacoesMaterial.quantidadeMaterial;
   }
 
 

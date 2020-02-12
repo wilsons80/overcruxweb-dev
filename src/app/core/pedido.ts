@@ -1,6 +1,7 @@
 export class Pedido{
+//TODO
 
-    //TODO
+    id:number
     descricao:string;
 
 }
