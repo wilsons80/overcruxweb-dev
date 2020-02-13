@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContaBancaria } from 'src/app/core/conta-bancaria';
-import { Unidade } from 'src/app/core/unidade';
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { MatTableDataSource } from '@angular/material';
 
 @Component({
@@ -14,33 +13,15 @@ export class DadosContasBancariasComponent implements OnInit {
 
   mostrarTabela= false;
 
-  contasSelecionadas:ContaBancaria[] = [];
+  contasSelecionadas:ContasBancaria[] = [];
 
   displayedColumns: string[] = ['nome', 'cpf', 'cargo', 'acoes'];
-  dataSource: MatTableDataSource<ContaBancaria> = new MatTableDataSource();
+  dataSource: MatTableDataSource<ContasBancaria> = new MatTableDataSource();
 
   msg = "Nenhuma conta adicionada"
 
-  listaContas:ContaBancaria[] = [
-    {
-      id: 1,
-      informacoesBanco:{ nome: "Banco do Brasil", numero: "001"},
-      numeroAgencia:"00001",
-      numeroContaBancaria: 12345,
-      tipoContaBancaria:"C",
-      unidade: new Unidade()
-    },
-    
-    {
-      id: 2,
-      informacoesBanco:{ nome: "Banco de Brasília", numero: "002"},
-      numeroAgencia:"00002",
-      numeroContaBancaria: 54321,
-      tipoContaBancaria:"C",
-      unidade: new Unidade()
-    }
-
-  ]
+  listaContas:ContasBancaria[];
+  
 
   constructor() { }
 

@@ -22,7 +22,7 @@
         
             <!-- CONTAS BANCÁRIAS-->
             <div style="padding-left: 15px">
-                <sub-menu icone="local_atm" titulo="Contas Bancárias" rota="contasbancarias" toolTip="Contas Bancárias"></sub-menu>
+                <sub-menu *ngIf="verificaAcesso(getModulos().CONTAS_BANCARIA)" icone="local_atm" titulo="Contas Bancárias" rota="contasbancarias" toolTip="Contas Bancárias"></sub-menu>
             </div>
         
         </div>
