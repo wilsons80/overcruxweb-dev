@@ -1,0 +1,29 @@
+<a mat-list-item (click)="toggle()" >
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Materiais">
+            <mat-icon>account_balance</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Materiais</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+    <!-- MATERIAL -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().MATERIAL)" icone="collections_bookmark" titulo="Cadastro de Materiais" rota="material" toolTip="Cadastro de Materiais"></sub-menu>
+
+    <!-- COTACOES_MATERIAIS -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().COTACOES_MATERIAIS)" icone="trending_up" titulo="Cotações Materiais" rota="cotacoesmateriais" toolTip="Cotações de Materiais"></sub-menu>
+
+    <!-- MOVIMENTACOES_MATERIAIS -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES_MATERIAIS)" icone="sync_alt" titulo="Movimentações Materiais" rota="movimentacoesmateriais" toolTip="Movimentações de Materiais"></sub-menu>
+
+    <!-- ESTOQUES -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().ESTOQUES)" icone="apartment" titulo="Estoques" rota="estoques" toolTip="Estoques de Materiais"></sub-menu>
+
+    </div>
+</mat-nav-list>
+

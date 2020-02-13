@@ -25,6 +25,7 @@ import { MenuAtendimentoMultidisciplinarComponent } from './menu-atendimento-mul
 import { SubMenuDiagnosticoMultidisciplinarComponent } from './menu-atendimento-multidisciplinar/sub-menu-diagnostico-multidisciplinar/sub-menu-diagnostico-multidisciplinar.component';
 import { SubMenuPlanejamentoAtividadesComponent } from './menu-atendimento-multidisciplinar/sub-menu-planejamento-atividades/sub-menu-planejamento-atividades.component';
 import { TbReferenciaFinanceiroComponent } from './menu-gestao-financeira/tb-referencia-financeiro/tb-referencia-financeiro.component';
+import { MenuMateriaisComponent } from './menu-materiais/menu-materiais.component';
 
 
 
@@ -51,6 +52,7 @@ import { TbReferenciaFinanceiroComponent } from './menu-gestao-financeira/tb-ref
     MenuAtendimentoMultidisciplinarComponent,
     SubMenuDiagnosticoMultidisciplinarComponent,
     SubMenuPlanejamentoAtividadesComponent,
+    MenuMateriaisComponent,
   ],
   imports: [
     CommonModule,

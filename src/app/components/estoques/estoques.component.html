@@ -1,0 +1,111 @@
+<mat-toolbar class="subtitulo">Estoque de Materiais</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formulario="ngForm">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um Programa</mat-label>
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.idPrograma" name="programa">
+                        <mat-option *ngFor="let d of programas" [value]="d">
+                            {{d.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um Projeto</mat-label>
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.idProjeto" name="projeto">
+                        <mat-option *ngFor="let d of projetos" [value]="d">
+                            {{d.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+                
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um Material</mat-label>
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.idMaterial" name="material">
+                        <mat-option *ngFor="let d of materiais" [value]="d">
+                            {{d.nome}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>                
+                
+            </div>
+
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+
+            </div>
+        </form>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+
+            <ng-container matColumnDef="material">
+                <th mat-header-cell *matHeaderCellDef style="width: 20%"> Material </th>
+                <td mat-cell *matCellDef="let element"> {{ element.material.nome }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantidade">
+                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Quantidade em estoque </th>
+                <td mat-cell *matCellDef="let element"> {{ element.quantidadeEstoque }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantidademinimo">
+                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Quantidade Mínima </th>
+                <td mat-cell *matCellDef="let element"> {{ element.quantidadeMinimoEstoque }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantidademaxima">
+                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Quantidade Máxima </th>
+                <td mat-cell *matCellDef="let element"> {{ element.quantidadeMaximoEstoque }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="programa">
+                <th mat-header-cell *matHeaderCellDef style="width: 22%"> Programa </th>
+                <td mat-cell *matCellDef="let element"> {{ element.programa.nome }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="projeto">
+                <th mat-header-cell *matHeaderCellDef style="width: 22%"> Projeto  </th>
+                <td mat-cell *matCellDef="let element"> {{ element.projeto.nome }} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="visualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <ng-template #tabelaSemDados>
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+    </div>
+</div>
