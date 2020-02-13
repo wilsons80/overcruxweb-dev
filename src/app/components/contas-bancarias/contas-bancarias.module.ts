@@ -1,3 +1,4 @@
+import { NgxCurrencyModule } from 'ngx-currency';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { ContasBancariasComponent } from './contas-bancarias.component';
 import { NgModule } from '@angular/core';
@@ -15,7 +16,8 @@ import { CadastrarContasBancariasComponent } from './cadastrar-contas-bancarias/
   imports: [
     CommonModule,
     ContasBancariasRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    NgxCurrencyModule
   ]
 })
 export class ContasBancariasModule { }

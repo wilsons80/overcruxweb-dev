@@ -1,4 +1,4 @@
 export class Banco{
-    numero:number
+    numero:string
     nome:string
 }

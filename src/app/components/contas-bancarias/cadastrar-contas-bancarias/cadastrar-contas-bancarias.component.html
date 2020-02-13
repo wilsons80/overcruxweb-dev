@@ -7,7 +7,7 @@
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <!-- UNIDADE -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Unidade:</mat-label>
                 <mat-select [(ngModel)]="contaBancaria.unidade.idUnidade" name="empresa" required>
                     <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
@@ -17,11 +17,9 @@
                 <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade
                     cadastrada</mat-hint>
             </mat-form-field>
-
-        </div>
-        <!-- BANCOS -->
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+            
+            <!-- BANCO -->
+            <mat-form-field fxFlex="30%" >
                 <mat-label>Banco:</mat-label>
                 <mat-select [(ngModel)]="contaBancaria.banco" name="cargo" required>
                     <mat-option *ngFor="let m of listaBancos" [value]=m>
@@ -31,8 +29,22 @@
                 <mat-hint *ngIf="listaBancos?.length === 0" align="start">Nenhum banco cadastrado</mat-hint>
             </mat-form-field>
 
+            <mat-form-field fxFlex="30%" >
+                <mat-label>Tipo de Contas:</mat-label>
+                <mat-select name="tiposContas" [(ngModel)]="contaBancaria.tipoContaBancaria">
+                    <mat-option *ngFor="let m of tipoContas" [value]="m.id">
+                        {{m.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        </div>
+        <!-- BANCOS -->
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            
             <!-- AGENCIA -->
-            <mat-form-field fxFlex="10%">
+            <mat-form-field fxFlexOffset="20px" fxFlex="10%">
                 <input [(ngModel)]="contaBancaria.numeroAgencia" matInput maxlength="20" name="agencia" placeholder="Agência:" required>
             </mat-form-field>
 
@@ -46,54 +58,37 @@
                 <mat-hint align="end">{{nomeTitular.value.length}} / 200</mat-hint>
             </mat-form-field>
 
-
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                <mat-label>Tipo de Contas:</mat-label>
-                <mat-select name="tiposContas" [(ngModel)]="contaBancaria.tipoContaBancaria">
-                    <mat-option *ngFor="let m of tipoContas" [value]="m.id">
-                        {{m.nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                <mat-label>Saldo:</mat-label>
-                <mat-select name="saldo" [(ngModel)]="contaBancaria.saldosContasBancaria.id">
-                    <mat-option *ngFor="let m of saldos" [value]=m.id>
-                        {{m.numero}} - {{m.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="saldos?.length === 0" align="start">Nenhum saldo cadastrado</mat-hint>
-            </mat-form-field>
-
         </div>
 
         <mat-toolbar class="titulopartes">Dados do Titular</mat-toolbar>
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- NOME TITULAR -->
             <mat-form-field fxFlexOffset="20px" fxFlex="30%">
                 <input [(ngModel)]="contaBancaria.nomeTitular" #nomeTitular matInput maxlength="200" name="nomeTitular" placeholder="Nome titular:" required>
                 <mat-hint align="end">{{nomeTitular.value.length}} / 200</mat-hint>
             </mat-form-field>
 
+            <!-- CPF/CNPJ -->
             <mat-form-field fxFlex="30%">
                 <input [(ngModel)]="contaBancaria.cpfCnpjTitular" #numerocpfcnpj matInput maxlength="14" name="numerocpfcnpj" placeholder="CPF/CNPJ:" required>
                 <mat-hint align="end">{{numerocpfcnpj.value.length}} / 14</mat-hint>
             </mat-form-field>
 
-            <mat-form-field fxFlex="30%">
-                <input [(ngModel)]="contaBancaria.telefoneTitular" #numeroTelefone matInput maxlength="14" name="numeroTelefone" placeholder="Número Telefone:"
-                    required>
-                <mat-hint align="end">{{numeroTelefone.value.length}} / 20</mat-hint>
+            <!-- TELEFONE -->
+            <mat-form-field fxFlex="20%">
+                <input matInput [(ngModel)]="contaBancaria.telefoneTitular" name="celular" placeholder="Celular"
+                    [textMask]="{mask: maskCelular}"
+                    pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
             </mat-form-field>
+    
         </div>
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
-                <input [(ngModel)]="contaBancaria.emailTitular" #email matInput maxlength="200" name="email" placeholder="Email:">
+          <!-- EMAIL -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="50%">
+                <input email [(ngModel)]="contaBancaria.emailTitular" #email matInput maxlength="200" name="email" placeholder="Email:">
                 <mat-hint align="end">{{email.value.length}} / 200</mat-hint>
             </mat-form-field>
         </div>
@@ -121,3 +116,5 @@
     </form>
 
 </div>
+
+{{contaBancaria | json}}

@@ -6,7 +6,7 @@
 
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                         <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione uma função</mat-label>
+                    <mat-label fxFlexOffset="20px">Selecione uma conta bancária</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="contasBancaria" name="contasBancaria">
                         <mat-option *ngFor="let d of listaContasBancarias" [value]="d">
                             {{d.banco.numero}} - {{d.banco.nome}} Ag. {{d.numeroAgencia}} C. {{d.numeroContaBancaria}} 
@@ -35,7 +35,7 @@
 
             <ng-container matColumnDef="banco">
                 <th mat-header-cell *matHeaderCellDef> Banco: </th>
-                <td mat-cell *matCellDef="let element"> {{element.banco.nome}} - {{element.banco.numero}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.banco.numero}} - {{element.banco.nome}} </td>
             </ng-container>
 
             <ng-container matColumnDef="numeroAgencia">

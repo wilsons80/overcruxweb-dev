@@ -15,6 +15,5 @@ export class ContasBancaria {
 	cpfCnpjTitular:string;
 	telefoneTitular:string;
 	emailTitular:string;
-    saldosContasBancaria: SaldosContasBancaria;
 }
 

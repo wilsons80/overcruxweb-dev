@@ -1,3 +1,4 @@
+import { AuthGuard } from './../../guards/auth.guard';
 import { ContasBancariasComponent } from './contas-bancarias.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -7,8 +8,8 @@ import { Modulos } from 'src/app/core/modulos';
 
 // ,resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CONTAS_BANCARIA} 
 const routes: Routes = [
-  {path: 'contasbancarias/cadastrar', component: CadastrarContasBancariasComponent,resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CONTAS_BANCARIA}},
-  {path: 'contasbancarias', component: ContasBancariasComponent,resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CONTAS_BANCARIA}}
+  {path: 'contasbancarias/cadastrar', component: CadastrarContasBancariasComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CONTAS_BANCARIA}},
+  {path: 'contasbancarias', component: ContasBancariasComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CONTAS_BANCARIA}}
 ];
 
 @NgModule({

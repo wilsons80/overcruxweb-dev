@@ -1,3 +1,5 @@
+import { Banco } from './../../../core/banco';
+import { ListaBancosService } from './../../../services/listaBancos/lista-bancos.service';
 import { SaldosContasBancaria } from './../../../core/saldos-contas-bancaria';
 import { Component, OnInit } from '@angular/core';
 import { InformacoesBanco } from 'src/app/core/informacoes-banco';
@@ -10,6 +12,7 @@ import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { Unidade } from 'src/app/core/unidade';
 import { Instituicao } from 'src/app/core/instituicao';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cadastrar-contas-bancarias',
@@ -18,17 +21,14 @@ import { Instituicao } from 'src/app/core/instituicao';
 })
 export class CadastrarContasBancariasComponent implements OnInit {
 
-  listaBancos:InformacoesBanco[] = [
-    {numero:"001", nome:"Banco do Brasil"},
-    {numero:"070", nome:"Banco de Brasília"}
-  ];
-  
   saldos:any =[]
 
   tipoContas = [
     {id:"C", nome:"Conta Corrente"},
     {id:"P", nome:"Poupança"}
   ];
+
+  public maskCelular = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   unidades:Unidade[];
 
@@ -40,12 +40,15 @@ export class CadastrarContasBancariasComponent implements OnInit {
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
+  listaBancos:Banco[];
+
   constructor(
     private contasBancariaService: ContasBancariaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
     private unidadeService:UnidadeService,
+    private listaBancosService:ListaBancosService
 
   ) { }
 
@@ -62,6 +65,9 @@ export class CadastrarContasBancariasComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    this.listaBancos = this.listaBancosService.listaBancos;
+
+
     this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
     })
@@ -73,24 +79,28 @@ export class CadastrarContasBancariasComponent implements OnInit {
       this.isAtualizar = true;
       this.contasBancariaService.getById(id).subscribe((contaBancaria: ContasBancaria) => {
         this.contaBancaria = contaBancaria
+        this.contaBancaria.banco = _.find(this.listaBancos, (b:Banco) => b.numero === this.contaBancaria.banco.numero);
       });
     }
 
   }
 
   cadastrar() {
+
+    this.tratarDados();
+
     this.contasBancariaService.cadastrar(this.contaBancaria).subscribe(() => {
-      this.router.navigate(['contasBancaria']);
+      this.router.navigate(['contasbancarias']);
       this.toastService.showSucesso("Conta bancária cadastrada com sucesso");
     });
   }
-
+  
   limpar() {
     this.inicializarObjetos();
   }
 
   cancelar() {
-    this.router.navigate(['contasBancaria']);
+    this.router.navigate(['contasbancarias']);
   }
 
   getNomeBotao() {
@@ -99,8 +109,9 @@ export class CadastrarContasBancariasComponent implements OnInit {
 
 
   atualizar() {
+    this.tratarDados();
     this.contasBancariaService.alterar(this.contaBancaria).subscribe(() => {
-      this.router.navigate(['contasBancaria']);
+      this.router.navigate(['contasbancarias']);
       this.toastService.showSucesso("Conta bancária atualizada com sucesso");
     });
 
@@ -109,7 +120,6 @@ export class CadastrarContasBancariasComponent implements OnInit {
 
   inicializarObjetos() {
     this.contaBancaria = new ContasBancaria();
-    this.contaBancaria.saldosContasBancaria = new SaldosContasBancaria();
     this.contaBancaria.unidade = new Unidade();
   }
 
@@ -119,6 +129,14 @@ export class CadastrarContasBancariasComponent implements OnInit {
     if (!this.mostrarBotaoCadastrar) return false;
 
     return true;
+  }
+
+  tratarDados() {
+    this.contaBancaria.telefoneTitular = this.contaBancaria.telefoneTitular ? this.retiraMascara(this.contaBancaria.telefoneTitular) : null
+  }
+
+  retiraMascara(objeto:any) {
+    return objeto.replace(/\D/g, '');
   }
 
 
