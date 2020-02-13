@@ -35,6 +35,7 @@ export class MenuMateriaisComponent implements OnInit {
       this.currentState = 'hidden';
     }
   }
+  
   getIcone() {
     return this.isMostrarSubMenu ? "expand_more" : "chevron_right";
   }
