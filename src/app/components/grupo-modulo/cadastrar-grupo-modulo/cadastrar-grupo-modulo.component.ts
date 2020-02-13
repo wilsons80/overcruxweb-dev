@@ -101,10 +101,12 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   }
 
   carregarGruposModulosDaInstituicao() {
-    this.grupoModuloService.getAllByInstituicao(this.instituicaoSelecionada.id)
-    .subscribe((grupoModulos: GrupoModulo[]) => {
-      this.grupoModulos = grupoModulos;
-    });
+    if(this.instituicaoSelecionada.id) {
+      this.grupoModuloService.getAllByInstituicao(this.instituicaoSelecionada.id)
+      .subscribe((grupoModulos: GrupoModulo[]) => {
+        this.grupoModulos = grupoModulos;
+      });
+    }
   }
 
 
