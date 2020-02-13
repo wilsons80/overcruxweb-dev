@@ -93,6 +93,7 @@ import { UploadFotoModule } from './components/upload-foto/upload-foto.module';
 import { UsuarioModule } from './components/usuario/usuario.module';
 import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl/portuguese-paginator-intl.component';
+import { EstoquesModule } from './components/estoques/estoques.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -214,7 +215,8 @@ registerLocaleData(localePt, 'pt-BR');
     CotacoesMateriaisModule,
     MovimentacoesMateriaisModule,
     FuncoesModule,
-    ContasBancariasModule
+    ContasBancariasModule,
+    EstoquesModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

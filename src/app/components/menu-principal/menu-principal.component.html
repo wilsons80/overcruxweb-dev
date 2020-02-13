@@ -43,6 +43,9 @@
 
         <!-- GESTÃO FINANCEIRA -->
         <menu-gestao-financeira *ngIf="verificaAcesso(getModulos().GESTAO_FINANCEIRA)"></menu-gestao-financeira>
+
+        <!-- MATERIAIS -->
+        <menu-materiais *ngIf="verificaAcesso(getModulos().MATERIAIS)"></menu-materiais>
         
         <!-- ATENDIMENTO MULTIDISCIPLINAR -->
         <menu-atendimento-multidisciplinar *ngIf="verificaAcesso(getModulos().ATENDIMENTO_MULTIDISCIPLINAR)"></menu-atendimento-multidisciplinar>
