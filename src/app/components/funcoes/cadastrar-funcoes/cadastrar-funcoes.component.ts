@@ -50,14 +50,9 @@ export class CadastrarFuncoesComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
+    this.unidadeService.getAllUnidadeParaCombo().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
     })
-    
-    this.instituicaoService.getInstituicoesComAcesso().subscribe((instituicoes: Instituicao[]) => {
-      this.instituicoes = instituicoes;
-    })
-
    
     let id: number;
     id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
@@ -101,7 +96,6 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   inicializarObjetos() {
     this.funcao = new Funcoes();
-    this.funcao.instituicao = new Instituicao();
     this.funcao.unidade = new Unidade();
   }
 

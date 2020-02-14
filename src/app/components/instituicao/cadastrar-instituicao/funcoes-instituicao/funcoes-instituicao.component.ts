@@ -28,7 +28,7 @@ export class FuncoesInstituicaoComponent implements OnInit {
   funcionarios: Funcionario[] = [];
 
 
-  displayedColumns: string[] = ['funcao', 'funcionario', 'dataInicio', 'dataFim', 'acoes'];
+  displayedColumns: string[] = ['funcionario', 'funcao', 'dataInicio', 'dataFim', 'acoes'];
   dataSource: MatTableDataSource<FuncoesInstituicao> = new MatTableDataSource();
 
   funcoesInstituicao: FuncoesInstituicao;
@@ -58,10 +58,11 @@ export class FuncoesInstituicaoComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['instituicao'] && changes['instituicao'].currentValue.id) {
-      this.funcionarioService.getPorInstituicao(this.instituicao.id)
+      this.funcionarioService.getPorInstituicaoCombo(this.instituicao.id)
         .subscribe((funcionarios: Funcionario[]) => {
           this.funcionarios = funcionarios;
         })
+        this.carregarLista();
     }
   }
 

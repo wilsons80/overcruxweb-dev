@@ -17,6 +17,9 @@ export class UnidadeService extends BaseService<Unidade> {
     super(http, rotaPath);
   }
 
+  getAllUnidadeParaCombo(){
+    return this.http.get(rotaPath + `combo`);
+  }
 
   getUnidadeSetandoLogada(idUnidade: number) {
     return this.http.get(rotaPath + `logada/${idUnidade}`);

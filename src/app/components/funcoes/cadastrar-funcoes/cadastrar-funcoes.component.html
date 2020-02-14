@@ -26,18 +26,6 @@
         </div>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
            
-            <!-- INSTITUICAO -->
-            <mat-form-field fxFlex="60%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Instituição:</mat-label>
-                <mat-select  [(ngModel)]=funcao.instituicao.id name="instituicao" required>
-                    <mat-option *ngFor="let i of instituicoes" [value]=i.id>
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma instituição
-                    cadastrada</mat-hint>
-            </mat-form-field>
-
              <!-- #VALOR  -->
              <mat-form-field fxFlex="35%" fxFlexOffset="20px">
                 <input currencyMask matInput maxlength="50" name="valorSalario"

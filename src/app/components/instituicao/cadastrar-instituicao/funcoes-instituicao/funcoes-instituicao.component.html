@@ -95,12 +95,12 @@
 
                 <ng-container matColumnDef="funcionario">
                     <th mat-header-cell *matHeaderCellDef> Funcionário </th>
-                    <td mat-cell *matCellDef="let element"> {{element.funcionario?.nome}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.funcionario?.pessoasFisica?.nome }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="funcao">
                     <th mat-header-cell *matHeaderCellDef> Função </th>
-                    <td mat-cell *matCellDef="let element"> {{element.funcoes.nome}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.funcoes?.nome}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="dataInicio">

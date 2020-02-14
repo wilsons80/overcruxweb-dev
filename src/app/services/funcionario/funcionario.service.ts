@@ -23,8 +23,8 @@ export class FuncionarioService extends BaseService<Funcionario> {
     return this.http.get(Rotas.FUNCIONARIOS + 'porunidades',  { params: params });
   }
 
-  getPorInstituicao(idInstituicao: number) {
-    return this.http.get(Rotas.FUNCIONARIOS + 'instituicao/' + idInstituicao);
+  getPorInstituicaoCombo(idInstituicao: number) {
+    return this.http.get(Rotas.FUNCIONARIOS + 'combo/instituicao/' + idInstituicao);
   }
 
 }

@@ -4,7 +4,6 @@ export class Funcoes{
     id:number;
     nome:string;
     unidade:Unidade;
-    instituicao:Instituicao;
     valorSalario:number;
 }
 
