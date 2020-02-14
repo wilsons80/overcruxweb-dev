@@ -1,3 +1,4 @@
+import { FuncoesInstituicao } from './funcoes-instituicao';
 export class Instituicao {
 
 	id: number;
@@ -14,4 +15,5 @@ export class Instituicao {
 	foto?: any;
 	urlFoto?: any;
 	isFotoChanged?: boolean;
+	funcoesInstituicao:FuncoesInstituicao[];
 }

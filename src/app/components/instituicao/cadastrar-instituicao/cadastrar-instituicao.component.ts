@@ -37,7 +37,7 @@ export class CadastrarInstituicaoComponent implements OnInit {
               private instituicaoService: InstituicaoService) { }
 
   ngOnInit() {
-    this.instituicao = new Instituicao();
+    this.initObjetos();
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
@@ -66,6 +66,11 @@ export class CadastrarInstituicaoComponent implements OnInit {
     this.instituicaoService.getAll().subscribe((dados: Instituicao[]) => {
       this.instituicoes = dados;
     });
+  }
+  
+  initObjetos() {
+    this.instituicao = new Instituicao();
+    this.instituicao.funcoesInstituicao = [];
   }
 
 

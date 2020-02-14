@@ -23,7 +23,7 @@
             <form #formCadastroFuncoes="ngForm">
                 <ng-template matStepLabel>FUNÇÕES</ng-template>
 
-                <funcoes-instituicao></funcoes-instituicao>
+                <funcoes-instituicao [instituicao]=instituicao></funcoes-instituicao>
             </form>
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                   fxFlexFill>
@@ -72,3 +72,5 @@
     </button>
 
 </div>
+
+{{instituicao | json}}

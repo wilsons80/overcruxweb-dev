@@ -1,17 +1,13 @@
 import { Banco } from './../../../core/banco';
 import { ListaBancosService } from './../../../services/listaBancos/lista-bancos.service';
-import { SaldosContasBancaria } from './../../../core/saldos-contas-bancaria';
 import { Component, OnInit } from '@angular/core';
-import { InformacoesBanco } from 'src/app/core/informacoes-banco';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { Acesso } from 'src/app/core/acesso';
 import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
-import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { Unidade } from 'src/app/core/unidade';
-import { Instituicao } from 'src/app/core/instituicao';
 import * as _ from 'lodash';
 
 @Component({
@@ -138,6 +134,5 @@ export class CadastrarContasBancariasComponent implements OnInit {
   retiraMascara(objeto:any) {
     return objeto.replace(/\D/g, '');
   }
-
 
 }

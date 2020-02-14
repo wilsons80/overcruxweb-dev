@@ -8,7 +8,7 @@ export class FuncoesInstituicao {
     funcoes: Funcoes;
     instituicao: Instituicao;
     funcionario: Funcionario;
-    dataInicioFuncao: Date;
-    dataFimFuncao: Date;
+    dataInicio: Date;
+    dataFim: Date;
 
 }
