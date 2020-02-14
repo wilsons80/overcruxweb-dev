@@ -72,6 +72,7 @@ export class CadastrarProgramasComponent implements OnInit {
     this.programa.composicaoRhPrograma = [];
     this.programa.materiaisPrograma = [];
     this.programa.unidades = [];
+    this.programa.contasCentrosCusto = [];
     
   }
 

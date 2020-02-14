@@ -1,3 +1,4 @@
+import { ContasCentrosCustoModule } from './../common/contas-centros-custo/contas-centros-custo.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgxCurrencyModule } from 'ngx-currency';
@@ -13,7 +14,6 @@ import { MateriaisProgramaComponent } from './cadastrar-programas/parcerias-prog
 import { ParceriasProgramaComponent } from './cadastrar-programas/parcerias-programa/parcerias-programa.component';
 import { ProgramasRoutingModule } from './programas-routing.module';
 import { ProgramasComponent } from './programas.component';
-import { DadosContasBancariasModule } from '../common/dados-contas-bancarias/dados-contas-bancarias.module';
 
 
 
@@ -35,7 +35,7 @@ import { DadosContasBancariasModule } from '../common/dados-contas-bancarias/dad
     DadosFuncionarioModule,
     UnidadesMultiplasModule,
     NgxCurrencyModule,
-    DadosContasBancariasModule
+    ContasCentrosCustoModule
   ]
 })
 export class ProgramasModule { }

@@ -5,6 +5,7 @@ import { Unidade } from './unidade';
 import { ColaboradoresProjeto } from './colaboradores-projeto';
 import { ParceriasProjeto } from './parcerias-projeto';
 import { ComposicaoRhProjeto } from './composicao-rh-projeto';
+import { ContasCentrosCusto } from './contas-centros-custo';
 
 export class Projeto {
 
@@ -26,6 +27,7 @@ export class Projeto {
 	parceriasProjeto:ParceriasProjeto[];
 	composicaoRhProjeto:ComposicaoRhProjeto[];
 	materiaisProjeto:MateriaisProjeto[]
+	contasCentrosCusto:ContasCentrosCusto[];
 
 }
 

@@ -75,6 +75,7 @@ export class CadastrarProjetoComponent implements OnInit {
     this.projeto.parceriasProjeto = [];
     this.projeto.composicaoRhProjeto = [];
     this.projeto.materiaisProjeto = [];
+    this.projeto.contasCentrosCusto = [];
   }
   mostrarBotaoLimpar(){
     if(this.isAtualizar) return false;

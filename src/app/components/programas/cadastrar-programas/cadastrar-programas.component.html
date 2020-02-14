@@ -94,11 +94,13 @@
                         </form>
                 </mat-step>
 
-                <!------------------  Contas Bancárias ------------------------>
+                <!------------------  Centros de Custo ------------------------>
                 <mat-step [stepControl]="formCadastroMateriais">
                         <form #formCadastroMateriais="ngForm" matStepperIcon="phone">
-                                <ng-template matStepLabel>CONTAS BANCÁRIAS</ng-template>
-                                <dados-contas-bancarias></dados-contas-bancarias>
+                                <ng-template matStepLabel>CENTROS DE CUSTO</ng-template>
+                                <contas-centros-custo
+                                        [listaContasCentrosCusto] = programa.contasCentrosCusto
+                                ></contas-centros-custo>
                                 <div dir="rtl" fxLayoutGap="20px"
                                         style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
                                         <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>

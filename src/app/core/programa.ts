@@ -4,6 +4,7 @@ import { Unidade } from './unidade';
 import { ParceriasPrograma } from './parcerias-programa';
 import { ComposicaoRhPrograma } from './composicao-rh-programa';
 import { MateriaisPrograma } from './materiais-programa';
+import { ContasCentrosCusto } from './contas-centros-custo';
 
 export class Programa {
 	id: number;
@@ -23,5 +24,6 @@ export class Programa {
 	colaboradoresPrograma:ColaboradoresPrograma[];
 	parceriasPrograma:ParceriasPrograma[];
 	composicaoRhPrograma:ComposicaoRhPrograma[];
-	materiaisPrograma:MateriaisPrograma[]
+	materiaisPrograma:MateriaisPrograma[];
+	contasCentrosCusto:ContasCentrosCusto[];
 }
