@@ -1,0 +1,136 @@
+<mat-toolbar class="titulopartes">Material em estoque</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="100%" >
+        <input matInput name="nomeMaterial" placeholder="Material" [(ngModel)]="estoque.material.nome">
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlexOffset="20px" fxFlex="50%">
+        <input matInput name="nomePrograma" placeholder="Programa" [(ngModel)]="estoque.programa.nome">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50%">
+        <input matInput name="nomeProjeto" placeholder="Projeto" [(ngModel)]="estoque.projeto.nome">
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="33%">
+        <input matInput name="quantidadeEstoque" placeholder="Quantidade em estoque" 
+                [(ngModel)]="estoque.quantidadeEstoque">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+        <input matInput name="quantidadeMinimoEstoque" placeholder="Quantidade mínima" 
+                [(ngModel)]="estoque.quantidadeMinimoEstoque">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+        <input matInput name="quantidadeMaximoEstoque" placeholder="Quantidade máxima" 
+                [(ngModel)]="estoque.quantidadeMaximoEstoque">
+    </mat-form-field>
+
+</div>
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>    
+    <mat-form-field fxFlexOffset="20px" fxFlex="33%">
+        <span matPrefix style="padding-right: 6px">R$</span>
+        <input matInput [(ngModel)]="estoque.valorMedioMaterial" name="valorMedioMaterial" 
+               placeholder="Valor médio do material">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+        <span matPrefix style="padding-right: 6px">R$</span>
+        <input matInput [(ngModel)]="estoque.valorEntradaMaterial" name="valorEntradaMaterial" 
+               placeholder="Valor do material na data de entrada">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+        <span matPrefix style="padding-right: 6px">R$</span>
+        <input matInput [(ngModel)]="estoque.valorUltimoMaterial" name="valorUltimoMaterial" 
+               placeholder="Último valor do material">
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="25%">
+        <input matInput name="tipoEntrada" placeholder="Tipo de entrada do material" 
+               [(ngModel)]="estoque.tipoEntradaMaterial">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="25%">
+        <input matInput name="tipoEntrada" placeholder="Tipo de movimentação" 
+               [(ngModel)]="estoque.tipoMovimentacaoEstoque">
+    </mat-form-field>
+
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlex="25%">
+        <input style="margin-left: 20px" matInput name="dataEstoque"
+               [matDatepicker]="dataEstoque" 
+               placeholder="Data do estoque"
+               [(ngModel)]="estoque.dataEstoque">
+        <mat-datepicker-toggle matSuffix [for]="dataEstoque"></mat-datepicker-toggle>
+        <mat-datepicker #dataEstoque></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlex="25%">
+        <input style="margin-left: 20px" matInput name="dtAtzEstoque"
+               [matDatepicker]="dtAtzEstoque" 
+               placeholder="Data atualização"
+               [(ngModel)]="estoque.dtAtzEstoque">
+        <mat-datepicker-toggle matSuffix [for]="dtAtzEstoque"></mat-datepicker-toggle>
+        <mat-datepicker #dtAtzEstoque></mat-datepicker>
+    </mat-form-field>   
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="45%" appearance="outline">
+            <mat-label>Descrição da movimentação</mat-label>
+            <textarea #descricaoMovimentacaoEstoque matInput
+                      name="descricaoMovimentacaoEstoque"
+                      [(ngModel)]="estoque.descricaoMovimentacaoEstoque"
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="3"
+                      maxlength="200"></textarea>
+            <mat-hint align="end">{{descricaoMovimentacaoEstoque.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+            <mat-label>Forma de obtenção do valor do material</mat-label>
+            <textarea #descricaoFormaValorEntrada matInput
+                      name="descricaoFormaValorEntrada"
+                      [(ngModel)]="estoque.descricaoFormaValorEntrada"
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="3"
+                      maxlength="200"></textarea>
+            <mat-hint align="end">{{descricaoFormaValorEntrada.value.length}} / 200</mat-hint>
+    </mat-form-field>
+</div>
+
+
+
+<br><br>
+<div fxLayout="row" fxLayoutGap="50px" 
+     style="margin-top: 30px; margin-bottom: 10px" 
+     fxFlexFill>
+    <div fxFlex="100%" fxLayoutAlign="center center">
+        <button mat-raised-button 
+                style="width: 240px; background-color: rgb(241,241,241);"
+                (click)="cancelar()"  
+                matTooltip="Fechar">
+            Fechar
+        </button>
+    </div>
+</div>

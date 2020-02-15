@@ -4,13 +4,14 @@ import { Programa } from 'src/app/core/programa';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Estoques } from './../../core/estoques';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EstoquesService } from 'src/app/services/estoques/estoques.service';
 import { Material } from 'src/app/core/material';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { MaterialService } from 'src/app/services/material/material.service';
+import { EstoqueDialogComponent } from './estoque-dialog/estoque-dialog.component';
 
 class FilterEstoque {
   idPrograma: number;
@@ -99,8 +100,10 @@ export class EstoquesComponent implements OnInit {
   }
 
 
-  visualizar(estoque: Estoques) {
-
+  visualizar(objetoEstoque: Estoques) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {estoque: objetoEstoque};
+    this.dialog.open(EstoqueDialogComponent, dialogConfig);
   }
 
 
