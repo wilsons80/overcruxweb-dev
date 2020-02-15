@@ -1,15 +1,12 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Iniciativa } from 'src/app/core/iniciativa';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
-import { IniciativaService } from 'src/app/services/iniciativa/iniciativa.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-cadastrar-projeto',
@@ -87,7 +84,7 @@ export class CadastrarProjetoComponent implements OnInit {
 
   cadastrar() {
     this.projetoService.cadastrar(this.projeto).subscribe(() => {
-      this.router.navigate(['projeto']);
+      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto cadastrado com sucesso");
     });
   }
@@ -97,13 +94,12 @@ export class CadastrarProjetoComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['projeto']);
+    this.router.navigate(['projetos']);
   }
-
 
   atualizar() {
     this.projetoService.alterar(this.projeto).subscribe(() => {
-      this.router.navigate(['projeto']);
+      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto atualizado com sucesso");
     });
 

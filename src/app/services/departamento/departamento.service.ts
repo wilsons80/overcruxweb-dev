@@ -13,4 +13,8 @@ export class DepartamentoService extends BaseService<Departamento> {
     super(http, Rotas.DEPARTAMENTO);
   }
 
+  getAllCombo() {
+    return this.http.get(`${Rotas.DEPARTAMENTO}combo`);
+  }
+
 }

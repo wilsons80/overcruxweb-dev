@@ -1,35 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Empresa } from 'src/app/core/empresa';
+import { BaseService } from '../base/base.service';
+import { Rotas } from 'src/app/core/rotas';
 
 
-const rootPath = 'api/empresa/';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmpresaService {
+export class EmpresaService extends BaseService<Empresa> {
 
-
-  constructor(private http: HttpClient) { }
-
-  getAll() {
-    return this.http.get(rootPath);
+  constructor(http: HttpClient) {
+    super(http, Rotas.EMPRESAS);
   }
 
-  getById(id: number) {
-    return this.http.get(rootPath + `${id}`);
+  getAllCombo() {
+    return this.http.get(`${Rotas.EMPRESAS}combo/`);
   }
 
-  cadastrar(empresa: Empresa) {
-    return this.http.post(rootPath, empresa);
-  }
-
-  alterar(empresa: Empresa) {
-    return this.http.put(rootPath, empresa);
-  }
-
-  excluir(id: number) {
-    return this.http.delete(rootPath + `${id}`);
-  }
 }

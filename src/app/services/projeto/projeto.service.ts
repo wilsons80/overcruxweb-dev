@@ -13,15 +13,24 @@ const rootPath = 'api/projeto/';
 export class ProjetoService extends BaseService<Projeto> {
 
   constructor(http: HttpClient) {
-    super(http, Rotas.PROJETO);
+    super(http, Rotas.PROJETOS);
   }
 
   getAllIntituicaoLogada() {
-    return this.http.get(`${Rotas.PROJETO}instituicao/logada`);
+    return this.http.get(`${Rotas.PROJETOS}instituicao/logada`);
   }
 
   getAllPorPrograma(idPrograma: number) {
-    return this.http.get(`${Rotas.PROJETO}programa/${idPrograma}`);
+    return this.http.get(`${Rotas.PROJETOS}programa/${idPrograma}`);
   }
+
+  getAllProgramasIntituicaoLogadaCombo() {
+    return this.http.get(`${Rotas.PROJETOS}instituicao/logada/combo`);
+  }
+
+  getAllCombo() {
+    return this.http.get(`${Rotas.PROJETOS}combo`);
+  }
+
 
 }

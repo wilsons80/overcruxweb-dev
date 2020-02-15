@@ -11,11 +11,17 @@ import { Programa } from 'src/app/core/programa';
 export class ProgramaService extends BaseService<Programa> {
 
   constructor(http: HttpClient) {
-    super(http, Rotas.PROGRAMA);
+    super(http, Rotas.PROGRAMAS);
   }
 
   getAllProgramasIntituicaoLogada() {
-    return this.http.get(`${Rotas.PROGRAMA}instituicao/logada`);
+    return this.http.get(`${Rotas.PROGRAMAS}instituicao/logada`);
+  }
+  getAllProgramasIntituicaoLogadaCombo() {
+    return this.http.get(`${Rotas.PROGRAMAS}instituicao/logada/combo`);
+  }
+  getAllCombo() {
+    return this.http.get(`${Rotas.PROGRAMAS}combo`);
   }
 
 }

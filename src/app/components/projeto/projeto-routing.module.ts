@@ -8,8 +8,8 @@ import { Modulos } from 'src/app/core/modulos';
 
 
 const routes: Routes = [
-  { path: 'projeto/cadastrar', component: CadastrarProjetoComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PROJETO}  },
-  { path: 'projeto', component: ProjetoComponent, canActivate: [AuthGuard] ,resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PROJETO} },
+  { path: 'projetos/cadastrar', component: CadastrarProjetoComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PROJETO}  },
+  { path: 'projetos', component: ProjetoComponent, canActivate: [AuthGuard] ,resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PROJETO} },
 
 ];
 

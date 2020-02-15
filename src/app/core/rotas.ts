@@ -31,8 +31,8 @@ export enum Rotas {
     CONDICAO_MORADIA                = 'api/condicaomoradia/',
     USUARIO                         = 'api/usuario/',
     USUARIO_SISTEMA                 = 'api/usuariosistema/',
-    PROGRAMA                        = 'api/programa/',
-    PROJETO                         = 'api/projeto/',
+    PROGRAMAS                       = 'api/programas/',
+    PROJETOS                        = 'api/projetos/',
     DOCUMENTO_ATIVIDADE             = 'api/documentosatividade/',
     MATERIAIS_ATIVIDADE             = 'api/materiaisatividade/',
     CADASTRO_RESERVA_ATIVIDADE      = 'api/cadastroreservaatividade/',
@@ -60,4 +60,5 @@ export enum Rotas {
     PEDIDOS                         = 'api/pedidos/',
     CONTAS_BANCARIA                 = 'api/contasbancarias/',
     ESTOQUES                        = 'api/estoques/',
+    MOVIMENTACOES                   = 'api/movimentacoes/',
 }

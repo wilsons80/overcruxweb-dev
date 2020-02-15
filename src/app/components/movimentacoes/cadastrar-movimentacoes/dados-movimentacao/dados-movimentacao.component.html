@@ -8,9 +8,9 @@
             <!-- EMPRESAS -->
             <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Empresa:</mat-label>
-                <mat-select name="empresa">
-                    <mat-option *ngFor="let i of empresas">
-                        {{i.nome}}
+                <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
+                    <mat-option *ngFor="let i of empresas" [value]=i.id>
+                        {{i.nomeFantasia}}
                     </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
@@ -20,8 +20,8 @@
             <!-- TIPO MOVIMENTACAO -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Tipo de Movimentação:</mat-label>
-                <mat-select name="tiposMovimentacao" required>
-                    <mat-option *ngFor="let i of tiposMovimentacao">
+                <mat-select [(ngModel)]=movimentacoes.stTipoMovimentacao name="tiposMovimentacao" required>
+                    <mat-option *ngFor="let i of tiposMovimentacao" [value]=i.id>
                         {{i.descricao}}
                     </mat-option>
                 </mat-select>
@@ -29,7 +29,7 @@
 
             <!-- DATA MOVIMENTACAO -->
             <mat-form-field fxFlex="30%">
-                <input matInput name="dataMovimentacao" [matDatepicker]="dataMovimentacao" placeholder="Data de Início">
+                <input [(ngModel)]=movimentacoes.dataMovimentacao matInput name="dataMovimentacao" [matDatepicker]="dataMovimentacao" placeholder="Data Movimentação">
                 <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataMovimentacao></mat-datepicker>
@@ -39,9 +39,10 @@
 
         <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
+            <!-- DESCRICAO -->
             <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                 <mat-label>Descrição:</mat-label>
-                <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                <textarea [(ngModel)]=movimentacoes.descricaoMovimentacao matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                     cdkAutosizeMinRows="3" maxlength="200">
                 </textarea>
                 <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
@@ -51,20 +52,24 @@
         <!-- DOCUMENTOS -->
         <mat-toolbar class="titulopartes">Documentos</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- NR DOCUMENTOS -->
             <mat-form-field fxFlexOffset="20px" fxFlex="30%">
-                <input #numeroDocumento matInput maxlength="20" name="numeroDocumento" placeholder="Número documento:">
+                <input [(ngModel)]=movimentacoes.nrDocumento #numeroDocumento matInput maxlength="20" name="numeroDocumento" placeholder="Número documento:">
                 <mat-hint align="end">{{numeroDocumento.value.length}} / 20</mat-hint>
             </mat-form-field>
 
+            <!-- DATA DOCUMENTOS -->
             <mat-form-field fxFlex="30%">
-                <input matInput name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data do documento:">
+                <input matInput [(ngModel)]=movimentacoes.dataDocumento name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data do documento:">
                 <mat-datepicker-toggle matSuffix [for]="dataDocumento">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataDocumento></mat-datepicker>
             </mat-form-field>
 
+            <!-- VALOR -->
             <mat-form-field fxFlex="15%">
-                <input currencyMask name="valorAlocacao" placeholder="Valor:" matInput maxlength="13"
+                <input [(ngModel)]=movimentacoes.valorMovimentacao currencyMask name="valorAlocacao" placeholder="Valor:" matInput maxlength="13"
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
@@ -76,8 +81,8 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Programa:</mat-label>
-                <mat-select name="programa">
-                    <mat-option *ngFor="let i of programas">
+                <mat-select [(ngModel)]=movimentacoes.programa.id name="programa">
+                    <mat-option *ngFor="let i of programas" [value]=i.id>
                         {{i.nome}}
                     </mat-option>
                 </mat-select>
@@ -87,8 +92,8 @@
 
             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Projeto:</mat-label>
-                <mat-select name="projeto">
-                    <mat-option *ngFor="let i of projetos">
+                <mat-select [(ngModel)]=movimentacoes.projeto.id name="projeto">
+                    <mat-option *ngFor="let i of projetos" [value]=i.id>
                         {{i.nome}}
                     </mat-option>
                 </mat-select>
@@ -97,9 +102,34 @@
             </mat-form-field>
         </div>
 
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Unidade:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.unidade.idUnidade name="unidade" required>
+                    <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
+                        {{i.nomeUnidade}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Departamento:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
+                    <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
+                        {{i.nmDepartamento}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum departamento
+                    cadastrado</mat-hint>
+            </mat-form-field>
+        </div>
+
+
         <div fxLayout="row" fxFlexFill>
         <mat-form-field fxFlex="46%" fxFlexOffset="20px">
-            <input type="number" matInput maxlength="3" 
+            <input [(ngModel)]=movimentacoes.qtdParcelas type="number" min=0 matInput maxlength="3" 
                 name="qtdParcelas" placeholder="Quantidade de parcelas da movimentação:" />
         </mat-form-field>
     </div>

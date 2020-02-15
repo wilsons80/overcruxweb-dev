@@ -115,13 +115,22 @@
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                 fxFlexFill>
-                <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]=formCadastroDadosProjeto.invalid
-                        mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
+                <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" 
+                        [disabled]=formCadastroDadosProjeto.invalid
+                        mat-raised-button name="botaoConfirmar" 
+                        fxFlex="20%" 
+                        color="primary" 
+                        (click)="cadastrar()">
                         Cadastrar
                 </button>
 
-                <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formCadastroDadosProjeto.invalid
-                        mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
+                <button *ngIf="isAtualizar && mostrarBotaoAtualizar" 
+                        [disabled]=formCadastroDadosProjeto.invalid
+                        mat-raised-button 
+                        name="botaoConfirmar" 
+                        fxFlex="20%" 
+                        color="primary" 
+                        (click)="atualizar()">
                         Atualizar
                 </button>
 
