@@ -15,7 +15,7 @@
                     <!-- MATERIAL -->
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Material:</mat-label>
-                        <mat-select name="material">
+                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material">
                             <mat-option *ngFor="let i of materiais">
                                 {{i.nome}}
                             </mat-option>
@@ -27,8 +27,8 @@
                     <!-- CATEGORIAS -->
                     <mat-form-field fxFlex="30%">
                         <mat-label>Categoria:</mat-label>
-                        <mat-select name="categoria" >
-                            <mat-option *ngFor="let i of categorias">
+                        <mat-select name="categoria" [(ngModel)]=itensMovimentacoes.categoria.id >
+                            <mat-option *ngFor="let i of categorias" [value]=i.id>
                                 {{i.nome}}
                             </mat-option>
                         </mat-select>
@@ -37,9 +37,9 @@
                     <!-- PEDIDO MATERIAL -->
                     <mat-form-field fxFlex="30%">
                         <mat-label>Pedido Material:</mat-label>
-                        <mat-select name="pedidoMaterial" >
-                            <mat-option *ngFor="let i of pedidosMaterial">
-                                {{i.nome}}
+                        <mat-select name="pedidoMaterial" [(ngModel)]=itensMovimentacoes.pedidosMateriais.id>
+                            <mat-option *ngFor="let i of pedidosMateriais" [value]=i.id>
+                                {{i.descricaoPedido}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -50,7 +50,7 @@
         
                     <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                         <mat-label>Descrição item movimentação:</mat-label>
-                        <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                        <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                             cdkAutosizeMinRows="3" maxlength="200" >
                         </textarea>
                         <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
@@ -59,18 +59,18 @@
         
                 <div fxLayout="row" fxLayoutGap="50px">
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input [(ngModel)]="valorUnitario" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                        <input (ngModelChange)="multiplicar()" [(ngModel)]=itensMovimentacoes.valorUnitarioItem currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
         
                     <mat-form-field fxFlex="10%" >
-                        <input type="number" [(ngModel)]="quantidade" matInput min="0" maxlength="3" name="qtdParcelas"
+                        <input type="number" (input)="multiplicar()" [(ngModel)]=itensMovimentacoes.quantidadeMaterial  matInput min="0" maxlength="3" name="qtdParcelas"
                             placeholder="Quantidade:" />
                     </mat-form-field>
         
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input currencyMask name="valorTotal" 
+                        <input [(ngModel)]=itensMovimentacoes.valorTotalItem currencyMask name="valorTotal" 
                         placeholder="Valor Total:" matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" disabled />
                         <span matPrefix>R$&nbsp;</span>
@@ -105,7 +105,7 @@
             (closed)="openFormCadastro = true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Lista de Itens ( {{listaItemMovimentacao?.length}} )
+                    Lista de Itens ( {{listaItensMovimentacoes?.length}} )
                 </mat-panel-title>
             </mat-expansion-panel-header>
 

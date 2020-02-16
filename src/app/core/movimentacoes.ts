@@ -1,3 +1,4 @@
+import { ItensMovimentacoes } from './itens-movimentacoes';
 import { Departamento } from './departamento';
 import { Projeto } from './projeto';
 import { Programa } from './programa';
@@ -18,4 +19,5 @@ export class Movimentacoes{
 	unidade:Unidade;
 	departamento:Departamento;
 	qtdParcelas:number;
+	itensMovimentacoes:ItensMovimentacoes[]
 }

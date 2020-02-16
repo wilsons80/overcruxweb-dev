@@ -1,8 +1,16 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { PedidosMateriaisService } from './../../../../services/pedidosMateriais/pedidos-materiais.service';
+import { PedidosMateriais } from './../../../../core/pedidos-materiais';
+import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
+import { MaterialService } from './../../../../services/material/material.service';
+import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Acesso } from 'src/app/core/acesso';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { ItemMovimentacao } from 'src/app/core/item-movimentacao';
+import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
+import * as _ from 'lodash';
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
+import { Material } from 'src/app/core/material';
+import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 
 @Component({
   selector: 'itens-movimentacao',
@@ -11,75 +19,134 @@ import { ItemMovimentacao } from 'src/app/core/item-movimentacao';
 })
 export class ItensMovimentacaoComponent implements OnInit {
 
-  @Input() listaItemMovimentacao: ItemMovimentacao[] = [];
+  @Input() listaItensMovimentacoes: ItensMovimentacoes[];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  mostrarTabela = true;
-  msg: string;
+  mostrarTabela = false;
+  msg: string = "Nenhum item movimentação adicionado";
 
-  materiais = [{ nome: "Material 1" }, { nome: "Material 2" }];
-  categorias = [{ nome: "Categoria 1" }, { nome: "Categoria 2" }];
-  pedidosMaterial = [{ nome: "Pedido 1" }, { nome: "Pedido 2" }];
 
   
-  displayedColumns: string[] = ['categoria','material', 'qtdMaterial', 'valorUnitarioItem', 'valorTotalItem','acoes'];
-  dataSource: MatTableDataSource<ItemMovimentacao> = new MatTableDataSource();
+  displayedColumns: string[] = ['id','descricaoItemMovimentacao','quantidadeMaterial','valorUnitarioItem','valorTotalItem', 'acoes'];
+  dataSource: MatTableDataSource<ItensMovimentacoes> = new MatTableDataSource();
 
- 
-
-  itemMovimentacao: ItemMovimentacao;
+  itensMovimentacoes: ItensMovimentacoes;
 
   perfilAcesso: Acesso;
 
   openFormCadastro = false;
   isAtualizar = false;
+  materiais: Material[];
+  categorias: CategoriasContabeis[];
+  pedidosMateriais: PedidosMateriais[];
 
-  valorUnitario: number = 0;
-  valorTotal: number = 0;
-  quantidade: number = 0;
 
   constructor(
+
+    private materialService:MaterialService,
+    private categoriasContabeisService:CategoriasContabeisService,
+    private pedidosMateriaisService:PedidosMateriaisService
+
   ) { }
 
   ngOnInit() {
+    this.initObjetos();
 
-    this.inicializaLista();
+    this.materialService.getAllCombo().subscribe((materiais:Material[]) => {
+      this.materiais = materiais;
+    })
+  
+    this.categoriasContabeisService.getAllCombo().subscribe((categorias:CategoriasContabeis[]) => {
+      this.categorias = categorias;
+    })
+  
+    this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais:PedidosMateriais[]) => {
+      this.pedidosMateriais = pedidosMateriais;
+    })
+  
   }
 
-  initObjeto() {}
-
-  limpar() { }
-
-  adicionar() {}
-
-  getObjetosCompletosParaLista(itemMovimentacao: ItemMovimentacao) {}
-
-  atualizar() { }
-
-
-  inicializaLista(){
-    const item = new ItemMovimentacao();
-    item.categoria = "Categoria 1";
-    item.material = "Material 1"
-    item.qtdMaterial = 3;
-    item.valorUnitarioItem = 5;
-    item.valorTotalItem = 15;
-
-    const item1 = new ItemMovimentacao();
-    item1.categoria = "Categoria 2";
-    item1.material = "Material 2"
-    item1.qtdMaterial = 10;
-    item1.valorUnitarioItem = 5;
-    item1.valorTotalItem = 50;
-
-    this.listaItemMovimentacao.push(item);
-    this.listaItemMovimentacao.push(item1);
-
-    this.dataSource.data = this.listaItemMovimentacao;
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes["listaItensMovimentacoes"] && changes["listaItensMovimentacoes"].currentValue){
+      this.carregarLista();
+    }
   }
 
-  carregarLista(){}
+  adicionar() {
+    const contasCentrosCustoSelecionada = new ItensMovimentacoes();
+    Object.assign(contasCentrosCustoSelecionada, this.itensMovimentacoes);
+    
+    this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
 
+    this.listaItensMovimentacoes.push(contasCentrosCustoSelecionada);
+    this.limpar();
+    this.openFormCadastro = !this.openFormCadastro;
+  }
+
+
+  getObjetosCompletosParaLista(itensMovimentacoes:ItensMovimentacoes) {
+    itensMovimentacoes.material = _.find(this.materiais, (m:Material) => m.id == itensMovimentacoes.material.id);
+    itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m:PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
+    itensMovimentacoes.categoria = _.find(this.categorias, (m:CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
+  }
+
+  novo() {
+    this.isAtualizar = false;
+    this.openFormCadastro = !this.openFormCadastro;
+    this.limpar();
+  }
+
+  atualizar() {
+    this.limpar();
+    this.openFormCadastro = false;
+    this.isAtualizar = false;
+  }
+
+
+
+  atualizarFuncao(itensMovimentacoes: ItensMovimentacoes) {
+    this.itensMovimentacoes = itensMovimentacoes;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+
+  }
+
+  limpar() {
+    this.initObjetos();
+  }
+
+  carregarLista() {
+    if (this.listaItensMovimentacoes.length === 0) {
+      this.mostrarTabela = false;
+      this.msg = 'Nenhum item movimentação adicionado.';
+    } else {
+      this.dataSource.data = this.listaItensMovimentacoes ? this.listaItensMovimentacoes : [];
+      this.mostrarTabela = true;
+    }
+  }
+
+
+  initObjetos() {
+    this.itensMovimentacoes = new ItensMovimentacoes();
+    this.itensMovimentacoes.categoria = new CategoriasContabeis();
+    this.itensMovimentacoes.material = new Material();
+    this.itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
+    this.itensMovimentacoes.quantidadeMaterial = 0;
+    this.itensMovimentacoes.valorTotalItem = 0;
+    this.itensMovimentacoes.valorUnitarioItem= 0;
+  }
+
+  deletar(itensMovimentacoes: ItensMovimentacoes): void {
+    const index = this.listaItensMovimentacoes.indexOf(this.listaItensMovimentacoes.find(fi => fi === itensMovimentacoes));
+    if (index >= 0) {
+      this.listaItensMovimentacoes.splice(index, 1);
+      this.carregarLista();
+    }
+  }
+
+  multiplicar(){
+    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem * this.itensMovimentacoes.quantidadeMaterial
+  }
 
 }

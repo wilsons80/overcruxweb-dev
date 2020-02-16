@@ -15,6 +15,10 @@ export class BaseService<T> {
   getAll() {
     return this.http.get(`${this.rota}`);
   }
+  
+  getAllCombo() {
+    return this.http.get(`${this.rota}combo`);
+  }
 
   getById(id: number) {
     return this.http.get(`${this.rota}${id}`);
