@@ -15,8 +15,8 @@
                     <!-- MATERIAL -->
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Material:</mat-label>
-                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material">
-                            <mat-option *ngFor="let i of materiais">
+                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material" required>
+                            <mat-option *ngFor="let i of materiais" [value]=i.id>
                                 {{i.nome}}
                             </mat-option>
                         </mat-select>
@@ -27,11 +27,13 @@
                     <!-- CATEGORIAS -->
                     <mat-form-field fxFlex="30%">
                         <mat-label>Categoria:</mat-label>
-                        <mat-select name="categoria" [(ngModel)]=itensMovimentacoes.categoria.id >
+                        <mat-select name="categoria" [(ngModel)]=itensMovimentacoes.categoria.id required>
                             <mat-option *ngFor="let i of categorias" [value]=i.id>
                                 {{i.nome}}
                             </mat-option>
                         </mat-select>
+                        <mat-hint *ngIf="categorias?.length === 0" align="start">Nenhuma categoria
+                            cadastrada</mat-hint>
                     </mat-form-field>
         
                     <!-- PEDIDO MATERIAL -->
@@ -42,6 +44,8 @@
                                 {{i.descricaoPedido}}
                             </mat-option>
                         </mat-select>
+                        <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material
+                            cadastrado</mat-hint>
                     </mat-form-field>
         
                 </div>
@@ -59,13 +63,13 @@
         
                 <div fxLayout="row" fxLayoutGap="50px">
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input (ngModelChange)="multiplicar()" [(ngModel)]=itensMovimentacoes.valorUnitarioItem currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                        <input (ngModelChange)="multiplicar($event)" [(ngModel)]="itensMovimentacoes.valorUnitarioItem" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
         
                     <mat-form-field fxFlex="10%" >
-                        <input type="number" (input)="multiplicar()" [(ngModel)]=itensMovimentacoes.quantidadeMaterial  matInput min="0" maxlength="3" name="qtdParcelas"
+                        <input type="number" (input)="multiplicarComQuantidade()" [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  matInput min="0" maxlength="3" name="qtdParcelas"
                             placeholder="Quantidade:" />
                     </mat-form-field>
         
@@ -112,38 +116,38 @@
             <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
                 style="margin-top: 20px">
 
-                <ng-container matColumnDef="categoria">
-                    <th mat-header-cell *matHeaderCellDef> Categoria </th>
-                    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="material">
-                    <th mat-header-cell *matHeaderCellDef> Material </th>
-                    <td mat-cell *matCellDef="let element"> {{element.material}} </td>
+                <ng-container matColumnDef="descricaoItemMovimentacao">
+                    <th mat-header-cell *matHeaderCellDef> Descrição </th>
+                    <td mat-cell *matCellDef="let element"> {{element.descricaoItemMovimentacao}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="qtdMaterial">
+                <ng-container matColumnDef="quantidadeMaterial">
                     <th mat-header-cell *matHeaderCellDef> Quantidade </th>
-                    <td mat-cell *matCellDef="let element"> {{element.qtdMaterial}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.quantidadeMaterial}} </td>
                 </ng-container>
                
                 <ng-container matColumnDef="valorUnitarioItem">
                     <th mat-header-cell *matHeaderCellDef> Valor Unitário </th>
-                    <td mat-cell *matCellDef="let element"> {{element.valorUnitarioItem}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.valorUnitarioItem | currency: 'BRL'}} </td>
                 </ng-container>
                
                 <ng-container matColumnDef="valorTotalItem">
                     <th mat-header-cell *matHeaderCellDef> Valor Total </th>
-                    <td mat-cell *matCellDef="let element"> {{element.valorTotalItem}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.valorTotalItem | currency: 'BRL'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="acoes">
                     <th mat-header-cell *matHeaderCellDef > Ações </th>
                     <td mat-cell *matCellDef="let element">
-                        <button  mat-button >
+                        <button mat-button (click)="deletar(element)">
                             <mat-icon>delete</mat-icon>
                         </button>
-                        <button  mat-button >
+                        <button  mat-button (click)="atualizarRegistro(element)">
                             <mat-icon>create</mat-icon>
                         </button>
                     </td>
@@ -166,7 +170,7 @@
             <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px"
                 style="padding-top: 30px">
                 <div>
-                    <button matTooltip="Adicionar nova unidade" mat-fab color="primary" >
+                    <button matTooltip="Adicionar novo item" mat-fab color="primary" (click)="novo()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>

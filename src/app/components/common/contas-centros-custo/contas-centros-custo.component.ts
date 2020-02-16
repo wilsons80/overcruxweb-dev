@@ -135,4 +135,12 @@ export class ContasCentrosCustoComponent implements OnInit {
       this.carregarLista();
     }
   }
+
+  atualizarCentrosDeCusto(contasCentrosCusto: ContasCentrosCusto) {
+    this.contasCentrosCusto = contasCentrosCusto;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+
+  }
+
 }

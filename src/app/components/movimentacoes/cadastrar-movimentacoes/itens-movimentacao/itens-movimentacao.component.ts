@@ -1,16 +1,14 @@
-import { PedidosMateriaisService } from './../../../../services/pedidosMateriais/pedidos-materiais.service';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import * as _ from 'lodash';
+import { Acesso } from 'src/app/core/acesso';
+import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
+import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
+import { Material } from 'src/app/core/material';
 import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
-import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { Acesso } from 'src/app/core/acesso';
-import { ToastService } from 'src/app/services/toast/toast.service';
-import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
-import * as _ from 'lodash';
-import { ContasBancaria } from 'src/app/core/contas-bancaria';
-import { Material } from 'src/app/core/material';
-import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
+import { PedidosMateriaisService } from './../../../../services/pedidosMateriais/pedidos-materiais.service';
 
 @Component({
   selector: 'itens-movimentacao',
@@ -27,8 +25,8 @@ export class ItensMovimentacaoComponent implements OnInit {
   msg: string = "Nenhum item movimentação adicionado";
 
 
-  
-  displayedColumns: string[] = ['id','descricaoItemMovimentacao','quantidadeMaterial','valorUnitarioItem','valorTotalItem', 'acoes'];
+
+  displayedColumns: string[] = ['descricaoItemMovimentacao', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
   dataSource: MatTableDataSource<ItensMovimentacoes> = new MatTableDataSource();
 
   itensMovimentacoes: ItensMovimentacoes;
@@ -44,31 +42,31 @@ export class ItensMovimentacaoComponent implements OnInit {
 
   constructor(
 
-    private materialService:MaterialService,
-    private categoriasContabeisService:CategoriasContabeisService,
-    private pedidosMateriaisService:PedidosMateriaisService
+    private materialService: MaterialService,
+    private categoriasContabeisService: CategoriasContabeisService,
+    private pedidosMateriaisService: PedidosMateriaisService
 
   ) { }
 
   ngOnInit() {
     this.initObjetos();
 
-    this.materialService.getAllCombo().subscribe((materiais:Material[]) => {
+    this.materialService.getAllCombo().subscribe((materiais: Material[]) => {
       this.materiais = materiais;
     })
-  
-    this.categoriasContabeisService.getAllCombo().subscribe((categorias:CategoriasContabeis[]) => {
+
+    this.categoriasContabeisService.getAllCombo().subscribe((categorias: CategoriasContabeis[]) => {
       this.categorias = categorias;
     })
-  
-    this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais:PedidosMateriais[]) => {
+
+    this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais: PedidosMateriais[]) => {
       this.pedidosMateriais = pedidosMateriais;
     })
-  
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes["listaItensMovimentacoes"] && changes["listaItensMovimentacoes"].currentValue){
+    if (changes["listaItensMovimentacoes"] && changes["listaItensMovimentacoes"].currentValue) {
       this.carregarLista();
     }
   }
@@ -76,7 +74,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   adicionar() {
     const contasCentrosCustoSelecionada = new ItensMovimentacoes();
     Object.assign(contasCentrosCustoSelecionada, this.itensMovimentacoes);
-    
+
     this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
 
     this.listaItensMovimentacoes.push(contasCentrosCustoSelecionada);
@@ -85,10 +83,10 @@ export class ItensMovimentacaoComponent implements OnInit {
   }
 
 
-  getObjetosCompletosParaLista(itensMovimentacoes:ItensMovimentacoes) {
-    itensMovimentacoes.material = _.find(this.materiais, (m:Material) => m.id == itensMovimentacoes.material.id);
-    itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m:PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
-    itensMovimentacoes.categoria = _.find(this.categorias, (m:CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
+  getObjetosCompletosParaLista(itensMovimentacoes: ItensMovimentacoes) {
+    itensMovimentacoes.material = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
+    itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
+    itensMovimentacoes.categoria = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
   }
 
   novo() {
@@ -134,7 +132,7 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
     this.itensMovimentacoes.quantidadeMaterial = 0;
     this.itensMovimentacoes.valorTotalItem = 0;
-    this.itensMovimentacoes.valorUnitarioItem= 0;
+    this.itensMovimentacoes.valorUnitarioItem = 0;
   }
 
   deletar(itensMovimentacoes: ItensMovimentacoes): void {
@@ -145,8 +143,37 @@ export class ItensMovimentacaoComponent implements OnInit {
     }
   }
 
-  multiplicar(){
-    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem * this.itensMovimentacoes.quantidadeMaterial
+  multiplicar(event) {
+    this.itensMovimentacoes.valorUnitarioItem = event;
+
+    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem  * 
+      this.itensMovimentacoes.quantidadeMaterial
   }
 
+ multiplicarComQuantidade() {
+    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem  * 
+      this.itensMovimentacoes.quantidadeMaterial
+  }
+
+  atualizarRegistro(itensMovimentacoes: ItensMovimentacoes) {
+    this.preencherObjetosVazios(itensMovimentacoes);
+    this.itensMovimentacoes = itensMovimentacoes;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+  }
+
+  preencherObjetosVazios(itensMovimentacoes: ItensMovimentacoes){
+    if(!itensMovimentacoes.material){
+      itensMovimentacoes.material = new Material();
+    }
+
+    if(!itensMovimentacoes.categoria){
+      itensMovimentacoes.categoria = new CategoriasContabeis();
+    }
+
+    if(!itensMovimentacoes.pedidosMateriais){
+      itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
+    }
+  }
+  
 }

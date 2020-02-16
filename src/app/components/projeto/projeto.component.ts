@@ -63,7 +63,7 @@ export class ProjetoComponent implements OnInit {
 
 
   atualizar(projeto: Projeto) {
-    this.router.navigate(['/projeto/cadastrar'], { queryParams: { idProjeto: projeto.id } });
+    this.router.navigate(['/projetos/cadastrar'], { queryParams: { idProjeto: projeto.id } });
   }
 
   deletar(projeto: Projeto) {
