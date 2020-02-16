@@ -38,7 +38,7 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
             <form #formFaturas="ngForm">
                 <ng-template matStepLabel>FATURAS</ng-template>
-                <faturas-movimentacao></faturas-movimentacao>
+                <faturas-movimentacao [listaFaturas]=movimentacoes.faturas></faturas-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

@@ -116,7 +116,7 @@
 
             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Departamento:</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
+                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento" required>
                     <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
                         {{i.nmDepartamento}}
                     </mat-option>

@@ -37,6 +37,11 @@
                 <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
             </ng-container>
 
+            <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef> Data Movimentação: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.descricaoMovimentacao }} </td>
+            </ng-container>
+           
             <ng-container matColumnDef="dataMovimentacao">
                 <th mat-header-cell *matHeaderCellDef> Data Movimentação: </th>
                 <td mat-cell *matCellDef="let element"> {{ element.dataMovimentacao | dataSimples }} </td>
