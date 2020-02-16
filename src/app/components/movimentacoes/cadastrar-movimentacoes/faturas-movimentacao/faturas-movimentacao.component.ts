@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Acesso } from 'src/app/core/acesso';
-import { FaturaMovimentacao } from 'src/app/core/fatura-movimentacao';
+import { Fatura } from 'src/app/core/fatura';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'faturas-movimentacao',
@@ -10,49 +11,100 @@ import { FaturaMovimentacao } from 'src/app/core/fatura-movimentacao';
 })
 export class FaturasMovimentacaoComponent implements OnInit {
 
-  @Input() listaFaturas: FaturaMovimentacao[] = [];
+  @Input() listaFaturas: Fatura[] = [];
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  mostrarTabela = true;
-  msg: string;
+  mostrarTabela = false;
+  msg: string = "Nenhum fatura adicionada";
 
-  displayedColumns: string[] = ['dataVencimento', 'valorFatura', 'numeroParcelas', 'acoes'];
-  dataSource: MatTableDataSource<FaturaMovimentacao> = new MatTableDataSource();
 
-  openFormCadastro = false;
+  displayedColumns: string[] = ['dataVencimento', 'valor', 'numeroParcela', 'acoes'];
+  dataSource: MatTableDataSource<Fatura> = new MatTableDataSource();
+
+  fatura: Fatura;
 
   perfilAcesso: Acesso;
 
+  openFormCadastro = false;
   isAtualizar = false;
+
 
   constructor() { }
 
   ngOnInit() {
-
-    this.initLista();
+    this.initObjetos();
   }
 
-  adicionar(){}
-  limpar(){}
-  atualizar(){}
-  carregarLista(){}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["listaFaturas"] && changes["listaFaturas"].currentValue) {
+      this.carregarLista();
+    }
+  }
 
-  initLista(){
-    const fatura1 = new FaturaMovimentacao;
-    fatura1.dataVencimento = new Date();
-    fatura1.valorFatura = 200;
-    fatura1.numeroParcelas = 2;
-    
-    const fatura = new FaturaMovimentacao;
-    fatura.dataVencimento = new Date();
-    fatura.valorFatura = 100;
-    fatura.numeroParcelas = 12;
+  adicionar() {
+    const contasCentrosCustoSelecionada = new Fatura();
+    Object.assign(contasCentrosCustoSelecionada, this.fatura);
+    this.listaFaturas.push(contasCentrosCustoSelecionada);
+    this.limpar();
+    this.openFormCadastro = !this.openFormCadastro;
+  }
 
-    this.listaFaturas.push(fatura);
-    this.listaFaturas.push(fatura1);
 
-    this.dataSource.data = this.listaFaturas;
 
+  novo() {
+    this.isAtualizar = false;
+    this.openFormCadastro = !this.openFormCadastro;
+    this.limpar();
+  }
+
+  atualizar() {
+    this.limpar();
+    this.openFormCadastro = false;
+    this.isAtualizar = false;
+  }
+
+
+
+  atualizarFuncao(fatura: Fatura) {
+    this.fatura = fatura;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+
+  }
+
+  limpar() {
+    this.initObjetos();
+  }
+
+  carregarLista() {
+    if (this.listaFaturas.length === 0) {
+      this.mostrarTabela = false;
+      this.msg = 'Nenhuma fatura adicionada.';
+    } else {
+      this.dataSource.data = this.listaFaturas ? this.listaFaturas : [];
+      this.mostrarTabela = true;
+    }
+  }
+
+
+  initObjetos() {
+    this.fatura = new Fatura();
+  }
+
+  deletar(fatura: Fatura): void {
+    const index = this.listaFaturas.indexOf(this.listaFaturas.find(fi => fi === fatura));
+    if (index >= 0) {
+      this.listaFaturas.splice(index, 1);
+      this.carregarLista();
+    }
+  }
+
+
+  atualizarRegistro(fatura: Fatura) {
+    this.fatura = fatura;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
   }
 
 }

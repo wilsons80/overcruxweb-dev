@@ -82,6 +82,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.programa = new Programa();
     this.movimentacoes.projeto = new Projeto();
     this.movimentacoes.itensMovimentacoes = [];
+    this.movimentacoes.faturas = [];
   }
 
   mostrarBotaoLimpar() {
