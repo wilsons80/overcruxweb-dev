@@ -56,7 +56,7 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formPagamentos">
             <form #formPagamentos="ngForm">
                 <ng-template matStepLabel>PAGAMENTOS</ng-template>
-                <pagamentos-movimentacao></pagamentos-movimentacao>
+                <pagamentos-movimentacao [idMovimentacao]=movimentacoes.id></pagamentos-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

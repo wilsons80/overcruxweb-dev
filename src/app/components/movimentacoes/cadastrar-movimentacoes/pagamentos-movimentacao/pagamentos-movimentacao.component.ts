@@ -1,7 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { FaturaService } from './../../../../services/fatura/fatura.service';
+import { ContasBancariaService } from './../../../../services/contas-bancaria/contas-bancaria.service';
+import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Acesso } from 'src/app/core/acesso';
 import { PagamentoMovimentacao } from 'src/app/core/pagamento-movimentacao';
+import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
+import { Material } from 'src/app/core/material';
+import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
+import { PedidosMateriais } from 'src/app/core/pedidos-materiais';
+import { MaterialService } from 'src/app/services/material/material.service';
+import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
+import { PedidosMateriaisService } from 'src/app/services/pedidosMateriais/pedidos-materiais.service';
+import * as _ from 'lodash';
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
+import { Fatura } from 'src/app/core/fatura';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -10,75 +23,135 @@ import { PagamentoMovimentacao } from 'src/app/core/pagamento-movimentacao';
 })
 export class PagamentosMovimentacaoComponent implements OnInit {
 
+  @Input() listaPagamentosFatura: PagamentosFatura[];
+  @Input() idMovimentacao: number;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  listaPagamentos= [];
-  mostrarTabela = true;
-  msg: string;
+  mostrarTabela = false;
+  msg: string = "Nenhum item movimentação adicionado";
+
+  formasPagamento = [
+    {id: "A", descricao: "CARTÃO DE CRÉDITO" },
+    {id: "B", descricao: "DÉBITO EM CARTÃO" },
+    {id: "C", descricao: "CHEQUE" },
+    {id: "D", descricao: "EM DINHEIRO" }
+  ]
+
+
+
+  displayedColumns: string[] = ['descricaoItemMovimentacao', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
+  dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
+
+  pagamentosFatura: PagamentosFatura;
+
   perfilAcesso: Acesso;
 
   openFormCadastro = false;
   isAtualizar = false;
-
-  formaPagamento:any;
-
-  displayedColumns: string[] = ['valorPagamento','dataPagamento', 'formaPagamento','acoes'];
-  dataSource: MatTableDataSource<PagamentoMovimentacao> = new MatTableDataSource();
+  contasBancarias: ContasBancaria[];
+  listaFaturas: Fatura[];
 
 
-  faturas = [
-    {data:"01/02/2020", valor:"100"},
-    {data:"01/02/2020", valor:"200"},
-  ]
+  constructor(
+    private contasBancariaService:ContasBancariaService,
+    private faturaService:FaturaService
 
-  contasBancarias =[
-    {nome:"CONTA BANCÁRIA 1"},
-    {nome:"CONTA BANCÁRIA 2"}
-  ]
-  
-  saldos =[
-    {nome:"SALDO BANCÁRIO 1"},
-    {nome:"SALDO BANCÁRIO 2"}
-  ]
-
-  formasPagamento=[
-    {id: "A", descricao: "CHEQUE"},
-    {id: "B", descricao: "CARTÃO DE CRÉDITO"},
-    {id: "C", descricao: "DÉBITO EM CARTÃO"},
-    {id: "D", descricao: "EM DINHEIRO"},
-    
-  ]
-
-  valorPagamento = 0;
-
-  constructor() { }
+  ) { }
 
   ngOnInit() {
-    this.initLista();
+    this.initObjetos();
+
+    this.contasBancariaService.getAllCombo().subscribe((contasBancarias:ContasBancaria[]) => {
+      this.contasBancarias = contasBancarias;
+    })
   }
-  
-  limpar(){}
-  adicionar(){}
-  atualizar(){}
-  
-  carregarLista(){}
- 
-  initLista() {
 
-    const pagamento1 = new PagamentoMovimentacao();
-    pagamento1.valorPagamento = 100.00;
-    pagamento1.dataPagamento = new Date();
-    pagamento1.formaPagamento = "CHEQUE"
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["listaPagamentosFatura"] && changes["listaPagamentosFatura"].currentValue) {
+      this.carregarLista();
+    }
     
-    const pagamento2 = new PagamentoMovimentacao();
-    pagamento2.valorPagamento = 500.00;
-    pagamento2.dataPagamento = new Date();
-    pagamento2.formaPagamento = "EM DINHEIRO"
+    if (changes["idMovimentacao"] && changes["idMovimentacao"].currentValue) {
+      this.faturaService.getAllPorMovimentacoes(this.idMovimentacao).subscribe((listaFaturas:Fatura[]) => {
+        this.listaFaturas = listaFaturas;
+      })
+    }
+  }
 
-    this.listaPagamentos.push(pagamento1);
-    this.listaPagamentos.push(pagamento2);
-    this.dataSource.data = this.listaPagamentos;
+  adicionar() {
+    const contasCentrosCustoSelecionada = new PagamentosFatura();
+    Object.assign(contasCentrosCustoSelecionada, this.pagamentosFatura);
 
+    this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
+
+    this.listaPagamentosFatura.push(contasCentrosCustoSelecionada);
+    this.limpar();
+    this.openFormCadastro = !this.openFormCadastro;
+  }
+
+
+  getObjetosCompletosParaLista(pagamentosFatura: PagamentosFatura) {
+    // pagamentosFatura.material = _.find(this.materiais, (m: Material) => m.id == pagamentosFatura.material.id);
+  }
+
+  novo() {
+    this.isAtualizar = false;
+    this.openFormCadastro = !this.openFormCadastro;
+    this.limpar();
+  }
+
+  atualizar() {
+    this.limpar();
+    this.openFormCadastro = false;
+    this.isAtualizar = false;
+  }
+
+
+
+  atualizarFuncao(pagamentosFatura: PagamentosFatura) {
+    this.pagamentosFatura = pagamentosFatura;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+
+  }
+
+  limpar() {
+    this.initObjetos();
+  }
+
+  carregarLista() {
+    if (this.listaPagamentosFatura.length === 0) {
+      this.mostrarTabela = false;
+      this.msg = 'Nenhum nenhum pagamento adicionado.';
+    } else {
+      this.dataSource.data = this.listaPagamentosFatura ? this.listaPagamentosFatura : [];
+      this.mostrarTabela = true;
+    }
+  }
+
+
+  initObjetos() {
+    this.pagamentosFatura = new PagamentosFatura();
+  }
+
+  deletar(pagamentosFatura: PagamentosFatura): void {
+    const index = this.listaPagamentosFatura.indexOf(this.listaPagamentosFatura.find(fi => fi === pagamentosFatura));
+    if (index >= 0) {
+      this.listaPagamentosFatura.splice(index, 1);
+      this.carregarLista();
+    }
+  }
+
+
+  atualizarRegistro(pagamentosFatura: PagamentosFatura) {
+    this.preencherObjetosVazios(pagamentosFatura);
+    this.pagamentosFatura = pagamentosFatura;
+    this.openFormCadastro = true;
+    this.isAtualizar = true;
+  }
+
+  preencherObjetosVazios(pagamentosFatura: PagamentosFatura){
   }
 
 }
