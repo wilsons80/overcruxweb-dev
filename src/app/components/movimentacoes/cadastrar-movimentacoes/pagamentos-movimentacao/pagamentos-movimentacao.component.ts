@@ -15,6 +15,7 @@ import * as _ from 'lodash';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 import { Fatura } from 'src/app/core/fatura';
+import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -39,8 +40,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   ]
 
 
-
-  displayedColumns: string[] = ['descricaoItemMovimentacao', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
+  displayedColumns: string[] = ['fatura', 'dataPagamento', 'valorPagamento', 'acoes'];
   dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
 
   pagamentosFatura: PagamentosFatura;
@@ -92,7 +92,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
 
   getObjetosCompletosParaLista(pagamentosFatura: PagamentosFatura) {
-    // pagamentosFatura.material = _.find(this.materiais, (m: Material) => m.id == pagamentosFatura.material.id);
+    pagamentosFatura.contaBancaria = _.find(this.contasBancarias, (m: ContasBancaria) => m.id == pagamentosFatura.contaBancaria.id);
+    pagamentosFatura.fatura = _.find(this.listaFaturas, (m: Fatura) => m.id == pagamentosFatura.fatura.id);
   }
 
   novo() {
@@ -133,6 +134,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   initObjetos() {
     this.pagamentosFatura = new PagamentosFatura();
+    this.pagamentosFatura.contaBancaria = new ContasBancaria();
+    this.pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
+    this.pagamentosFatura.fatura = new Fatura();
   }
 
   deletar(pagamentosFatura: PagamentosFatura): void {
@@ -152,6 +156,18 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   preencherObjetosVazios(pagamentosFatura: PagamentosFatura){
+    if(!pagamentosFatura.contaBancaria){
+      pagamentosFatura.contaBancaria = new ContasBancaria();
+    }
+
+    if(!pagamentosFatura.fatura){
+      pagamentosFatura.fatura = new Fatura();
+    }
+   
+    if(!pagamentosFatura.saldoContaBancaria){
+      pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
+    }
+
   }
 
 }

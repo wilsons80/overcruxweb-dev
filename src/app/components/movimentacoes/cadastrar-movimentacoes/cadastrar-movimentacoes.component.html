@@ -38,7 +38,10 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
             <form #formFaturas="ngForm">
                 <ng-template matStepLabel>FATURAS</ng-template>
-                <faturas-movimentacao [listaFaturas]=movimentacoes.faturas></faturas-movimentacao>
+                <faturas-movimentacao 
+                [listaFaturas]=movimentacoes.faturas
+                [listaPagamentos]=movimentacoes.pagamentosFatura
+                ></faturas-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -56,7 +59,10 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formPagamentos">
             <form #formPagamentos="ngForm">
                 <ng-template matStepLabel>PAGAMENTOS</ng-template>
-                <pagamentos-movimentacao [idMovimentacao]=movimentacoes.id></pagamentos-movimentacao>
+                <pagamentos-movimentacao 
+                [idMovimentacao]=movimentacoes.id
+                [listaPagamentosFatura]=movimentacoes.pagamentosFatura
+                ></pagamentos-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

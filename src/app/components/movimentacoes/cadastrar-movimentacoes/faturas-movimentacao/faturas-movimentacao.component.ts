@@ -1,3 +1,5 @@
+import { ToastService } from './../../../../services/toast/toast.service';
+import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Acesso } from 'src/app/core/acesso';
@@ -12,6 +14,7 @@ import * as _ from 'lodash';
 export class FaturasMovimentacaoComponent implements OnInit {
 
   @Input() listaFaturas: Fatura[] = [];
+  @Input() listaPagamentos: PagamentosFatura[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -30,7 +33,10 @@ export class FaturasMovimentacaoComponent implements OnInit {
   isAtualizar = false;
 
 
-  constructor() { }
+  constructor(
+    private toastService: ToastService
+
+  ) { }
 
   ngOnInit() {
     this.initObjetos();
@@ -93,6 +99,12 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   deletar(fatura: Fatura): void {
+    if (this.existemPagamentos(fatura)) {
+      this.toastService.showAlerta("Não é possui excluir essa fatura pois existem pagamentos vinculados a ela.")
+      return;
+    }
+
+
     const index = this.listaFaturas.indexOf(this.listaFaturas.find(fi => fi === fatura));
     if (index >= 0) {
       this.listaFaturas.splice(index, 1);
@@ -105,6 +117,10 @@ export class FaturasMovimentacaoComponent implements OnInit {
     this.fatura = fatura;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+  }
+
+  existemPagamentos(fatura: Fatura) {
+    return this.listaPagamentos.find((l: PagamentosFatura) => l.fatura.id == fatura.id)
   }
 
 }

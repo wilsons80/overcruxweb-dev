@@ -5,6 +5,7 @@ import { Programa } from './programa';
 import { Empresa } from './empresa'
 import { Unidade } from './unidade';
 import { Fatura } from './fatura';
+import { PagamentosFatura } from './pagamentos-fatura';
 
 export class Movimentacoes{
     id:number;
@@ -22,4 +23,5 @@ export class Movimentacoes{
 	qtdParcelas:number;
 	itensMovimentacoes:ItensMovimentacoes[]
 	faturas:Fatura[]
+	pagamentosFatura:PagamentosFatura[]
 }
