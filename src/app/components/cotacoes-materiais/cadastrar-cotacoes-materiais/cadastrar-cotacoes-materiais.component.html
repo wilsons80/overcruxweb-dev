@@ -67,14 +67,14 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <!-- #VALOR UNITARIO  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                <input (ngModelChange)="multiplicar()" [(ngModel)]="cotacoesMaterial.valorUnitarioCotacao" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
+                <input (ngModelChange)="multiplicar($event)" [(ngModel)]="cotacoesMaterial.valorUnitarioCotacao" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
             <!-- #QUANTIDADE  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="10%">
-                <input (input)="multiplicar()" [(ngModel)]="cotacoesMaterial.quantidadeMaterial" #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
+                <input (input)="multiplicarComQuantidade()" [(ngModel)]="cotacoesMaterial.quantidadeMaterial" #quantidade type="number" matInput min="0" name="quantidade" placeholder="Quantidade:">
             </mat-form-field>
 
             <!-- #VALOR TOTAL  -->

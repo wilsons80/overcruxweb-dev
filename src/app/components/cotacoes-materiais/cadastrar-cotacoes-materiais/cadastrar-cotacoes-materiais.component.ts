@@ -27,7 +27,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
   isAtualizar: boolean = false;
 
   perfilAcesso: Acesso;
-  
+
 
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
@@ -46,7 +46,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
 
-   // this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -89,7 +89,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   limpar() {
     this.inicializarObjetos();
-    
+
   }
 
   cancelar() {
@@ -128,10 +128,17 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
     return true;
   }
 
-  multiplicar(){
-    this.cotacoesMaterial.valorTotalCotacao = this.cotacoesMaterial.valorUnitarioCotacao 
-                  * this.cotacoesMaterial.quantidadeMaterial;
+  multiplicar(event) {
+    this.cotacoesMaterial.valorUnitarioCotacao = event;
+    this.cotacoesMaterial.valorTotalCotacao = this.cotacoesMaterial.valorUnitarioCotacao
+      * this.cotacoesMaterial.quantidadeMaterial;
   }
+
+  multiplicarComQuantidade() {
+    this.cotacoesMaterial.valorTotalCotacao = this.cotacoesMaterial.valorUnitarioCotacao
+      * this.cotacoesMaterial.quantidadeMaterial;
+  }
+
 
 
 }
