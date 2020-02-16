@@ -82,7 +82,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   cadastrar() {
     this.cotacoesMateriaisService.cadastrar(this.cotacoesMaterial).subscribe(() => {
-      this.router.navigate(['cotacoesmaterial']);
+      this.router.navigate(['cotacoesmateriais']);
       this.toastService.showSucesso("Cotação cadastrada com sucesso");
     });
   }
@@ -93,7 +93,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['cotacoesmaterial']);
+    this.router.navigate(['cotacoesmateriais']);
   }
 
   getNomeBotao() {
@@ -103,7 +103,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   atualizar() {
     this.cotacoesMateriaisService.alterar(this.cotacoesMaterial).subscribe(() => {
-      this.router.navigate(['cotacoesmaterial']);
+      this.router.navigate(['cotacoesmateriais']);
       this.toastService.showSucesso("Cotação atualizada com sucesso");
     });
 
