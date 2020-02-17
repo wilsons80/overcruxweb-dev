@@ -28,14 +28,9 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
   ]
 
 
-  perfilAcesso: Acesso = {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:187,
-    nomeModulo:"CATEGORIAS_CONTABEIS"
-  };
+  perfilAcesso: Acesso;
+
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -52,7 +47,7 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
 
-    //this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
