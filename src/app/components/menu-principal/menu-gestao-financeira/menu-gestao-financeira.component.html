@@ -13,12 +13,14 @@
     
         <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
     
+            <!-- OBJETIVOS -->
+            <sub-menu icone="list_alt" titulo="Movimentações" rota="movimentacoes" toolTip="Movimentações"></sub-menu>
 
-     <!-- OBJETIVOS -->
-     <sub-menu icone="list_alt" titulo="Movimentações" rota="movimentacoes" toolTip="Movimentações"></sub-menu>
+            <!-- SALDOS_CONTAS_BANCARIA -->
+            <sub-menu icone="monetization_on" titulo="Saldos de contas bancárias" rota="saldoscontasbancaria" toolTip="Saldos de contas bancárias"></sub-menu>
 
-      <!-- TABELAS REFERENCIA -->
-      <tb-referencia-financeiro></tb-referencia-financeiro>
+            <!-- TABELAS REFERENCIA -->
+            <tb-referencia-financeiro></tb-referencia-financeiro>
 
         </div>
     </mat-nav-list>

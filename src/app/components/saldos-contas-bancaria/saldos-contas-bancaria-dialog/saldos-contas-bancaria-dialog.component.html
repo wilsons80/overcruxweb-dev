@@ -1,0 +1,119 @@
+<mat-toolbar class="titulopartes">Saldo da conta bancária</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="40%">
+        <input matInput name="quantidadeEstoque" placeholder="banco" 
+                [(ngModel)]="saldoBancario.contaBancaria.banco.nome">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="tipoContaBancaria" placeholder="Tipo de Conta Bancária" 
+                [(ngModel)]="saldoBancario.contaBancaria.tipoContaBancaria">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="agencia" placeholder="Agência" 
+                [(ngModel)]="saldoBancario.contaBancaria.numeroAgencia">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="numeroContaBancaria" placeholder="Número Conta" 
+                [(ngModel)]="saldoBancario.contaBancaria.numeroContaBancaria">
+    </mat-form-field>
+</div>
+
+
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="33%">
+        <span matPrefix style="padding-right: 6px">R$</span>
+        <input matInput [(ngModel)]="saldoBancario.valorSaldo" name="valorSaldo" 
+               placeholder="Valor do saldo">
+    </mat-form-field>
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlex="33%">
+        <input style="margin-left: 20px" matInput name="dataSaldo"
+               [matDatepicker]="dataSaldo" 
+               placeholder="Data do saldo"
+               [(ngModel)]="saldoBancario.dataSaldo">
+        <mat-datepicker-toggle matSuffix [for]="dataSaldo"></mat-datepicker-toggle>
+        <mat-datepicker #dataSaldo></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlex="33%">
+        <input style="margin-left: 20px" matInput name="dataAtualizacaoSaldo"
+               [matDatepicker]="dataAtualizacaoSaldo" 
+               placeholder="Data atualização"
+               [(ngModel)]="saldoBancario.dataAtualizacaoSaldo">
+        <mat-datepicker-toggle matSuffix [for]="dataAtualizacaoSaldo"></mat-datepicker-toggle>
+        <mat-datepicker #dataAtualizacaoSaldo></mat-datepicker>
+    </mat-form-field>   
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+    <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="100%" appearance="outline">
+            <mat-label>Descrição da movimentação</mat-label>
+            <textarea #descricaoSaldo matInput
+                      name="descricaoSaldo"
+                      [(ngModel)]="saldoBancario.descricaoSaldo"
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="3"
+                      maxlength="200"></textarea>
+            <mat-hint align="end">{{descricaoSaldo.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+        <input matInput name="unidade" placeholder="Unidade" 
+                [(ngModel)]="saldoBancario.contaBancaria.unidade.nome">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="nomeTitular" placeholder="Nome titular" 
+                [(ngModel)]="saldoBancario.contaBancaria.nomeTitular">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="15%">
+        <input matInput name="cpfCnpjTitular" placeholder="CPF do Titular" 
+                [(ngModel)]="saldoBancario.contaBancaria.cpfCnpjTitular">
+    </mat-form-field>
+
+
+    <mat-form-field fxFlex="15%">
+        <input matInput name="telefoneTitular" placeholder="Telefone do titular" 
+                [(ngModel)]="saldoBancario.contaBancaria.telefoneTitular">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="20%">
+        <input matInput name="emailTitular" placeholder="Email do titular" 
+                [(ngModel)]="saldoBancario.contaBancaria.emailTitular">
+    </mat-form-field>
+</div>
+
+
+
+
+<br><br>
+<div fxLayout="row" fxLayoutGap="50px" 
+     style="margin-top: 30px; margin-bottom: 10px" 
+     fxFlexFill>
+    <div fxFlex="100%" fxLayoutAlign="center center">
+        <button mat-raised-button 
+                style="width: 240px; background-color: rgb(241,241,241);"
+                (click)="cancelar()"  
+                matTooltip="Fechar">
+            Fechar
+        </button>
+    </div>
+</div>

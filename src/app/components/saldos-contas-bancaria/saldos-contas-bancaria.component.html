@@ -1,0 +1,100 @@
+<mat-toolbar class="subtitulo">Saldos de contas bancárias</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formulario="ngForm">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um tipo</mat-label>
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.tipoContaBancaria" name="tipoContaBancaria">
+                        <mat-option *ngFor="let d of tiposContas" [value]="d.tipo">
+                            {{d.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um Banco/Agência/Conta</mat-label>
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.dadosBanco" name="banco">
+                        <mat-option *ngFor="let d of bancos" [value]="d">
+                            Banco: {{d.banco.numero}} - {{d.banco.nome}} - Agência: {{d.numeroAgencia}} - Conta: {{d.numeroContaBancaria}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                
+            </div>
+
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+
+            </div>
+        </form>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+
+            <ng-container matColumnDef="tipoconta">
+                <th mat-header-cell *matHeaderCellDef style="width: 15%"> Tipo de conta </th>
+                <td mat-cell *matCellDef="let element"> {{ element.contaBancaria.tipoContaBancaria }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="banco">
+                <th mat-header-cell *matHeaderCellDef style="width: 26%"> Banco </th>
+                <td mat-cell *matCellDef="let element"> {{ element.contaBancaria.banco.numero }} - {{element.contaBancaria.banco.nome}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="agencia">
+                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Agência </th>
+                <td mat-cell *matCellDef="let element"> {{ element.contaBancaria.numeroAgencia }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="numeroconta">
+                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Número da Conta </th>
+                <td mat-cell *matCellDef="let element"> {{ element.contaBancaria.numeroContaBancaria }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="saldo">
+                <th mat-header-cell *matHeaderCellDef style="width: 15%"> Saldo </th>
+                <td mat-cell *matCellDef="let element"> {{ element.valorSaldo }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="datasaldo">
+                <th mat-header-cell *matHeaderCellDef style="width: 15%"> Data do saldo  </th>
+                <td mat-cell *matCellDef="let element"> {{ element.dataSaldo | dataSimples }} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="visualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        <ng-template #tabelaSemDados>
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+    </div>
+</div>
