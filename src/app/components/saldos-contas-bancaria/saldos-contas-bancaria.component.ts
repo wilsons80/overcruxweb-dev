@@ -11,14 +11,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Banco } from 'src/app/core/banco';
 
 
-
+class DadosBanco {
+  banco: Banco;
+  numeroAgencia: string;
+  numeroContaBancaria: string;
+}
 class Filter {
   tipoContaBancaria: string;
-  dadosBanco: {
-    banco: Banco;
-    numeroAgencia: string;
-    numeroContaBancaria: string;
-  }
+  dadosBanco: DadosBanco;
 }
 
 
@@ -77,11 +77,14 @@ export class SaldosContasBancariaComponent implements OnInit {
       this.contasBancarias = contas;
 
       const distinct = (value, index, self) => self.indexOf(value) === index;
-      this.bancos = contas.map(c => JSON.stringify({banco: c.banco, agencia: c.numeroAgencia, numeroConta: c.numeroContaBancaria}))
+      this.bancos = contas.map(c => JSON.parse(JSON.stringify({banco: c.banco,
+                                                    numeroAgencia: c.numeroAgencia,
+                                                    numeroContaBancaria: c.numeroContaBancaria})))
                           .filter(distinct);
     });
 
     this.filter = new Filter();
+    this.filter.dadosBanco = new DadosBanco();
     this.filter.dadosBanco.banco = new Banco();
 
     this.consultar();
@@ -93,6 +96,8 @@ export class SaldosContasBancariaComponent implements OnInit {
     this.saldo = new SaldosContasBancaria();
     this.dataSource.data = [];
     this.filter = new Filter();
+    this.filter.dadosBanco = new DadosBanco();
+    this.filter.dadosBanco.banco = new Banco();
   }
 
   consultar() {
