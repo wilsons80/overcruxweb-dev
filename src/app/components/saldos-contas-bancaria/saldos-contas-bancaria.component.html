@@ -7,7 +7,7 @@
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um tipo</mat-label>
-                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.tipoContaBancaria" name="tipoContaBancaria">
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filter.tipoContaBancaria" name="tipoContaBancaria">
                         <mat-option *ngFor="let d of tiposContas" [value]="d.tipo">
                             {{d.descricao}}
                         </mat-option>
@@ -17,7 +17,7 @@
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um Banco/Agência/Conta</mat-label>
-                    <mat-select fxFlexOffset="20px"[(ngModel)]="filterEstoque.dadosBanco" name="banco">
+                    <mat-select fxFlexOffset="20px"[(ngModel)]="filter.dadosBanco" name="banco">
                         <mat-option *ngFor="let d of bancos" [value]="d">
                             Banco: {{d.banco.numero}} - {{d.banco.nome}} - Agência: {{d.numeroAgencia}} - Conta: {{d.numeroContaBancaria}}
                         </mat-option>
