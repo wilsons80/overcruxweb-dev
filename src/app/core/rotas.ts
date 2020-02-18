@@ -64,5 +64,5 @@ export enum Rotas {
     MOVIMENTACOES                   = 'api/movimentacoes/',
     PEDIDOS_MATERIAIS               = 'api/pedidosmateriais/',
     FATURAS                         = 'api/faturas/',
-    SALDOS_CONTAS_BANCARIA          = 'api/saldoscontasbancaria'
+    SALDOS_CONTAS_BANCARIA          = 'api/saldoscontasbancaria/'
 }

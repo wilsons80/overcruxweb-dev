@@ -1,3 +1,4 @@
+import { SaldosContasBancariaService } from './../../../../services/saldos-contas-bancaria/saldos-contas-bancaria.service';
 import { FaturaService } from './../../../../services/fatura/fatura.service';
 import { ContasBancariaService } from './../../../../services/contas-bancaria/contas-bancaria.service';
 import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
@@ -55,7 +56,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   constructor(
     private contasBancariaService:ContasBancariaService,
-    private faturaService:FaturaService
+    private faturaService:FaturaService,
+    private saldosContasBancariaService:SaldosContasBancariaService
 
   ) { }
 
@@ -168,6 +170,16 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
     }
 
+  }
+
+  getSaldoContaBancaria(idContaBancaria:number){
+    this.saldosContasBancariaService.getPorConta(idContaBancaria).subscribe((saldo:SaldosContasBancaria) => {
+      this.pagamentosFatura.saldoContaBancaria = saldo;
+    },
+    (error) => {
+      this.pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
+    }
+    )
   }
 
 }

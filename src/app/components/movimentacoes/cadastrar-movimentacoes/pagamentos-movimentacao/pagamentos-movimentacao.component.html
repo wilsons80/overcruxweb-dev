@@ -28,7 +28,7 @@
                     <!-- CONTAS BANCARIAS -->
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Conta bancária:</mat-label>
-                        <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias" [(ngModel)]=pagamentosFatura.contaBancaria.id>
+                        <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias" (ngModelChange)="getSaldoContaBancaria($event)">
                             <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
                                 {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C.
                                 {{i.numeroContaBancaria}}
@@ -120,7 +120,6 @@
                 style="margin-top: 20px">
 
 
-                displayedColumns: string[] = ['fatura','dataPagamento', 'valorPagamento', 'acoes'];
                 <ng-container matColumnDef="fatura">
                     <th mat-header-cell *matHeaderCellDef> Fatura </th>
                     <td mat-cell *matCellDef="let element"> {{element.fatura?.valor}} </td>
