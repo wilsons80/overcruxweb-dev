@@ -1,0 +1,105 @@
+<div class="painel-principal" style="padding: 10px;">
+
+        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <!-- #UNIDADE -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Unidade:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.unidade.idUnidade name="unidade">
+                    <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
+                        {{i.nomeUnidade}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade
+                    cadastrada</mat-hint>
+            </mat-form-field>
+            
+            <!-- #DEPARTAMENTO -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Departamento:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
+                    <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
+                        {{i.nmDepartamento}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="departamentos?.length === 0" align="start">Nenhum departamento
+                    cadastrada</mat-hint>
+            </mat-form-field>
+
+          
+            <!-- #TIPO MOVIMENTACAO -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Tipo Movimentação:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.tipoMovimentacao name="tipoMovimentacao" required>
+                    <mat-option *ngFor="let i of tiposMovimentacoes" [value]=i.id>
+                        {{i.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 20px;" fxFlexFill>
+
+            <!-- #DESCRICAO MOVIMENTACAO  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
+                <mat-label>Descrição:</mat-label>
+                <textarea [(ngModel)]=movimentacoes.descricaoMovimentacaoMaterial matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="3" maxlength="200">
+         </textarea>
+                <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px; padding-bottom:20px" fxFlexFill>
+
+
+            <!-- #PROGRAMA -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Programa:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.programa.id name="programa">
+                    <mat-option *ngFor="let i of programas" [value]=i.id>
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+
+            <!-- #PROJETO -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Projeto:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.projeto.id name="projeto">
+                    <mat-option *ngFor="let i of projetos" [value]=i.id>
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
+            <!-- #EMPRESA -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Empresa:</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
+                    <mat-option *ngFor="let i of empresas" [value]=i.id>
+                        {{i.nomeRazaoSocial}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
+                    cadastrada</mat-hint>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxFlexFill>
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                <input [(ngModel)]=movimentacoes.numeroDocumento type="number" min=0 matInput  
+                    name="numeroDocumento" placeholder="Número do documento:" />
+            </mat-form-field>
+        </div>
+    
+
+      
+</div>

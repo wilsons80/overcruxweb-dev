@@ -1,173 +1,62 @@
 <mat-toolbar class="subtitulo">Movimentações Materiais</mat-toolbar>
+
 <div class="painel-principal" style="padding: 10px;">
-    <form #formCadastro="ngForm">
+    <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
 
-        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <!------------------ MOVIMENTAÇÃO ------------------------>
+        <mat-step [stepControl]="formDadosMovimentacao">
+            <form #formDadosMovimentacao="ngForm">
+                <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
+                <dados-movimentacoes-materiais
+                [movimentacoes]=movimentacoesMateriais
+                ></dados-movimentacoes-materiais>
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                    fxFlexFill>
+                    <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
 
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <!-- #MATERIAL -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Material:</mat-label>
-                <mat-select name="material;">
-                    <mat-option *ngFor="let i of materiais">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum material
-                    cadastrado</mat-hint>
-            </mat-form-field>
-
-            <!-- #NUMERO TOMBRAMENTO  -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                <input #numeroTombamento matInput maxlength="20" name="numeroTombamento"
-                    placeholder="Número tombamento:">
-            </mat-form-field>
-
-            <!-- #QUANTIDADE  -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="8%">
-                <input #quantidade matInput min=0 name="quantidade" placeholder="Quantidade:">
-            </mat-form-field>
-
-            <!-- #TIPO MOVIMENTACAO -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Tipo Movimentação:</mat-label>
-                <mat-select name="tipoMovimentacao" required>
-                    <mat-option *ngFor="let i of tiposMovimentacoes">
-                        {{i.descricao}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 20px;" fxFlexFill>
-
-            <!-- #DESCRICAO MOVIMENTACAO  -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
-                <mat-label>Descrição:</mat-label>
-                <textarea matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                    cdkAutosizeMinRows="3" maxlength="200" required>
-         </textarea>
-                <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px; padding-bottom:20px" fxFlexFill>
+       
+        <!-- ------------------ ITENS ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
+            <form #formFaturas="ngForm">
+                <ng-template matStepLabel>ITENS</ng-template>
+            </form>
+            <itens-movimentacoes-materiais
+                [listaItensMovimentacoesMateriais]=movimentacoesMateriais.itensMovimentacoesMateriais
+            ></itens-movimentacoes-materiais>
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>
 
 
-            <!-- #PROGRAMA -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Programa:</mat-label>
-                <mat-select name="programa">
-                    <mat-option *ngFor="let i of programas">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum programa
-                    cadastrado</mat-hint>
-            </mat-form-field>
+ <!-- BOTOES -->
+ <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+ fxFlexFill>
+ <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]=formDadosMovimentacao.invalid
+         mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
+         Cadastrar
+ </button>
 
+ <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formDadosMovimentacao.invalid
+         mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
+         Atualizar
+ </button>
 
-            <!-- #PROJETO -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Projeto:</mat-label>
-                <mat-select name="projeto;">
-                    <mat-option *ngFor="let i of projetos">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto
-                    cadastrado</mat-hint>
-            </mat-form-field>
+ <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+         Limpar
+ </button>
+ <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+         Cancelar
+ </button>
 
-            <!-- #EMPRESA -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Empresa:</mat-label>
-                <mat-select name="empresa">
-                    <mat-option *ngFor="let i of empresas">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
-                    cadastrada</mat-hint>
-            </mat-form-field>
-
-        </div>
-
-
-        <mat-toolbar class="titulopartes">Envio</mat-toolbar>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px; padding-bottom:20px" fxFlexFill>
-
-            <!-- #EMPRESA -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Funcionário que enviou:</mat-label>
-                <mat-select name="funcionario">
-                    <mat-option *ngFor="let i of funcionarios">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário
-                    cadastrado</mat-hint>
-            </mat-form-field>
-
-            <!-- #DATA ENVIO -->
-            <mat-form-field fxFlex="20%">
-                <input matInput name="dataEnvio" [matDatepicker]="dataEnvio" placeholder="Data de Envio">
-                <mat-datepicker-toggle matSuffix [for]="dataEnvio">
-                </mat-datepicker-toggle>
-                <mat-datepicker #dataEnvio></mat-datepicker>
-            </mat-form-field>
-
-        </div>
-
-        <mat-toolbar class="titulopartes">Recebimento</mat-toolbar>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px; padding-bottom:20px" fxFlexFill>
-
-            <!-- #EMPRESA -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Funcionário que recebeu:</mat-label>
-                <mat-select name="funcionario">
-                    <mat-option *ngFor="let i of funcionarios">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário
-                    cadastrado</mat-hint>
-            </mat-form-field>
-
-            <!-- #DATA RECEBIMENTO -->
-            <mat-form-field fxFlex="20%">
-                <input matInput name="dataRecebimento" [matDatepicker]="dataRecebimento" placeholder="Data de Recebimento">
-                <mat-datepicker-toggle matSuffix [for]="dataRecebimento">
-                </mat-datepicker-toggle>
-                <mat-datepicker #dataRecebimento></mat-datepicker>
-            </mat-form-field>
-
-        </div>
-
-
-
-
-        <!-- BOTOES -->
-        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-            fxFlexFill>
-            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
-            </button>
-
-            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
-                Atualizar
-            </button>
-
-            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
-                Limpar
-            </button>
-            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
-                Cancelar
-            </button>
-
-        </div>
-    </form>
 </div>
