@@ -10,9 +10,9 @@
   <mat-form-field style="margin-left: 20px" fxFlex="90%" appearance="outline">
     <mat-label>Descrição:</mat-label>
     <textarea [(ngModel)]="programa.descricao" matInput #message name="descricao"  cdkTextareaAutosize
-        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200" required>
+        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="500" required>
          </textarea>
-    <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
   </mat-form-field>
   
 </div>
