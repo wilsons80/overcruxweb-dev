@@ -1,13 +1,13 @@
 <!-- DADOS INICIAIS -->
 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
 <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-  <mat-form-field style="margin-bottom: 20px" fxFlex="45%" fxFlexOffset="20px">
+  <mat-form-field style="margin-bottom: 20px" fxFlex="90%" fxFlexOffset="20px">
     <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" [(ngModel)]="programa.nome" required>
     <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
   </mat-form-field>
 </div>
 <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-  <mat-form-field style="margin-left: 20px" fxFlex="30%" appearance="outline">
+  <mat-form-field style="margin-left: 20px" fxFlex="90%" appearance="outline">
     <mat-label>Descrição:</mat-label>
     <textarea [(ngModel)]="programa.descricao" matInput #message name="descricao"  cdkTextareaAutosize
         #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200" required>
