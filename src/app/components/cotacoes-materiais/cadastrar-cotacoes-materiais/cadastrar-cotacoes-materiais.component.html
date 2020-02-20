@@ -20,12 +20,12 @@
             <!-- PEDIDOS -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Pedido:</mat-label>
-                <mat-select [(ngModel)]="cotacoesMaterial.pedido.id" name="pedido" required>
-                    <mat-option *ngFor="let i of pedidos">
-                        {{i.descricao}}
+                <mat-select [(ngModel)]="cotacoesMaterial.pedidosMaterial.id" name="pedido" required>
+                    <mat-option *ngFor="let i of pedidos" [value]=i.id>
+                        {{i.descricaoPedido}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="pedidos?.length === 0" align="start">Nenhum pedido
+                <mat-hint *ngIf="pedidos?.length === 0" align="start">Nenhum pedido material
                     cadastrado</mat-hint>
             </mat-form-field>
 

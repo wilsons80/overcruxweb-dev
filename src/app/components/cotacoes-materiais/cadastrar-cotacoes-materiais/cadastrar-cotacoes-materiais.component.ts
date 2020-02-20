@@ -1,3 +1,4 @@
+import { PedidosMateriaisService } from './../../../services/pedidosMateriais/pedidos-materiais.service';
 import { CotacoesMateriaisService } from './../../../services/cotacoes-materiais/cotacoes-materiais.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { Empresa } from './../../../core/empresa';
 import { Pedido } from './../../../core/pedido';
 import { EmpresaService } from './../../../services/empresa/empresa.service';
 import { PedidoService } from './../../../services/pedido/pedido.service';
+import { PedidosMateriais } from 'src/app/core/pedidos-materiais';
 
 @Component({
   selector: 'cadastrar-cotacoes-materiais',
@@ -20,7 +22,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   empresas: Empresa[];
   materiais: Material[];
-  pedidos: Pedido[]
+  pedidos: PedidosMateriais[]
 
   cotacoesMaterial: CotacoesMateriais;
 
@@ -36,7 +38,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
     private cotacoesMateriaisService: CotacoesMateriaisService,
     private empresaService: EmpresaService,
     private materialService: MaterialService,
-    private pedidoService: PedidoService,
+    private pedidosMateriaisService: PedidosMateriaisService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
@@ -56,15 +58,15 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.empresaService.getAll().subscribe((empresas: Empresa[]) => {
+    this.empresaService.getAllCombo().subscribe((empresas: Empresa[]) => {
       this.empresas = empresas;
     })
 
-    this.materialService.getAll().subscribe((materiais: Material[]) => {
+    this.materialService.getAllCombo().subscribe((materiais: Material[]) => {
       this.materiais = materiais;
     })
 
-    this.pedidoService.getAll().subscribe((pedidos: Pedido[]) => {
+    this.pedidosMateriaisService.getAllCombo().subscribe((pedidos: PedidosMateriais[]) => {
       this.pedidos = pedidos;
     })
 
@@ -112,7 +114,7 @@ export class CadastrarCotacoesMateriaisComponent implements OnInit {
 
   inicializarObjetos() {
     this.cotacoesMaterial = new CotacoesMateriais();
-    this.cotacoesMaterial.pedido = new Pedido();
+    this.cotacoesMaterial.pedidosMaterial = new PedidosMateriais();
     this.cotacoesMaterial.material = new Material();
     this.cotacoesMaterial.empresa = new Empresa();
     this.cotacoesMaterial.valorTotalCotacao = 0;

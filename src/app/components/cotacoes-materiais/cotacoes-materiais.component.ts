@@ -47,7 +47,7 @@ export class CotacoesMateriaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

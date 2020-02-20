@@ -29,14 +29,7 @@ export class PedidosMateriaisComponent implements OnInit {
   displayedColumns: string[] = ['id','descricaoPedido', 'dataPedido' ,'dataInicioPeriodo', 'dataFimPeriodo', 'acoes'];
   dataSource: MatTableDataSource<PedidosMateriais> = new MatTableDataSource();
   
-   perfilAcesso: Acesso = {
-     insere:true,
-     altera:true,
-     consulta:true,
-     deleta:true,
-     idModulo:1,
-     nomeModulo:''
-   };
+   perfilAcesso: Acesso;
 
 
   constructor(
@@ -47,7 +40,7 @@ export class PedidosMateriaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
