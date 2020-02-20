@@ -20,6 +20,9 @@
 
     <!-- MOVIMENTACOES_MATERIAIS -->
     <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES_MATERIAIS)" icone="sync_alt" titulo="Movimentações Materiais" rota="movimentacoesmateriais" toolTip="Movimentações de Materiais"></sub-menu>
+   
+    <!-- PEDIDOS_MATERIAIS -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().PEDIDOS_MATERIAIS)" icone="shopping_basket" titulo="Pedidos Materiais" rota="pedidosmateriais" toolTip="Pedidos Materiais"></sub-menu>
 
     <!-- ESTOQUES -->
     <sub-menu *ngIf="verificaAcesso(getModulos().ESTOQUES)" icone="apartment" titulo="Estoques" rota="estoques" toolTip="Estoques de Materiais"></sub-menu>
