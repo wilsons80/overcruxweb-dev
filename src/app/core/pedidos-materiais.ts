@@ -1,3 +1,4 @@
+import { ItensPedidosMateriais } from './itens-pedidos-materiais';
 import { Funcionario } from './funcionario';
 import { Departamento } from './departamento';
 import { Programa } from './programa';
@@ -16,5 +17,7 @@ export class PedidosMateriais{
 	programa:Programa;
 	projeto:Projeto;
 	unidade:Unidade;
+
+	itensPedidosMateriais:ItensPedidosMateriais[];
 	
 }

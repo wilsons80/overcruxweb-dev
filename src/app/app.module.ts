@@ -95,6 +95,7 @@ import { SharedPipesModule } from './pipes/shared-pipes.module';
 import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl/portuguese-paginator-intl.component';
 import { EstoquesModule } from './components/estoques/estoques.module';
 import { SaldosContasBancariaModule } from './components/saldos-contas-bancaria/saldos-contas-bancaria.module';
+import { PedidosMateriaisModule } from './components/pedidos-materiais/pedidos-materiais.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -218,7 +219,8 @@ registerLocaleData(localePt, 'pt-BR');
     FuncoesModule,
     ContasBancariasModule,
     EstoquesModule,
-    SaldosContasBancariaModule
+    SaldosContasBancariaModule,
+    PedidosMateriaisModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },

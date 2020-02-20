@@ -1,0 +1,100 @@
+<mat-toolbar class="subtitulo">Movimentações</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formConsultarDepartamento="ngForm">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label fxFlexOffset="20px">Selecione um pedido material</mat-label>
+                    <mat-select fxFlexOffset="20px" name="movimentacoes">
+                        <mat-option *ngFor="let d of listaPedidosMateriais" [value]="d">
+                            {{d.id}} - {{d.descricaoPedido}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+
+            </div>
+        </form>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef> Data Movimentação: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.descricaoMovimentacao }} </td>
+            </ng-container>
+           
+            <ng-container matColumnDef="dataMovimentacao">
+                <th mat-header-cell *matHeaderCellDef> Data Movimentação: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.dataMovimentacao | dataSimples }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="stTipoMovimentacao">
+                <th mat-header-cell *matHeaderCellDef> Tipo Movimentação: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.stTipoMovimentacao }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valorMovimentacao">
+                <th mat-header-cell *matHeaderCellDef> Valor da Movimentação: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.valorMovimentacao | currency: 'BRL' }} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="qtdParcelas">
+                <th mat-header-cell *matHeaderCellDef> Quantidade de Parcelas fim: </th>
+                <td mat-cell *matCellDef="let element"> {{ element.qtdParcelas }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.deleta"  mat-button (click)="deletar(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+        
+        <ng-template #tabelaSemDados >
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+        <div fxLayout="row"  fxLayoutAlign="end center" fxLayoutGap="16px"
+            style="padding-top: 50px">
+            <div>
+                <button matTooltip="Adicionar novo pedido material" mat-fab color="primary" [routerLink]="['/pedidosmateriais/cadastrar']"
+                    routerLinkActive="router-link-active">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

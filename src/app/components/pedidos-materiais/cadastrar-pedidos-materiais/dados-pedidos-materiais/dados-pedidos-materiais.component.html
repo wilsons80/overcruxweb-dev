@@ -1,0 +1,129 @@
+<div class="painel-principal" style="padding: 10px;">
+
+    <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <!-- #FUNCIONARIO FEZ -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Funcionário responsável pelo pedido:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.funcionarioPedido.id name="funcionarioPedido" required>
+                <mat-option *ngFor="let i of funcionarios" [value]=i.id>
+                    {{i.pessoasFisica.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário
+                cadastrado</mat-hint>
+        </mat-form-field>
+
+        <!-- #FUNCIONARIO RECEBEU -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Funcionário que recebeu o pedido:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.funcionarioRecPed.id name="funcionarioRecPed">
+                <mat-option *ngFor="let i of funcionarios" [value]=i.id>
+                    {{i.pessoasFisica.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário
+                cadastrado</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <!-- #DATA PEDIDO -->
+        <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+            <input matInput [(ngModel)]=pedidosMateriais.dataPedido name="dataPedido" [matDatepicker]="dataPedido"
+                placeholder="Data pedido:">
+            <mat-datepicker-toggle matSuffix [for]="dataPedido">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dataPedido></mat-datepicker>
+        </mat-form-field>
+        
+        <!-- #DATA INCIO -->
+        <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+            <input matInput [(ngModel)]=pedidosMateriais.dataInicioPeriodo name="dataInicioPeriodo" [matDatepicker]="dataInicioPeriodo"
+                placeholder="Data início período:">
+            <mat-datepicker-toggle matSuffix [for]="dataInicioPeriodo">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dataInicioPeriodo></mat-datepicker>
+        </mat-form-field>
+        
+
+        <!-- #DATA FIM -->
+        <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+            <input matInput [(ngModel)]=pedidosMateriais.dataFimPeriodo name="dataFimPeriodo" [matDatepicker]="dataFimPeriodo"
+                placeholder="Data fim período:">
+            <mat-datepicker-toggle matSuffix [for]="dataFimPeriodo">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dataFimPeriodo></mat-datepicker>
+        </mat-form-field>
+        
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+        <!-- #DESCRICAO  -->
+        <mat-form-field fxFlexOffset="20px" style="margin-left: 20px" fxFlex="100%" appearance="outline">
+            <mat-label>Descrição:</mat-label>
+            <textarea [(ngModel)]=pedidosMateriais.descricaoPedido matInput #message name="descricaoPedido" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="3" maxlength="200">
+         </textarea>
+            <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <!-- #UNIDADE -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Unidade:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.unidade.idUnidade name="unidade">
+                <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
+                    {{i.nomeUnidade}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade
+                cadastrada</mat-hint>
+        </mat-form-field>
+
+        <!-- #DEPARTAMENTO -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Departamento:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.departamento.idDepartamento name="departamento">
+                <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
+                    {{i.nmDepartamento}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum departamento
+                cadastrado</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <!-- #PROGRAMA -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Programa:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.programa.id name="programa">
+                <mat-option *ngFor="let i of programas" [value]=i.id>
+                    {{i.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa
+                cadastrado</mat-hint>
+        </mat-form-field>
+
+        <!-- #PROJETO -->
+        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Projeto:</mat-label>
+            <mat-select [(ngModel)]=pedidosMateriais.projeto.id name="projeto">
+                <mat-option *ngFor="let i of projetos" [value]=i.id>
+                    {{i.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum projeto
+                cadastrado</mat-hint>
+        </mat-form-field>
+    </div>
+
+</div>

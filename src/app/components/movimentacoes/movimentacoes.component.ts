@@ -24,14 +24,7 @@ export class MovimentacoesComponent implements OnInit {
   displayedColumns: string[] = ['id','descricao', 'dataMovimentacao', 'stTipoMovimentacao', 'valorMovimentacao', 'qtdParcelas', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
-   perfilAcesso: Acesso= {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:186,
-    nomeModulo:"FUNCAO"
-  };
+   perfilAcesso: Acesso;
 
 
   constructor(
@@ -42,7 +35,7 @@ export class MovimentacoesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  //  this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
