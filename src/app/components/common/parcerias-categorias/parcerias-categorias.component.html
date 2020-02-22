@@ -24,7 +24,7 @@
                     <!-- #VALOR  -->
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
                         <input [(ngModel)]="parceriasCategorias.valorParceriaCategoria" currencyMask name="valor" placeholder="Valor:" matInput maxlength="13"
-                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" required/>
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 

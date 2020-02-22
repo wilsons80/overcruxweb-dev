@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 import { Acesso } from 'src/app/core/acesso';
 import { MateriaisProjeto } from 'src/app/core/materiais-projeto';
 import { Material } from 'src/app/core/material';
-import { ParceriasProjeto } from 'src/app/core/parcerias-projeto';
-import { Projeto } from 'src/app/core/projeto';
 import { MaterialService } from 'src/app/services/material/material.service';
+import { NovoObjetoService } from 'src/app/services/novo-objeto/novo-objeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
@@ -15,16 +15,16 @@ import { ToastService } from 'src/app/services/toast/toast.service';
   templateUrl: './materiais-projeto.component.html',
   styleUrls: ['./materiais-projeto.component.css']
 })
-export class MateriaisProjetoComponent implements OnInit {
+export class MateriaisProjetoComponent implements OnInit, OnDestroy {
 
-  @Input() listaMateriaisProjeto:MateriaisProjeto[] = [];
+  @Input() listaMateriaisProjeto: MateriaisProjeto[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   mostrarTabela = false;
   msg: string;
 
-  displayedColumns: string[] = ['material','dataInicio','dataFim', 'valorMaterial','acoes'];
+  displayedColumns: string[] = ['material', 'dataInicio', 'dataFim', 'valorMaterial', 'acoes'];
   dataSource: MatTableDataSource<MateriaisProjeto> = new MatTableDataSource();
 
   openFormCadastro = false;
@@ -33,14 +33,16 @@ export class MateriaisProjetoComponent implements OnInit {
 
   isAtualizar = false;
 
+  sub: Subscription;
 
-  materiaisProjeto:MateriaisProjeto;
-  materiais:Material[]= [];
+  materiaisProjeto: MateriaisProjeto;
+  materiais: Material[] = [];
 
   constructor(
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
-    private materialService:MaterialService
+    private materialService: MaterialService,
+    private novoObjetoService: NovoObjetoService
   ) {
 
   }
@@ -50,7 +52,12 @@ export class MateriaisProjetoComponent implements OnInit {
     this.initObjetos();
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
-    this.materialService.getAll().subscribe((materiais:Material[]) => this.materiais = materiais);
+    this.materialService.getAll().subscribe((materiais: Material[]) => this.materiais = materiais);
+
+    this.sub = this.novoObjetoService.initObjeto.subscribe(() => {
+      this.listaMateriaisProjeto = [];
+      this.carregarLista();
+    });
 
   }
 
@@ -67,7 +74,7 @@ export class MateriaisProjetoComponent implements OnInit {
   }
 
   limpar() {
-    this.initObjetos(); 
+    this.initObjetos();
   }
 
 
@@ -84,7 +91,7 @@ export class MateriaisProjetoComponent implements OnInit {
 
   getObjetosCompletosParaLista(materiaisProjetoSelecionado: MateriaisProjeto) {
     materiaisProjetoSelecionado.material = _.find(this.materiais, (material: Material) => material.id == materiaisProjetoSelecionado.material.id);
-    
+
   }
 
 
@@ -125,6 +132,10 @@ export class MateriaisProjetoComponent implements OnInit {
     this.materiaisProjeto = materiaisProjeto;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
 

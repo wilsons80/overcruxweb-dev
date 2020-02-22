@@ -92,6 +92,8 @@ export class ParceriasProgramaComponent implements OnInit {
 
     this.listaParceiros.push(parceriaProgramaSelecionado);
     this.initObjetos();
+
+    this.openFormCadastro = !this.openFormCadastro;
   }
 
   getObjetosCompletosParaLista(parceriaProgramaSelecionado: ParceriasPrograma) {

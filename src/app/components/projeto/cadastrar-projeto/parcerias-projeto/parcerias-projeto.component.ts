@@ -7,6 +7,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ParceriasProjeto } from 'src/app/core/parcerias-projeto';
 import { Empresa } from 'src/app/core/empresa';
+import { NovoObjetoService } from 'src/app/services/novo-objeto/novo-objeto.service';
 
 @Component({
   selector: 'parcerias-projeto',
@@ -37,7 +38,8 @@ export class ParceriasProjetoComponent implements OnInit {
   constructor(
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private novoObjetoService:NovoObjetoService
   ) {
 
   }
@@ -112,6 +114,8 @@ export class ParceriasProjetoComponent implements OnInit {
     this.isAtualizar = false;
     this.openFormCadastro = !this.openFormCadastro;
     this.limpar();
+
+    this.novoObjetoService.initObjeto.emit();
   }
 
   carregarLista() {
@@ -128,6 +132,7 @@ export class ParceriasProjetoComponent implements OnInit {
     this.limpar();
     this.openFormCadastro = false;
     this.isAtualizar = false;
+    this.novoObjetoService.initObjeto.emit();
   }
 
   atualizarComposicao(parceiro: ParceriasProjeto) {
