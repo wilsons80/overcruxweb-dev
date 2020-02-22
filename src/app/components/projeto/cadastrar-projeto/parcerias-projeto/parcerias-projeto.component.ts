@@ -56,6 +56,7 @@ export class ParceriasProjetoComponent implements OnInit {
     this.parceriasProjeto = new ParceriasProjeto();
     this.parceriasProjeto.empresa = new Empresa();
     this.parceriasProjeto.materiaisProjeto = [];
+    this.parceriasProjeto.parceriasCategorias = [];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -89,6 +90,8 @@ export class ParceriasProjetoComponent implements OnInit {
 
     this.listaParceiros.push(parceriaProjetoSelecionado);
     this.limpar();
+
+    this.openFormCadastro = !this.openFormCadastro;
   }
 
   getObjetosCompletosParaLista(parceriaProjetoSelecionado: ParceriasProjeto) {

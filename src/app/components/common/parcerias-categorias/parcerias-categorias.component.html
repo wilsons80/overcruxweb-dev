@@ -4,42 +4,31 @@
 
             <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Dados do material</mat-panel-title>
+                    <mat-panel-title>Dados da categoria</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                    <!-- MATERIAL -->
+                    <!-- CATEGORIA -->
                     <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                        <mat-label>Material:</mat-label>
-                        <mat-select [(ngModel)]="materiaisPrograma.material.id" name="material" required>
-                            <mat-option *ngFor="let e of materiais" [value]="e.id">
+                        <mat-label>Categoria:</mat-label>
+                        <mat-select [(ngModel)]="parceriasCategorias.categoriasContabeis.id" name="categoriasContabeis" required>
+                            <mat-option *ngFor="let e of categoriasContabeis" [value]="e.id">
                                 {{e.nome}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum material cadastrado</mat-hint>
+                        <mat-hint *ngIf="categoriasContabeis?.length === 0" align="start">Nenhuma categoria cadastrada
+                        </mat-hint>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
-                        <input matInput name="dtImplantacao" [matDatepicker]="dataInicio"
-                            placeholder="Data de início de alocação:" [(ngModel)]="materiaisPrograma.dataInicio">
-                        <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                        <mat-datepicker #dataInicio></mat-datepicker>
-                    </mat-form-field>
-
-                    <mat-form-field fxFlex="15%">
-                        <input matInput name="dtTermino" [matDatepicker]="dataTermino"
-                            placeholder="Data de fim de alocação:" [(ngModel)]="materiaisPrograma.dataFim">
-                        <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
-                        <mat-datepicker #dataTermino></mat-datepicker>
-                    </mat-form-field>
-
-                    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
-                        <input currencyMask matInput maxlength="50" name="valorMaterial"
-                            placeholder="Valor do material:" [(ngModel)]="materiaisPrograma.vlMaterial"
+                    <!-- #VALOR  -->
+                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                        <input [(ngModel)]="parceriasCategorias.valorParceriaCategoria" currencyMask name="valor" placeholder="Valor:" matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
+
+
                 </div>
 
 
@@ -52,12 +41,12 @@
 
                     <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid
                         fxFlex="20%" color="primary" (click)="adicionar()">
-                        Adicionar material
+                        Adicionar Categoria
                     </button>
 
                     <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid
                         fxFlex="20%" color="primary" (click)="atualizar()">
-                        Atualizar material
+                        Atualizar Categoria
                     </button>
 
                 </div>
@@ -69,31 +58,21 @@
                 (closed)="openFormCadastro = true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Lista de Materiais dos Parceiros ( {{listaMateriaisPrograma?.length}} )
+                        Lista de Materiais dos Parceiros ( {{listaParceriasCategorias?.length}} )
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
                     style="margin-top: 20px">
 
-                    <ng-container matColumnDef="material">
-                        <th mat-header-cell *matHeaderCellDef> Código </th>
-                        <td mat-cell *matCellDef="let element"> {{element.material.nome}}</td>
+                    <ng-container matColumnDef="categoriasContabeis">
+                        <th mat-header-cell *matHeaderCellDef> Categorias </th>
+                        <td mat-cell *matCellDef="let element"> {{element.categoriasContabeis?.nome}}</td>
                     </ng-container>
 
-                    <ng-container matColumnDef="dataInicio">
+                    <ng-container matColumnDef="valorParceriaCategoria">
                         <th mat-header-cell *matHeaderCellDef> Data Início:</th>
-                        <td mat-cell *matCellDef="let element">{{element.dataInicio | dataSimples}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="dataFim">
-                        <th mat-header-cell *matHeaderCellDef> Data Fim:</th>
-                        <td mat-cell *matCellDef="let element">{{element.dataFim | dataSimples}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="valorMaterial">
-                        <th mat-header-cell *matHeaderCellDef> Valor:</th>
-                        <td mat-cell *matCellDef="let element">{{element.vlMaterial}} </td>
+                        <td mat-cell *matCellDef="let element">{{element.valorParceriaCategoria | currency: 'BRL'}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="acoes">
@@ -130,8 +109,6 @@
                         </button>
                     </div>
                 </div>
-
-
             </mat-expansion-panel>
 
         </mat-accordion>

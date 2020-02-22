@@ -1,3 +1,4 @@
+import { ParceriasCategoriasModule } from './../../common/parcerias-categorias/parcerias-categorias.module';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Iniciativa } from 'src/app/core/iniciativa';

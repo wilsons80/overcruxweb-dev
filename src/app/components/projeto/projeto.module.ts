@@ -1,3 +1,4 @@
+import { ParceriasCategoriasModule } from './../common/parcerias-categorias/parcerias-categorias.module';
 import { ContasCentrosCustoModule } from './../common/contas-centros-custo/contas-centros-custo.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -33,7 +34,8 @@ import { MateriaisProjetoComponent } from './cadastrar-projeto/parcerias-projeto
     MaterialCommonModule,
     UnidadesMultiplasModule,
     NgxCurrencyModule,
-    ContasCentrosCustoModule
+    ContasCentrosCustoModule,
+    ParceriasCategoriasModule
   ]
 })
 export class ProjetoModule { }

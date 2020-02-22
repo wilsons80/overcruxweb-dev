@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { NovoObjetoService } from './../../../../../services/novo-objeto/novo-objeto.service';
+import { Component, Input, OnInit, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
@@ -10,6 +11,7 @@ import { Programa } from 'src/app/core/programa';
 import { MaterialService } from 'src/app/services/material/material.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import {ControlContainer, NgForm} from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'materiais-programa',
@@ -17,8 +19,8 @@ import {ControlContainer, NgForm} from '@angular/forms';
   styleUrls: ['./materiais-programa.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
-export class MateriaisProgramaComponent implements OnInit {
-
+export class MateriaisProgramaComponent implements OnInit, OnDestroy {
+ 
   @Input() listaMateriaisPrograma:MateriaisPrograma[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -38,13 +40,14 @@ export class MateriaisProgramaComponent implements OnInit {
 
   materiaisPrograma:MateriaisPrograma;
   materiais:Material[]= [];
+  sub: Subscription;
 
   constructor(
-    private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
-    private materialService:MaterialService
+    private materialService:MaterialService,
+    private novoObjetoService:NovoObjetoService
   ) {
-
+    
   }
 
   ngOnInit() {
@@ -53,6 +56,11 @@ export class MateriaisProgramaComponent implements OnInit {
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.materialService.getAll().subscribe((materiais:Material[]) => this.materiais = materiais);
+
+    this.sub = this.novoObjetoService.initObjeto.subscribe(() => {
+      this.listaMateriaisPrograma = [];
+      this.carregarLista();
+    });
 
   }
 
@@ -128,6 +136,11 @@ export class MateriaisProgramaComponent implements OnInit {
     this.openFormCadastro = true;
     this.isAtualizar = true;
   }
+ 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
+ 
 
 }

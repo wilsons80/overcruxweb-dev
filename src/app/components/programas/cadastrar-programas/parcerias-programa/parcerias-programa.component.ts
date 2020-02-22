@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { NovoObjetoService } from './../../../../services/novo-objeto/novo-objeto.service';
+import { Component, Input, OnInit, SimpleChanges, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
@@ -17,7 +18,9 @@ export class ParceriasProgramaComponent implements OnInit {
 
   @Input() listaParceiros: ParceriasPrograma[];
 
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
 
   mostrarTabela = false;
   msg: string;
@@ -37,7 +40,8 @@ export class ParceriasProgramaComponent implements OnInit {
   constructor(
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private novoObjetoService:NovoObjetoService
   ) {
 
   }
@@ -56,6 +60,7 @@ export class ParceriasProgramaComponent implements OnInit {
     this.parceriasPrograma = new ParceriasPrograma();
     this.parceriasPrograma.empresa = new Empresa();
     this.parceriasPrograma.materiaisPrograma = [];
+    this.parceriasPrograma.parceriasCategorias = []
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -65,9 +70,7 @@ export class ParceriasProgramaComponent implements OnInit {
 
   }
 
-  limpar() {
-    this.initObjetos();
-  }
+
 
   isJaAdicionada(): boolean {
     const unidadeAdicionada = this.listaParceiros.find((e: ParceriasPrograma) => e.empresa.id === this.parceriasPrograma.empresa.id);
@@ -88,7 +91,7 @@ export class ParceriasProgramaComponent implements OnInit {
     this.getObjetosCompletosParaLista(parceriaProgramaSelecionado);
 
     this.listaParceiros.push(parceriaProgramaSelecionado);
-    this.limpar();
+    this.initObjetos();
   }
 
   getObjetosCompletosParaLista(parceriaProgramaSelecionado: ParceriasPrograma) {
@@ -108,7 +111,8 @@ export class ParceriasProgramaComponent implements OnInit {
   novo() {
     this.isAtualizar = false;
     this.openFormCadastro = !this.openFormCadastro;
-    this.limpar();
+    this.initObjetos();
+    this.novoObjetoService.initObjeto.emit();
   }
 
   carregarLista() {
@@ -122,9 +126,10 @@ export class ParceriasProgramaComponent implements OnInit {
   }
 
   atualizar() {
-    this.limpar();
+    this.initObjetos();
     this.openFormCadastro = false;
     this.isAtualizar = false;
+    this.novoObjetoService.initObjeto.emit();
   }
 
   atualizarComposicao(parceiro: ParceriasPrograma) {

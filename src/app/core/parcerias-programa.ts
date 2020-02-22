@@ -1,6 +1,7 @@
 import { Programa } from 'src/app/core/programa';
 import { Empresa } from './empresa';
 import { MateriaisPrograma } from './materiais-programa';
+import { ParceriasCategorias } from './parcerias-categorias';
 export class ParceriasPrograma {
 
 	id: number;
@@ -11,5 +12,6 @@ export class ParceriasPrograma {
 	programa: Programa;
 	valorParceria: number;
 	materiaisPrograma: MateriaisPrograma[];
+	parceriasCategorias:ParceriasCategorias[];
 
 }
