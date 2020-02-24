@@ -6,6 +6,7 @@ import { AcoesAtividadeService } from 'src/app/services/acoes-atividade/acoes-at
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 
 @Component({
   selector: 'app-acoes-atividade',
@@ -24,14 +25,17 @@ export class AcoesAtividadeComponent implements OnInit {
 
   mostrarTabela = false;
 
+  unidadesComboCadastro: any[];
+
   displayedColumns: string[] = ['descricao', 'dataInicio', 'dataFim', 'dataPrevisaoFim', 'dataPrevisaoInicio', 'acoes'];
   dataSource: MatTableDataSource<Acoes> = new MatTableDataSource();
 
   constructor(
-    private atividadeService: AcoesAtividadeService,
+    private acoesAtividadeService: AcoesAtividadeService,
     private router: Router,
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private unidadeService: UnidadeService,
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -41,8 +45,13 @@ export class AcoesAtividadeComponent implements OnInit {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
+
+
+    this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: any[]) => {
+      this.unidadesComboCadastro = unidades;
+    });
   }
- 
+
 
   limpar() {
     this.mostrarTabela = false;
@@ -52,15 +61,15 @@ export class AcoesAtividadeComponent implements OnInit {
 
   consultar() {
     if (this.acoesAtividade.id) {
-      this.atividadeService.getById(this.acoesAtividade.id).subscribe((acoesAtividade: Acoes) => {
-        if(!acoesAtividade){
-          this.mostrarTabela = false
-          this.msg = "Nenhum registro para a pesquisa selecionada"
-        }else {
+      this.acoesAtividadeService.getById(this.acoesAtividade.id).subscribe((acoesAtividade: Acoes) => {
+        if (!acoesAtividade){
+          this.mostrarTabela = false;
+          this.msg = 'Nenhum registro para a pesquisa selecionada';
+        } else {
           this.dataSource.data = [acoesAtividade];
           this.mostrarTabela = true;
         }
-      })
+      });
     } else {
       this.getAll();
     }
@@ -68,7 +77,7 @@ export class AcoesAtividadeComponent implements OnInit {
 
 
   atualizar(acoesAtividade: Acoes) {
-    this.router.navigate(['/acoesatividade/cadastrar'], { queryParams: { idAcoesAtividade: acoesAtividade.id } });
+    this.router.navigate(['/acoesoficinas/cadastrar'], { queryParams: { codigoacao: acoesAtividade.id } });
   }
 
   deletar(acoesAtividade: Acoes) {
@@ -86,10 +95,10 @@ export class AcoesAtividadeComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-        this.atividadeService.excluir(acoesAtividade.id).subscribe(() => {
+        this.acoesAtividadeService.excluir(acoesAtividade.id).subscribe(() => {
           this.acoesAtividade.id = null;
           this.consultar();
-        })
+        });
       } else {
         dialogRef.close();
       }
@@ -98,19 +107,19 @@ export class AcoesAtividadeComponent implements OnInit {
   }
 
    getAll() {
-    this.atividadeService.getAll().subscribe((listaAcoesAtividade: Acoes[]) => {
+    this.acoesAtividadeService.getAll().subscribe((listaAcoesAtividade: Acoes[]) => {
       this.listaAcoesAtividade = listaAcoesAtividade;
       this.dataSource.data = listaAcoesAtividade ? listaAcoesAtividade : [];
       this.verificaMostrarTabela(listaAcoesAtividade);
-    })
+    });
   }
 
   verificaMostrarTabela(listaAcoesAtividade: Acoes[]) {
-    if(!listaAcoesAtividade || listaAcoesAtividade.length == 0) {
-      this.mostrarTabela = false; 
-      this.msg = "Nenhuma ação atividade cadastrada."
-    }else{
-      this.mostrarTabela = true; 
+    if(!listaAcoesAtividade || listaAcoesAtividade.length === 0) {
+      this.mostrarTabela = false;
+      this.msg = 'Nenhuma ação cadastrada.';
+    } else {
+      this.mostrarTabela = true;
     }
   }
 }

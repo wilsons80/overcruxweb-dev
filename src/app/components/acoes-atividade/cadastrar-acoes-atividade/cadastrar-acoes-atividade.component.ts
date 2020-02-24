@@ -20,9 +20,6 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
   acoes: Acoes = new Acoes();
 
-  atividades: Atividade[];
-  funcionarios: Funcionario[];
-
   carregarPerfil: CarregarPerfil;
   perfilAcesso: Acesso = new Acesso();
   mostrarBotaoCadastrar = true;
@@ -35,11 +32,9 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     private acoesAtividadeService: AcoesAtividadeService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastService: ToastService,
-    private atividadeService: AtividadeService,
-    private funcionarioService: FuncionarioService
+    private toastService: ToastService
   ) {
-    this.acoes.atividade = new Atividade();
+    this.acoes.oficina = new Atividade();
     this.carregarPerfil = new CarregarPerfil();
   }
 
@@ -54,23 +49,16 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     if (!this.perfilAcesso.altera) {
       this.mostrarBotaoAtualizar = false;
     }
-    this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {
-      this.atividades = atividades;
-    })
-
-    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
-      this.funcionarios = funcionarios;
-    });
 
     this.acoes.funcionarioAprovaAcao = new Funcionario();
     this.acoes.funcionarioExecutaAcao = new Funcionario();
     this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
 
 
-    const idAcoesAtividade = this.activatedRoute.snapshot.queryParams.idAcoesAtividade ? this.activatedRoute.snapshot.queryParams.idAcoesAtividade : null;
-    if (idAcoesAtividade) {
+    const codigoacao = this.activatedRoute.snapshot.queryParams.codigoacao ? this.activatedRoute.snapshot.queryParams.codigoacao : null;
+    if (codigoacao) {
       this.isAtualizar = true;
-      this.acoesAtividadeService.getById(idAcoesAtividade).subscribe((acoes: Acoes) => {
+      this.acoesAtividadeService.getById(codigoacao).subscribe((acoes: Acoes) => {
         this.acoes = acoes;
       });
     }
@@ -89,47 +77,19 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     if (!this.validarDatas() ) { return; }
 
     this.acoesAtividadeService.cadastrar(this.acoes).subscribe(() => {
-      this.router.navigate(['acoesatividade'])
-      this.toastService.showSucesso("Ações atividade cadastrada com sucesso");
+      this.router.navigate(['acoesoficinas']);
+      this.toastService.showSucesso('Ações atividade cadastrada com sucesso');
     });
   }
 
-  validarDatas(): boolean {
-    if (this.acoes.dataInicio && new Date(this.acoes.dataInicio).getTime() < new Date(this.acoes.atividade.dataInicio).getTime()) {
-      this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
-      return false;
-    }
 
-    if (this.acoes.atividade.dataFim) {
-      if (this.acoes.dataInicio &&
-        new Date(this.acoes.dataInicio).getTime() > new Date(this.acoes.atividade.dataFim).getTime()) {
-        this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
-        return false;
-      }
-    }
-
-    if (this.acoes.atividade.dataFim &&
-        this.acoes.dataFim &&
-        new Date(this.acoes.dataFim).getTime() > new Date(this.acoes.atividade.dataFim).getTime()) {
-      this.toastService.showAlerta('A data de fim informada não pode ser maior que a data de fim da atividade selecionada.');
-      return false;
-    }
-
-    if (this.acoes.dataFim &&
-        new Date(this.acoes.dataFim).getTime() < new Date(this.acoes.atividade.dataInicio).getTime()) {
-      this.toastService.showAlerta('A data de fim informada não pode ser menor que a data de início da atividade selecionada.');
-      return false;
-    }
-
-    return true;
-  }
 
   limpar() {
     this.acoes = new Acoes();
   }
 
   cancelar() {
-    this.router.navigate(['acoesatividade'])
+    this.router.navigate(['acoesoficinas']);
   }
 
 
@@ -137,37 +97,42 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     if (!this.validarDatas() ) { return; }
 
     this.acoesAtividadeService.alterar(this.acoes).subscribe(() => {
-      this.router.navigate(['acoesatividade'])
-      this.toastService.showSucesso("Ações atividade atualizada com sucesso");
+      this.router.navigate(['acoesoficinas']);
+      this.toastService.showSucesso('Ações atividade atualizada com sucesso');
     });
-
-  }
-
-  getNomeAtividade(){
-    if(this.atividades)
-    return this.atividades.length === 0 ? 'Nenhuma atividade cadastrada' : 'Atividade'
-  }
-
-  mostrarDadosAtividade(idAtividade) {
-    this.acoes.atividade = _.cloneDeep(_.find(this.atividades, (a: Atividade) => a.id === idAtividade));
   }
 
 
-  carregarDadosFuncionarioAprovacao() {
-    if (this.acoes.funcionarioAprovaAcao.id) {
-      this.acoes.funcionarioAprovaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioAprovaAcao.id));
+
+  validarDatas(): boolean {
+    if (this.acoes.dataInicio && new Date(this.acoes.dataInicio).getTime() < new Date(this.acoes.oficina.dataInicio).getTime()) {
+      this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
+      return false;
     }
+
+    if (this.acoes.oficina.dataFim) {
+      if (this.acoes.dataInicio &&
+        new Date(this.acoes.dataInicio).getTime() > new Date(this.acoes.oficina.dataFim).getTime()) {
+        this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
+        return false;
+      }
+    }
+
+    if (this.acoes.oficina.dataFim &&
+        this.acoes.dataFim &&
+        new Date(this.acoes.dataFim).getTime() > new Date(this.acoes.oficina.dataFim).getTime()) {
+      this.toastService.showAlerta('A data de fim informada não pode ser maior que a data de fim da atividade selecionada.');
+      return false;
+    }
+
+    if (this.acoes.dataFim &&
+        new Date(this.acoes.dataFim).getTime() < new Date(this.acoes.oficina.dataInicio).getTime()) {
+      this.toastService.showAlerta('A data de fim informada não pode ser menor que a data de início da atividade selecionada.');
+      return false;
+    }
+
+    return true;
   }
 
-  carregarDadosFuncionarioExecucao() {
-    if (this.acoes.funcionarioExecutaAcao.id) {
-      this.acoes.funcionarioExecutaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioExecutaAcao.id));
-    }
-  }
-  carregarDadosFuncionarioPlanejamento() {
-    if (this.acoes.funcionarioPlanejamentoAcao.id) {
-      this.acoes.funcionarioPlanejamentoAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acoes.funcionarioPlanejamentoAcao.id));
-    }
-  }
 
 }

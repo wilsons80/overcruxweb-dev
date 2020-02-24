@@ -1,5 +1,6 @@
 import { Funcionario } from 'src/app/core/funcionario';
 import { Atividade } from './atividade';
+import { MateriaisAcao } from './materiais-acao';
 
 export class Acoes {
 	id: number;
@@ -16,11 +17,13 @@ export class Acoes {
 	descricaoAvaliacaoAcao: string;
 	descricaoOcorrenciaAcao: string;
 	
-	atividade: Atividade;
+	oficina: Atividade;
 	
 	funcionarioPlanejamentoAcao: Funcionario;
 	funcionarioAprovaAcao: Funcionario;
 	funcionarioExecutaAcao: Funcionario;
-	
 	usuarioAlteracao: number;
+
+	materiaisAcao: MateriaisAcao[];
+	
 }

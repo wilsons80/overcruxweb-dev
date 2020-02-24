@@ -1,3 +1,4 @@
+import { Acoes } from './acoes';
 import { Programa } from './programa';
 import { ColaboradoresAtividade } from './colaboradores-atividade';
 import { PlanosAcao } from './planos-acao';

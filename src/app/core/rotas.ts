@@ -6,7 +6,6 @@ export enum Rotas {
     ATENDIMENTO                     = 'api/atendimento/',
     ATIVIDADE_ALUNO                 = 'api/atividadesaluno/',
     MATRICULAS                      = 'api/matriculas/',
-    ATIVIDADE                       = 'api/atividade/',
     AVALIACAO_ALUNO                 = 'api/avaliacaoaluno/',
     AVALIACAO_ATIVIDADE             = 'api/avaliacoes/',
     DIAGNOSTICOS                    = 'api/diagnosticos/',
@@ -38,7 +37,7 @@ export enum Rotas {
     MATERIAIS_ATIVIDADE             = 'api/materiaisatividade/',
     CADASTRO_RESERVA_ATIVIDADE      = 'api/cadastroreservaatividade/',
     UNIDADE                         = 'api/unidade/',
-    ACOES_ATIVIDADE                 = 'api/acao/',
+    ACOES_OFICINAS                  = 'api/acoesoficinas/',
     INSTITUICAO                     = 'api/instituicao/',
     PERFIL_ACESSO                   = 'api/perfilacesso/',
     GRUPO_MODULO                    = 'api/grupomodulo/',
@@ -68,4 +67,5 @@ export enum Rotas {
     MOVIMENTACOES_MATERIAIS         = 'api/movimentacoesmateriais/',
     ITENS_PEDIDOS_MATERIAIS         = 'api/itenspedidosmateriais/',
     ITENS_MOVIMENTACOES             = 'api/itensmovimentacoes/',
+    ACAO                            = 'api/acoesoficinas',
 }

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import { BaseService } from '../base/base.service';
-import { FaltasFuncionario } from 'src/app/core/faltas-funcionario';
 import { Rotas } from 'src/app/core/rotas';
 
 const rotaPath = Rotas.UNIDADE;

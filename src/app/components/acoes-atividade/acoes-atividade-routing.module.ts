@@ -8,10 +8,8 @@ import { CadastrarAcoesAtividadeComponent } from './cadastrar-acoes-atividade/ca
 
 
 const routes: Routes = [
-  { path: 'acoesatividade/cadastrar', component: CadastrarAcoesAtividadeComponent, canActivate: [AuthGuard], resolve: { perfilAcesso: AcessoModuloResolver }, data: { modulo: Modulos.ACOES_ATIVIDADE } },
-  { path: 'acoesatividade', component: AcoesAtividadeComponent, canActivate: [AuthGuard], resolve: { perfilAcesso: AcessoModuloResolver }, data: { modulo: Modulos.ACOES_ATIVIDADE } },
-
-
+  { path: 'acoesoficinas/cadastrar', component: CadastrarAcoesAtividadeComponent, canActivate: [AuthGuard], resolve: { perfilAcesso: AcessoModuloResolver }, data: { modulo: Modulos.ACOES_ATIVIDADE } },
+  { path: 'acoesoficinas', component: AcoesAtividadeComponent, canActivate: [AuthGuard], resolve: { perfilAcesso: AcessoModuloResolver }, data: { modulo: Modulos.ACOES_ATIVIDADE } },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

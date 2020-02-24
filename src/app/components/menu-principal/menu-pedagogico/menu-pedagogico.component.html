@@ -58,6 +58,11 @@
             rota="niveisturmas" toolTip="Níveis de Turmas"></sub-menu>
 
 
+        <!-- ACOES_ATIVIDADE -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().ACOES_ATIVIDADE)" icone="event_busy"
+            titulo="Ações das Oficinas" rota="acoesoficinas" toolTip="Ações das Oficinas"></sub-menu>
+
+            
         <!-- REPROVACAO ALUNO  
         <sub-menu *ngIf="verificaAcesso(getModulos().REPROVACAO_ALUNO)" icone="event_busy"
             titulo="Reprovações do Aluno " rota="reprovacaoaluno" toolTip="Reprovações do Aluno"></sub-menu>

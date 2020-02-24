@@ -1,193 +1,44 @@
-<mat-toolbar class="subtitulo">Cadastrar Ação Atividade</mat-toolbar>
-
+<mat-toolbar class="subtitulo">Cadastrar ação da oficina</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
-
-    <div *ngIf="acoes.atividade.id">
-        <dados-atividade [atividade]=acoes.atividade></dados-atividade>
-    </div>
-
-    <!-- DADOS INICIAIS -->
     <form #formCadastro="ngForm">
-        <div fxLayout="row"  fxLayoutGap="50px" class="espaco"
-           fxFlexFill>
-
-            <div id="row_dados" fxLayout="column" fxFlex="45%">
-                <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
-                 <mat-form-field style="margin-left: 20px; margin-bottom: 20px" >
-                        <input #descricao matInput maxlength="50" [(ngModel)]="acoes.descricao"
-                               name="Descricao" placeholder="Descricao:" required>
-                        <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
-                </mat-form-field>
-            </div>
-
-            <div id="row_dados" fxLayout="column" fxFlex="55%">
-                <mat-toolbar class="titulopartes">Atividade</mat-toolbar>
-                 <mat-form-field style="margin-right: 20px;margin-left: 10px"  fxFlex= "95%" >
-                        <mat-label>Atividades</mat-label>
-                        <mat-select [(ngModel)]="acoes.atividade.id"
-                                    (selectionChange)="mostrarDadosAtividade($event.value)"
-                                    name="atividade" required>
-                            <mat-option *ngFor="let u of atividades" [value]="u.id" >
-                              {{u.descricao}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="atividades?.length === 0"  align="start">Nenhuma atividade cadastrada</mat-hint>
-                </mat-form-field>
-            </div>
-
+        <div class="painel-principal" style="padding: 10px;">
+            <mat-tab-group>
+                <!-- DADOS DA AÇÃO -->
+                <mat-tab label="AÇÃO">
+                    <form #formCadastroDadosAcao="ngForm">
+                        <formulario-acao-oficina [acao]="acoes"></formulario-acao-oficina>
+                    </form>
+                </mat-tab>
+        
+                <!-- MATERIAIS DA AÇÃO -->
+                <mat-tab label="MATERIAIS">
+                    <form #formCadastroMateriaisAcao="ngForm">
+                        <materiais-acoes [acao]="acoes"></materiais-acoes>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
         </div>
-
-         <!-- DATA -->
-        <mat-toolbar class="titulopartes">Datas</mat-toolbar>
-        <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill>
-            <mat-form-field fxFlex= "20%" fxFlexOffset="20px">
-                <input matInput name= "dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio" placeholder="Data Previsão de Início:" 
-                       [(ngModel)]="acoes.dataPrevisaoInicio">
-                <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
-                <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex= "20%"  >
-                <input matInput name= "dataPrevisaoFim" [matDatepicker]="dataPrevisaoFim" placeholder="Data Previsão de Fim:" 
-                       [(ngModel)]="acoes.dataPrevisaoFim">
-                <mat-datepicker-toggle matSuffix [for]="dataPrevisaoFim"></mat-datepicker-toggle>
-                <mat-datepicker #dataPrevisaoFim></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex= "20%" fxFlexOffset="20px" >
-                <input matInput name= "dataInicio" [matDatepicker]="dataInicio" placeholder="Data de Início:" 
-                       [(ngModel)]="acoes.dataInicio">
-                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                <mat-datepicker #dataInicio></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex= "20%">
-                <input matInput name= "dataFim" [matDatepicker]="dataFim" placeholder="Data Fim:" 
-                       [(ngModel)]="acoes.dataFim">
-                <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
-                <mat-datepicker #dataFim></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field fxFlex= "20%">
-                <input matInput name="dataAprovaAcao" [matDatepicker]="dataAprovaAcao" placeholder="Data Aprovação:" 
-                        [(ngModel)]="acoes.dataAprovaAcao">
-                <mat-datepicker-toggle matSuffix [for]="dataAprovaAcao"></mat-datepicker-toggle>
-                <mat-datepicker #dataAprovaAcao></mat-datepicker>
-            </mat-form-field>
-    
-       </div>
+    </form>    
 
 
+    <!-- BOTOES -->
+    <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+        fxFlexFill>
+        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+            color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+        </button>
 
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+            color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+            Atualizar
+        </button>
 
-       <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                <mat-label>Funcionário planejamento</mat-label>
-                <mat-select [(ngModel)]="acoes.funcionarioPlanejamentoAcao.id" 
-                            name="funcionarioPlanejamentoAcao"
-                            (selectionChange)="carregarDadosFuncionarioPlanejamento()">
-                    <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
-                        {{d.pessoasFisica.nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                <mat-label>Funcionário aprovação</mat-label>
-                <mat-select [(ngModel)]="acoes.funcionarioAprovaAcao.id" 
-                            (selectionChange)="carregarDadosFuncionarioAprovacao()"
-                            name="funcionarioAprovaAcao">
-                    <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
-                        {{d.pessoasFisica.nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                <mat-label>Funcionário execução</mat-label>
-                <mat-select [(ngModel)]="acoes.funcionarioExecutaAcao.id" 
-                            name="funcionarioExecutaAcao"
-                            (selectionChange)="carregarDadosFuncionarioExecucao()">
-                    <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
-                        {{d.pessoasFisica.nome}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>            
-       </div>
+        <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+            Limpar
+        </button>
+        <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+            Cancelar
+        </button>
 
-       <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-            <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="45%" appearance="outline">
-                    <mat-label>Descrição do objetivo da ação</mat-label>
-                    <textarea #descricaoObjetivoAcao matInput
-                              name="descricaoObjetivoAcao"
-                              [(ngModel)]="acoes.descricaoObjetivoAcao"
-                              cdkTextareaAutosize
-                              #autosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="3"
-                              maxlength="200"></textarea>
-                    <mat-hint align="end">{{descricaoObjetivoAcao.value.length}} / 200</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
-                    <mat-label>Descrição da metodologia da ação</mat-label>
-                    <textarea #descricaoMetodologiaAcao matInput
-                              name="descricaoMetodologiaAcao"
-                              [(ngModel)]="acoes.descricaoMetodologiaAcao"
-                              cdkTextareaAutosize
-                              #autosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="3"
-                              maxlength="200"></textarea>
-                    <mat-hint align="end">{{descricaoMetodologiaAcao.value.length}} / 200</mat-hint>
-            </mat-form-field>
-       </div>   
-       
-       <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-            <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="45%" appearance="outline">
-                    <mat-label>Descrição da avaliação da execução da ação</mat-label>
-                    <textarea #descricaoAvaliacaoAcao matInput
-                              name="descricaoAvaliacaoAcao"
-                              [(ngModel)]="acoes.descricaoAvaliacaoAcao"
-                              cdkTextareaAutosize
-                              #autosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="3"
-                              maxlength="200"></textarea>
-                    <mat-hint align="end">{{descricaoAvaliacaoAcao.value.length}} / 200</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
-                    <mat-label>Descrição das ocorrências que podem ter ocorrido execução</mat-label>
-                    <textarea #descricaoOcorrenciaAcao matInput
-                              name="descricaoOcorrenciaAcao"
-                              [(ngModel)]="acoes.descricaoOcorrenciaAcao"
-                              cdkTextareaAutosize
-                              #autosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="3"
-                              maxlength="200"></textarea>
-                    <mat-hint align="end">{{descricaoOcorrenciaAcao.value.length}} / 200</mat-hint>
-            </mat-form-field>
-       </div>       
-       
-
-
-        <!-- BOTOES -->
-        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-            fxFlexFill>
-            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
-            </button>
-
-            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
-                Atualizar
-            </button>
-
-            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
-                Limpar
-            </button>
-            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
-                Cancelar
-            </button>
-
-        </div>
-    </form>
+    </div>
 </div>

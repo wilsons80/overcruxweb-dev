@@ -1,0 +1,31 @@
+<mat-accordion>
+
+    <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Materiais da Ação
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <cadastrar-materiais-acao #cadastrarMateriais [acao]="acao"></cadastrar-materiais-acao>
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="!openFormCadastro" (opened)="listarMateriais.carregarLista()"
+        (closed)="openFormCadastro = true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Lista de Materiais da Ação ( {{acao.materiaisAcao?.length}} )
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <listar-materiais-acao #listarMateriais
+                            [materiaisAcao]="acao.materiaisAcao"
+                            (onAtualizar)="onGetAdicionar($event); cadastrarMateriais.atualizarOficina($event)"
+                            (onAdicionar)="onGetAdicionar($event); cadastrarMateriais.initObjeto()">
+        </listar-materiais-acao>
+
+    </mat-expansion-panel>
+
+
+</mat-accordion>

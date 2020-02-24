@@ -10,15 +10,15 @@ import { Rotas } from 'src/app/core/rotas';
 export class AtividadeService extends BaseService<Atividade> {
 
     constructor(http: HttpClient) {
-      super(http, Rotas.ATIVIDADE);
+      super(http, Rotas.OFICINA);
     }
 
     getAllVigentesAndPassadas() {
-      return this.http.get(Rotas.ATIVIDADE + 'vigente-e-passadas');
+      return this.http.get(Rotas.OFICINA + 'vigente-e-passadas');
     }
 
     getAllVigentesAndFuturas() {
-      return this.http.get(Rotas.ATIVIDADE + 'vigente-e-futuras');
+      return this.http.get(Rotas.OFICINA + 'vigente-e-futuras');
     }
 
 }

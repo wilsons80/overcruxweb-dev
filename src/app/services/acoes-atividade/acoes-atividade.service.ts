@@ -10,7 +10,7 @@ import { Acoes } from 'src/app/core/acoes';
 export class AcoesAtividadeService extends BaseService<Acoes> {
 
   constructor(http: HttpClient) {
-    super(http, Rotas.ACOES_ATIVIDADE);
+    super(http, Rotas.ACOES_OFICINAS);
   }
 
 }
