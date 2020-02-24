@@ -4,21 +4,44 @@
         <form #formConsultar="ngForm">
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+
                 <mat-icon>search</mat-icon>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-label>Unidade</mat-label>
-                    <mat-select [(ngModel)]="unidade" name="unidade" required>
+                <mat-form-field fxFlex="50%" >
+                    <mat-label>Selecione uma unidade</mat-label>
+                    <mat-select [(ngModel)]="unidadeSelecionada" name="unidade">
                         <mat-option *ngFor="let m of unidadesComboCadastro" [value]="m">
                             {{m.nomeUnidade}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
+
+                <mat-icon>search</mat-icon>
+                <mat-form-field fxFlex="50%">
+                    <mat-label>Selecione uma turma</mat-label>
+                    <mat-select [(ngModel)]="turmaSelecionada" name="turma">
+                        <mat-option *ngFor="let m of turmasCombo" [value]="m">
+                            {{m.descricao}} - {{turnos.getDescricao(m.turno)}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
             </div>
-            
-            
+
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <mat-icon>search</mat-icon>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                <mat-form-field fxFlex="50%">
+                    <mat-label>Selecione uma oficina</mat-label>
+                    <mat-select [(ngModel)]="oficinaSelecionada" name="oficina">
+                        <mat-option *ngFor="let m of oficinasCombo" [value]="m">
+                            {{m.descricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-icon>search</mat-icon>
+                <mat-form-field fxFlex="50%">
                     <mat-label>Selecione uma ação</mat-label>
                     <mat-select [(ngModel)]="acoesAtividade" name="atividade">
                         <mat-option *ngFor="let d of listaAcoesAtividade" [value]="d">
@@ -26,8 +49,9 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
 
+            </div>
+                
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
                 fxFlexFill>

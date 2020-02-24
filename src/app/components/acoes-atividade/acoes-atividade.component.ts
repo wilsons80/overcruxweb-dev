@@ -1,3 +1,7 @@
+import { Atividade } from './../../core/atividade';
+import { Unidade } from './../../core/unidade';
+import { Turmas } from 'src/app/core/turmas';
+import { TurmasService } from './../../services/turmas/turmas.service';
 import { Acoes } from './../../core/acoes';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
@@ -7,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
+import { TipoTurno } from 'src/app/core/tipo-turno';
+import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 
 @Component({
   selector: 'app-acoes-atividade',
@@ -25,7 +31,15 @@ export class AcoesAtividadeComponent implements OnInit {
 
   mostrarTabela = false;
 
+  unidadeSelecionada: Unidade = new Unidade();
+  turmaSelecionada: Turmas = new Turmas();
+  oficinaSelecionada: Atividade = new Atividade();
+
   unidadesComboCadastro: any[];
+  turmasCombo: Turmas[];
+  oficinasCombo: Atividade[];
+
+  turnos: TipoTurno = new TipoTurno();
 
   displayedColumns: string[] = ['descricao', 'dataInicio', 'dataFim', 'dataPrevisaoFim', 'dataPrevisaoInicio', 'acoes'];
   dataSource: MatTableDataSource<Acoes> = new MatTableDataSource();
@@ -36,7 +50,9 @@ export class AcoesAtividadeComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private unidadeService: UnidadeService,
-  ) { 
+    private turmaService: TurmasService,
+    private oficinaService: AtividadeService
+  ) {
     this.carregarPerfil = new CarregarPerfil();
   }
 
@@ -46,23 +62,40 @@ export class AcoesAtividadeComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.getAll();
 
-
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: any[]) => {
       this.unidadesComboCadastro = unidades;
     });
+
+    this.turmaService.getFilter(null, null, this.unidadeSelecionada.idUnidade)
+    .subscribe((turmas: Turmas[]) => {
+      this.turmasCombo = turmas;
+    });
+
   }
 
 
   limpar() {
     this.mostrarTabela = false;
-    this.acoesAtividade = new Acoes()
     this.dataSource.data = [];
+
+    this.acoesAtividade = new Acoes();
+    this.unidadeSelecionada = new Unidade();
+    this.turmaSelecionada = new Turmas();
+    this.oficinaSelecionada = new Atividade();
   }
 
   consultar() {
-    if (this.acoesAtividade.id) {
-      this.acoesAtividadeService.getById(this.acoesAtividade.id).subscribe((acoesAtividade: Acoes) => {
-        if (!acoesAtividade){
+    if (this.unidadeSelecionada.idUnidade ||
+        this.turmaSelecionada.id ||
+        this.oficinaSelecionada.id ||
+        this.acoesAtividade.id) {
+
+      this.acoesAtividadeService.getFilter(this.unidadeSelecionada.idUnidade,
+                                           this.turmaSelecionada.id,
+                                           this.oficinaSelecionada.id,
+                                           this.acoesAtividade.id)
+      .subscribe((acoesAtividade: Acoes) => {
+        if (!acoesAtividade) {
           this.mostrarTabela = false;
           this.msg = 'Nenhum registro para a pesquisa selecionada';
         } else {

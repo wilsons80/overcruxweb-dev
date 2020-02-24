@@ -8,6 +8,7 @@ import { Projeto } from 'src/app/core/projeto';
 import { NiveisTurmas } from 'src/app/core/niveis-turmas';
 import { Programa } from 'src/app/core/programa';
 import { Unidade } from 'src/app/core/unidade';
+import { TipoTurno } from 'src/app/core/tipo-turno';
 import { ControlContainer, NgForm } from '@angular/forms';
 import * as _ from 'lodash';
 
@@ -29,13 +30,7 @@ export class DadosTurmaComponent implements OnInit {
     { id: 'E', descricao: 'EXTERNA' },
   ];
 
-  turnos: any = [
-    { id: 'M', descricao: 'MATUTINO' },
-    { id: 'V', descricao: 'VESPERTINO' },
-    { id: 'N', descricao: 'NOTURNO' },
-    { id: 'O', descricao: 'OUTRO' },
-  ];
-
+  turnos: TipoTurno = new TipoTurno();
 
   niveisTurma: NiveisTurmas[];
   projetos: Projeto[];
