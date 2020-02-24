@@ -6,14 +6,8 @@
           <!-- DADOS INICIAIS -->
           <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
           <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-               <mat-form-field fxFlex="60%" fxFlexOffset="20px">
-                    <input #nome matInput maxlength="200" name="nome" placeholder="Nome do Material:"
-                         [(ngModel)]="material.nome" required>
-                    <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
-               </mat-form-field>
-
-               <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+               
+               <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                     <mat-label >Tipo:</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="material.tipo" name="tipo" required>
                          <mat-option *ngFor="let d of tipos" [value]="d.id">
@@ -21,18 +15,28 @@
                          </mat-option>
                     </mat-select>
                </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-               <mat-form-field fxFlex="25%" fxFlexOffset="20px">
-                    <input type=number #qtdLimite [(ngModel)]="material.quantidadeLimitePedido" matInput min=0 name="quantidadeLimitePedido" placeholder="Quantidade limite:" />
-               </mat-form-field>
-              
-               <mat-form-field fxFlex="25%" fxFlexOffset="20px">
-                    <input type=number [(ngModel)]="material.numeroVidaUtil" #qtdLimite matInput min=0 name="numeroVidaUtil" placeholder="Vida Útil (Meses):" />
+          
+               <mat-form-field fxFlex="70%">
+                    <input #nome matInput maxlength="200" name="nome" placeholder="Nome do Material:"
+                         [(ngModel)]="material.nome" required>
+                    <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
                </mat-form-field>
 
-               <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                    <input type=number min=0 matInput [(ngModel)]="material.valorDepreciacao" name="valorDepreciacao" placeholder="Depreciação Ano:">
+          </div>
+          <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+               <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                    <input type=number #qtdLimite [(ngModel)]="material.quantidadeLimitePedido" 
+                           matInput min=0 name="quantidadeLimitePedido" placeholder="Quantidade limite:" />
+               </mat-form-field>
+              
+               <mat-form-field fxFlex="15%">
+                    <input type=number [(ngModel)]="material.numeroVidaUtil" 
+                           #qtdLimite matInput min=0 name="numeroVidaUtil" placeholder="Vida Útil (Meses):" />
+               </mat-form-field>
+
+               <mat-form-field fxFlex="20%">
+                    <input type=number min=0 matInput [(ngModel)]="material.valorDepreciacao" 
+                           name="valorDepreciacao" placeholder="Depreciação Ano:">
                     <span matSuffix>%</span>
                 </mat-form-field>
           </div>

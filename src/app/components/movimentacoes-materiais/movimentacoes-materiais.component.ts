@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { MovimentacoesMateriais } from 'src/app/core/movimentacoes-materiais';
 import { MovimentacoesMateriaisService } from 'src/app/services/movimentacoes-materiais/movimentacoes-materiais.service';
+import { TipoMovimentacao } from 'src/app/core/tipo-movimentacao';
 
 @Component({
   selector: 'movimentacoes-materiais',
@@ -34,6 +35,7 @@ export class MovimentacoesMateriaisComponent implements OnInit {
     nomeModulo:"FUNCAO"
   };
 
+  tiposMovimentacao: TipoMovimentacao = new TipoMovimentacao();
 
   constructor(
     private movimentacoesMateriaisService: MovimentacoesMateriaisService,

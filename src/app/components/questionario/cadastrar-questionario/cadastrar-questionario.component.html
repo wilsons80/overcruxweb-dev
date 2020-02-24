@@ -52,7 +52,7 @@
                                                 <mat-label>Tipo Questionário:</mat-label>
                                                 <mat-select [(ngModel)]="questionario.tipoQuestionario"
                                                         name="tiposQuestionario" required>
-                                                        <mat-option *ngFor="let o of tiposQuestionario"
+                                                        <mat-option *ngFor="let o of tiposQuestionario.tipos"
                                                                 [value]="o.tipo">
                                                                 {{o.descricao}}
                                                         </mat-option>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Funcionario } from 'src/app/core/funcionario';
 import { ArquivoPessoaFisicaService } from 'src/app/services/arquivo-pessoa-fisica/arquivo-pessoa-fisica.service';
 import { FileUtils } from 'src/app/utils/file-utils';
+import { TipoFuncionario } from 'src/app/core/tipo-funcionario';
 
 
 
@@ -13,6 +14,8 @@ import { FileUtils } from 'src/app/utils/file-utils';
 export class DadosFuncionarioComponent implements OnInit {
 
   @Input() funcionario: Funcionario;
+  tipoFuncionario: TipoFuncionario = new TipoFuncionario();
+  descricaoTipoFuncionario = '';
 
   constructor(private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
               private fileUtils: FileUtils) { }
@@ -37,6 +40,7 @@ export class DadosFuncionarioComponent implements OnInit {
         this.funcionario.pessoasFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
         this.funcionario.pessoasFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.descricaoTipoFuncionario = this.tipoFuncionario.getDescricao(this.funcionario.cargo.tipoCargo);
       });
     }
   }

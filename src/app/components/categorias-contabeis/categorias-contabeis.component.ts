@@ -5,6 +5,8 @@ import { Acesso } from 'src/app/core/acesso';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CategoriasContabeis } from './../../core/categorias-contabeis';
+import { TipoDespesa } from './../../core/tipo-despesa';
+
 
 @Component({
   selector: 'categorias-contabeis',
@@ -20,10 +22,12 @@ export class CategoriasContabeisComponent implements OnInit {
   categoriasContabeis: CategoriasContabeis = new CategoriasContabeis();
   msg: string;
 
-  displayedColumns: string[] = ['id', 'tipo', 'nome', 'acoes'];
+  displayedColumns: string[] = ['tipo', 'nome', 'categoria', 'acoes'];
   dataSource: MatTableDataSource<CategoriasContabeis> = new MatTableDataSource();
 
   perfilAcesso: Acesso;
+
+  tiposDespesas: TipoDespesa = new TipoDespesa();
 
   constructor(
     private categoriasContabeisService: CategoriasContabeisService,

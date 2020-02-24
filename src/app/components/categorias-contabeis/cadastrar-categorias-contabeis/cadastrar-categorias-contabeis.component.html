@@ -9,7 +9,7 @@
             <mat-form-field fxFlex="10%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Tipo:</mat-label>
                 <mat-select name="tipo" [(ngModel)]=categoriasContabeis.tipo required>
-                    <mat-option *ngFor="let i of tipos" [value]=i.id>
+                    <mat-option *ngFor="let i of tiposDespesas.tipos" [value]=i.id>
                         {{i.descricao}}
                     </mat-option>
                 </mat-select>

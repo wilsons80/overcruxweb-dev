@@ -39,7 +39,7 @@ export class CadastrarMovimentacoesMateriaisComponent implements OnInit {
       this.isAtualizar = true;
       
       this.movimentacoesMateriaisService.getById(id).subscribe((movimentacoesMateriais: MovimentacoesMateriais) => {
-        this.movimentacoesMateriais = movimentacoesMateriais
+        this.movimentacoesMateriais = movimentacoesMateriais;
       });
     }
 

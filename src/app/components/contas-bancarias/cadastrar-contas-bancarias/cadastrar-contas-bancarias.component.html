@@ -49,11 +49,11 @@
             </mat-form-field>
 
             <!-- CONTA -->
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="15%">
                 <input [(ngModel)]="contaBancaria.numeroContaBancaria" matInput maxlength="20" name="conta" placeholder="Conta Corrente:" required>
             </mat-form-field>
 
-            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+            <mat-form-field fxFlex="60%">
                 <input [(ngModel)]="contaBancaria.nomeContato" #contato matInput maxlength="200" name="nomeContato" placeholder="Nome contato:">
                 <mat-hint align="end">{{nomeTitular.value.length}} / 200</mat-hint>
             </mat-form-field>

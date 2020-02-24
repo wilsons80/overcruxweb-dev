@@ -5,7 +5,7 @@ import { QuestionarioService } from 'src/app/services/questionario/questionario.
 import { ObjetivoService } from 'src/app/services/objetivo/objetivo.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { Objetivo } from 'src/app/core/objetivo';
+import { TipoQuestionario } from 'src/app/core/tipo-questionario';
 import { Acesso } from 'src/app/core/acesso';
 
 @Component({
@@ -17,22 +17,19 @@ export class CadastrarQuestionarioComponent implements OnInit {
 
   questionario: Questionario = new Questionario();
 
-  isAtualizar: boolean = false;
+  isAtualizar = false;
 
   perfilAcesso: Acesso;
-  mostrarBotaoCadastrar = true
+  mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
-  tiposQuestionario = [
-    {id: 1, tipo: "T", descricao: "TALENTO" },
-    {id: 2, tipo: "G", descricao: "GRUPO FAMILIAR" },
-    {id: 3, tipo: "O", descricao: "OUTRO" },
-  ]
+  tiposQuestionario: TipoQuestionario = new TipoQuestionario();
+
   constructor(
     private questionarioService: QuestionarioService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private toastService:ToastService
+    private toastService: ToastService
   ) {
   }
 

@@ -5,6 +5,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Questionario } from 'src/app/core/questionario';
 import { QuestionarioService } from 'src/app/services/questionario/questionario.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { TipoQuestionario } from 'src/app/core/tipo-questionario';
 
 @Component({
   selector: 'app-questionario',
@@ -24,7 +25,7 @@ export class QuestionarioComponent implements OnInit {
   dataSource: MatTableDataSource<Questionario> = new MatTableDataSource();
 
   perfilAcesso: Acesso;
-
+  tiposQuestionario: TipoQuestionario = new TipoQuestionario();
 
   constructor(
     private questionarioService: QuestionarioService,

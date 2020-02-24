@@ -30,7 +30,7 @@ export class ItensMovimentacoesMateriaisComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   mostrarTabela = false;
-  msg: string = "Nenhum item movimentação material adicionado";
+  msg = "Nenhum item movimentação material adicionado";
 
 
 

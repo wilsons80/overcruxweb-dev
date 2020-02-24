@@ -6,9 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
-import { Unidade } from 'src/app/core/unidade';
-import { Instituicao } from 'src/app/core/instituicao';
-import { Funcoes } from 'src/app/core/funcoes';
+import { TipoDespesa } from 'src/app/core/tipo-despesa';
+
 
 @Component({
   selector: 'cadastrar-categorias-contabeis',
@@ -20,18 +19,14 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
   listaCategoriasContabeis: CategoriasContabeis[];
   categoriasContabeis: CategoriasContabeis;
 
-  isAtualizar: boolean = false;
+  isAtualizar = false;
 
-  tipos= [
-    {id: "D", descricao:"DESPESA"},
-    {id: "R", descricao:"RECEITA"},
-  ]
-
+  tiposDespesas: TipoDespesa = new TipoDespesa();
 
   perfilAcesso: Acesso;
 
 
-  mostrarBotaoCadastrar = true
+  mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
   constructor(

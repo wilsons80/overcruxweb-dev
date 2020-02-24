@@ -1,6 +1,6 @@
 import { MovimentacoesMateriais } from './../../../../core/movimentacoes-materiais';
 import { Component, OnInit, Input } from '@angular/core';
-import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { TipoMovimentacao } from 'src/app/core/tipo-movimentacao';
 import { Empresa } from 'src/app/core/empresa';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
@@ -21,13 +21,9 @@ import { ControlContainer, NgForm } from '@angular/forms';
 })
 export class DadosMovimentacoesMateriaisComponent implements OnInit {
 
-  @Input() movimentacoes:MovimentacoesMateriais;
+  @Input() movimentacoes: MovimentacoesMateriais;
 
-  tiposMovimentacoes = [
-    {id:"E", descricao: "ENTRADA"},
-    {id:"S", descricao: "SAÍDA"},
-    {id:"A", descricao: "ACERTO ESTOQUE"}
-  ]
+  tiposMovimentacao: TipoMovimentacao = new TipoMovimentacao();
 
   empresas:Empresa[];
   projetos:Projeto[];

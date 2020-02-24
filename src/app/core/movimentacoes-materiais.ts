@@ -8,15 +8,15 @@ import { Empresa } from './empresa';
 import { Departamento } from './departamento';
 
 export class MovimentacoesMateriais{
-    id:number;
-	descricaoMovimentacaoMaterial:string;
-	departamento:Departamento;
-	empresa:Empresa;
-	programa:Programa;
-	projeto:Projeto;
-	unidade:Unidade;
-	numeroDocumento:string;
-	tipoMovimentacao:string;
+    id: number;
+	descricaoMovimentacaoMaterial: string;
+	departamento: Departamento;
+	empresa: Empresa;
+	programa: Programa;
+	projeto: Projeto;
+	unidade: Unidade;
+	numeroDocumento: string;
+	tipoMovimentacao: string;
 
-	itensMovimentacoesMateriais:ItensMovimentacoesMateriais[]
+	itensMovimentacoesMateriais: ItensMovimentacoesMateriais[];
 }

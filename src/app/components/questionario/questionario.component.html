@@ -40,7 +40,7 @@
 
             <ng-container matColumnDef="tipoQuestionario">
                 <th mat-header-cell *matHeaderCellDef> Tipo Questionário: </th>
-                <td mat-cell *matCellDef="let element"> {{element.tipoQuestionario}} </td>
+                <td mat-cell *matCellDef="let element"> {{tiposQuestionario.getDescricao(element.tipoQuestionario)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="dataInicio">
