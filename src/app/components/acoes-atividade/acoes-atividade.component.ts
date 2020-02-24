@@ -66,9 +66,13 @@ export class AcoesAtividadeComponent implements OnInit {
       this.unidadesComboCadastro = unidades;
     });
 
-    this.turmaService.getFilter(null, null, this.unidadeSelecionada.idUnidade)
-    .subscribe((turmas: Turmas[]) => {
+    this.turmaService.getFilter(null, null, null).subscribe((turmas: Turmas[]) => {
       this.turmasCombo = turmas;
+    });
+
+
+    this.oficinaService.getAll().subscribe((oficinas: Atividade[]) => {
+      this.oficinasCombo = oficinas;
     });
 
   }
@@ -94,12 +98,12 @@ export class AcoesAtividadeComponent implements OnInit {
                                            this.turmaSelecionada.id,
                                            this.oficinaSelecionada.id,
                                            this.acoesAtividade.id)
-      .subscribe((acoesAtividade: Acoes) => {
+      .subscribe((acoesAtividade: Acoes[]) => {
         if (!acoesAtividade) {
           this.mostrarTabela = false;
           this.msg = 'Nenhum registro para a pesquisa selecionada';
         } else {
-          this.dataSource.data = [acoesAtividade];
+          this.dataSource.data = acoesAtividade ? acoesAtividade : [];
           this.mostrarTabela = true;
         }
       });
@@ -108,6 +112,19 @@ export class AcoesAtividadeComponent implements OnInit {
     }
   }
 
+  carregarTurmas() {
+    this.turmaService.getFilter(null, null, this.unidadeSelecionada.idUnidade).subscribe((turmas: Turmas[]) => {
+      this.turmasCombo = turmas;
+    });
+  }
+
+  carregarOficinas() {
+    if(this.turmaSelecionada.id) {
+      this.oficinaService.getByTurma(this.turmaSelecionada.id).subscribe((oficinas: Atividade[]) => {
+        this.oficinasCombo = oficinas;
+      });
+    }
+  }
 
   atualizar(acoesAtividade: Acoes) {
     this.router.navigate(['/acoesoficinas/cadastrar'], { queryParams: { codigoacao: acoesAtividade.id } });

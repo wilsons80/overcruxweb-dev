@@ -13,6 +13,11 @@ export class AtividadeService extends BaseService<Atividade> {
       super(http, Rotas.OFICINA);
     }
 
+    getByTurma(idTurma: number) {
+      return this.http.get(Rotas.OFICINA + 'turma/' + idTurma);
+    }
+
+
     getAllVigentesAndPassadas() {
       return this.http.get(Rotas.OFICINA + 'vigente-e-passadas');
     }

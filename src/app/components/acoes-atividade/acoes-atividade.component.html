@@ -8,7 +8,7 @@
                 <mat-icon>search</mat-icon>
                 <mat-form-field fxFlex="50%" >
                     <mat-label>Selecione uma unidade</mat-label>
-                    <mat-select [(ngModel)]="unidadeSelecionada" name="unidade">
+                    <mat-select [(ngModel)]="unidadeSelecionada" name="unidade" (selectionChange)="carregarTurmas()">
                         <mat-option *ngFor="let m of unidadesComboCadastro" [value]="m">
                             {{m.nomeUnidade}}
                         </mat-option>
@@ -19,7 +19,7 @@
                 <mat-icon>search</mat-icon>
                 <mat-form-field fxFlex="50%">
                     <mat-label>Selecione uma turma</mat-label>
-                    <mat-select [(ngModel)]="turmaSelecionada" name="turma">
+                    <mat-select [(ngModel)]="turmaSelecionada" name="turma" (selectionChange)="carregarOficinas()">
                         <mat-option *ngFor="let m of turmasCombo" [value]="m">
                             {{m.descricao}} - {{turnos.getDescricao(m.turno)}}
                         </mat-option>

@@ -1,5 +1,5 @@
 import { Acoes } from './../../../core/acoes';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'materiais-acoes',
@@ -9,10 +9,20 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MateriaisAcoesComponent implements OnInit {
 
   @Input() acao: Acoes;
-
-  constructor() { }
+  openFormCadastro = false;
+  
+  constructor(protected drc: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
+  }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+  }
+
+  onGetAdicionar(evento) {
+    this.openFormCadastro = evento;
   }
 
 }

@@ -20,9 +20,9 @@
         </mat-expansion-panel-header>
 
         <listar-materiais-acao #listarMateriais
-                            [materiaisAcao]="acao.materiaisAcao"
-                            (onAtualizar)="onGetAdicionar($event); cadastrarMateriais.atualizarOficina($event)"
-                            (onAdicionar)="onGetAdicionar($event); cadastrarMateriais.initObjeto()">
+                               [materiaisAcao]="acao.materiaisAcao"
+                               (onAtualizar)="onGetAdicionar($event); cadastrarMateriais.atualizarMaterial($event)"
+                               (onAdicionar)="onGetAdicionar($event); cadastrarMateriais.initObjeto()">
         </listar-materiais-acao>
 
     </mat-expansion-panel>
