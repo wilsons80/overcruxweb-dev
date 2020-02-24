@@ -14,10 +14,10 @@
         <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
     
             <!-- OBJETIVOS -->
-            <sub-menu icone="list_alt" titulo="Movimentações" rota="movimentacoes" toolTip="Movimentações"></sub-menu>
+            <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES)" icone="list_alt" titulo="Movimentações" rota="movimentacoes" toolTip="Movimentações"></sub-menu>
 
             <!-- SALDOS_CONTAS_BANCARIA -->
-            <sub-menu icone="monetization_on" titulo="Saldos de contas bancárias" rota="saldoscontasbancaria" toolTip="Saldos de contas bancárias"></sub-menu>
+            <sub-menu  *ngIf="verificaAcesso(getModulos().SALDOS_CONTAS_BANCARIA)" icone="monetization_on" titulo="Saldos de contas bancárias" rota="saldoscontasbancaria" toolTip="Saldos de contas bancárias"></sub-menu>
 
             <!-- TABELAS REFERENCIA -->
             <tb-referencia-financeiro></tb-referencia-financeiro>
