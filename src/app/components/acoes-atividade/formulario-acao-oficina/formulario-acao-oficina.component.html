@@ -23,6 +23,7 @@
                     <mat-select [(ngModel)]="acao.oficina.id"
                                 (selectionChange)="mostrarDadosAtividade($event.value)"
                                 name="atividade" required>
+                        <mat-option></mat-option>        
                         <mat-option *ngFor="let u of atividades" [value]="u.id" >
                             {{u.descricao}}
                         </mat-option>
@@ -83,6 +84,7 @@
             <mat-select [(ngModel)]="acao.funcionarioPlanejamentoAcao.id" 
                         name="funcionarioPlanejamentoAcao"
                         (selectionChange)="carregarDadosFuncionarioPlanejamento()">
+                <mat-option></mat-option>        
                 <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
                     {{d.pessoasFisica.nome}}
                 </mat-option>
@@ -94,6 +96,7 @@
             <mat-select [(ngModel)]="acao.funcionarioAprovaAcao.id" 
                         (selectionChange)="carregarDadosFuncionarioAprovacao()"
                         name="funcionarioAprovaAcao">
+                <mat-option></mat-option>        
                 <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
                     {{d.pessoasFisica.nome}}
                 </mat-option>
@@ -105,6 +108,7 @@
             <mat-select [(ngModel)]="acao.funcionarioExecutaAcao.id" 
                         name="funcionarioExecutaAcao"
                         (selectionChange)="carregarDadosFuncionarioExecucao()">
+                <mat-option></mat-option>        
                 <mat-option *ngFor="let d of funcionarios" [value]="d.id" >
                     {{d.pessoasFisica.nome}}
                 </mat-option>

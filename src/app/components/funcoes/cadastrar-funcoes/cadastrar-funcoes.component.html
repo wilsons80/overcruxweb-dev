@@ -15,6 +15,7 @@
             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Unidade:</mat-label>
                 <mat-select  [(ngModel)]=funcao.unidade.idUnidade  name="empresa" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
                         {{i.nomeUnidade}}
                     </mat-option>

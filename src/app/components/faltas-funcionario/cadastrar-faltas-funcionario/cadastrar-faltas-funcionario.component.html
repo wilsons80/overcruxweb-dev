@@ -11,6 +11,7 @@
                 <mat-label>Funcionário que faltou:</mat-label>
                 <mat-select [(ngModel)]="faltasFuncionario.funcionarioFaltou.id" name="funcionarioFaltou"
                     (selectionChange)="mostrarDadosFuncionarioQueFaltou($event.value)" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let o of funcionarios" [value]="o.id">
                         {{o.pessoasFisica.nome}}
                     </mat-option>
@@ -27,6 +28,7 @@
                 <mat-label>Funcionário que está cadastrando a falta:</mat-label>
                 <mat-select [(ngModel)]="faltasFuncionario.funcionarioCadastrouFalta.id"
                     name="funcionarioCadastrouFalta" (selectionChange)="mostrarDadosFuncionario($event.value)" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let o of funcionarios" [value]="o.id">
                         {{o.pessoasFisica.nome}}
                     </mat-option>

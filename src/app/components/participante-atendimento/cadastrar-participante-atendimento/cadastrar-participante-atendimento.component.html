@@ -11,6 +11,7 @@
                 <mat-form-field style="margin: 0 20px 20px 20px">
                     <mat-label>Atendimentos:</mat-label>
                     <mat-select [(ngModel)]="participanteAtendimento.atendimento.id" name="atendimento" required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of atendimentos" [value]="i.id">
                             {{i.dataAtendimento | dataSimples}} - {{i.aluno.pessoaFisica.nome}}
                         </mat-option>
@@ -28,6 +29,7 @@
                     <mat-select [(ngModel)]="participanteAtendimento.familiar.id" 
                                  name="familiar"
                                  (selectionChange)=setFamiliar($event.value)>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of familiares" [value]="i.id">
                             {{i.pessoasFisica.nome }}
                         </mat-option>
@@ -46,6 +48,7 @@
                                 name="funcionario" 
                                 (selectionChange)=setFuncionario($event.value)
                                 required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of funcionarios" [value]="i.id">
                             {{i.pessoasFisica.nome }}
                         </mat-option>

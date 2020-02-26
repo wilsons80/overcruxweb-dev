@@ -20,6 +20,7 @@
      <mat-form-field fxFlexOffset="20px" fxFlex="45%">
          <mat-label>Unidade:</mat-label>
          <mat-select [(ngModel)]="atividade.unidade.idUnidade" name="unidade" required>
+            <mat-option></mat-option>
              <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
                  {{u.nomeUnidade}}
              </mat-option>

@@ -24,6 +24,7 @@
             <mat-label>Situação de Vulnerabilidade</mat-label>
             <mat-select [(ngModel)]="vulnerabilidade.situacoesVulnerabilidade.id"
                         name="situacoesVulnerabilidade">
+                <mat-option></mat-option>                        
                 <mat-option *ngFor="let m of situacaoVulnerabilidades" [value]="m.id">
                     {{m.descricao}}
                 </mat-option>
@@ -33,6 +34,7 @@
         <mat-form-field fxFlex="35%" fxFlexOffset="20px">
             <mat-label>Solução</mat-label>
             <mat-select [(ngModel)]="vulnerabilidade.solucoes.id" name="solucoes">
+                <mat-option></mat-option>                
                 <mat-option *ngFor="let m of solucoes" [value]="m.id">
                     {{m.descricao}}
                 </mat-option>

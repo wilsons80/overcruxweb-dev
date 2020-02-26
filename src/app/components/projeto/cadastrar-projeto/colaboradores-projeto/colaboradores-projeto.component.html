@@ -11,6 +11,7 @@
                 <mat-form-field fxFlex="50%" fxFlexOffset="20px">
                     <mat-label>Funcionário:</mat-label>
                     <mat-select [(ngModel)]="colaboradoresProjeto.funcionario.id" name="unidade" required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let m of funcionarios" [value]="m.id">
                             {{m.pessoasFisica.nome}}
                         </mat-option>
@@ -22,6 +23,7 @@
                     <mat-label>Cargo:</mat-label>
                     <mat-select [(ngModel)]="colaboradoresProjeto.cargo.id" name="cargo" required
                         (selectionChange)="verificaComposicaoCargo()">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let m of cargos" [value]="m.id">
                             {{m.nome}}
                         </mat-option>

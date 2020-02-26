@@ -47,6 +47,7 @@
             <mat-form-field fxFlex="60%" *ngIf="isPrograma(); else projeto">
                 <mat-label>Programa</mat-label>
                 <mat-select [(ngModel)]="alocacao.programa.id" name="programa">
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let m of programas" [value]="m.id">
                         {{m.nome}}
                     </mat-option>
@@ -57,6 +58,7 @@
                 <mat-form-field fxFlex="60%">
                     <mat-label>Projeto</mat-label>
                     <mat-select [(ngModel)]="alocacao.projeto.id" name="projeto">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let m of projetos" [value]="m.id">
                             {{m.nome}}
                         </mat-option>

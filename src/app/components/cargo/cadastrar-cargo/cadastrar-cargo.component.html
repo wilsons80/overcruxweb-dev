@@ -19,6 +19,7 @@
                         <mat-form-field fxFlex="35%">
                                 <mat-label>Tipo Cargo:</mat-label>
                                 <mat-select [(ngModel)]="cargo.tipoCargo" name="tipoCargo" required>
+                                        <mat-option></mat-option>
                                         <mat-option *ngFor="let m of tiposCargo.tipos" [value]="m.tipo">
                                                 {{m.descricao}}
                                         </mat-option>
@@ -38,6 +39,7 @@
                         <mat-form-field fxFlex="80%">
                                 <mat-label>CBO</mat-label>
                                 <mat-select [(ngModel)]="cargo.cbo.id" name="cbo" >
+                                        <mat-option></mat-option>
                                         <mat-option *ngFor="let m of cbos" [value]="m.id">
                                                 {{m.numero}} - {{m.descricaoTipo}}
                                         </mat-option>

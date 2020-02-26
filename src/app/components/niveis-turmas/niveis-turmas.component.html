@@ -8,6 +8,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um nível</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="nivelTurma" name="nivelTurma">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of niveisTurmas" [value]="d">
                             {{d.descricao}}
                         </mat-option>

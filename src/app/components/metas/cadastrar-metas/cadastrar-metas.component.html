@@ -55,6 +55,7 @@
                                 <mat-form-field style="margin: 0 20px 20px 20px">
                                         <mat-label>Indicadores:</mat-label>
                                         <mat-select [(ngModel)]="metas.indicadores.idIndicador" name="metas" required>
+                                                <mat-option></mat-option>
                                                 <mat-option *ngFor="let i of indicadores" [value]="i.idIndicador">
                                                         {{i.nome}}
                                                 </mat-option>

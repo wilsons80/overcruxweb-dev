@@ -30,6 +30,7 @@
                                                 <mat-label>Pessoa:</mat-label>
                                                 <mat-select [(ngModel)]="cursoFormacao.pessoaFisica.id"
                                                         name="pessoaFisica" required>
+                                                        <mat-option></mat-option>
                                                         <mat-option *ngFor="let m of listaPessoaFisica" [value]="m.id">
                                                                 {{m.nome}}
                                                         </mat-option>

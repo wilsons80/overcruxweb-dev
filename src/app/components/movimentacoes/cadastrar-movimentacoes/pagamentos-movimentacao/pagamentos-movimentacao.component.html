@@ -16,6 +16,7 @@
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Fatura:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.fatura.id name="fatura" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of listaFaturas" [value]=i.id>
                                 {{i.dataVencimento | dataSimples}} - R$: {{i.valor}}
                             </mat-option>
@@ -29,6 +30,7 @@
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Conta bancária:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias" (ngModelChange)="getSaldoContaBancaria($event)">
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
                                 {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C.
                                 {{i.numeroContaBancaria}}
@@ -72,6 +74,7 @@
                     <mat-form-field fxFlex="20%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Forma de pagamento:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of formasPagamento" [value]=i.id>
                                 {{i.descricao}}
                             </mat-option>

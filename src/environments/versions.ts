@@ -1,1 +1,1 @@
-export const versions = { revisionDate: "2020-01-26 23:41", revision: "ca6884ce", branch: "master" };
+export const versions = { revisionDate: "2020-02-24 20:54", revision: "49409c42", branch: "estoque-financeiro" };

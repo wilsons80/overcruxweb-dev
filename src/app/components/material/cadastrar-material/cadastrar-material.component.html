@@ -10,6 +10,7 @@
                <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                     <mat-label >Tipo:</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="material.tipo" name="tipo" required>
+                         <mat-option></mat-option>
                          <mat-option *ngFor="let d of tipos" [value]="d.id">
                               {{d.descricao}}
                          </mat-option>

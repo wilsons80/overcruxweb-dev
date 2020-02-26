@@ -67,6 +67,7 @@
   <mat-form-field fxFlex="30%" fxFlexOffset="20px">
     <mat-label>Situação Trabalho</mat-label>
     <mat-select [(ngModel)]="familiar.pessoasFisica.situacaoTrabalho" name="situacaoTrabalho">
+        <mat-option></mat-option>
         <mat-option *ngFor="let m of SITUACAO_TRABALHO" [value]="m">
             {{m}}
         </mat-option>
@@ -77,6 +78,7 @@
   <mat-form-field fxFlex="70%" fxFlexOffset="20px">
     <mat-label>Classificador do motivo de não trabalhar</mat-label>
     <mat-select [(ngModel)]="familiar.pessoasFisica.classificadorMotivoNaoTrab" name="classificadorMotivoNaoTrab">
+        <mat-option></mat-option>
         <mat-option *ngFor="let m of MOTIVO_NAO_TRABALHA" [value]="m.flag">
             {{m.tipo}}
         </mat-option>

@@ -11,6 +11,7 @@
                             name="aluno" 
                             (selectionChange)="mostrarDadosAluno($event.value)"
                             required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let d of alunos" [value]="d.id">
                         {{d.pessoaFisica.nome}}
                     </mat-option>

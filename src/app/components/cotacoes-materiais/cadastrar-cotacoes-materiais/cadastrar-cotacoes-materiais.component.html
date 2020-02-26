@@ -9,6 +9,7 @@
             <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                 <mat-label>Material:</mat-label>
                 <mat-select [(ngModel)]="cotacoesMaterial.material.id" name="material" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let i of materiais" [value]="i.id">
                         {{i.nome}}
                     </mat-option>
@@ -21,6 +22,7 @@
             <mat-form-field fxFlex="30%">
                 <mat-label>Pedido:</mat-label>
                 <mat-select [(ngModel)]="cotacoesMaterial.pedidosMaterial.id" name="pedido" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let i of pedidos" [value]=i.id>
                         {{i.descricaoPedido}}
                     </mat-option>
@@ -33,6 +35,7 @@
             <mat-form-field fxFlex="30%">
                 <mat-label>Empresa:</mat-label>
                 <mat-select [(ngModel)]="cotacoesMaterial.empresa.id" name="empresa" required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let i of empresas" [value]=i.id>
                         {{i.nomeFantasia}}
                     </mat-option>

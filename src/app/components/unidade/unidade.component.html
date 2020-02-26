@@ -9,6 +9,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione uma unidade</mat-label>
                     <mat-select fxFlexOffset="20px" name="unidade" [(ngModel)]="unidade.idUnidade">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
                             {{u.nomeUnidade}}
                         </mat-option>

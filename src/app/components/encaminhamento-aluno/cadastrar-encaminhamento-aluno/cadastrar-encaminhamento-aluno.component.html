@@ -9,6 +9,7 @@
                             name="aluno" 
                             (selectionChange)="mostrarDadosAluno($event.value)"
                             required>
+                    <mat-option></mat-option>                            
                     <mat-option *ngFor="let d of alunos" [value]="d.id">
                         {{d.pessoaFisica.nome}}
                     </mat-option>
@@ -21,6 +22,7 @@
                             (selectionChange)="mostrarDadosEntidadeSocial($event.value)"
                             name="entidadeSocial" (selectionChange)="mostrarDadosAluno($event.value)"
                             required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let d of entidadesSociais" [value]="d.id">
                         {{d.empresa.nomeFantasia}}
                     </mat-option>

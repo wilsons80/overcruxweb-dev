@@ -11,6 +11,7 @@
                     <mat-label>Seleciona um funcionário:</mat-label>
                     <mat-select [(ngModel)]="talento.funcionario.id" name="funcionario"
                         (selectionChange)="mostrarFuncionario($event.value)" required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let o of funcionarios" [value]="o.id">
                             {{o.pessoasFisica.nome}}
                         </mat-option>
@@ -25,6 +26,7 @@
                 <mat-form-field fxFlex="80%" style="margin-left: 20px; margin-right: 20px">
                     <mat-label>Seleciona um questionário:</mat-label>
                     <mat-select [(ngModel)]="talento.questionario.id" name="questionario" required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let o of questionarios" [value]="o.id">
                             {{o.descricao}}
                         </mat-option>

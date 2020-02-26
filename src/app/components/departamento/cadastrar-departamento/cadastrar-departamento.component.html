@@ -36,6 +36,7 @@
                 <mat-select [(ngModel)]="departamento.unidade.idUnidade" name="unidade" 
                 (selectionChange)="mostrarUnidade($event.value)"
                 required>
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
                        {{u.siglaUnidade}} - {{u.nomeUnidade}}
                     </mat-option>
@@ -49,6 +50,7 @@
                 <mat-select name="departamentoSuperior" [(ngModel)]="departamento.departamentoSuperior.idDepartamento" 
                 (selectionChange)="mostrarDepartamento($event.value)"
                 >
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let d of departamentos" [value]="d.idDepartamento">
                         {{d.cdUnidadeDepartamento}} - {{d.nmDepartamento}}
                     </mat-option>

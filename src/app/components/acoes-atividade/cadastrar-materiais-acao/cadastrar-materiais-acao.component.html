@@ -5,6 +5,7 @@
             <mat-form-field fxFlex="60%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Materiais</mat-label>
                 <mat-select [(ngModel)]=materialAcao.material.id name="material" (selectionChange)="carregarDadosMaterial()">
+                    <mat-option></mat-option>
                     <mat-option *ngFor="let i of materiais" [value]=i.id>
                         {{i.nome}}
                     </mat-option>

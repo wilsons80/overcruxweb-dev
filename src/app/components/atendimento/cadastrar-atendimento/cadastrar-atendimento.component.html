@@ -23,6 +23,7 @@
                     <mat-label>Alunos:</mat-label>
                     <mat-select [(ngModel)]="atendimento.aluno.id" name="aluno" required
                         (selectionChange)="mostrarDadosAluno($event.value)">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of alunos" [value]="i.id">
                             {{i.pessoaFisica.nome}}
                         </mat-option>
@@ -45,6 +46,7 @@
                 <mat-form-field style="margin: 0 20px 20px 20px">
                         <mat-label>Diagnósticos:</mat-label>
                         <mat-select [(ngModel)]="atendimento.diagnostico.id" name="diagnostico" required>
+                                <mat-option></mat-option>
                                 <mat-option *ngFor="let i of diagnosticos" [value]="i.id">
                                         {{i.descricao}}
                                 </mat-option>
@@ -68,6 +70,7 @@
                 <mat-form-field style="margin: 0 20px 20px 20px">
                     <mat-label>Soluções</mat-label>
                     <mat-select [(ngModel)]="atendimento.solucoes.id" name="solucoes">
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of solucoes" [value]="i.id">
                                 {{i.descricao}}
                             </mat-option>

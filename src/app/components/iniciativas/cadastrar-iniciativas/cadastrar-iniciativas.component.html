@@ -22,6 +22,7 @@
                                 <mat-form-field style="margin: 0 20px 20px 20px">
                                         <mat-label>Metas:</mat-label>
                                         <mat-select [(ngModel)]="iniciativa.metas.id" name="metas" required>
+                                                <mat-option></mat-option>
                                                 <mat-option *ngFor="let i of metas" [value]="i.id">
                                                         {{i.nome}}
                                                 </mat-option>

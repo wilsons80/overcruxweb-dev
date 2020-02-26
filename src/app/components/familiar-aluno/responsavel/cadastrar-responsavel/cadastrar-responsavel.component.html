@@ -19,6 +19,7 @@
     <mat-form-field fxFlex="34%" fxFlexOffset="20px">
           <mat-label>Aluno tem o mesmo endereço do responsável</mat-label>
           <mat-select [(ngModel)]="responsavel.mesmoEnderResponsavel" name="mesmoEnderResponsavel">
+              <mat-option></mat-option>
               <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
                   {{m.tipo}}
               </mat-option>

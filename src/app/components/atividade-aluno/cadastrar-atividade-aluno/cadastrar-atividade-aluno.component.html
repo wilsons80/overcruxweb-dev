@@ -30,6 +30,7 @@
                         <mat-label>Alunos:</mat-label>
                         <mat-select [(ngModel)]="atividadeAluno.aluno.id" name="aluno"
                             (selectionChange)="mostrarDadosAluno($event.value)" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of alunos" [value]="i.id">
                                 {{i.pessoaFisica.nome}}
                             </mat-option>
@@ -45,6 +46,7 @@
                         <mat-label>Turmas:</mat-label>
                         <mat-select [(ngModel)]="atividadeAluno.atividade.idTurma" name="turma"
                             (selectionChange)="carregarOficinas()" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of turmas" [value]="i.id">
                                 {{i.descricao}}
                             </mat-option>
@@ -60,6 +62,7 @@
                         <mat-label>Oficinas:</mat-label>
                         <mat-select [(ngModel)]="atividadeAluno.atividade.id" name="atividade"
                             (selectionChange)="mostrarDadosAtividade($event.value)" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of atividades" [value]="i.id">
                                 {{i.descricao}}
                             </mat-option>

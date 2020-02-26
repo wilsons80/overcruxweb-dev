@@ -16,6 +16,7 @@
                                         [disabled]=isAtualizar
                                         (selectionChange)=mostrarDadosFuncionario($event.value)
                                         required>
+                                <mat-option></mat-option>
                                 <mat-option *ngFor="let d of listaDeFuncionarios" [value]="d.id">
                                     {{d.pessoasFisica.nome}}
                                 </mat-option>
@@ -31,6 +32,7 @@
                                         (selectionChange)=setCargo($event.value)
                                         [disabled]="!colaboradorTurma.funcionario.id"
                                         required>
+                                <mat-option></mat-option>
                                 <mat-option *ngFor="let d of listaDeCargos" [value]="d.id">
                                     {{d.nome}}
                                 </mat-option>

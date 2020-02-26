@@ -8,6 +8,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um material</mat-label>
                     <mat-select  [(ngModel)]="idMaterial" fxFlexOffset="20px"  name="materiais">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of listaMateriais" [value]="d.id">
                             {{d.nome}}
                         </mat-option>

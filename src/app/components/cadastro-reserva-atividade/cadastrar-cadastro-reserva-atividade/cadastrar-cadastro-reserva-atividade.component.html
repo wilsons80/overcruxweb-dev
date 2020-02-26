@@ -48,6 +48,7 @@
                                     (selectionChange)=mostrarDadosAtividade($event.value)
                                     name="atividade" 
                                     required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let m of atividades" [value]="m.id">
                                 {{m.descricao}}
                             </mat-option>
@@ -62,6 +63,7 @@
                     <mat-form-field fxFlexOffset="20px" fxFlex="100%">
                         <mat-label>Nome</mat-label>
                         <mat-select [(ngModel)]="cadastroReserva.pessoasFisica.id" name="pessoafisica" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let m of pessoas" [value]="m.id">
                                 {{m.nome}}
                             </mat-option>

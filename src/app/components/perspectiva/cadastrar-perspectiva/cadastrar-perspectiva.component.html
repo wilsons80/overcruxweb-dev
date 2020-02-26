@@ -22,6 +22,7 @@
                                                 <mat-label>Unidades:</mat-label>
                                                 <mat-select [(ngModel)]="perspectiva.unidade.idUnidade" name="unidades"
                                                         required>
+                                                        <mat-option></mat-option>
                                                         <mat-option *ngFor="let i of unidades" [value]="i.idUnidade">
                                                                 {{i.siglaUnidade}} - {{i.nomeUnidade}}
                                                         </mat-option>

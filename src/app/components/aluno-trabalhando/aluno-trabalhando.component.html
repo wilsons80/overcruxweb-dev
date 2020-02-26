@@ -8,6 +8,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label>Selecione um aluno</mat-label>
                     <mat-select [(ngModel)]="alunoTrabalhando" name="alunoTrabalhando">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of alunosTrabalhando" [value]="d">
                              {{ d.aluno.pessoaFisica.nome }}
                         </mat-option>

@@ -16,6 +16,7 @@
                     <mat-select [(ngModel)]="matricula.aluno.id" name="aluno"
                                 (selectionChange)="mostrarDadosAluno($event.value)" 
                                 required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of alunos" [value]="i.id">
                             {{i.pessoaFisica.nome}}
                         </mat-option>
@@ -32,6 +33,7 @@
                     <mat-select [(ngModel)]="matricula.turma.id" name="turma" 
                                 (selectionChange)="carregarDadosTurma()"
                                 required>
+                        <mat-option></mat-option>                                
                         <mat-option *ngFor="let i of turmas" [value]="i.id">
                             {{i.descricao}}
                         </mat-option>

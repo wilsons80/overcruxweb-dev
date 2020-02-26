@@ -14,4 +14,7 @@ export class ContasBancariaService extends BaseService<ContasBancaria> {
     super(http, Rotas.CONTAS_BANCARIA);
   }
 
+  getAllComboByInstituicaoLogada() {
+    return this.http.get(`${Rotas.CONTAS_BANCARIA}combo/instituicoes`);
+  }
 }

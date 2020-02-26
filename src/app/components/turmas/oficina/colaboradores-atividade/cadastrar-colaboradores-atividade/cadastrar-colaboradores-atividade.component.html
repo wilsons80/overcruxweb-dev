@@ -9,6 +9,7 @@
                         <mat-select [(ngModel)]="colaboradorAtividade.funcionario.id" name="funcionario"
                                     (selectionChange)=mostrarDadosFuncionario($event.value)
                                     required>
+                            <mat-option></mat-option>                                    
                             <mat-option *ngFor="let d of listaDeFuncionarios" [value]="d.id">
                                 {{d.pessoasFisica.nome}}
                             </mat-option>
@@ -29,6 +30,7 @@
                         <mat-select [(ngModel)]="colaboradorAtividade.cargo.id" name="cargo"
                                     (selectionChange)=setCargo($event.value)
                                     required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let d of listaDeCargos" [value]="d.id">
                                 {{d.nome}}
                             </mat-option>

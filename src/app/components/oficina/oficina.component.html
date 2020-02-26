@@ -8,6 +8,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione uma oficina</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="oficina" name="oficina">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of oficinas" [value]="d">
                             {{d.descricao}}
                         </mat-option>

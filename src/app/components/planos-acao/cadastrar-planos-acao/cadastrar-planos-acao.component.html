@@ -23,6 +23,7 @@
                                 <mat-form-field style="margin: 0 20px 20px 20px">
                                         <mat-label>Iniciativa:</mat-label>
                                         <mat-select [(ngModel)]="planosAcao.iniciativa.id" name="iniciativa" required>
+                                                <mat-option></mat-option>
                                                 <mat-option *ngFor="let i of iniciativas" [value]="i.id">
                                                         {{i.nome}}
                                                 </mat-option>

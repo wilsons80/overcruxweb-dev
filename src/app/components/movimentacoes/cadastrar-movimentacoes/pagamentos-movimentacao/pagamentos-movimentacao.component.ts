@@ -64,7 +64,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   ngOnInit() {
     this.initObjetos();
 
-    this.contasBancariaService.getAllCombo().subscribe((contasBancarias:ContasBancaria[]) => {
+    this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
       this.contasBancarias = contasBancarias;
     })
   }
@@ -75,7 +75,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     }
     
     if (changes["idMovimentacao"] && changes["idMovimentacao"].currentValue) {
-      this.faturaService.getAllPorMovimentacoes(this.idMovimentacao).subscribe((listaFaturas:Fatura[]) => {
+      this.faturaService.getAllPorMovimentacoes(this.idMovimentacao).subscribe((listaFaturas: Fatura[]) => {
         this.listaFaturas = listaFaturas;
       })
     }

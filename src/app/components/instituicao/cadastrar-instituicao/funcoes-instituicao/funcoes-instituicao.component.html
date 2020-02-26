@@ -15,6 +15,7 @@
                     <mat-form-field fxFlex="20%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Função:</mat-label>
                         <mat-select [(ngModel)]="funcoesInstituicao.funcoes.id" name="funcao" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of listaFuncoes" [value]=i.id>
                                 {{i.nome}}
                             </mat-option>
@@ -27,6 +28,7 @@
                     <mat-form-field fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Funcionario:</mat-label>
                         <mat-select [(ngModel)]=funcoesInstituicao.funcionario.id name="funcionario" required>
+                            <mat-option></mat-option>
                             <mat-option *ngFor="let i of funcionarios" [value]=i.id>
                                 {{i.pessoasFisica.nome}}
                             </mat-option>

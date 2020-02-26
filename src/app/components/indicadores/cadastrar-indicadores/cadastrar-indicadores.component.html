@@ -21,6 +21,7 @@
                                         <mat-label>Objetivos:</mat-label>
                                         <mat-select [(ngModel)]="indicadores.objetivo.idObjetivo" name="objetivos"
                                                 required>
+                                                <mat-option></mat-option>
                                                 <mat-option *ngFor="let i of objetivos" [value]="i.idObjetivo">
                                                         {{i.nome}}
                                                 </mat-option>

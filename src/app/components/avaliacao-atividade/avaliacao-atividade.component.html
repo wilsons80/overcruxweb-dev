@@ -7,6 +7,7 @@
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label  fxFlexOffset="20px" >Selecione uma avaliação</mat-label>
                     <mat-select  fxFlexOffset="20px" [(ngModel)]="avaliacao" name="avaliacao">
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of avaliacoes" [value]="d">
                             {{d.nome}}
                         </mat-option>

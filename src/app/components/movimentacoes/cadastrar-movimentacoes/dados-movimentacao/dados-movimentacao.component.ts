@@ -59,7 +59,7 @@ export class DadosMovimentacaoComponent implements OnInit {
       this.departamentos = departamentos;
     })
 
-    this.unidadeService.getAllUnidadeParaCombo().subscribe((unidades:Unidade[]) => {
+    this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades:Unidade[]) => {
       this.unidades = unidades;
     })
 

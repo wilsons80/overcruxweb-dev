@@ -11,6 +11,7 @@
                                 [(ngModel)]="filtroBusca.atividade" 
                                 name="atividade" 
                                 required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let d of atividades" [value]="d">
                             {{d.descricao}}
                         </mat-option>
@@ -24,6 +25,7 @@
                     <mat-select [(ngModel)]="filtroBusca.avaliacao" 
                                 name="avaliacao" 
                                 required>
+                        <mat-option></mat-option>
                         <mat-option *ngFor="let i of avaliacoes" [value]="i">
                             {{i.nome}}
                         </mat-option>
@@ -116,6 +118,7 @@
                                 <mat-select [(ngModel)]="element.notaAvaliacao" 
                                             name="notaAvaliacao_{{i}}"
                                             required>
+                                    <mat-option></mat-option>
                                     <mat-option *ngFor="let i of notasAvaliacao" [value]="i.id">
                                         {{i.nota}}
                                     </mat-option>
