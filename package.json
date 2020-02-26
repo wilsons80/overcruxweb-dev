@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run desenv",
-    "producao": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 --gc_global=true --nolazy_sweeping=true server.js",
+    "producao": "node  --max_semi_space_size=1 --max_old_space_size=460 --max_executable_size=192 --optimize_for_size --gc_interval=100 server.js",
     "desenv": "ng serve --proxy-config proxy.config.js --host 0.0.0.0 --disable-host-check",
     "postinstall": "ng build --aot --prod",
     "build": "ng build",
@@ -13,8 +13,8 @@
     "e2e": "ng e2e"
   },
   "engines": {
-    "node": "13.9.0",
-    "npm": "6.13.7"
+    "node": "12.12.0",
+    "npm": "6.11.3"
   },
   "private": true,
   "dependencies": {
