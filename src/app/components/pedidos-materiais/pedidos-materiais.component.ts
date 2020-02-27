@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { PedidosMateriais } from 'src/app/core/pedidos-materiais';
 import { Acesso } from 'src/app/core/acesso';
 import { PedidosMateriaisService } from 'src/app/services/pedidosMateriais/pedidos-materiais.service';

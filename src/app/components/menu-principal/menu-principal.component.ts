@@ -5,7 +5,7 @@ import { ControleMenuService } from './../../services/controle-menu/controle-men
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MenuPrincipalService } from 'src/app/services/menuPrincipal/menu-principal.service';
-import { MatButton } from '@angular/material';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({

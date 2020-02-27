@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.component';
-import { MatButtonModule} from '@angular/material';
+import { MatButtonModule} from '@angular/material/button';
 import { EscolaridadeComponent } from './escolaridade/escolaridade.component';
 import { DocumentosComponent } from './documentos/documentos.component';
 import { DadosProfissionaisComponent } from './dados-profissionais/dados-profissionais.component';

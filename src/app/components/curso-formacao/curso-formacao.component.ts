@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { CursoFormacao } from 'src/app/core/curso-formacao';
 import { CursoFormacaoService } from 'src/app/services/curso-formacao/curso-formacao.service';

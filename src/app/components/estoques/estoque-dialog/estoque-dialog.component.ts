@@ -1,6 +1,7 @@
 import { Estoques } from './../../../core/estoques';
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Material } from 'src/app/core/material';
 import { Programa } from 'src/app/core/programa';

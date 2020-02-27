@@ -2,7 +2,13 @@ import { AtividadeAlunoService } from './../../services/atividade-aluno/atividad
 import { UniformeEntregeAlunoService } from './../../services/uniforme-entregue-aluno/uniforme-entrege-aluno.service';
 import { UniformeAluno } from 'src/app/core/uniforme-aluno';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatSort } from '@angular/material';
+
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+
 import { AtividadeAluno } from 'src/app/core/atividade-aluno';
 import { Aluno } from 'src/app/core/aluno';
 import { Atividade } from 'src/app/core/atividade';

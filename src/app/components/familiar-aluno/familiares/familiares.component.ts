@@ -1,7 +1,11 @@
 import { Familiares } from 'src/app/core/familiares';
 import { Aluno } from './../../../core/aluno';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { FamiliarAlunoService } from 'src/app/services/familiar-aluno/familiar-aluno.service';
 import { Router } from '@angular/router';
 import { SituacaoParentesco } from 'src/app/core/situacao-parentesco';

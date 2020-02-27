@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorToastComponent } from 'src/app/components/common/http-error-toast/http-error-toast.component';
 
 

@@ -17,7 +17,6 @@ import { MaterialCommonModule } from 'src/app/material-modules/material-common.m
     SharedDirectivesModule,
     MaterialCommonModule,
     SaldosContasBancariaRoutingModule
-  ],
-  entryComponents: [SaldosContasBancariaDialogComponent],
+  ]
 })
 export class SaldosContasBancariaModule { }

@@ -1,7 +1,12 @@
 import { Turmas } from './../../../core/turmas';
 import { Atividade } from 'src/app/core/atividade';
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({

@@ -2,7 +2,10 @@ import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/cor
 import { ColaboradoresPrograma } from 'src/app/core/colaboradores-programa';
 import { Unidade } from 'src/app/core/unidade';
 import { ComposicaoRhPrograma } from 'src/app/core/composicao-rh-programa';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { Acesso } from 'src/app/core/acesso';
 import { Funcionario } from 'src/app/core/funcionario';
 import { Cargo } from 'src/app/core/cargo';

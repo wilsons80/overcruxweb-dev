@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+
+import { MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { AtividadeAluno } from 'src/app/core/atividade-aluno';
 import { Acesso } from 'src/app/core/acesso';
 import { AtividadeAlunoService } from 'src/app/services/atividade-aluno/atividade-aluno.service';

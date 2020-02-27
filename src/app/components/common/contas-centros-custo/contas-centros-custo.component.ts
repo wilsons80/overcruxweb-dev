@@ -1,7 +1,11 @@
 import { ContasBancariaService } from './../../../services/contas-bancaria/contas-bancaria.service';
 import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { ContasCentrosCusto } from 'src/app/core/contas-centros-custo';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { Funcoes } from 'src/app/core/funcoes';
 import { Funcionario } from 'src/app/core/funcionario';
 import { FuncoesInstituicao } from 'src/app/core/funcoes-instituicao';

@@ -1,6 +1,5 @@
 import { AutenticadorService } from './services/autenticador/autenticador.service';
 import { Component, ViewChild, HostListener } from '@angular/core';
-import { MatDrawer } from '@angular/material';
 import { LoadingIndicatorService } from 'src/app/services/loadingIndicator/loading-indicator.service';
 import { LoadingPopupService } from './services/loadingPopup/loading-popup.service';
 import { MenuPrincipalService } from './services/menuPrincipal/menu-principal.service';
@@ -23,7 +22,7 @@ export class AppComponent {
   versions = versions;
   environment = environment;
 
-  @ViewChild('menuPrincipal', { static: false }) menuPrincipal: MatDrawer;
+  @ViewChild('menuPrincipal', { static: false }) menuPrincipal;
   reason = '';
 
   showFiller = false;

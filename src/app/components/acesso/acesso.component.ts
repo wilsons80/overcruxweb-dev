@@ -1,6 +1,10 @@
 import { MenuService } from 'src/app/services/menu/menu.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Modulo } from 'src/app/core/modulo';
 import { PerfilAcessoUsuario } from 'src/app/core/perfil-acesso-usuario';

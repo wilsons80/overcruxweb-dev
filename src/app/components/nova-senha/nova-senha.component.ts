@@ -2,7 +2,11 @@ import { TrocaSenha } from './../../core/troca-senha';
 import { AutenticadorService } from './../../services/autenticador/autenticador.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Routes, Router } from '@angular/router';

@@ -1,7 +1,11 @@
 import { Acesso } from '../../core/acesso';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Unidade } from 'src/app/core/unidade';
-import { MatTableDataSource, MatDialog, MatDialogConfig, MatPaginator } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ControleMenuService } from 'src/app/services/controle-menu/controle-menu.service';

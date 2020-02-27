@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Aluno } from 'src/app/core/aluno';
 import { Observable } from 'rxjs';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';

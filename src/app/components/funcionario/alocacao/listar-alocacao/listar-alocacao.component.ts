@@ -1,7 +1,9 @@
 import { AlocacaoFuncionario } from './../../../../core/alocacao-funcionario';
 import { Funcionario } from 'src/app/core/funcionario';
 import { Component, OnInit, Output, Input, EventEmitter, ViewChild, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';

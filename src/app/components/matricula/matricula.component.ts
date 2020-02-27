@@ -1,6 +1,11 @@
 import { Turmas } from './../../core/turmas';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { AlunosTurma } from 'src/app/core/alunos-turma';
 import { Aluno } from 'src/app/core/aluno';
 import { Atividade } from 'src/app/core/atividade';

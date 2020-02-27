@@ -9,7 +9,11 @@ import { FormularioAcaoOficinaComponent } from './formulario-acao-oficina/formul
 import { MateriaisAcoesComponent } from './materiais-acoes/materiais-acoes.component';
 import { CadastrarMateriaisAcaoComponent } from './cadastrar-materiais-acao/cadastrar-materiais-acao.component';
 import { ListarMateriaisAcaoComponent } from './listar-materiais-acao/listar-materiais-acao.component';
-import { MatExpansionModule, MatTabsModule } from '@angular/material';
+
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
 import { NgxCurrencyModule } from 'ngx-currency';
 
 

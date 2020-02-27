@@ -9,7 +9,7 @@ import { PessoaFisicaModule } from '../common/pessoa-fisica/pessoa-fisica.module
 import { VulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/vulnerabilidade-aluno.component';
 import { CadastrarVulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/cadastrar-vulnerabilidade-aluno/cadastrar-vulnerabilidade-aluno.component';
 import { ListarVulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/listar-vulnerabilidade-aluno/listar-vulnerabilidade-aluno.component';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({

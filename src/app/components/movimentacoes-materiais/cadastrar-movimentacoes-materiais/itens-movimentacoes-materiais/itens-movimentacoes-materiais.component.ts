@@ -5,7 +5,8 @@ import { ItensPedidosMateriaisService } from './../../../../services/itens-pedid
 import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import { ItensMovimentacoesMateriais } from './../../../../core/itens-movimentacoes-materiais';
 import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Acesso } from 'src/app/core/acesso';
 import { Material } from 'src/app/core/material';
 import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';

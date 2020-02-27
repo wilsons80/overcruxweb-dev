@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, SimpleChanges } from '@angular/core';
 import { Atividade } from 'src/app/core/atividade';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';

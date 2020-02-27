@@ -1,7 +1,9 @@
 import { TipoCargo } from 'src/app/core/tipo-cargo';
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { Funcionario } from 'src/app/core/funcionario';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { VulnerabilidadesFamiliar } from 'src/app/core/vulnerabilidades-familiar';
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';

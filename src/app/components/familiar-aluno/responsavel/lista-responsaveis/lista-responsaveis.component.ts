@@ -1,4 +1,7 @@
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Familiares } from 'src/app/core/familiares';
 import { ResponsaveisAluno } from 'src/app/core/responsaveis-aluno';

@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, Input, ViewChild, EventEmitter, SimpleChanges } from '@angular/core';
 import { Funcionario } from 'src/app/core/funcionario';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Dependentes } from 'src/app/core/dependentes';
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';

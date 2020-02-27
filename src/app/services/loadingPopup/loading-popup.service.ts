@@ -1,6 +1,6 @@
 import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
 import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { LoadingPopupComponent } from 'src/app/components/common/loading-popup/loading-popup.component';
 
 const dialogConfig = new MatDialogConfig();

@@ -1,7 +1,11 @@
 import { TiposContratacoesService } from './../../services/tipos-contratacoes/tipos-contratacoes.service';
 import { TiposContratacoes } from './../../core/tipos-contratacoes';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Atividade } from 'src/app/core/atividade';
 import { Acesso } from 'src/app/core/acesso';
 import { AtividadeService } from 'src/app/services/atividade/atividade.service';

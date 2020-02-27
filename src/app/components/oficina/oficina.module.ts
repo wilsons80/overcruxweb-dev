@@ -5,7 +5,10 @@ import { OficinaRoutingModule } from './oficina-routing.module';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { OficinaComponent } from './oficina.component';
 import { CadastrarOficinaComponent } from './cadastrar-oficina/cadastrar-oficina.component';
-import { MatExpansionModule, MatTabsModule } from '@angular/material';
+import { MatExpansionModule} from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
 import { NgxCurrencyModule } from 'ngx-currency';
 import { MateriaisOficinaComponent } from './materiais-oficina/materiais-oficina.component';
 import { CadastrarMateriaisComponent } from './materiais-oficina/cadastrar-materiais/cadastrar-materiais.component';

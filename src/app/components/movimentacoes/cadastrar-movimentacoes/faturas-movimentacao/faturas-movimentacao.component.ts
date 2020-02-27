@@ -1,7 +1,9 @@
 import { ToastService } from './../../../../services/toast/toast.service';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { Fatura } from 'src/app/core/fatura';
 import * as _ from 'lodash';

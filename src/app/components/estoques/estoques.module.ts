@@ -17,7 +17,6 @@ import { NgxCurrencyModule } from 'ngx-currency';
     SharedDirectivesModule,
     MaterialCommonModule,
     EstoquesRoutingModule
-  ],
-  entryComponents: [EstoqueDialogComponent],
+  ]
 })
 export class EstoquesModule { }

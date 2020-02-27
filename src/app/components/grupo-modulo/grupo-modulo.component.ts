@@ -5,7 +5,11 @@ import { GrupoModuloService } from './../../services/grupo-modulo/grupo-modulo.s
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Unidade } from 'src/app/core/unidade';
 import { Acesso } from 'src/app/core/acesso';
-import { MatTableDataSource, MatDialog, MatPaginator, MatDialogConfig } from '@angular/material';
+import { MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-unidade.service';

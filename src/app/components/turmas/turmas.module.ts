@@ -14,7 +14,8 @@ import { CadastrarOficinasComponent } from './oficina/cadastrar-oficinas/cadastr
 import { ListarOficinasComponent } from './oficina/listar-oficinas/listar-oficinas.component';
 import { DadosAtividadeComponent } from './oficina/dados-atividade/dados-atividade.component';
 import { ColaboradoresAtividadeComponent } from './oficina/colaboradores-atividade/colaboradores-atividade.component';
-import { MatExpansionModule, MatTabsModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs'
 import { CadastrarColaboradoresAtividadeComponent } from './oficina/colaboradores-atividade/cadastrar-colaboradores-atividade/cadastrar-colaboradores-atividade.component';
 import { ListarColaboradoresAtividadeComponent } from './oficina/colaboradores-atividade/listar-colaboradores-atividade/listar-colaboradores-atividade.component';
 import { MateriaisOficinaComponent } from './oficina/materiais-oficina/materiais-oficina.component';
@@ -45,7 +46,6 @@ import { OficinaComponent } from './oficina/oficina.component';
                  CopiarDadosOficinaDialogComponent,
                  OficinaComponent
                 ],
-  entryComponents: [CopiarDadosOficinaDialogComponent],
   imports: [
     CommonModule,
     TurmasRoutingModule,

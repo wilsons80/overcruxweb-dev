@@ -14,7 +14,7 @@ import { ProfissionalComponent } from './profissional/profissional.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ResponsavelComponent } from './responsavel/responsavel.component';
 import { CadastrarResponsavelComponent } from './responsavel/cadastrar-responsavel/cadastrar-responsavel.component';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ListaResponsaveisComponent } from './responsavel/lista-responsaveis/lista-responsaveis.component';
 import { VulnerabilidadeComponent } from './vulnerabilidade/vulnerabilidade.component';
 import { CadastrarVulnerabilidadeComponent } from './vulnerabilidade/cadastrar-vulnerabilidade/cadastrar-vulnerabilidade.component';

@@ -8,7 +8,9 @@ import { UsuarioSistemaService } from 'src/app/services/usuario-sistema/usuario-
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-unidade.service';
 import { UsuariosUnidades } from 'src/app/core/usuarios-unidades';
 

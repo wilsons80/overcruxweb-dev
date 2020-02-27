@@ -1,7 +1,10 @@
 import { Acoes } from 'src/app/core/acoes';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges } from '@angular/core';
 import { MateriaisAcao } from 'src/app/core/materiais-acao';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';

@@ -1,7 +1,9 @@
 import { TipoCargo } from 'src/app/core/tipo-cargo';
 import { Component, OnInit, Output, Input, EventEmitter, ViewChild } from '@angular/core';
 import { ColaboradoresTurma } from 'src/app/core/colaboradores-turma';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';

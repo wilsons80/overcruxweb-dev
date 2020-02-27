@@ -4,7 +4,7 @@ import { TempoSessaoModule } from './tempo-sessao.module';
 import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { Observable, timer, Subscription } from 'rxjs';
 import { take, map, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TempoSessaoDialogComponent } from '../common/tempo-sessao-dialog/tempo-sessao-dialog.component';
 
 @Component({

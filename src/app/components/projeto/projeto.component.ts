@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { Projeto } from 'src/app/core/projeto';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';

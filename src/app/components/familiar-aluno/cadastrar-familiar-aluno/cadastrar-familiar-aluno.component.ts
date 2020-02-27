@@ -5,7 +5,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Component, OnInit } from '@angular/core';
 import { Aluno } from 'src/app/core/aluno';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { FormControl } from '@angular/forms';
 import { startWith, map, switchMap } from 'rxjs/operators';

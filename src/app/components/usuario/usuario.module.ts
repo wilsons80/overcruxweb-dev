@@ -8,7 +8,7 @@ import { CadastrarUsuarioComponent } from './cadastrar-usuario/cadastrar-usuario
 import { PessoaFisicaModule } from '../common/pessoa-fisica/pessoa-fisica.module';
 import { DadosUsuarioComponent } from './dados-usuario/dados-usuario.component';
 import { UnidadeComponent } from './unidade/unidade.component';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({

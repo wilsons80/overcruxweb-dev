@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ViewChild, SimpleChanges, OnDestroy } from '@angular/core';
 import { ParceriasCategorias } from 'src/app/core/parcerias-categorias';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { Acesso } from 'src/app/core/acesso';
 import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { ActivatedRoute } from '@angular/router';

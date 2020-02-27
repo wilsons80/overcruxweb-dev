@@ -14,7 +14,7 @@ export class DadosPessoaFisicaComponent implements OnInit {
   @Input() pessoaFisica: PessoaFisica;
 
   constructor(private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
-    private fileUtils: FileUtils) { }
+              private fileUtils: FileUtils) { }
 
   ngOnInit() { }
 

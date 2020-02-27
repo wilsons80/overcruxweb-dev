@@ -1,6 +1,9 @@
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { Component, Input, OnInit, ViewChild, SimpleChanges } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 import { ActivatedRoute } from '@angular/router';
 import { Unidade } from 'src/app/core/unidade';
 import { ToastService } from 'src/app/services/toast/toast.service';

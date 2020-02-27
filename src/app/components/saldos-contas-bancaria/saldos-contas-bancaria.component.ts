@@ -4,7 +4,11 @@ import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { ContasBancariaService } from './../../services/contas-bancaria/contas-bancaria.service';
 import { SaldosContasBancaria } from './../../core/saldos-contas-bancaria';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Router, ActivatedRoute } from '@angular/router';

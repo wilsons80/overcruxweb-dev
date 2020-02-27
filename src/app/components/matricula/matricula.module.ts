@@ -7,7 +7,7 @@ import { MaterialCommonModule } from 'src/app/material-modules/material-common.m
 import { MatriculaComponent } from './matricula.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DadosOficinaComponent } from './dados-oficina/dados-oficina.component';
 
 

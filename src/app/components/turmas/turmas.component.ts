@@ -1,6 +1,10 @@
 import { Turmas } from './../../core/turmas';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig} from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TurmasService } from 'src/app/services/turmas/turmas.service';

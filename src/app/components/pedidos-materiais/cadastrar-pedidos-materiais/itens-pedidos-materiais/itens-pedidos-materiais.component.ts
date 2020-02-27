@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { ItensPedidosMateriais } from 'src/app/core/itens-pedidos-materiais';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
 import { Acesso } from 'src/app/core/acesso';
 import { Material } from 'src/app/core/material';
 import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';

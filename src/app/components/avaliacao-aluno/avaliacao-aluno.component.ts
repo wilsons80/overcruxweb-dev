@@ -2,7 +2,13 @@ import { NotaAvaliacao } from './../../core/nota-avaliacao';
 import { AvaliacaoAlunoService } from './../../services/avaliacao-aluno/avaliacao-aluno.service';
 import { AvaliacaoAluno } from './../../core/avaliacao-aluno';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+
+import { MatDialog} from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';

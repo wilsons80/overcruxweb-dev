@@ -2,7 +2,7 @@ import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AutenticadorService } from './../../../services/autenticador/autenticador.service';
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { timer, Subscription } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { LogoutService } from 'src/app/services/logout/logout.service';

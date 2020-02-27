@@ -1,1 +1,1 @@
-web: npm rum prod
+web: npm rum producao

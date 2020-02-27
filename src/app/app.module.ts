@@ -1,3 +1,4 @@
+import { AuthGuard } from './guards/auth.guard';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -5,9 +6,26 @@ import localePt from '@angular/common/locales/pt';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import { DateAdapter, MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorIntl, MatSidenavModule, MatSnackBarModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+
+
+import { DateAdapter } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
+
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -96,6 +114,8 @@ import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl/portugue
 import { EstoquesModule } from './components/estoques/estoques.module';
 import { SaldosContasBancariaModule } from './components/saldos-contas-bancaria/saldos-contas-bancaria.module';
 import { PedidosMateriaisModule } from './components/pedidos-materiais/pedidos-materiais.module';
+import { UnidadeResolver } from './guards/unidades.resolve';
+import { AcessoModuloResolver } from './guards/acesso-modulo.resolve';
 
 export const MY_FORMATS = {
   parse: {
@@ -111,11 +131,6 @@ export const MY_FORMATS = {
 
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
-  entryComponents: [
-    HttpErrorToastComponent,
-    ConfirmDialogComponent,
-    TempoSessaoDialogComponent
-  ],
   declarations: [
     AppComponent,
     HttpErrorToastComponent,
@@ -223,6 +238,7 @@ registerLocaleData(localePt, 'pt-BR');
     PedidosMateriaisModule
   ],
   providers: [
+    AuthGuard, UnidadeResolver, AcessoModuloResolver,
     { provide: MatPaginatorIntl, useValue: getPortuguesePaginatorIntl() },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
