@@ -68,8 +68,8 @@ export class UnidadesMultiplasComponent implements OnInit {
 
     if(changes["unidades"] && !_.isEmpty (changes["unidades"].currentValue)){
       this.unidadeSelecionadaService.unidadesSelecionadas.emit(this.unidades);
+      this.carregarLista();
     }
-    this.carregarLista();
     
   }
 
