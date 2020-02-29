@@ -1,15 +1,18 @@
 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
 <div fxLayout="row" fxFlexFill>
-        <mat-form-field style="margin-bottom: 10px" fxFlex="46%" fxFlexOffset="20px">
+        <mat-form-field style="margin-bottom: 10px" fxFlex="90%" fxFlexOffset="20px">
                 <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" [(ngModel)]="projeto.nome"
                         required>
                 <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
         </mat-form-field>
-
-        <mat-form-field fxFlex="46%" fxFlexOffset="20px">
-                <input #descricao matInput maxlength="200" name="descricao" placeholder="Descrição:"
-                        [(ngModel)]="projeto.descricao">
-                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+</div>
+<div fxLayout="row" fxFlexFill>
+        <mat-form-field style="margin-left: 20px" fxFlex="90%" appearance="outline">
+                <mat-label>Descrição:</mat-label>
+                <textarea matInput #message name="descricao" [(ngModel)]="projeto.descricao" cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="500">
+                     </textarea>
+                <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
         </mat-form-field>
 </div>
 
@@ -67,21 +70,23 @@
         <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
                 <mat-label>Público Alvo:</mat-label>
                 <textarea #publicoAlvo matInput name="publicoAlvo" [(ngModel)]="projeto.publicoAlvo" cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
-                    <mat-hint align="end">{{publicoAlvo.value.length}} / 4000</mat-hint>
-            </mat-form-field>
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
+                <mat-hint align="end">{{publicoAlvo.value.length}} / 4000</mat-hint>
+        </mat-form-field>
 
-            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
                 <mat-label>Justificativa:</mat-label>
-                <textarea #justificativa matInput name="justificativa" [(ngModel)]="projeto.justificativa" cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="4000"></textarea>
-                    <mat-hint align="end">{{justificativa.value.length}} / 4000</mat-hint>
-            </mat-form-field>
+                <textarea #justificativa matInput name="justificativa" [(ngModel)]="projeto.justificativa"
+                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
+                        maxlength="4000"></textarea>
+                <mat-hint align="end">{{justificativa.value.length}} / 4000</mat-hint>
+        </mat-form-field>
 
-            <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
                 <mat-label>Objetivo geral:</mat-label>
-                <textarea #objetivoGeral matInput name="objetivoGeral" [(ngModel)]="projeto.objetivoGeral" cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8" maxlength="2000"></textarea>
-                    <mat-hint align="end">{{objetivoGeral.value.length}} / 2000</mat-hint>
-            </mat-form-field>
+                <textarea #objetivoGeral matInput name="objetivoGeral" [(ngModel)]="projeto.objetivoGeral"
+                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
+                        maxlength="2000"></textarea>
+                <mat-hint align="end">{{objetivoGeral.value.length}} / 2000</mat-hint>
+        </mat-form-field>
 </div>
