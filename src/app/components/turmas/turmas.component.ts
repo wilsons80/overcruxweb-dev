@@ -30,7 +30,7 @@ export class TurmasComponent implements OnInit {
 
   mostrarTabela = false;
 
-  displayedColumns: string[] = ['descricao', 'dataPrevisaoInicio', 'dataPrevisaoTermino', 'cargaHoraria', 'programa', 'projeto', 'acoes'];
+  displayedColumns: string[] = ['descricao', 'dataPrevisaoInicio', 'programa', 'projeto', 'acoes'];
   dataSource: MatTableDataSource<Turmas> = new MatTableDataSource();
 
   constructor(

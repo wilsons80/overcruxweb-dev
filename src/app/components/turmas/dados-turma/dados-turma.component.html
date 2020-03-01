@@ -121,8 +121,7 @@
 
     <mat-form-field fxFlex="20%" fxFlexOffset="20px">
         <input matInput name="dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio"
-            placeholder="Data de Previsão de Início" [(ngModel)]="turma.dataPrevisaoInicio"
-            required>
+            placeholder="Data de Previsão de Início" [(ngModel)]="turma.dataPrevisaoInicio">
         <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
         <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
     </mat-form-field>
