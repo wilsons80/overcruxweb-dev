@@ -14,7 +14,7 @@ import { versions } from 'src/environments/versions';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'OverCrux';
+  title = 'S3Manager';
 
   data = new Date();
   teste = false;

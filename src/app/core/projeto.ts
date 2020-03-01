@@ -28,6 +28,6 @@ export class Projeto {
 	composicaoRhProjeto:ComposicaoRhProjeto[];
 	materiaisProjeto:MateriaisProjeto[]
 	contasCentrosCusto:ContasCentrosCusto[];
-
+	idCoordenador: number;
 }
 

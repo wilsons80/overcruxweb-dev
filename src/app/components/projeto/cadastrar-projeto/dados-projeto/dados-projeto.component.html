@@ -16,6 +16,23 @@
         </mat-form-field>
 </div>
 
+
+<!-- Coordenador -->
+<mat-toolbar class="titulopartes">Responsável pelo Projeto</mat-toolbar>
+<div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <mat-form-field style="margin: 0 40px 0 20px" fxFlex="85%">
+    <mat-label>Funcionário:</mat-label>
+    <mat-select [(ngModel)]="projeto.idCoordenador" name="funcionarios">
+      <mat-option></mat-option>
+      <mat-option *ngFor="let f of funcionarios" [value]="f.id">
+        {{f.pessoasFisica.nome}}
+      </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
+  </mat-form-field>
+</div>
+
+
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
         <!--DATAS -->

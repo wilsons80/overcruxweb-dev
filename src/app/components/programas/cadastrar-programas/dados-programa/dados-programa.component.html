@@ -22,8 +22,7 @@
 <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
   <mat-form-field style="margin: 0 40px 0 20px" fxFlex="85%">
     <mat-label>Funcionário:</mat-label>
-    <mat-select [(ngModel)]="programa.idCoordenador" name="funcionarios"
-      (selectionChange)=mostrarDadosFuncionario($event.value);>
+    <mat-select [(ngModel)]="programa.idCoordenador" name="funcionarios">
       <mat-option></mat-option>
       <mat-option *ngFor="let f of funcionarios" [value]="f.id">
         {{f.pessoasFisica.nome}}

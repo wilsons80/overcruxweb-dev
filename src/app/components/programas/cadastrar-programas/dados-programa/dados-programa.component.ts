@@ -20,8 +20,6 @@ export class DadosProgramaComponent implements OnInit {
   objetivos: Objetivo[];
   funcionarios: Funcionario[];
 
-  funcionario: Funcionario = new Funcionario();
-
   constructor(
     private objetivoService: ObjetivoService,
     private funcionarioService: FuncionarioService,
@@ -46,9 +44,5 @@ export class DadosProgramaComponent implements OnInit {
     this.programa.objetivo = new Objetivo();
   }
 
-
-  mostrarDadosFuncionario(idFuncionario: number) {
-    this.funcionario = _.cloneDeep(_.find(this.funcionarios, (f: Funcionario) => f.id === idFuncionario));
-  }
 
 }
