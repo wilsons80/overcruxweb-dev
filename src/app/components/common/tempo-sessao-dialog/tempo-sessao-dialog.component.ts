@@ -14,21 +14,20 @@ import { TempoSessaoService } from 'src/app/services/tempo-sessao/tempo-sessao.s
   styleUrls: ['./tempo-sessao-dialog.component.css']
 })
 export class TempoSessaoDialogComponent implements OnInit, OnDestroy {
- 
 
   sessaoExpirada = false;
-  tempo:number
+  tempo: number;
   tempoDown: number;
 
-  sub:Subscription;
+  sub: Subscription;
 
-  constructor( 
-    private router:Router,
-    private autenticadorService:AutenticadorService,
-    public tempoSessaoService:TempoSessaoService,
+  constructor(
+    private router: Router,
+    private autenticadorService: AutenticadorService,
+    public tempoSessaoService: TempoSessaoService,
     private dialogRef: MatDialogRef<TempoSessaoDialogComponent>,
-    private logoutService:LogoutService,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    private logoutService: LogoutService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {
@@ -36,12 +35,12 @@ export class TempoSessaoDialogComponent implements OnInit, OnDestroy {
     this.tempoSessaoService.tempoAcabou.subscribe(() => {
       this.sessaoExpirada = true;
       this.logoutService.logout();
-    })
+    });
 
   }
 
-  revalidarSessao(){
-    this.autenticadorService.refreshToken();
+  revalidarSessao() {
+    this.autenticadorService.revalidarSessao();
     this.dialogRef.close();
   }
 

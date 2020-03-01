@@ -5,8 +5,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class TempoSessaoService {
 
-  tempoSessao:any;
+  tempoSessao: any;
   tempoAcabou = new EventEmitter();
+
   constructor() { }
 
 }

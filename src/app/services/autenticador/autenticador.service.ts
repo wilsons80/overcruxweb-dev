@@ -18,6 +18,7 @@ import { FileUtils } from './../../utils/file-utils';
 import { ArquivoUnidadeService } from './../arquivo/arquivo.service';
 import { ToolbarPrincipalService } from './../toolbarPrincipal/toolbar-principal.service';
 import { AcessoUnidade } from 'src/app/core/acesso-unidade';
+import { TempoSessaoService } from '../tempo-sessao/tempo-sessao.service';
 
 
 
@@ -44,6 +45,7 @@ export class AutenticadorService {
     private controleMenuService: ControleMenuService,
     private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
     private menuPrincipalService: MenuPrincipalService,
+    private tempoSessaoService: TempoSessaoService
   ) {
 
   }
@@ -76,47 +78,58 @@ export class AutenticadorService {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('logo');
     localStorage.removeItem('fotoPerfil');
-    this.usuarioEstaLogado = false
+    this.usuarioEstaLogado = false;
+  }
+
+  revalidarSessao() {
+    this.parametros.getTimeExpiredToken().subscribe((valor: number) => {
+      return this.refreshTempoSessao(valor);
+    });
+  }
+
+  private refreshTempoSessao(valor) {
+    return this.http.get(tokenRootPath + `refresh-token`)
+    .pipe(
+
+      /** Dados do Usuario Logado */ 
+      switchMap((usuarioLogado: UsuarioLogado) => {
+        this.usuarioLogado = usuarioLogado;
+        this.setSession(usuarioLogado);
+        this.toolbarPrincipalService.setarPropriedadesUsuarioLogado(usuarioLogado);
+        this.usuarioEstaLogado = true;
+        return this.getLogoUnidade(usuarioLogado.unidadeLogada);
+      }),
+
+      /** Logo da Unidade */ 
+      switchMap((arquivoRetorno) => {
+        this.setArquivo(arquivoRetorno);
+        return this.getMenu();
+      }),
+
+      /** Menu */
+      switchMap((menu: Menu[]) => {
+        this.controleMenuService.acessos = menu;
+        return this.getFotoUsuario(this.usuarioLogado.unidadeLogada);
+      }),
+
+      shareReplay(),
+
+      /** Foto Perfil */
+    ).subscribe((arquivoPFRetorno) => {
+      this.setFotoPerfil(arquivoPFRetorno);
+      this.tempoSessao$.emit({valor});
+      this.tempoSessaoService.tempoSessao = valor * 60;
+    });
   }
 
   refreshToken() {
     this.parametros.getTimeExpiredToken().subscribe((valor: number) => {
       if (moment().isBetween(this.getExpiration().subtract(valor, 'minutes'), this.getExpiration())) {
-        return this.http.get(tokenRootPath + `refresh-token`)
-          .pipe(
-
-            /** Dados do Usuario Logado */ 
-            switchMap((usuarioLogado: UsuarioLogado) => {
-              this.usuarioLogado = usuarioLogado;
-              this.setSession(usuarioLogado);
-              this.toolbarPrincipalService.setarPropriedadesUsuarioLogado(usuarioLogado);
-              this.usuarioEstaLogado = true;
-              return this.getLogoUnidade(usuarioLogado.unidadeLogada);
-            }),
-
-            /** Logo da Unidade */ 
-            switchMap((arquivoRetorno) => {
-              this.setArquivo(arquivoRetorno);
-              return this.getMenu();
-            }),
-
-            /** Menu */
-            switchMap((menu: Menu[]) => {
-              this.controleMenuService.acessos = menu;
-              return this.getFotoUsuario(this.usuarioLogado.unidadeLogada);
-            }),
-
-            shareReplay(),
-
-            /** Foto Perfil */
-          ).subscribe((arquivoPFRetorno) => {
-            this.setFotoPerfil(arquivoPFRetorno);
-            this.tempoSessao$.emit({valor});
-          });
+        return this.refreshTempoSessao(valor);
       }
     });
-
   }
+
   setSessionTimeout(valor: number) {
     this.tempoSessao$.emit({valor})
   }
@@ -140,12 +153,12 @@ export class AutenticadorService {
     return this.http.post(autenticadorRootPath + `trocar-senha`, trocaSenha);
   }
 
-  getLogoUnidade(unidadeLogada:AcessoUnidade){
+  getLogoUnidade(unidadeLogada: AcessoUnidade){
     if (unidadeLogada && !localStorage.getItem("logo")) {
       return this.arquivoService.get(unidadeLogada.id)
     } else {
       this.toolbarPrincipalService.logo = localStorage.getItem("logo");
-      return new Observable(obs => obs.next())
+      return new Observable(obs => obs.next());
     }
 
   }

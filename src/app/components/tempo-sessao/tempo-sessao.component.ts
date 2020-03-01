@@ -13,34 +13,31 @@ import { TempoSessaoDialogComponent } from '../common/tempo-sessao-dialog/tempo-
   styleUrls: ['./tempo-sessao.component.css']
 })
 export class TempoSessaoComponent implements OnInit, OnDestroy {
-  
+
   countDown;
   tick = 1000;
-  sub:Subscription;
-  
-  constructor(
-    private tempoSessaoService:TempoSessaoService,
-    private autenticadorService:AutenticadorService,
-    public dialog: MatDialog
-    ){
-      
-    }
-    
+  sub: Subscription;
+
+  constructor(private tempoSessaoService: TempoSessaoService,
+              private autenticadorService: AutenticadorService,
+              public dialog: MatDialog) {
+  }
+
   ngOnInit() {
-    this.sub= this.autenticadorService.tempoSessao$.pipe(
+    this.sub = this.autenticadorService.tempoSessao$.pipe(
       switchMap((info: any) => {
-        this.tempoSessaoService.tempoSessao = info.valor*60
-        return timer(0,1000).pipe(
+        this.tempoSessaoService.tempoSessao = info.valor * 60;
+        return timer(0, 1000).pipe(
           take(this.tempoSessaoService.tempoSessao),
-          map(() => --this.tempoSessaoService.tempoSessao))
+          map(() => --this.tempoSessaoService.tempoSessao));
       })
     ).subscribe((info) => {
-      this.countDown = info;
-        if(info === 30){
+        this.countDown = info;
+        if (info === 30) {
           this.openDialog();
         }
 
-        if(info === 0){
+        if (info === 0) {
           this.tempoSessaoService.tempoAcabou.emit();
         }
       });
@@ -56,7 +53,7 @@ export class TempoSessaoComponent implements OnInit, OnDestroy {
       console.log('The dialog was closed');
     });
   }
-  
+
   ngOnDestroy(): void {
    this.sub.unsubscribe();
   }
