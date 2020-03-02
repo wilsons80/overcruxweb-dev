@@ -53,12 +53,12 @@ export class UnidadesMultiplasComponent implements OnInit {
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
-    
+
     this.usuarioUnidadeService.getUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: any[]) => {
       this.unidadesComboCadastro = unidades;
     });
 
-    if(!_.isEmpty(this.unidades)){
+    if (!_.isEmpty(this.unidades)) {
       this.unidadeSelecionadaService.unidadesSelecionadas.emit(this.unidades);
     }
 
@@ -66,20 +66,23 @@ export class UnidadesMultiplasComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if(changes["unidades"] && _.isEmpty (changes["unidades"].currentValue)){
+    if (changes['unidades'] && _.isEmpty (changes['unidades'].currentValue)) {
       this.carregaUnidade();
     }
 
-    if(changes["unidades"] && !_.isEmpty (changes["unidades"].currentValue)){
+    if (changes['unidades'] && !_.isEmpty (changes['unidades'].currentValue)) {
       this.unidadeSelecionadaService.unidadesSelecionadas.emit(this.unidades);
       this.carregarLista();
     }
-    
+
   }
 
   private carregaUnidade() {
     this.unidadeService.getUnidadeLogada().subscribe((unidade: Unidade) => {
-      this.unidades.push(unidade);
+      const jaExiste = this.unidades.find(u => u.idUnidade === unidade.idUnidade);
+      if (!jaExiste) {
+        this.unidades.push(unidade);
+      }
       this.unidadeSelecionadaService.unidadesSelecionadas.emit(this.unidades);
       this.carregarLista();
     });
