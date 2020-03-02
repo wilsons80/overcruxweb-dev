@@ -11,6 +11,7 @@ import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
 import {UnidadeSelecionadaService} from '../../../services/unidadeSelecionada/unidade-selecionada.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'unidades-multiplas',
@@ -31,7 +32,8 @@ export class UnidadesMultiplasComponent implements OnInit {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   isAtualizar = false;
 
@@ -43,12 +45,14 @@ export class UnidadesMultiplasComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
     private usuarioUnidadeService: UsuarioUnidadeService,
-    private unidadeService:UnidadeService,
-    private unidadeSelecionadaService:UnidadeSelecionadaService
-  ) { }
+    private unidadeService: UnidadeService,
+    private unidadeSelecionadaService: UnidadeSelecionadaService
+  ) {
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     
     this.usuarioUnidadeService.getUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: any[]) => {
       this.unidadesComboCadastro = unidades;
