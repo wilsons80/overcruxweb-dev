@@ -1,17 +1,33 @@
 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
 <div fxLayout="row" fxFlexFill>
-        <mat-form-field style="margin-bottom: 10px" fxFlex="90%" fxFlexOffset="20px">
-                <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" [(ngModel)]="projeto.nome"
-                        required>
-                <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
+        <mat-form-field style="margin-bottom: 10px" fxFlex="90%" 
+                        fxFlexOffset="20px">
+        <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" 
+               [(ngModel)]="projeto.nome"
+               required>
+        <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
         </mat-form-field>
 </div>
+
+<mat-form-field fxFlex="90%" fxFlexOffset="20px">
+        <mat-label fxFlexOffset="20px">Programa</mat-label>
+        <mat-select fxFlexOffset="20px"[(ngModel)]="projeto.programa.id" 
+                    (selectionChange)="carregarDadosPrograma()"
+                    name="programa">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let d of programas" [value]="d.id">
+                        {{d.nome}}
+                </mat-option>
+        </mat-select>
+</mat-form-field>
+
 <div fxLayout="row" fxFlexFill>
         <mat-form-field style="margin-left: 20px" fxFlex="90%" appearance="outline">
                 <mat-label>Descrição:</mat-label>
-                <textarea matInput #message name="descricao" [(ngModel)]="projeto.descricao" cdkTextareaAutosize
+                <textarea matInput #message name="descricao" 
+                          [(ngModel)]="projeto.descricao" cdkTextareaAutosize
                         #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="500">
-                     </textarea>
+                        </textarea>
                 <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
         </mat-form-field>
 </div>
