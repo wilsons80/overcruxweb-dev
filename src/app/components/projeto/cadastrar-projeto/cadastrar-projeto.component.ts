@@ -59,7 +59,10 @@ export class CadastrarProjetoComponent implements OnInit {
     if (idProjeto) {
       this.isAtualizar = true;
       this.projetoService.getById(idProjeto).subscribe((projeto: Projeto) => {
-        this.projeto = projeto
+        this.projeto = projeto;
+        if (!this.projeto.programa) {
+          this.projeto.programa = new Programa();
+        }
       });
     }
 
