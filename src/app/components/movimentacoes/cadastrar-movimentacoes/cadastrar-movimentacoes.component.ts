@@ -43,7 +43,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
 
-        if(!this.movimentacoes.saldoContaBancaria) {
+        if(!!this.movimentacoes.saldoContaBancaria) {
           this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
           this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
           this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
