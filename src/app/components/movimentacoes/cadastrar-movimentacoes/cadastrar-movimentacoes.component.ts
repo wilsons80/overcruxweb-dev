@@ -37,13 +37,17 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
    
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
-      
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
+
+        if(!this.movimentacoes.saldoContaBancaria) {
+          this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
+          this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
+          this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
+        }
       });
     }
 
