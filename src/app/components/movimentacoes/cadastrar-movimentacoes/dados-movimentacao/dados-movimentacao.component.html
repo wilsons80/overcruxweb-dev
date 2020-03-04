@@ -116,7 +116,7 @@
 
             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Departamento</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento" required>
+                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
                         {{i.nmDepartamento}}
@@ -129,11 +129,121 @@
 
 
         <div fxLayout="row" fxFlexFill>
-        <mat-form-field fxFlex="46%" fxFlexOffset="20px">
-            <input [(ngModel)]=movimentacoes.qtdParcelas type="number" min=0 matInput maxlength="3" 
-                name="qtdParcelas" placeholder="Quantidade de parcelas da movimentação:" />
-        </mat-form-field>
-    </div>
+            <mat-form-field fxFlex="46%" fxFlexOffset="20px">
+                <input [(ngModel)]=movimentacoes.qtdParcelas 
+                       type="number" 
+                       min=0 matInput maxlength="3" 
+                       name="qtdParcelas" 
+                       placeholder="Quantidade de parcelas da movimentação:" />
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">saldo Conta Bancária</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="25%">
+                <input [(ngModel)]=movimentacoes.saldoContaBancaria.valorSaldo 
+                       currencyMask 
+                       name="valorSaldo" 
+                       placeholder="Valor do saldo" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                       disabled/>
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <input matInput 
+                       [(ngModel)]=movimentacoes.saldoContaBancaria.dataSaldo 
+                       name="dataSaldo" 
+                       [matDatepicker]="dataSaldo" 
+                       placeholder="Data do saldo"
+                       disabled>
+                <mat-datepicker-toggle matSuffix [for]="dataSaldo">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataSaldo></mat-datepicker>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex="25%">
+                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.banco.nome 
+                       matInput
+                       name="nomeBanco" 
+                       placeholder="Banco" 
+                       disabled/>
+            </mat-form-field>            
+
+            <mat-form-field fxFlex="15%">
+                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.numeroAgencia 
+                       matInput
+                       name="numeroAgencia" 
+                       placeholder="Agência" 
+                       disabled/>
+            </mat-form-field>            
+            
+            <mat-form-field fxFlex="15%">
+                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.numeroContaBancaria 
+                       matInput
+                       name="numeroContaBancaria" 
+                       placeholder="Conta" 
+                       disabled/>
+            </mat-form-field>              
+        </div>
+
+
+        <mat-toolbar class="titulopartes">Valores</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.valorISS 
+                       currencyMask 
+                       name="valorISS" 
+                       placeholder="Valor do ISS" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.valorICMS 
+                       currencyMask 
+                       name="valorICMS" 
+                       placeholder="Valor do ICMS" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.valorIPI 
+                       currencyMask 
+                       name="valorIPI" 
+                       placeholder="Valor do IPI" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.valorPisConfinsCsll 
+                       currencyMask 
+                       name="valorPisConfinsCsll" 
+                       placeholder="Valor do PIS/COFINS/CSLL" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+
+
+            <mat-form-field fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.valorInss 
+                       currencyMask 
+                       name="valorInss" 
+                       placeholder="Valor do INSS" 
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>            
+        </div>
 
 
 </div>
