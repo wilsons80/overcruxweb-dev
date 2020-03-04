@@ -16,4 +16,10 @@ export class ItensMovimentacoes{
 	valorTotalItem:number;
 	valorUnitarioItem:number;
 	pedidosMateriais:any;
+
+	valorISS:number;
+	valorICMS:number;
+	valorIPI:number;
+	valorPisConfinsCsll:number;
+	valorInss:number;
 }
