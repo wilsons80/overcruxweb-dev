@@ -25,7 +25,7 @@ export class MovimentacoesComponent implements OnInit {
   movimentacoes: Movimentacoes = new Movimentacoes();
   msg: string;
 
-  displayedColumns: string[] = ['id','descricao', 'dataMovimentacao', 'stTipoMovimentacao', 'valorMovimentacao', 'qtdParcelas', 'acoes'];
+  displayedColumns: string[] = ['descricao', 'dataMovimentacao', 'valorMovimentacao', 'qtdParcelas', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
    perfilAcesso: Acesso;
