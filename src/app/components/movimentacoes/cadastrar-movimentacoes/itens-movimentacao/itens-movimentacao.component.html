@@ -15,7 +15,7 @@
                     <!-- MATERIAL -->
                     <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                         <mat-label>Material:</mat-label>
-                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material" required>
+                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material">
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of materiais" [value]=i.id>
                                 {{i.nome}}
