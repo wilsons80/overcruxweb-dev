@@ -17,4 +17,7 @@ export class PagamentosFatura{
 	// DÉBITO EM CARTÃO; D = EM DINHEIRO
 	formaPagamento:string;
 
+	valorMulta: number;
+	valorJuros: number;
+
 }

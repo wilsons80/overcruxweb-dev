@@ -62,16 +62,17 @@
                     </mat-form-field>
 
                     <!-- DATA -->
-                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-                        <input [(ngModel)]=pagamentosFatura.dataPagamento  matInput name="dataPagamento" [matDatepicker]="dataPagamento"
-                            placeholder="Data do pagamento" required>
+                    <mat-form-field fxFlex="25%">
+                        <input [(ngModel)]=pagamentosFatura.dataPagamento  
+                               matInput name="dataPagamento" [matDatepicker]="dataPagamento"
+                               placeholder="Data do pagamento" required>
                         <mat-datepicker-toggle matSuffix [for]="dataPagamento">
                         </mat-datepicker-toggle>
                         <mat-datepicker #dataPagamento></mat-datepicker>
                     </mat-form-field>
 
                     <!-- FORMA DE PAGAMENTO -->
-                    <mat-form-field fxFlex="20%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="25%" fxLayoutGap="20px" >
                         <mat-label>Forma de pagamento:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
                             <mat-option></mat-option>
@@ -83,11 +84,30 @@
 
                     <!-- NUMERO CHEQUE -->
                     <mat-form-field fxFlex="20%">
-                        <input [(ngModel)]=pagamentosFatura.numeroDocPagamento matInput min="0" name="nrDocumento" placeholder="Numéro do documento:"
-                            [disabled]="pagamentosFatura.formaPagamento !== 'C'" />
+                        <input [(ngModel)]=pagamentosFatura.numeroDocPagamento 
+                               matInput min="0" name="nrDocumento" placeholder="Numéro do documento:"
+                               [disabled]="pagamentosFatura.formaPagamento !== 'C'" />
                     </mat-form-field>
+
                 </div>
 
+                <div fxLayout="row" fxLayoutGap="50px">
+                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                        <input [(ngModel)]="pagamentosFatura.valorMulta" 
+                               currencyMask name="valorMulta"
+                               placeholder="Valor da multa:" matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <span matPrefix>R$&nbsp;</span>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="20%">
+                        <input [(ngModel)]="pagamentosFatura.valorJuros" 
+                               currencyMask name="valorJuros"
+                               placeholder="Valor da juros:" matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <span matPrefix>R$&nbsp;</span>
+                    </mat-form-field>
+                </div>
             </form>
 
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"

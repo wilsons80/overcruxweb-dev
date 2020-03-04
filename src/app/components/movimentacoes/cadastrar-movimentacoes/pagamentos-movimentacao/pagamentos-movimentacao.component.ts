@@ -6,17 +6,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Acesso } from 'src/app/core/acesso';
-import { PagamentoMovimentacao } from 'src/app/core/pagamento-movimentacao';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
-import { Material } from 'src/app/core/material';
-import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
-import { PedidosMateriais } from 'src/app/core/pedidos-materiais';
-import { MaterialService } from 'src/app/services/material/material.service';
-import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
-import { PedidosMateriaisService } from 'src/app/services/pedidosMateriais/pedidos-materiais.service';
 import * as _ from 'lodash';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
-import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
 import { Fatura } from 'src/app/core/fatura';
 import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 
