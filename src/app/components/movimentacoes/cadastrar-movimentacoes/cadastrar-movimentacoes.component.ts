@@ -1,3 +1,4 @@
+import { AutenticadorService } from './../../../services/autenticador/autenticador.service';
 import { MovimentacoesService } from './../../../services/movimentacoes/movimentacoes.service';
 import { Component, OnInit } from '@angular/core';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
@@ -31,7 +32,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private movimentacoesService: MovimentacoesService
+    private movimentacoesService: MovimentacoesService,
+    private autenticadorService: AutenticadorService
   ) { }
 
   ngOnInit() {
@@ -76,6 +78,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   atualizar() {
     this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
       this.toastService.showSucesso("Registro atualizado com sucesso.");
+      this.autenticadorService.revalidarSessao();
     });
 
   }
