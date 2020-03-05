@@ -79,12 +79,6 @@ export class SaldosContasBancariaComponent implements OnInit {
 
     this.contasBancariaService.getAll().subscribe((contas: ContasBancaria[]) => {
       this.contasBancarias = contas;
-
-      const distinct = (value, index, self) => self.indexOf(value) === index;
-      this.bancos = contas.map(c => JSON.parse(JSON.stringify({banco: c.banco,
-                                                    numeroAgencia: c.numeroAgencia,
-                                                    numeroContaBancaria: c.numeroContaBancaria})))
-                          .filter(distinct);
     });
 
     this.filter = new Filter();
@@ -140,5 +134,16 @@ export class SaldosContasBancariaComponent implements OnInit {
     }
   }
 
+  filtrarContasPorTipo() {
+    if (this.filter.tipoContaBancaria) {
+      const distinct = (value, index, self) => self.indexOf(value) === index;
+      this.bancos = this.contasBancarias.filter(c => c.tipoContaBancaria === this.filter.tipoContaBancaria)
+                                         .map(c => JSON.parse(JSON.stringify({banco: c.banco,
+                                                                              numeroAgencia: c.numeroAgencia,
+                                                                              numeroContaBancaria: c.numeroContaBancaria})))
+                          .filter(distinct);
+
+    }
+  }
  
 }

@@ -1,3 +1,4 @@
+import { AutenticadorService } from './../../../services/autenticador/autenticador.service';
 import { MovimentacoesService } from './../../../services/movimentacoes/movimentacoes.service';
 import { Component, OnInit } from '@angular/core';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
@@ -8,6 +9,9 @@ import { Empresa } from 'src/app/core/empresa';
 import { Departamento } from 'src/app/core/departamento';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
+import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
+import { Banco } from 'src/app/core/banco';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -18,29 +22,34 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   movimentacoes: Movimentacoes;
 
-  isAtualizar: boolean = false;
+  isAtualizar = false;
 
   
-  mostrarBotaoCadastrar = true
+  mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private movimentacoesService:MovimentacoesService
+    private movimentacoesService: MovimentacoesService,
+    private autenticadorService: AutenticadorService
   ) { }
 
   ngOnInit() {
     this.inicializarObjetos();
    
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
-      
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
-        this.movimentacoes = movimentacoes
+        this.movimentacoes = movimentacoes;
+
+        if(!!this.movimentacoes.saldoContaBancaria) {
+          this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
+          this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
+          this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
+        }
       });
     }
 
@@ -68,8 +77,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   atualizar() {
     this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
-      this.router.navigate(['movimentacoes']);
-      this.toastService.showSucesso("Movimentação atualizada com sucesso");
+      this.toastService.showSucesso("Registro atualizado com sucesso.");
+      this.autenticadorService.revalidarSessao();
     });
 
   }
@@ -84,6 +93,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.itensMovimentacoes = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];
+    this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
+    this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
+    this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
   }
 
   mostrarBotaoLimpar() {
