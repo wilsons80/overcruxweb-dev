@@ -19,7 +19,7 @@ export class SaldosContasBancariaService extends BaseService<SaldosContasBancari
     numeroAgencia = numeroAgencia || '';
     numeroContaBancaria = numeroContaBancaria || '';
 
-    return this.http.get(Rotas.ESTOQUES + 'filter', { params: {
+    return this.http.get(Rotas.SALDOS_CONTAS_BANCARIA + 'filter', { params: {
       tipoContaBancaria: `${tipoContaBancaria}` ,
       nomeBanco: `${nomeBanco}` ,
       numeroAgencia: `${numeroAgencia}`,
