@@ -13,22 +13,32 @@ export class SaldosContasBancariaService extends BaseService<SaldosContasBancari
     super(http, Rotas.SALDOS_CONTAS_BANCARIA);
   }
 
-  getFilter(tipoContaBancaria: string|number, nomeBanco: string|number, numeroAgencia: string|number, numeroContaBancaria: string|number) {
+  getFilter(tipoContaBancaria: string|number,
+            nomeBanco: string|number,
+            numeroAgencia: string|number,
+            numeroContaBancaria: string|number,
+            dataInicio: string|Date,
+            dataFim: string|Date ) {
+
     tipoContaBancaria = tipoContaBancaria || '';
     nomeBanco = nomeBanco || '';
     numeroAgencia = numeroAgencia || '';
     numeroContaBancaria = numeroContaBancaria || '';
+    dataInicio = dataInicio || '';
+    dataFim = dataFim || '';
 
     return this.http.get(Rotas.SALDOS_CONTAS_BANCARIA + 'filter', { params: {
       tipoContaBancaria: `${tipoContaBancaria}` ,
       nomeBanco: `${nomeBanco}` ,
       numeroAgencia: `${numeroAgencia}`,
-      numeroContaBancaria: `${numeroContaBancaria}`
+      numeroContaBancaria: `${numeroContaBancaria}`,
+      dataInicio: `${dataInicio}`,
+      dataFim: `${dataFim}`,
       }
     });
   }
 
-  getPorConta(id:number) {
+  getPorConta(id: number) {
     return this.http.get(`${this.rota}/contabancaria/${id}`);
   }
 }

@@ -13,7 +13,7 @@
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
                     <!-- FATURAS -->
-                    <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                         <mat-label>Fatura:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.fatura.id name="fatura" required>
                             <mat-option></mat-option>
@@ -27,7 +27,7 @@
                     </mat-form-field>
 
                     <!-- CONTAS BANCARIAS -->
-                    <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="70%">
                         <mat-label>Conta bancária:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias" (ngModelChange)="getSaldoContaBancaria($event)">
                             <mat-option></mat-option>
@@ -38,14 +38,6 @@
                         </mat-select>
                         <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária
                             cadastrada</mat-hint>
-                    </mat-form-field>
-
-                    <!-- SALDO -->
-                    <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                        <input [(ngModel)]="pagamentosFatura.saldoContaBancaria.valorSaldo" currencyMask name="saldo"
-                            placeholder="Saldo conta bancária:" matInput maxlength="13"
-                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" disabled />
-                        <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 
                 </div>
@@ -63,13 +55,17 @@
 
                     <!-- DATA -->
                     <mat-form-field fxFlex="25%">
-                        <input [(ngModel)]=pagamentosFatura.dataPagamento  
-                               matInput name="dataPagamento" [matDatepicker]="dataPagamento"
-                               placeholder="Data do pagamento" required>
-                        <mat-datepicker-toggle matSuffix [for]="dataPagamento">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #dataPagamento></mat-datepicker>
+                        <input [(ngModel)]="pagamentosFatura.dataPagamento"
+                               matInput 
+                               name="dataPagamentoMovimento"
+                               [max]="maxDataPagamento"
+                               [matDatepicker]="dataPagamentoMovimento"
+                               placeholder="Data do pagamento" 
+                               required>
+                        <mat-datepicker-toggle matSuffix [for]="dataPagamentoMovimento"></mat-datepicker-toggle>
+                        <mat-datepicker #dataPagamentoMovimento></mat-datepicker>
                     </mat-form-field>
+                
 
                     <!-- FORMA DE PAGAMENTO -->
                     <mat-form-field fxFlex="25%" fxLayoutGap="20px" >
@@ -85,7 +81,7 @@
                     <!-- NUMERO CHEQUE -->
                     <mat-form-field fxFlex="20%">
                         <input [(ngModel)]=pagamentosFatura.numeroDocPagamento 
-                               matInput min="0" name="nrDocumento" placeholder="Numéro do documento:"
+                               matInput min="0" name="nrDocumento" placeholder="Numéro da Transação"
                                [disabled]="pagamentosFatura.formaPagamento !== 'C'" />
                     </mat-form-field>
 

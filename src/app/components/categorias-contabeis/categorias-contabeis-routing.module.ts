@@ -8,8 +8,8 @@ import { Modulos } from 'src/app/core/modulos';
 
 
 const routes: Routes = [
-  {path: 'categoriascontabeis/cadastrar', component: CadastrarCategoriasContabeisComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CATEGORIAS_CONTABEIS} },
-  {path: 'categoriascontabeis', component: CategoriasContabeisComponent,canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.CATEGORIAS_CONTABEIS} }
+  {path: 'categoriascontabeis/cadastrar', component: CadastrarCategoriasContabeisComponent, canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PLANOS_CONTAS_CONTABEIS} },
+  {path: 'categoriascontabeis', component: CategoriasContabeisComponent,canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.PLANOS_CONTAS_CONTABEIS} }
 ];
 
 @NgModule({

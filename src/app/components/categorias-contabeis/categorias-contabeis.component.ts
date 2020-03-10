@@ -74,7 +74,7 @@ export class CategoriasContabeisComponent implements OnInit {
 
 
   atualizar(categoriasContabeis: CategoriasContabeis) {
-    this.router.navigate(['/categoriascontabeis/cadastrar'], { queryParams: { id: categoriasContabeis.id } });
+    this.router.navigate(['/planoscontascontabeis/cadastrar'], { queryParams: { id: categoriasContabeis.id } });
   }
 
   deletar(categoriasContabeis: CategoriasContabeis) {

@@ -5,7 +5,7 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- EMPRESAS -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Empresa:</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
                     <mat-option></mat-option>
@@ -27,16 +27,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <!-- DATA MOVIMENTACAO -->
-            <mat-form-field fxFlex="30%">
-                <input [(ngModel)]=movimentacoes.dataMovimentacao matInput name="dataMovimentacao" [matDatepicker]="dataMovimentacao" placeholder="Data Movimentação">
-                <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
-                </mat-datepicker-toggle>
-                <mat-datepicker #dataMovimentacao></mat-datepicker>
-            </mat-form-field>
-
         </div>
-
         <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
             <!-- DESCRICAO -->
@@ -49,19 +40,44 @@
             </mat-form-field>
         </div>
 
+
+        <mat-toolbar class="titulopartes">Conta Bancária</mat-toolbar>
+        <div fxLayout="row" 
+             fxLayoutGap="50px" 
+             style="margin-top: 10px; margin-bottom: 10px" 
+             fxFlexFill>
+            <mat-form-field fxFlex="50%" fxFlexOffset="20px">
+                <mat-label>Agência - Conta Corrente</mat-label>
+                <mat-select name="contaBancaria" 
+                           [(ngModel)]="movimentacoes.contaBancaria.id"
+                           (selectionChange)="carregarContaBancaria()">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let m of contasBancarias" [value]="m.id">
+                        {{m.numeroAgencia}} - {{m.numeroContaBancaria}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
         <!-- DOCUMENTOS -->
         <mat-toolbar class="titulopartes">Documentos</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- NR DOCUMENTOS -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
-                <input [(ngModel)]=movimentacoes.nrDocumento #numeroDocumento matInput maxlength="20" name="numeroDocumento" placeholder="Número documento:">
+            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                <input [(ngModel)]=movimentacoes.nrDocumento 
+                       #numeroDocumento 
+                       matInput maxlength="20" 
+                       name="numeroDocumento" 
+                       placeholder="Número documento:">
                 <mat-hint align="end">{{numeroDocumento.value.length}} / 20</mat-hint>
             </mat-form-field>
 
             <!-- DATA DOCUMENTOS -->
-            <mat-form-field fxFlex="30%">
-                <input matInput [(ngModel)]=movimentacoes.dataDocumento name="dataDocumento" [matDatepicker]="dataDocumento" placeholder="Data do documento:">
+            <mat-form-field fxFlex="20%">
+                <input matInput [(ngModel)]=movimentacoes.dataDocumento 
+                       name="dataDocumento" [matDatepicker]="dataDocumento" 
+                       placeholder="Data do documento:">
                 <mat-datepicker-toggle matSuffix [for]="dataDocumento">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataDocumento></mat-datepicker>
@@ -69,130 +85,29 @@
 
             <!-- VALOR -->
             <mat-form-field fxFlex="15%">
-                <input [(ngModel)]=movimentacoes.valorMovimentacao currencyMask name="valorAlocacao" placeholder="Valor:" matInput maxlength="13"
-                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>
-        </div>
-
-
-        <!-- OUTRAS INFORMACOES -->
-        <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Programa</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.programa.id name="programa">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of programas" [value]=i.id>
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Projeto</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.projeto.id name="projeto">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of projetos" [value]=i.id>
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Unidade</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.unidade.idUnidade name="unidade" required>
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
-                        {{i.nomeUnidade}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Departamento</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
-                        {{i.nmDepartamento}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum departamento
-                    cadastrado</mat-hint>
-            </mat-form-field>
-        </div>
-
-
-        <div fxLayout="row" fxFlexFill>
-            <mat-form-field fxFlex="46%" fxFlexOffset="20px">
-                <input [(ngModel)]=movimentacoes.qtdParcelas 
-                       type="number" 
-                       min=0 matInput maxlength="3" 
-                       name="qtdParcelas" 
-                       placeholder="Quantidade de parcelas da movimentação:" />
-            </mat-form-field>
-        </div>
-
-        <mat-toolbar class="titulopartes">saldo Conta Bancária</mat-toolbar>
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-            <mat-form-field fxFlexOffset="20px" fxFlex="25%">
-                <input [(ngModel)]=movimentacoes.saldoContaBancaria.valorSaldo 
-                       currencyMask 
-                       name="valorSaldo" 
-                       placeholder="Valor do saldo" 
+                <input [(ngModel)]=movimentacoes.valorMovimentacao 
+                       currencyMask name="valorMovimentacao" 
+                       placeholder="Valor do movimento" 
+                       #valorMovimentacao
+                       (blur)="validarValorDodumento(valorMovimentacao.value)"
                        matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
-                       disabled/>
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
             <mat-form-field fxFlex="20%">
-                <input matInput 
-                       [(ngModel)]=movimentacoes.saldoContaBancaria.dataSaldo 
-                       name="dataSaldo" 
-                       [matDatepicker]="dataSaldo" 
-                       placeholder="Data do saldo"
-                       disabled>
-                <mat-datepicker-toggle matSuffix [for]="dataSaldo">
-                </mat-datepicker-toggle>
-                <mat-datepicker #dataSaldo></mat-datepicker>
+                <input [(ngModel)]=movimentacoes.qtdParcelas 
+                        type="number" 
+                        min=0 matInput maxlength="3" 
+                        name="qtdParcelas" 
+                        #qtdParcelas
+                        (blur)="validarValorNegativo(qtdParcelas.value)"
+                        placeholder="Quantidade de parcelas:" />
             </mat-form-field>
-            
-            <mat-form-field fxFlex="25%">
-                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.banco.nome 
-                       matInput
-                       name="nomeBanco" 
-                       placeholder="Banco" 
-                       disabled/>
-            </mat-form-field>            
-
-            <mat-form-field fxFlex="15%">
-                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.numeroAgencia 
-                       matInput
-                       name="numeroAgencia" 
-                       placeholder="Agência" 
-                       disabled/>
-            </mat-form-field>            
-            
-            <mat-form-field fxFlex="15%">
-                <input [(ngModel)]=movimentacoes.saldoContaBancaria.contaBancaria.numeroContaBancaria 
-                       matInput
-                       name="numeroContaBancaria" 
-                       placeholder="Conta" 
-                       disabled/>
-            </mat-form-field>              
+    
         </div>
 
-
-        <mat-toolbar class="titulopartes">Valores</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
             <mat-form-field fxFlexOffset="20px" fxFlex="20%">
                 <input [(ngModel)]=movimentacoes.valorISS 
                        currencyMask 
@@ -244,6 +159,59 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>            
         </div>
+
+
+
+        <!-- OUTRAS INFORMACOES -->
+        <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Programa</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.programa.id name="programa">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of programas" [value]=i.id>
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Projeto</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.projeto.id name="projeto">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of projetos" [value]=i.id>
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Unidade</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.unidade.idUnidade name="unidade" required>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
+                        {{i.nomeUnidade}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Departamento</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of departamentos" [value]=i.idDepartamento>
+                        {{i.nmDepartamento}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum departamento cadastrado</mat-hint>
+            </mat-form-field>
+        </div>
+
 
 
 </div>

@@ -60,11 +60,28 @@
                 <input [(ngModel)]="contaBancaria.nomeContato" #contato matInput maxlength="200" name="nomeContato" placeholder="Nome contato:">
                 <mat-hint align="end">{{nomeTitular.value.length}} / 200</mat-hint>
             </mat-form-field>
+        </div>
 
+        <mat-toolbar class="titulopartes">Conta Associada</mat-toolbar>
+        <div fxLayout="row" 
+             fxLayoutGap="50px" 
+             style="margin-top: 10px; margin-bottom: 10px" 
+             fxFlexFill
+             [fxHide]="contaBancaria.tipoContaBancaria === 'C'">
+            <mat-form-field fxFlex="30%" >
+                <mat-label>Agência - Conta Corrente</mat-label>
+                <mat-select name="tiposContas" 
+                           [(ngModel)]="contaBancaria.contaAssociada"
+                           (selectionChange)="carregarContaAssociada()">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let m of contasAssociadas" [value]="m.id">
+                        {{m.numeroAgencia}} - {{m.numeroContaBancaria}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <mat-toolbar class="titulopartes">Dados do Titular</mat-toolbar>
-
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- NOME TITULAR -->

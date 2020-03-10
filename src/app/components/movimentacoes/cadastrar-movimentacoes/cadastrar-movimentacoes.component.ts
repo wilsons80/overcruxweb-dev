@@ -45,10 +45,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
 
-        if(!!this.movimentacoes.saldoContaBancaria) {
-          this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
-          this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
-          this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
+        if (!!this.movimentacoes.contaBancaria) {
+          this.movimentacoes.contaBancaria = new ContasBancaria();
+          this.movimentacoes.contaBancaria.banco = new Banco();
         }
       });
     }
@@ -93,9 +92,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.itensMovimentacoes = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];
-    this.movimentacoes.saldoContaBancaria = new SaldosContasBancaria();
-    this.movimentacoes.saldoContaBancaria.contaBancaria = new ContasBancaria();
-    this.movimentacoes.saldoContaBancaria.contaBancaria.banco = new Banco();
+    this.movimentacoes.contaBancaria = new ContasBancaria();
+    this.movimentacoes.contaBancaria.banco = new Banco();
   }
 
   mostrarBotaoLimpar() {

@@ -10,10 +10,11 @@ export class ContasBancaria {
     numeroAgencia: string;
     numeroContaBancaria: number;
     unidade: Unidade;
-	nomeTitular:string;
-	nomeContato:string;
-	cpfCnpjTitular:string;
-	telefoneTitular:string;
-	emailTitular:string;
+	nomeTitular: string;
+	nomeContato: string;
+	cpfCnpjTitular: string;
+	telefoneTitular: string;
+    emailTitular: string;
+    contaAssociada: number;
 }
 

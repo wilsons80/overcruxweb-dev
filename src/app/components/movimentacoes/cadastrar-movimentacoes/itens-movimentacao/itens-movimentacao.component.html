@@ -12,21 +12,8 @@
                 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
         
-                    <!-- MATERIAL -->
-                    <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                        <mat-label>Material:</mat-label>
-                        <mat-select [(ngModel)]=itensMovimentacoes.material.id name="material">
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of materiais" [value]=i.id>
-                                {{i.nome}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhum material
-                            cadastrado</mat-hint>
-                    </mat-form-field>
-        
                     <!-- CATEGORIAS -->
-                    <mat-form-field fxFlex="30%">
+                    <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                         <mat-label>Categoria:</mat-label>
                         <mat-select name="categoria" [(ngModel)]=itensMovimentacoes.categoria.id required>
                             <mat-option></mat-option>
@@ -39,7 +26,7 @@
                     </mat-form-field>
         
                     <!-- PEDIDO MATERIAL -->
-                    <mat-form-field fxFlex="30%">
+                    <mat-form-field fxFlex="70%">
                         <mat-label>Pedido Material:</mat-label>
                         <mat-select name="pedidoMaterial" [(ngModel)]=itensMovimentacoes.pedidosMateriais.id>
                             <mat-option></mat-option>

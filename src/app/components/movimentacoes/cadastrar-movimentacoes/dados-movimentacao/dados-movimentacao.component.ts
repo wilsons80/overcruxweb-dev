@@ -1,3 +1,4 @@
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { UnidadeService } from './../../../../services/unidade/unidade.service';
 import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 import { ProgramaService } from './../../../../services/programa/programa.service';
@@ -11,6 +12,10 @@ import { Departamento } from 'src/app/core/departamento';
 import { Unidade } from 'src/app/core/unidade';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ControlContainer, NgForm } from '@angular/forms';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'dados-movimentacao',
@@ -27,6 +32,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   programas:Programa[];
   departamentos:Departamento[];
   unidades: Unidade[];
+  contasBancarias: ContasBancaria[];
 
   tiposMovimentacao = [
     {id: 'E', descricao: 'ENTRADA'},
@@ -34,11 +40,13 @@ export class DadosMovimentacaoComponent implements OnInit {
   ]
 
   constructor(
-    private empresaService:EmpresaService,
-    private programaService:ProgramaService,
-    private projetoService:ProjetoService,
-    private departamentoService:DepartamentoService,
-    private unidadeService:UnidadeService,
+    private empresaService: EmpresaService,
+    private programaService: ProgramaService,
+    private projetoService: ProjetoService,
+    private departamentoService: DepartamentoService,
+    private unidadeService: UnidadeService,
+    private toastService: ToastService,
+    private contasBancariaService: ContasBancariaService
   ) { }
 
   ngOnInit() {
@@ -63,6 +71,30 @@ export class DadosMovimentacaoComponent implements OnInit {
       this.unidades = unidades;
     })
 
+    this.contasBancariaService.getAllComboByInstituicaoLogada()
+    .subscribe((contasBancarias: ContasBancaria[]) => {
+      this.contasBancarias = contasBancarias;
+    })
   }
 
+  validarValorNegativo(valor) {
+    if (valor < 0) {
+      this.movimentacoes.qtdParcelas = null;
+      this.toastService.showAlerta('A quantidade de parcelas não pode ter valor negativo, informe outro valor.');
+    }
+  }
+
+  validarValorDodumento(valor) {
+    if (valor < 0) {
+      this.movimentacoes.valorMovimentacao = null;
+      this.toastService.showAlerta('O valor do documento não pode ser negativo, informe outro valor.');
+    }
+  }
+
+  carregarContaBancaria() {
+    if (this.movimentacoes.contaBancaria && this.movimentacoes.contaBancaria.id) {
+      this.movimentacoes.contaBancaria = _.cloneDeep(_.find(this.contasBancarias,  (c: ContasBancaria) => c.id === this.movimentacoes.contaBancaria.id));
+    }
+  }
+ 
 }

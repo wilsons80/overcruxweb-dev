@@ -34,9 +34,6 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private unidadeService:UnidadeService,
-    private instituicaoService:InstituicaoService
-
   ) { }
 
   ngOnInit() {
@@ -56,12 +53,11 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
       this.listaCategoriasContabeis = listaCategoriasContabeis;
     })
    
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
       this.categoriasContabeisService.getById(id).subscribe((categoriasContabeis: CategoriasContabeis) => {
-        this.categoriasContabeis = categoriasContabeis
+        this.categoriasContabeis = categoriasContabeis;
       });
     }
 
@@ -69,20 +65,20 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
 
   cadastrar() {
     this.categoriasContabeisService.cadastrar(this.categoriasContabeis).subscribe(() => {
-      this.router.navigate(['categoriascontabeis']);
-      this.toastService.showSucesso("Categoria Contábil cadastrada com sucesso");
+      this.router.navigate(['planoscontascontabeis']);
+      this.toastService.showSucesso('Plano de conta cadastrado com sucesso');
     });
   }
 
   limpar() {
     this.inicializarObjetos();
-    this.categoriasContabeis.nome = "";
-    this.categoriasContabeis.tipo = "";
-    this.categoriasContabeis.descricaoCategoria = "";
+    this.categoriasContabeis.nome = '';
+    this.categoriasContabeis.tipo = '';
+    this.categoriasContabeis.descricaoCategoria = '';
   }
 
   cancelar() {
-    this.router.navigate(['categoriascontabeis']);
+    this.router.navigate(['planoscontascontabeis']);
   }
 
   getNomeBotao() {
@@ -92,8 +88,8 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
 
   atualizar() {
     this.categoriasContabeisService.alterar(this.categoriasContabeis).subscribe(() => {
-      this.router.navigate(['categoriascontabeis']);
-      this.toastService.showSucesso("Categoria contábil atualizada com sucesso");
+      this.router.navigate(['planoscontascontabeis']);
+      this.toastService.showSucesso('Plano de conta atualizado com sucesso.');
     });
 
   }

@@ -15,9 +15,9 @@
 
         <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
 
-            <!-- CATEGORIAS CONTÁBEIS-->
+            <!-- PLANOS DE CONTAS-->
             <div style="padding-left: 15px">
-                <sub-menu *ngIf="verificaAcesso(getModulos().CATEGORIAS_CONTABEIS)" icone="toc" titulo="Categorias Contábeis" rota="categoriascontabeis" toolTip="Categorias Contábeis"></sub-menu>
+                <sub-menu *ngIf="verificaAcesso(getModulos().PLANOS_CONTAS_CONTABEIS)" icone="toc" titulo="Planos de Contas" rota="planoscontascontabeis" toolTip="Planos de Contas"></sub-menu>
             </div>
         
             <!-- CONTAS BANCÁRIAS-->

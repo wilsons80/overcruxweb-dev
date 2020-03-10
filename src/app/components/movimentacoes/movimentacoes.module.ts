@@ -13,7 +13,12 @@ import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
-  declarations: [MovimentacoesComponent, CadastrarMovimentacoesComponent, DadosMovimentacaoComponent, ItensMovimentacaoComponent, FaturasMovimentacaoComponent, PagamentosMovimentacaoComponent],
+  declarations: [MovimentacoesComponent, 
+                 CadastrarMovimentacoesComponent, 
+                 DadosMovimentacaoComponent, 
+                 ItensMovimentacaoComponent, 
+                 FaturasMovimentacaoComponent, 
+                 PagamentosMovimentacaoComponent],
   imports: [
     CommonModule,
     MovimentacoesRoutingModule,

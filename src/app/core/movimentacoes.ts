@@ -6,7 +6,7 @@ import { Empresa } from './empresa'
 import { Unidade } from './unidade';
 import { Fatura } from './fatura';
 import { PagamentosFatura } from './pagamentos-fatura';
-import { SaldosContasBancaria } from './saldos-contas-bancaria';
+import { ContasBancaria } from './contas-bancaria';
 
 export class Movimentacoes{
     id:number;
@@ -31,6 +31,6 @@ export class Movimentacoes{
 	valorIPI:number;
 	valorPisConfinsCsll:number;
 	valorInss:number;
-	saldoContaBancaria: SaldosContasBancaria;
+	contaBancaria: ContasBancaria;
 
 }

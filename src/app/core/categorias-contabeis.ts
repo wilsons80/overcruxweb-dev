@@ -3,6 +3,7 @@ export class CategoriasContabeis{
    categoriaSuperior:CategoriasContabeis;
 	tipo:string;	
 	nome:string;
-	descricaoCategoria:string;
+	descricaoCategoria: string;
+	codigoCategoriaContabil: string;
 }
 

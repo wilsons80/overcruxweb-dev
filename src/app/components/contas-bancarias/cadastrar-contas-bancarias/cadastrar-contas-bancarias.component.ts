@@ -1,3 +1,4 @@
+import { CarregarPerfil } from './../../../core/carregar-perfil';
 import { Banco } from './../../../core/banco';
 import { ListaBancosService } from './../../../services/listaBancos/lista-bancos.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,41 +18,46 @@ import * as _ from 'lodash';
 })
 export class CadastrarContasBancariasComponent implements OnInit {
 
-  saldos:any =[]
+  saldos: any = [];
 
   tipoContas = [
-    {id:"C", nome:"Conta Corrente"},
-    {id:"P", nome:"Poupança"}
+    {id: 'C', nome: 'Conta Corrente'},
+    {id: 'P', nome: 'Poupança'},
+    {id: 'A', nome: 'Aplicação'},
   ];
 
   public maskCelular = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  unidades:Unidade[];
+  unidades: Unidade[];
+  contasAssociadas: ContasBancaria[];
 
   contaBancaria: ContasBancaria;
 
-  isAtualizar: boolean = false;
+  isAtualizar = false;
 
-  perfilAcesso: Acesso;
-  mostrarBotaoCadastrar = true
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+  mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
-  listaBancos:Banco[];
+  listaBancos: Banco[];
 
   constructor(
     private contasBancariaService: ContasBancariaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private unidadeService:UnidadeService,
-    private listaBancosService:ListaBancosService
+    private unidadeService: UnidadeService,
+    private listaBancosService: ListaBancosService
 
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -66,31 +72,43 @@ export class CadastrarContasBancariasComponent implements OnInit {
 
     this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
-    })
-   
-   
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    });
+
+
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
       this.contasBancariaService.getById(id).subscribe((contaBancaria: ContasBancaria) => {
-        this.contaBancaria = contaBancaria
-        this.contaBancaria.banco = _.find(this.listaBancos, (b:Banco) => b.numero === this.contaBancaria.banco.numero);
+        this.contaBancaria = contaBancaria;
+        this.contaBancaria.banco = _.find(this.listaBancos, (b: Banco) => b.numero === this.contaBancaria.banco.numero);
+
+        // Carrega apenas para contas do tipo APLICACAO e POUPANCA
+        if (this.contaBancaria.tipoContaBancaria !== 'C') {
+          this.carregarListaContasAssociadas();
+        }
       });
+
+    } else {
+      this.carregarListaContasAssociadas();
     }
 
   }
 
-  cadastrar() {
-
-    this.tratarDados();
-
-    this.contasBancariaService.cadastrar(this.contaBancaria).subscribe(() => {
-      this.router.navigate(['contasbancarias']);
-      this.toastService.showSucesso("Conta bancária cadastrada com sucesso");
+  carregarListaContasAssociadas() {
+    this.contasBancariaService.getAllComboByInstituicaoLogada()
+    .subscribe((contasBancarias: ContasBancaria[]) => {
+       this.contasAssociadas = contasBancarias.filter(c => c.tipoContaBancaria === 'C');
     });
   }
-  
+
+  cadastrar() {
+    this.tratarDados();
+    this.contasBancariaService.cadastrar(this.contaBancaria).subscribe(() => {
+      this.router.navigate(['contasbancarias']);
+      this.toastService.showSucesso('Conta bancária cadastrada com sucesso');
+    });
+  }
+
   limpar() {
     this.inicializarObjetos();
   }
@@ -108,7 +126,7 @@ export class CadastrarContasBancariasComponent implements OnInit {
     this.tratarDados();
     this.contasBancariaService.alterar(this.contaBancaria).subscribe(() => {
       this.router.navigate(['contasbancarias']);
-      this.toastService.showSucesso("Conta bancária atualizada com sucesso");
+      this.toastService.showSucesso('Conta bancária atualizada com sucesso');
     });
 
   }
@@ -133,6 +151,14 @@ export class CadastrarContasBancariasComponent implements OnInit {
 
   retiraMascara(objeto:any) {
     return objeto.replace(/\D/g, '');
+  }
+
+
+  carregarContaAssociada() {
+    if (this.contaBancaria.contaAssociada) {
+      const conta = _.cloneDeep(_.find(this.contasAssociadas,  (c: ContasBancaria) => c.id === this.contaBancaria.id));
+      this.contaBancaria.contaAssociada = conta ? conta.id : null;
+    }
   }
 
 }

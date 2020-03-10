@@ -58,7 +58,7 @@ export enum Rotas {
     CATEGORIAS_CONTABEIS            = 'api/categoriascontabeis/',
     COTACOES_MATERIAIS              = 'api/cotacoesmateriais/',
     PEDIDOS                         = 'api/pedidos/',
-    CONTAS_BANCARIA                 = 'api/contasbancarias/',
+    CONTAS_BANCARIA                 = 'api/planoscontascontabeis/',
     ESTOQUES                        = 'api/estoques/',
     MOVIMENTACOES                   = 'api/movimentacoes/',
     PEDIDOS_MATERIAIS               = 'api/pedidosmateriais/',

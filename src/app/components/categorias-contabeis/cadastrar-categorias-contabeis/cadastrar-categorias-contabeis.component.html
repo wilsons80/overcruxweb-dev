@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Categorias Contábeis</mat-toolbar>
+<mat-toolbar class="subtitulo">Planos de Contas</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
 
@@ -36,6 +36,17 @@
             </mat-form-field>
 
         </div>
+
+        <div fxLayout="row" fxFlexFill>
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                <input #codigoCategoriaContabil [(ngModel)]=categoriasContabeis.codigoCategoriaContabil 
+                       matInput maxlength="10" 
+                       name="codigoCategoriaContabil" 
+                       placeholder="Código do Plano de Contas">
+                <mat-hint align="end">{{codigoCategoriaContabil.value.length}} / 10</mat-hint>
+            </mat-form-field>
+        </div>
+
 
         <div fxLayout="row" fxFlexFill>
             <mat-form-field fxFlexOffset="20px" style="margin-top: 20px" fxFlex="95%" appearance="outline">

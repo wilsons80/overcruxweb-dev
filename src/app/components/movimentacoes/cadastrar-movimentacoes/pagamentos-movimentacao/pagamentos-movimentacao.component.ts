@@ -27,6 +27,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   mostrarTabela = false;
   msg: string = "Nenhum item movimentação adicionado";
 
+  maxDataPagamento = new Date();
+
   formasPagamento = [
     {id: "A", descricao: "CARTÃO DE CRÉDITO" },
     {id: "B", descricao: "DÉBITO EM CARTÃO" },
@@ -49,11 +51,12 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
 
   constructor(
-    private contasBancariaService:ContasBancariaService,
-    private faturaService:FaturaService,
-    private saldosContasBancariaService:SaldosContasBancariaService
-
-  ) { }
+    private contasBancariaService: ContasBancariaService,
+    private faturaService: FaturaService,
+    private saldosContasBancariaService: SaldosContasBancariaService
+  ) { 
+    this.maxDataPagamento = new Date();
+  }
 
   ngOnInit() {
     this.initObjetos();

@@ -23,6 +23,8 @@ class DadosBanco {
 class Filter {
   tipoContaBancaria: string;
   dadosBanco: DadosBanco;
+  dataInicio: Date;
+  dataFim: Date;
 }
 
 
@@ -103,12 +105,16 @@ export class SaldosContasBancariaComponent implements OnInit {
     if (this.filter.tipoContaBancaria ||
         this.filter.dadosBanco.banco.nome ||
         this.filter.dadosBanco.numeroAgencia ||
-        this.filter.dadosBanco.numeroContaBancaria) {
+        this.filter.dadosBanco.numeroContaBancaria ||
+        this.filter.dataInicio ||
+        this.filter.dataFim) {
 
       this.saldosContasBancariaService.getFilter(this.filter.tipoContaBancaria,
                                                  this.filter.dadosBanco.banco.nome,
                                                  this.filter.dadosBanco.numeroAgencia,
-                                                 this.filter.dadosBanco.numeroContaBancaria)
+                                                 this.filter.dadosBanco.numeroContaBancaria,
+                                                 this.filter.dataInicio,
+                                                 this.filter.dataFim)
       .subscribe((saldos: SaldosContasBancaria[]) => {
         this.saldos = saldos;
         this.dataSource.data = saldos ? saldos : [];
