@@ -10,7 +10,7 @@ import { CategoriasContabeis } from './../../core/categorias-contabeis';
 export class CategoriasContabeisService extends BaseService<CategoriasContabeis> {
 
   constructor(http: HttpClient) {
-    super(http, Rotas.CATEGORIAS_CONTABEIS);
+    super(http, Rotas.PLANOS_CONTAS_CONTABEIS);
   }
 
 }

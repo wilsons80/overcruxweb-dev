@@ -1,3 +1,4 @@
+import { Cacheable } from 'ngx-cacheable';
 import { ContasBancaria } from '../../core/contas-bancaria';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,6 +14,7 @@ export class ContasBancariaService extends BaseService<ContasBancaria> {
     super(http, Rotas.CONTAS_BANCARIA);
   }
 
+  @Cacheable()
   getAllComboByInstituicaoLogada() {
     return this.http.get(`${Rotas.CONTAS_BANCARIA}combo/instituicoes`);
   }

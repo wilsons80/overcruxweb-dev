@@ -39,6 +39,6 @@ export class SaldosContasBancariaService extends BaseService<SaldosContasBancari
   }
 
   getPorConta(id: number) {
-    return this.http.get(`${this.rota}/contabancaria/${id}`);
+    return this.http.get(`${this.rota}contabancaria/${id}`);
   }
 }

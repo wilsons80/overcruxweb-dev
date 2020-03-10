@@ -33,7 +33,9 @@
 
             <mat-form-field fxFlex="30%" >
                 <mat-label>Tipo de Contas:</mat-label>
-                <mat-select name="tiposContas" [(ngModel)]="contaBancaria.tipoContaBancaria">
+                <mat-select name="tiposContas" 
+                            [(ngModel)]="contaBancaria.tipoContaBancaria"
+                            (selectionChange)="carregarListaContasAssociadas()">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let m of tipoContas" [value]="m.id">
                         {{m.nome}}
@@ -62,23 +64,26 @@
             </mat-form-field>
         </div>
 
-        <mat-toolbar class="titulopartes">Conta Associada</mat-toolbar>
-        <div fxLayout="row" 
-             fxLayoutGap="50px" 
-             style="margin-top: 10px; margin-bottom: 10px" 
-             fxFlexFill
-             [fxHide]="contaBancaria.tipoContaBancaria === 'C'">
-            <mat-form-field fxFlex="30%" >
-                <mat-label>Agência - Conta Corrente</mat-label>
-                <mat-select name="tiposContas" 
-                           [(ngModel)]="contaBancaria.contaAssociada"
-                           (selectionChange)="carregarContaAssociada()">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let m of contasAssociadas" [value]="m.id">
-                        {{m.numeroAgencia}} - {{m.numeroContaBancaria}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div [fxHide]="contaBancaria.tipoContaBancaria === 'C'">
+
+            <mat-toolbar class="titulopartes">Conta Associada</mat-toolbar>
+            <div fxLayout="row" 
+                fxLayoutGap="50px" 
+                style="margin-top: 10px; margin-bottom: 10px" 
+                fxFlexFill>
+
+                <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                    <mat-label>Agência - Conta Corrente</mat-label>
+                    <mat-select name="tiposContas" 
+                               [(ngModel)]="contaBancaria.contaAssociada"
+                               (selectionChange)="carregarContaAssociada()">
+                        <mat-option></mat-option>
+                        <mat-option *ngFor="let m of contasAssociadas" [value]="m.id">
+                            {{m.numeroAgencia}} - {{m.numeroContaBancaria}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
 
         <mat-toolbar class="titulopartes">Dados do Titular</mat-toolbar>
