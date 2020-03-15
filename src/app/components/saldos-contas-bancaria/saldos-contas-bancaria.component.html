@@ -4,7 +4,7 @@
         <form #formulario="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
 
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                <mat-form-field fxFlex="25%" fxFlexOffset="20px">
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um tipo</mat-label>
                     <mat-select fxFlexOffset="20px"
@@ -17,10 +17,8 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                <mat-form-field fxFlex="75%" >
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label fxFlexOffset="20px">Selecione um Banco/Agência/Conta</mat-label>
                     <mat-select fxFlexOffset="20px"
@@ -33,12 +31,13 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
             </div>
 
-            
+          
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <mat-icon fxFlexOffset="20px" matPrefix>search</mat-icon>
-                <mat-form-field fxFlex= "30%" >
+                <mat-form-field fxFlex= "15%" >
                     <input matInput name= "dataInicio"
                            [matDatepicker]="dataInicio" 
                            placeholder="Data Início" 
@@ -49,7 +48,7 @@
                 </mat-form-field>
             
                 <mat-icon matPrefix>search</mat-icon>
-                <mat-form-field fxFlex= "30%" >
+                <mat-form-field fxFlex= "15%" >
                     <input matInput name= "dataFim"
                            [matDatepicker]="dataFim" 
                            placeholder="Data Fim" 

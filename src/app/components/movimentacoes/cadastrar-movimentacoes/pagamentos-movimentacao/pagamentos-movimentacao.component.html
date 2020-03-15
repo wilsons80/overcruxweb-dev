@@ -46,7 +46,7 @@
                 <div fxLayout="row" fxLayoutGap="50px">
 
                     <!-- VALOR -->
-                    <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                    <mat-form-field fxFlexOffset="20px" fxFlex="10%">
                         <input [(ngModel)]="pagamentosFatura.valorPagamento" currencyMask name="valorPagamento"
                             placeholder="Valor:" matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
@@ -54,7 +54,7 @@
                     </mat-form-field>
 
                     <!-- DATA -->
-                    <mat-form-field fxFlex="25%">
+                    <mat-form-field fxFlex="15%">
                         <input [(ngModel)]="pagamentosFatura.dataPagamento"
                                matInput 
                                name="dataPagamentoMovimento"
@@ -68,7 +68,7 @@
                 
 
                     <!-- FORMA DE PAGAMENTO -->
-                    <mat-form-field fxFlex="25%" fxLayoutGap="20px" >
+                    <mat-form-field fxFlex="65%">
                         <mat-label>Forma de pagamento:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
                             <mat-option></mat-option>
@@ -88,7 +88,7 @@
                 </div>
 
                 <div fxLayout="row" fxLayoutGap="50px">
-                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="10%" fxFlexOffset="20px">
                         <input [(ngModel)]="pagamentosFatura.valorMulta" 
                                currencyMask name="valorMulta"
                                placeholder="Valor da multa:" matInput maxlength="13"
@@ -96,7 +96,7 @@
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="20%">
+                    <mat-form-field fxFlex="10%">
                         <input [(ngModel)]="pagamentosFatura.valorJuros" 
                                currencyMask name="valorJuros"
                                placeholder="Valor da juros:" matInput maxlength="13"
