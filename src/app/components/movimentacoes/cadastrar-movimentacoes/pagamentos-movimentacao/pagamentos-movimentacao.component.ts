@@ -36,7 +36,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   ]
 
 
-  displayedColumns: string[] = ['fatura', 'dataPagamento', 'valorPagamento', 'acoes'];
+  displayedColumns: string[] = ['fatura', 'formaPagamento', 'dataPagamento', 'valorPagamento', 'acoes'];
   dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
 
   pagamentosFatura: PagamentosFatura;

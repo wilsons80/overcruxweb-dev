@@ -144,8 +144,13 @@
                     <td mat-cell *matCellDef="let element"> {{element.fatura?.valor}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="formaPagamento">
+                    <th mat-header-cell *matHeaderCellDef> Forma Pagamento </th>
+                    <td mat-cell *matCellDef="let element"> {{element.formaPagamento}} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="dataPagamento">
-                    <th mat-header-cell *matHeaderCellDef> Forma </th>
+                    <th mat-header-cell *matHeaderCellDef> Data Pagamento </th>
                     <td mat-cell *matCellDef="let element"> {{element.dataPagamento | dataSimples}} </td>
                 </ng-container>
 
