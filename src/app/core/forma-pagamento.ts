@@ -1,10 +1,19 @@
-export enum FormaPagamento{
-    DINHEIRO = "R", 
-    CARTAO = "C" ,
-    DEBITO = "D" ,
-    DESCONTO_FOLHA = "F"
+export class FormaPagamento {
+    tipos = [
+        {id: 'A', descricao: 'CARTÃO DE CRÉDITO' },
+        {id: 'B', descricao: 'DÉBITO EM CARTÃO' },
+        {id: 'C', descricao: 'CHEQUE' },
+        {id: 'D', descricao: 'EM DINHEIRO' }
+     ];
+
+
+    getTipo(tipo: string) {
+       const tipoCargo = this.tipos.find( d => d.id.includes(tipo));
+       return tipoCargo ? tipoCargo : null;
+     }
+
+     getDescricao(tipo: string) {
+      const tipoCargo = this.getTipo(tipo);
+      return tipoCargo ? tipoCargo.descricao : '';
+    }
 }
-
-
-// DINHEIRO(1, "R", "Dinheiro"), CARTAO(2, "C", "Cartão"), DEBITO(3, "D", "Débito"),
-// 	DESCONTO_FOLHA(4, "F", "Desconto em Folha");

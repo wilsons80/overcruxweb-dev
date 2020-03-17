@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { Fatura } from 'src/app/core/fatura';
 import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
+import { FormaPagamento } from 'src/app/core/forma-pagamento';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -24,16 +25,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   mostrarTabela = false;
-  msg: string = "Nenhum item movimentação adicionado";
+  msg = "Nenhum item movimentação adicionado";
 
   maxDataPagamento = new Date();
 
-  formasPagamento = [
-    {id: "A", descricao: "CARTÃO DE CRÉDITO" },
-    {id: "B", descricao: "DÉBITO EM CARTÃO" },
-    {id: "C", descricao: "CHEQUE" },
-    {id: "D", descricao: "EM DINHEIRO" }
-  ]
+  formasPagamento: FormaPagamento = new FormaPagamento();
 
 
   displayedColumns: string[] = ['fatura', 'formaPagamento', 'dataPagamento', 'valorPagamento', 'acoes'];

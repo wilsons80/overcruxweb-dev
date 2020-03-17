@@ -72,7 +72,7 @@
                         <mat-label>Forma de pagamento:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
                             <mat-option></mat-option>
-                            <mat-option *ngFor="let i of formasPagamento" [value]=i.id>
+                            <mat-option *ngFor="let i of formasPagamento.tipos" [value]=i.id>
                                 {{i.descricao}}
                             </mat-option>
                         </mat-select>
@@ -145,8 +145,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="formaPagamento">
-                    <th mat-header-cell *matHeaderCellDef> Forma Pagamento </th>
-                    <td mat-cell *matCellDef="let element"> {{element.formaPagamento}} </td>
+                    <th mat-header-cell *matHeaderCellDef style="width: 20%"> Forma Pagamento </th>
+                    <td mat-cell *matCellDef="let element"> {{formasPagamento.getDescricao(element.formaPagamento)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="dataPagamento">
