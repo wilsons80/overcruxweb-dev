@@ -57,7 +57,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   cadastrar() {
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe(() => {
       this.router.navigate(['movimentacoes']);
-      this.toastService.showSucesso("Movimentação cadastrada com sucesso");
+      this.toastService.showSucesso('Movimentação cadastrada com sucesso');
     });
   }
 
@@ -76,8 +76,14 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   atualizar() {
     this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
-      this.toastService.showSucesso("Registro atualizado com sucesso.");
+      this.toastService.showSucesso('Registro atualizado com sucesso.');
       this.autenticadorService.revalidarSessao();
+
+      this.movimentacoesService.getById(this.movimentacoes.id)
+      .subscribe( (movimentacao: Movimentacoes) => {
+        this.movimentacoes = movimentacao;
+      });
+
     });
 
   }
