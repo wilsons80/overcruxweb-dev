@@ -1,0 +1,11 @@
+.divExtrato {
+    text-align: center; 
+    width: 1000px;
+    border: 1px solid #ccc!important; 
+    margin:0 auto; 
+    padding-bottom: 50px; 
+}
+
+.fontRed {
+    color: red;
+}

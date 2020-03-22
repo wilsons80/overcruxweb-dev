@@ -1,5 +1,4 @@
 import { SaldosContasBancariaDialogComponent } from './saldos-contas-bancaria-dialog/saldos-contas-bancaria-dialog.component';
-import { SaldosContasBancariaService } from './../../services/saldos-contas-bancaria/saldos-contas-bancaria.service';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { ContasBancariaService } from './../../services/contas-bancaria/contas-bancaria.service';
 import { SaldosContasBancaria } from './../../core/saldos-contas-bancaria';
@@ -11,8 +10,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Banco } from 'src/app/core/banco';
+import { ExtratoContaBancariaService } from 'src/app/services/extrato/extrato-conta-bancaria.service';
+import { Extrato } from 'src/app/core/extrato';
+import { ActivatedRoute } from '@angular/router';
 
 
 class DadosBanco {
@@ -21,6 +22,7 @@ class DadosBanco {
   numeroContaBancaria: string;
 }
 class Filter {
+  idContaBancaria: number;
   tipoContaBancaria: string;
   dadosBanco: DadosBanco;
   dataInicio: Date;
@@ -48,6 +50,7 @@ export class SaldosContasBancariaComponent implements OnInit {
   }];
 
   bancos = [];
+  extrato: Extrato;
 
   contasBancarias: ContasBancaria[];
 
@@ -66,11 +69,10 @@ export class SaldosContasBancariaComponent implements OnInit {
   dataSource: MatTableDataSource<SaldosContasBancaria> = new MatTableDataSource();
 
   constructor(
-    private saldosContasBancariaService: SaldosContasBancariaService,
-    private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private contasBancariaService: ContasBancariaService,
+    private extratoContaBancariaService: ExtratoContaBancariaService
   ) {
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -87,7 +89,6 @@ export class SaldosContasBancariaComponent implements OnInit {
     this.filter.dadosBanco = new DadosBanco();
     this.filter.dadosBanco.banco = new Banco();
 
-    this.consultar();
   }
 
 
@@ -101,7 +102,8 @@ export class SaldosContasBancariaComponent implements OnInit {
   }
 
   consultar() {
-
+    this.gerarExtrato();
+    /*
     if (this.filter.tipoContaBancaria ||
         this.filter.dadosBanco.banco.nome ||
         this.filter.dadosBanco.numeroAgencia ||
@@ -121,12 +123,19 @@ export class SaldosContasBancariaComponent implements OnInit {
         this.verificaMostrarTabela(saldos);
       });
     }
+    */
   }
 
+  gerarExtrato() {
+    this.extratoContaBancariaService.gerarExtrato(this.filter.idContaBancaria, this.filter.dataInicio,this.filter.dataFim).subscribe((extrato: Extrato) => {
+      this.extrato = extrato;
+      this.visualizar();
+    });
+  }
 
-  visualizar(saldo: SaldosContasBancaria) {
+  visualizar() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {saldoContaBancaria: saldo};
+    dialogConfig.data = {extrato: this.extrato};
     this.dialog.open(SaldosContasBancariaDialogComponent, dialogConfig);
   }
 
@@ -144,7 +153,8 @@ export class SaldosContasBancariaComponent implements OnInit {
     if (this.filter.tipoContaBancaria) {
       const distinct = (value, index, self) => self.indexOf(value) === index;
       this.bancos = this.contasBancarias.filter(c => c.tipoContaBancaria === this.filter.tipoContaBancaria)
-                                         .map(c => JSON.parse(JSON.stringify({banco: c.banco,
+                                         .map(c => JSON.parse(JSON.stringify({idConta: c.id,
+                                                                              banco: c.banco,
                                                                               numeroAgencia: c.numeroAgencia,
                                                                               numeroContaBancaria: c.numeroContaBancaria})))
                           .filter(distinct);

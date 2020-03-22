@@ -7,10 +7,11 @@ import { SaldosContasBancariaComponent } from './saldos-contas-bancaria.componen
 import { NgxCurrencyModule } from 'ngx-currency';
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
+import { ExtratoContaBancariaComponent } from './extrato-conta-bancaria/extrato-conta-bancaria.component';
 
 
 @NgModule({
-  declarations: [SaldosContasBancariaComponent, SaldosContasBancariaDialogComponent],
+  declarations: [SaldosContasBancariaComponent, SaldosContasBancariaDialogComponent, ExtratoContaBancariaComponent],
   imports: [
     CommonModule,
     NgxCurrencyModule,

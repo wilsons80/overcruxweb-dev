@@ -1,0 +1,70 @@
+<div [ngClass]="divExtrato">
+
+    <div style="text-align: center; margin-bottom: 0px;">
+        <h1>Extrato de Conta Bancária</h1>
+    </div>
+
+    <div style="text-align: right; color: #1180ef;">
+        <span>{{extrato.dataAtual | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+    </div>
+
+
+    <div style="text-align: center; font-weight: bolder;">
+        <span>{{extrato.identificacaoConta}}</span>
+        <br/><br/><br/>
+        <span>Período Extrato</span>
+        <br/>
+        <span>{{extrato.periodoExtrato}}</span>
+        <br/>
+    </div>
+    <br/><br/><br/>
+    <div *ngIf="!extrato.isSaldoAtualDivergente; else divSaldoDivergente">
+
+        <div style="text-align: left; padding-left: 70%; font-size: 14px;">
+            <b>Saldo Anterior:</b><span style="text-align: right; padding-left: 5px;" [ngClass]="{'fontRed': extrato.saldoAnterior < 0}">{{extrato.saldoAnterior | currency:'BRL':true:'1.2-2'}}</span>
+        </div>
+
+        <hr style="border-top: 1px solid #8ee2ec;"/>
+        <table style="width: 100%">
+            <thead>
+                <tr>
+                    <th style="width: 10%; text-align: left;">Data</th>
+                    <th style="width: 13%; text-align: left;">N° Documento</th>
+                    <th style="width: 41%; text-align: left;">Descrição</th>
+                    <th style="width: 10%; text-align: left;">Entradas</th>
+                    <th style="width: 12%; text-align: right;">Saídas</th>
+                    <th style="width: 14%; text-align: right;">Saldo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let movimento of extrato.movimentacoes">
+                    <td style="text-align: left;">{{movimento.data | dataSimples}}</td> 
+                    <td style="text-align: left;">{{movimento.numero}}</td>
+                    <td style="text-align: left;">{{movimento.descricao}}</td>
+                    <td style="text-align: left;">{{movimento.valorEntrada | currency:'BRL':true:'1.2-2'}}</td>
+                    <td style="text-align: right;">{{movimento.valorSaida | currency:'BRL':true:'1.2-2'}}</td>
+                    <td style="text-align: right;" [ngClass]="{'fontRed': movimento.saldo < 0}">{{movimento.saldo | currency:'BRL':true:'1.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr style="border-top: 1px solid #8ee2ec;"/>
+
+        <br/><br/>
+        <div style="text-align: left; padding-left: 70%; font-size: 14px;">
+            <b>Saldo Final:</b><span style="text-align: right; padding-left: 20px;" [ngClass]="{'fontRed': extrato.saldoAtual < 0}">{{extrato.saldoAtual | currency:'BRL':true:'1.2-2'}}</span>
+        </div>				
+    </div>
+
+    <ng-template #divSaldoDivergente>
+        <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+            <div style="text-align: center; border-style: solid; border-color: coral;margin-bottom: 15px; width: 512px; font-size: 15px;">
+                <span style="color: blue">
+                    Divergência no saldo final, favor executar a atualização de saldos.
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+</div>
+

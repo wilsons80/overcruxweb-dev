@@ -53,7 +53,7 @@
                            (selectionChange)="carregarContaBancaria()">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let m of contasBancarias" [value]="m.id">
-                        {{m.numeroAgencia}} - {{m.numeroContaBancaria}}
+                        Banco: {{m.banco.numero}} - {{m.banco.nome}} - Agência: {{m.numeroAgencia}} - Conta: {{m.numeroContaBancaria}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
