@@ -10,8 +10,8 @@
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                     <mat-label>Unidade</mat-label>
                     <mat-select [(ngModel)]="unidade" name="unidade" required>
-                        <mat-option *ngFor="let m of unidadesComboCadastro" [value]="m.unidade">
-                            {{m.unidade.nomeUnidade}}
+                        <mat-option *ngFor="let m of unidadesComboCadastro" [value]="m">
+                            {{m.nomeUnidade}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

@@ -77,7 +77,7 @@ export class DadosMovimentacaoComponent implements OnInit {
     })
   }
 
-  validarValorNegativo(valor) {
+  validarValorNegativo( valor: number ) {
     if (valor < 0) {
       this.movimentacoes.qtdParcelas = null;
       this.toastService.showAlerta('A quantidade de parcelas não pode ter valor negativo, informe outro valor.');
@@ -85,7 +85,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   }
 
   validarValorDodumento(valor) {
-    if (valor < 0) {
+    if (valor.includes("-")) {
       this.movimentacoes.valorMovimentacao = null;
       this.toastService.showAlerta('O valor do documento não pode ser negativo, informe outro valor.');
     }

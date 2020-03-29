@@ -57,6 +57,7 @@
                     <mat-form-field fxFlex="15%">
                         <input [(ngModel)]="pagamentosFatura.dataPagamento"
                                matInput 
+                               #campoPagamentoMovimento
                                name="dataPagamentoMovimento"
                                [max]="maxDataPagamento"
                                [matDatepicker]="dataPagamentoMovimento"
@@ -64,6 +65,8 @@
                                required>
                         <mat-datepicker-toggle matSuffix [for]="dataPagamentoMovimento"></mat-datepicker-toggle>
                         <mat-datepicker #dataPagamentoMovimento></mat-datepicker>
+
+                        <mat-error *ngIf="campoPagamentoMovimento.value">A data está inválida ou superior a hoje</mat-error>
                     </mat-form-field>
                 
 

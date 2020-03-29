@@ -119,6 +119,10 @@ export class CadastarAlunoComponent implements OnInit {
   atualizar() {
     this.tratarDados();
 
+    if (this.aluno.pessoaFisica.cpf === null) {
+      this.aluno.pessoaFisica.cpf = this.aluno.id;
+    }
+
     this.alunoService.alterar(this.aluno).pipe(
       switchMap((aluno: Aluno) => {
         if (this.aluno.pessoaFisica.isFotoChanged && this.aluno.pessoaFisica.foto) {

@@ -5,6 +5,7 @@ export class Fatura{
 	movimentacao:Movimentacoes;
 	dataVencimento:Date;
 	valor:number;
-    numeroParcela:number;
+	numeroParcela:number;
+	codigoBarra: string;
     
 }

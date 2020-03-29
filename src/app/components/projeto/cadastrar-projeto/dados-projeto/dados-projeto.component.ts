@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { Programa } from 'src/app/core/programa';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 
+
 @Component({
   selector: 'dados-projeto',
   templateUrl: './dados-projeto.component.html',
@@ -20,8 +21,11 @@ export class DadosProjetoComponent implements OnInit {
   funcionarios: Funcionario[];
   programas: Programa[];
 
+
+
   constructor(private funcionarioService: FuncionarioService,
               private programaService: ProgramaService) {
+             
   }
 
   ngOnInit() {

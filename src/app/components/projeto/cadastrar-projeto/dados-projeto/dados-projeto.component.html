@@ -60,14 +60,14 @@
                 <mat-toolbar class="titulopartes">Datas</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                        <mat-form-field fxFlex="50%" fxFlexOffset="20px">
                                 <input matInput name="dtImplantacao" [matDatepicker]="dataInicio"
                                         placeholder="Data de Início:" [(ngModel)]="projeto.dataInicio">
                                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
                                 <mat-datepicker #dataInicio></mat-datepicker>
                         </mat-form-field>
 
-                        <mat-form-field fxFlex="40%">
+                        <mat-form-field fxFlex="50%">
                                 <input matInput name="dtTermino" [matDatepicker]="dataTermino"
                                         placeholder="Data de Fim:" [(ngModel)]="projeto.dataFim">
                                 <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
@@ -82,7 +82,7 @@
                 <mat-toolbar class="titulopartes">Datas Previstas</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin: 0 20px 20px 0" fxFlexFill>
 
-                        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+                        <mat-form-field fxFlex="50%" fxFlexOffset="20px">
                                 <input matInput name="dtPrevistaImplantacao" [matDatepicker]="dataPrevisaoInicio"
                                         placeholder="Data Prevista de Início:" 
                                         [(ngModel)]="projeto.dataPrevisaoInicio">
@@ -90,7 +90,7 @@
                                 <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
                         </mat-form-field>
 
-                        <mat-form-field fxFlex="40%">
+                        <mat-form-field fxFlex="50%">
                                 <input style="margin-right: 20px" matInput name="dtPrevistaTermino"
                                         [matDatepicker]="dataPrevisaoTermino" placeholder="Data Prevista de Fim:"
                                         [(ngModel)]="projeto.dataPrevisaoTermino">
@@ -101,6 +101,24 @@
                 </div>
         </div>
 </div>
+
+<mat-toolbar class="titulopartes">Faixa Etária</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin: 0 20px 20px 0" fxFlexFill>
+        <mat-form-field fxFlex= "20%" fxFlexOffset="20px" >
+           <input #faixaEtariaInicial matInput type="text" pattern="\d*" maxlength="2" name="faixaEtariaInicial" 
+                 placeholder="Faixa etária (Inicial)" 
+                 [(ngModel)]="projeto.faixaEtariaInicial">
+           <mat-error >Informa apenas dois valores numéricos</mat-error>                 
+        </mat-form-field>
+
+        <mat-form-field fxFlex= "20%" fxFlexOffset="20px" >
+           <input #faixaEtariaFinal matInput type="text" pattern="\d*" maxlength="2" name="faixaEtariaFinal" 
+                  placeholder="Faixa etária (Final)" 
+                  [(ngModel)]="projeto.faixaEtariaFinal">
+           <mat-error >Informa apenas dois valores numéricos</mat-error>                                   
+        </mat-form-field>
+</div>
+
 
 <mat-toolbar class="titulopartes">Outras informações</mat-toolbar>
 <div fxLayout="row" fxFlexFill>
@@ -118,7 +136,9 @@
                         maxlength="4000"></textarea>
                 <mat-hint align="end">{{justificativa.value.length}} / 4000</mat-hint>
         </mat-form-field>
+</div>
 
+<div fxLayout="row" fxFlexFill>
         <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
                 <mat-label>Objetivo geral:</mat-label>
                 <textarea #objetivoGeral matInput name="objetivoGeral" [(ngModel)]="projeto.objetivoGeral"
@@ -126,4 +146,12 @@
                         maxlength="2000"></textarea>
                 <mat-hint align="end">{{objetivoGeral.value.length}} / 2000</mat-hint>
         </mat-form-field>
+
+        <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
+                <mat-label>Objetivo especifico:</mat-label>
+                <textarea #objetivoEspecifico matInput name="objetivoEspecifico" [(ngModel)]="projeto.objetivoEspecifico"
+                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
+                        maxlength="2000"></textarea>
+                <mat-hint align="end">{{objetivoEspecifico.value.length}} / 2000</mat-hint>
+        </mat-form-field>        
 </div>

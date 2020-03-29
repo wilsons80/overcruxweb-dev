@@ -41,13 +41,13 @@
 
                  <!------------------  Composição Recursos Humanos do Programa ------------------------>
                  <mat-step [stepControl]="formCadastroRH">
-                        <form #formCadastroRH="ngForm" matStepperIcon="phone">
-                                <ng-template matStepLabel>COMPOSIÇÃO REC. HUMANOS</ng-template>
-                                <composicao-rh-programa 
+                     <form #formCadastroRH="ngForm" matStepperIcon="phone">
+                          <ng-template matStepLabel>COMPOSIÇÃO REC. HUMANOS</ng-template>
+                          <composicao-rh-programa 
                                 [programa]=programa
                                 [listaComposicaoRhPrograma]=programa.composicaoRhPrograma
-                                ></composicao-rh-programa>
-                                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                          ></composicao-rh-programa>
+                          <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                                 fxFlexFill>
                               <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
                                   <mat-icon>chevron_right</mat-icon>
@@ -56,7 +56,7 @@
                                   <mat-icon>chevron_left</mat-icon>
                               </button>
                           </div>
-                        </form>
+                     </form>
                 </mat-step>
 
                 <!------------------  Colaboradores do Programa ------------------------>

@@ -11,32 +11,46 @@
                 <!-- DADOS INICIAIS -->
                 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                   
-                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-                        <input [(ngModel)]="fatura.dataVencimento" matInput name="dataVencimento" [matDatepicker]="dataVencimento"
-                                placeholder="Data de vencimento"
-                                required
+                    <mat-form-field fxFlex="120px" fxFlexOffset="20px">
+                        <input [(ngModel)]="fatura.dataVencimento" 
+                               matInput name="dataVencimento" 
+                               [matDatepicker]="dataVencimento"
+                               placeholder="Data de vencimento"
+                               required
                                >
                         <mat-datepicker-toggle matSuffix [for]="dataVencimento">
                         </mat-datepicker-toggle>
                         <mat-datepicker #dataVencimento></mat-datepicker>
-                </mat-form-field>
+                    </mat-form-field>
 
-                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input [(ngModel)]="fatura.valor" currencyMask name="valorFatura" placeholder="Valor da Fatura:" matInput maxlength="13"
-                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" required/>
+                    <mat-form-field fxFlexOffset="20px" fxFlex="120%">
+                        <input [(ngModel)]="fatura.valor" 
+                               currencyMask name="valorFatura" 
+                               placeholder="Valor da Fatura:" 
+                               matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                               required/>
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="10%" >
-                        <input type="number" [(ngModel)]="fatura.numeroParcela" matInput min="0" maxlength="10" name="qtdParcelas"
-                            placeholder="Parcela:" required/>
+                    <mat-form-field fxFlex="50px" >
+                        <input type="number" 
+                               [(ngModel)]="fatura.numeroParcela" 
+                               matInput min="0" 
+                               maxlength="10" name="qtdParcelas"
+                               placeholder="Parcela:" 
+                               required/>
                     </mat-form-field>
-        
-        
                 </div>
         
-                
+                <div fxLayout="row"  fxFlexFill>
+                    <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                        <input [(ngModel)]="fatura.codigoBarra" 
+                               matInput name="codigoBarra"
+                               maxlength="100"
+                               placeholder="Código de barra">
+                    </mat-form-field>
+                </div>
                 
             </form>
             

@@ -29,5 +29,8 @@ export class Projeto {
 	materiaisProjeto:MateriaisProjeto[]
 	contasCentrosCusto:ContasCentrosCusto[];
 	idCoordenador: number;
+	faixaEtariaInicial: number;
+	faixaEtariaFinal: number;
+	objetivoEspecifico: string;
 }
 

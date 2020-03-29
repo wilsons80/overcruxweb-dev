@@ -12,8 +12,9 @@ import { EnderecoService } from 'src/app/services/endereco/endereco.service';
 export class DocumentosComponent implements OnInit {
 
   @Input() pessoaFisica: PessoaFisica;
+  @Input() validaCPF: boolean = true;
 
-  public mascaraCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,];
+  public mascaraCpf = [];
   public mascaraNIS = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/, /\d/, '.', /\d/, /\d/, '-', /\d/];
     
   ufs: any[] = [
@@ -22,12 +23,22 @@ export class DocumentosComponent implements OnInit {
 
   constructor(
     private enderecoService:EnderecoService
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     this.enderecoService.getAllEstados().subscribe((ufs:any)=> {
       this.ufs = ufs;
     });
+
+    if(this.validaCPF) {
+      this.adicionarMascara();
+    }
+  }
+
+
+  adicionarMascara() {
+    this.mascaraCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,];
   }
 
 }

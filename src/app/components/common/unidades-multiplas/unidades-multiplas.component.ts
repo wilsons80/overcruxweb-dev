@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Unidade } from 'src/app/core/unidade';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-unidade.service';
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
 import {UnidadeSelecionadaService} from '../../../services/unidadeSelecionada/unidade-selecionada.service';
@@ -37,14 +36,13 @@ export class UnidadesMultiplasComponent implements OnInit {
 
   isAtualizar = false;
 
-  unidadesComboCadastro: any[];
+  unidadesComboCadastro: Unidade[];
   unidade: Unidade = new Unidade();
   
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
-    private usuarioUnidadeService: UsuarioUnidadeService,
     private unidadeService: UnidadeService,
     private unidadeSelecionadaService: UnidadeSelecionadaService
   ) {
@@ -53,11 +51,11 @@ export class UnidadesMultiplasComponent implements OnInit {
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
-
-    this.usuarioUnidadeService.getUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: any[]) => {
+    
+    this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: Unidade[]) => {
       this.unidadesComboCadastro = unidades;
     });
-
+    
     if (!_.isEmpty(this.unidades)) {
       this.unidadeSelecionadaService.unidadesSelecionadas.emit(this.unidades);
     }

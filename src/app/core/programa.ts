@@ -20,6 +20,7 @@ export class Programa {
 	publicoAlvo:string;
 	justificativa:string;
 	objetivoGeral:string;
+	objetivoEspecifico:string;
 	unidades:Unidade[];
 	colaboradoresPrograma:ColaboradoresPrograma[];
 	parceriasPrograma:ParceriasPrograma[];
