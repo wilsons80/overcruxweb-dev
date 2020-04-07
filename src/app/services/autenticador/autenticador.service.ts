@@ -19,8 +19,9 @@ import { ArquivoUnidadeService } from './../arquivo/arquivo.service';
 import { ToolbarPrincipalService } from './../toolbarPrincipal/toolbar-principal.service';
 import { AcessoUnidade } from 'src/app/core/acesso-unidade';
 import { TempoSessaoService } from '../tempo-sessao/tempo-sessao.service';
-
-
+import { Router } from '@angular/router';
+import 'rxjs-compat/add/operator/finally';
+import { finalize } from 'rxjs/operators'
 
 
 const autenticadorRootPath = 'api/autenticador/';
@@ -36,6 +37,7 @@ export class AutenticadorService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private toolbarPrincipalService: ToolbarPrincipalService,
     private toastService: ToastService,
     private arquivoService: ArquivoUnidadeService,
@@ -59,11 +61,22 @@ export class AutenticadorService {
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
+  private setIdSessaoLoginUsuario() {
+    if(localStorage.getItem('IDSESSIONUSUARIO')) {
+      localStorage.removeItem('IDSESSIONUSUARIO');
+    }
+    localStorage.setItem('IDSESSIONUSUARIO', String(Date.now()));
+  }
+
   get token(): string {
     return localStorage.getItem('token');
   }
 
   login(usuario: Usuario) {
+    this.limparDadosSessao();
+    this.setIdSessaoLoginUsuario();
+    usuario.idsession = localStorage.getItem('IDSESSIONUSUARIO');
+
     return this.http.post(autenticadorRootPath + `login`, usuario).pipe(
       tap(response =>
         this.setSession(response)
@@ -72,13 +85,23 @@ export class AutenticadorService {
     );
   }
 
-
-  logout() {
+  limparDadosSessao() {
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('logo');
     localStorage.removeItem('fotoPerfil');
+    localStorage.removeItem('IDSESSIONUSUARIO');
     this.usuarioEstaLogado = false;
+  }
+
+  logout() {
+    this.limparDadosSessao();
+
+    this.http.post('api/logout', {}).pipe(
+      finalize(() => {
+        this.router.navigateByUrl('/login');
+      })
+    ).subscribe();
   }
 
   revalidarSessao() {

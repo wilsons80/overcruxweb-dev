@@ -1,4 +1,5 @@
 export class Login{
     userName:string;
-	senha:string;
+    senha:string;
+    idsession: string;
 }
