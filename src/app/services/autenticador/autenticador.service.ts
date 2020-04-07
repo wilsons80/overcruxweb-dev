@@ -20,7 +20,6 @@ import { ToolbarPrincipalService } from './../toolbarPrincipal/toolbar-principal
 import { AcessoUnidade } from 'src/app/core/acesso-unidade';
 import { TempoSessaoService } from '../tempo-sessao/tempo-sessao.service';
 import { Router } from '@angular/router';
-import 'rxjs-compat/add/operator/finally';
 import { finalize } from 'rxjs/operators'
 
 
