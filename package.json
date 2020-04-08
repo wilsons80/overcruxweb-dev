@@ -7,6 +7,7 @@
     "producao": "node  --max_old_space_size=512 --gc_interval=100 server.js",
     "desenv": "ng serve --proxy-config proxy.config.js --host 0.0.0.0 --disable-host-check",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "heroku-prebuild": "rm package-lock.json && rm -rf node_modules",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
