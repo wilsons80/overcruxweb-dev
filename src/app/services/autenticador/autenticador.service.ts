@@ -74,6 +74,7 @@ export class AutenticadorService {
   login(usuario: Usuario) {
     this.limparDadosSessao();
     this.setIdSessaoLoginUsuario();
+    
     usuario.idsession = localStorage.getItem('IDSESSIONUSUARIO');
 
     return this.http.post(autenticadorRootPath + `login`, usuario).pipe(
