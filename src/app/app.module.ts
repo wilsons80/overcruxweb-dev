@@ -233,7 +233,7 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: DateAdapter, useClass: ComonsDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: DateAdapter, useClass: ComonsDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT_PT_BR },
   ],
   bootstrap: [AppComponent]
