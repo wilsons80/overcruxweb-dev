@@ -118,7 +118,6 @@ import { AcessoModuloResolver } from './guards/acesso-modulo.resolve';
 import { DATE_FORMAT_PT_BR, ComonsDateAdapter } from './date-config/comons-date-adapter';
 
 
-
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   declarations: [
@@ -225,7 +224,7 @@ registerLocaleData(localePt, 'pt-BR');
     ContasBancariasModule,
     EstoquesModule,
     SaldosContasBancariaModule,
-    PedidosMateriaisModule
+    PedidosMateriaisModule,
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

@@ -1,5 +1,6 @@
 {
   "compileOnSave": false,
+  "allowSyntheticDefaultImports": true,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -15,9 +16,14 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2018",
+      "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "moment" : [
+        "./node_modules/moment/moment.d.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

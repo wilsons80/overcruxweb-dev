@@ -4,7 +4,6 @@ import { ArquivoPessoaFisicaService } from './../arquivo-pessoa-fisica/arquivo-p
 import { HttpClient } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
 import * as jwtDecode from 'jwt-decode';
-import * as moment  from "node_modules/moment/moment.d";
 import { Observable } from 'rxjs';
 import { shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Menu } from 'src/app/core/menu';
@@ -21,6 +20,9 @@ import { AcessoUnidade } from 'src/app/core/acesso-unidade';
 import { TempoSessaoService } from '../tempo-sessao/tempo-sessao.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators'
+import * as moment from 'moment';
+
+
 
 
 const autenticadorRootPath = 'api/autenticador/';
