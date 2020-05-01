@@ -22,7 +22,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -116,18 +115,9 @@ import { SaldosContasBancariaModule } from './components/saldos-contas-bancaria/
 import { PedidosMateriaisModule } from './components/pedidos-materiais/pedidos-materiais.module';
 import { UnidadeResolver } from './guards/unidades.resolve';
 import { AcessoModuloResolver } from './guards/acesso-modulo.resolve';
+import { DATE_FORMAT_PT_BR, ComonsDateAdapter } from './date-config/comons-date-adapter';
 
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MM YYYY',
-    dateA11yLabel: 'DD/MM/YYYY',
-    monthYearA11yLabel: 'MM YYYY',
-  },
-};
+
 
 registerLocaleData(localePt, 'pt-BR');
 @NgModule({
@@ -244,8 +234,8 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: DateAdapter, useClass: MatMomentDateModule, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: DateAdapter, useClass: ComonsDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT_PT_BR },
   ],
   bootstrap: [AppComponent]
 })
