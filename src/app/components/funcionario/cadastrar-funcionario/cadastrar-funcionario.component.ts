@@ -1,4 +1,3 @@
-import { Moment } from "moment";
 import { ArquivoPessoaFisicaService } from './../../../services/arquivo-pessoa-fisica/arquivo-pessoa-fisica.service';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';

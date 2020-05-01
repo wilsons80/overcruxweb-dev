@@ -17,7 +17,7 @@ import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Aluno } from 'src/app/core/aluno';
 import * as _ from 'lodash';
-import { Moment } from "moment";
+import { Moment } from "node_modules/moment/moment";
 
 class FiltroBusca {
   dataReferencia: Moment;

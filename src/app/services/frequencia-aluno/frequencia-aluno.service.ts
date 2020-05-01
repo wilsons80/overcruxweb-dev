@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../base/base.service';
 import { FrequenciaAluno } from 'src/app/core/frequencia-aluno';
 import { Rotas } from 'src/app/core/rotas';
-import { Moment } from "moment";
+import { Moment } from "node_modules/moment/moment";
 
 @Injectable({
   providedIn: 'root'

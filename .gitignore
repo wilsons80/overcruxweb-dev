@@ -6,6 +6,8 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/lib
+
 
 # dependencies
 /node_modules
@@ -50,3 +52,4 @@ Thumbs.db
 npm-debug.log
 .DS_Store
 /.env
+node_modules

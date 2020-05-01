@@ -20,8 +20,7 @@ import { AcessoUnidade } from 'src/app/core/acesso-unidade';
 import { TempoSessaoService } from '../tempo-sessao/tempo-sessao.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators'
-import * as moment from 'moment';
-
+import * as moment from "node_modules/moment/moment";
 
 
 
