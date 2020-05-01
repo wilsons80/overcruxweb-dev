@@ -46,7 +46,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.25.0",
     "ngx-cacheable": "^1.2.2",
     "ngx-currency": "^2.2.2",
     "ngx-image-cropper": "^1.4.1",
