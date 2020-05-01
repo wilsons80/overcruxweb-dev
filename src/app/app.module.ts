@@ -22,7 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -244,7 +244,7 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: DateAdapter, useClass: MatMomentDateModule, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
   bootstrap: [AppComponent]
