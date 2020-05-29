@@ -18,6 +18,8 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { Aluno } from 'src/app/core/aluno';
 import * as _ from 'lodash';
 import { Moment } from "node_modules/moment/moment";
+import * as moment from "node_modules/moment/moment";
+
 
 class FiltroBusca {
   dataReferencia: Moment;
@@ -39,8 +41,9 @@ export class FrequenciaAlunoComponent implements OnInit {
   frequenciaAluno: FrequenciaAluno = new FrequenciaAluno();
   frequenciasAluno: FrequenciaAluno[];
 
-  maxDate = new Date(9999, 12, 31);
-  minDate = new Date(1111, 1, 1);
+  
+  maxDate = moment('9999-12-31', 'YYYY-MM-DD');
+  minDate = moment('1111-1-1', 'YYYY-MM-DD');
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
