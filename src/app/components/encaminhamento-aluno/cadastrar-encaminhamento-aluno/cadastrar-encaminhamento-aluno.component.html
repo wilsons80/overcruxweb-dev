@@ -1,10 +1,10 @@
-<mat-toolbar class="subtitulo">Origem do Aluno</mat-toolbar>
+<mat-toolbar class="subtitulo">Origem do Beneficiário</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
         <mat-toolbar class="titulopartes">Encaminhamento</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="20px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                <mat-label>Selecione um aluno</mat-label>
+                <mat-label>Selecione um Beneficiário</mat-label>
                 <mat-select [(ngModel)]="encaminhamentoAluno.aluno.id" 
                             name="aluno" 
                             (selectionChange)="mostrarDadosAluno($event.value)"

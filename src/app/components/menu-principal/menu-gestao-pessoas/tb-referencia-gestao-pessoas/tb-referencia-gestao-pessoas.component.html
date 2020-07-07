@@ -15,7 +15,10 @@
 
         <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
 
-
+            <!-- ACAO COMPETENCIA -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().ACAO_COMPETENCIA)" icone="directions_walk" titulo="Ações da Competência" rota="acaocompetencia" toolTip="Ações das competências do Talento do Funcionário"></sub-menu>
+            </div>            
 
             <!-- FUNÇÕES --->
             <div style="padding-left: 15px">
@@ -25,6 +28,16 @@
             <!-- COMPETÊNCIA - AINDA NAO TEM -->
             <div style="padding-left: 15px">
                 <sub-menu  *ngIf="verificaAcesso(getModulos().ATRIBUTO_AVALIACAO_DESEMPENHO)" icone="spellcheck" titulo="Atributos da Avaliação de Desempenho" rota="home" toolTip="Atributos da Avaliação de Desempenho"></sub-menu>
+            </div>
+
+            <!-- CBO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().CBO)" icone="copyright" titulo="CBO" rota="cbo" toolTip="Código de Classificação Brasileira de Ocupações"></sub-menu>
+            </div>
+
+            <!-- CURSO DE FORMACAO -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().CURSO_FORMACAO)" icone="library_books" titulo="Curso de Formação" rota="cursoformacao" toolTip="Curso de Formação"></sub-menu>
             </div>
 
             <!-- GRAUS INSTRUCAO -->
@@ -38,18 +51,14 @@
             </div>
 
             <!-- TALENTO -->
-            <div style="padding-left: 15px">
+            <!--div style="padding-left: 15px">
                 <sub-menu *ngIf="verificaAcesso(getModulos().TALENTO)" icone="grade" titulo="Talento" rota="talento" toolTip="Talento"></sub-menu>
+            </div-->
+
+            <!-- TIPOS CONTRATAÇÕES -->
+            <div style="padding-left: 15px">
+                <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_CONTRATACOES)" icone="title" titulo="Tipos contratações" rota="tiposcontratacoes" toolTip="Tipos contratações"></sub-menu>
             </div>
 
-            <!-- CURSO DE FORMACAO -->
-            <div style="padding-left: 15px">
-                <sub-menu *ngIf="verificaAcesso(getModulos().CURSO_FORMACAO)" icone="library_books" titulo="Curso de Formação" rota="cursoformacao" toolTip="Curso de Formação"></sub-menu>
-            </div>
-
-            <!-- ACAO COMPETENCIA -->
-            <div style="padding-left: 15px">
-                <sub-menu *ngIf="verificaAcesso(getModulos().ACAO_COMPETENCIA)" icone="directions_walk" titulo="Ações da Competência" rota="acaocompetencia" toolTip="Ações das competências do Talento do Funcionário"></sub-menu>
-            </div>            
         </div>
     </mat-nav-list>

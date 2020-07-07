@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Matricula de aluno</mat-toolbar>
+<mat-toolbar class="subtitulo">Matricula de beneficiário</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
@@ -68,7 +68,7 @@
             </ng-container>
 
             <ng-container matColumnDef="aluno">
-                <th mat-header-cell *matHeaderCellDef> Aluno </th>
+                <th mat-header-cell *matHeaderCellDef> beneficiário </th>
                 <td mat-cell *matCellDef="let element" style="width: 35%"> {{ element.aluno.pessoaFisica.nome }} </td>
             </ng-container>
 

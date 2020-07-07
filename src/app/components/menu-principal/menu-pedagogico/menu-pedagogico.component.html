@@ -29,44 +29,47 @@
         <sub-menu *ngIf="verificaAcesso(getModulos().OFICINA)" icone="pages" titulo="Oficinas" rota="oficinas"
              toolTip="Oficinas"></sub-menu>            
 
+        <!-- ACOES_ATIVIDADE -->
+        <sub-menu *ngIf="verificaAcesso(getModulos().ACOES_ATIVIDADE)" icone="event_busy"
+            titulo="Ações das Oficinas" rota="acoesoficinas" toolTip="Ações das Oficinas"></sub-menu>
+
         <!-- MATRICULA NA OFICINA -->
         <sub-menu *ngIf="verificaAcesso(getModulos().ATIVIDADE_ALUNO)" icone="sports_handball" titulo="Matrícula na Oficina"
             rota="atividadealuno" toolTip="Matrícula na Oficina"></sub-menu>
 
         <!-- FREQUENCIA ALUNO-->
         <sub-menu *ngIf="verificaAcesso(getModulos().FREQUENCIA_ALUNO)" icone="check_circle_outline"
-            titulo="Frequência do Aluno" rota="frequenciaaluno" toolTip="Frequência do Aluno"></sub-menu>
+            titulo="Frequência do Beneficiário" rota="frequenciaaluno" toolTip="Frequência do Beneficiário"></sub-menu>
 
         <!-- AVALIACAO ALUNO -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ALUNO)" icone="done" titulo="Avaliação do Aluno"
-            rota="avaliacaoaluno" toolTip="Avaliação do Aluno"></sub-menu>
+        <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ALUNO)" icone="done" titulo="Avaliação do Beneficiário"
+            rota="avaliacaoaluno" toolTip="Avaliação do Beneficiário"></sub-menu>
 
         <!-- ALUNO TRABALHANDO -->
         <sub-menu *ngIf="verificaAcesso(getModulos().ALUNO_TRABALHANDO)" icone="accessibility"
             titulo="Cadastro Menor Aprendiz" rota="alunotrabalhando" toolTip="Cadastro Menor Aprendiz"></sub-menu>
 
         <!-- TIPO_OCORRENCIA_ALUNO -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipo de ocorrência do aluno"
-            rota="tipoocorrenciaaluno" toolTip="Tipo de ocorrência do aluno"></sub-menu>
+        <!--sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipo de ocorrência do aluno"
+            rota="tipoocorrenciaaluno" toolTip="Tipo de ocorrência do aluno"></sub-menu-->
 
         <!-- OCORRENCIA_ALUNO -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().OCORRENCIA_ALUNO)" icone="how_to_reg" titulo="Ocorrência do aluno"
-            rota="ocorrenciaaluno" toolTip="Ocorrência do aluno"></sub-menu>
+        <sub-menu *ngIf="verificaAcesso(getModulos().OCORRENCIA_ALUNO)" icone="how_to_reg" titulo="Ocorrência do Beneficiário"
+            rota="ocorrenciaaluno" toolTip="Ocorrência do Beneficiário"></sub-menu>
 
         <!-- NIVEIS TURMAS -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().NIVEIS_TURMAS)" icone="timeline" titulo="Níveis de turmas" 
-            rota="niveisturmas" toolTip="Níveis de Turmas"></sub-menu>
-
-
-        <!-- ACOES_ATIVIDADE -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().ACOES_ATIVIDADE)" icone="event_busy"
-            titulo="Ações das Oficinas" rota="acoesoficinas" toolTip="Ações das Oficinas"></sub-menu>
+        <!--sub-menu *ngIf="verificaAcesso(getModulos().NIVEIS_TURMAS)" icone="timeline" titulo="Níveis de turmas" 
+            rota="niveisturmas" toolTip="Níveis de Turmas"></sub-menu-->
 
             
         <!-- REPROVACAO ALUNO  
         <sub-menu *ngIf="verificaAcesso(getModulos().REPROVACAO_ALUNO)" icone="event_busy"
             titulo="Reprovações do Aluno " rota="reprovacaoaluno" toolTip="Reprovações do Aluno"></sub-menu>
         -->
+
+        <!-- TABELAS REFERENCIA -->
+        <tb-referencia-pedagogico></tb-referencia-pedagogico>
+
 
     </div>
 </mat-nav-list>

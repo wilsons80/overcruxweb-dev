@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Cadastro de Ocorrência de Aluno</mat-toolbar>
+<mat-toolbar class="subtitulo">Cadastro de Ocorrência de Beneficiário</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
@@ -7,7 +7,7 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                <mat-label>Selecione um aluno</mat-label>
+                <mat-label>Selecione um beneficiário</mat-label>
                 <mat-select [(ngModel)]="ocorrenciaAluno.aluno.id" name="aluno" [disabled]=isAtualizar
                     (selectionChange)=mostrarDadosAluno($event.value) required>
                     <mat-option></mat-option>
@@ -15,7 +15,7 @@
                         {{d.pessoaFisica.nome}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="listaDeAlunos?.length === 0" align="start">Nenhum aluno cadastrado</mat-hint>
+                <mat-hint *ngIf="listaDeAlunos?.length === 0" align="start">Nenhum ben cadastrado</mat-hint>
             </mat-form-field>
 
             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
