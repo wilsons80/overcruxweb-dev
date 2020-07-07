@@ -31,7 +31,7 @@
             </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
-                <button mat-raised-button fxFlex="10%" (click)="consultar()" *ngIf="filtroBusca.atividade.id">
+                <button mat-raised-button fxFlex="10%" (click)="consultar()" *ngIf="filtroBusca.atividade && filtroBusca.atividade.id">
                     CONSULTAR
                 </button>
                 <button mat-raised-button fxFlex="10%" style="padding-right: 20px" (click)="limpar()">
@@ -39,7 +39,7 @@
                 </button>
             </div>
 
-            <div *ngIf="filtroBusca.atividade.id">
+            <div *ngIf="filtroBusca.atividade && filtroBusca.atividade.id">
                 <dados-atividade [atividade]="filtroBusca.atividade"></dados-atividade>
             </div>
 

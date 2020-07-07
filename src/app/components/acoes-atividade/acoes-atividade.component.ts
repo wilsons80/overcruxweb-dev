@@ -119,13 +119,15 @@ export class AcoesAtividadeComponent implements OnInit {
   }
 
   carregarTurmas() {
-    this.turmaService.getFilter(null, null, this.unidadeSelecionada.idUnidade).subscribe((turmas: Turmas[]) => {
-      this.turmasCombo = turmas;
-    });
+    if(this.unidadeSelecionada) {
+      this.turmaService.getFilter(null, null, this.unidadeSelecionada.idUnidade).subscribe((turmas: Turmas[]) => {
+        this.turmasCombo = turmas;
+      });
+    }
   }
 
   carregarOficinas() {
-    if(this.turmaSelecionada.id) {
+    if(this.turmaSelecionada && this.turmaSelecionada.id) {
       this.oficinaService.getByTurma(this.turmaSelecionada.id).subscribe((oficinas: Atividade[]) => {
         this.oficinasCombo = oficinas;
       });
