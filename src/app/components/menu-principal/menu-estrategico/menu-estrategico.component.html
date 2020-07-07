@@ -1,8 +1,8 @@
 <a mat-list-item (click)="toggle()" >
     <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}">
-        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Gestão de Desempenho">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Desempenho Institucional">
             <mat-icon>highlight</mat-icon>
-            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Gestão de Desempenho</span>
+            <span *ngIf="menuPrincipalService.expandido"  class="nav-caption">Desempenho Institucional</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="start stretch">
             <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
