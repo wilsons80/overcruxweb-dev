@@ -8,13 +8,12 @@
                placeholder="CPF:"
                maxlength="11"
                type="text" 
-               pattern="\d*"
                *ngIf="!validaCPF">
 
         <input matInput 
                [(ngModel)]="pessoaFisica.cpf" 
                name="cpf" 
-               placeholder="CPF aasdfasdfa:" 
+               placeholder="CPF:" 
                [textMask]="{mask: mascaraCpf}"
                [cpfValidator] 
                [required]=validaCPF

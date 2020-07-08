@@ -42,7 +42,7 @@ export class PessoaFisica{
     nomePai:string;
     cep:number;
     identidade:string;
-    cpf:number;
+    cpf:string;
     cts:string;
     celular:string;
     nis:string;

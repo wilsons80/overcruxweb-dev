@@ -120,7 +120,7 @@ export class CadastarAlunoComponent implements OnInit {
     this.tratarDados();
 
     if (this.aluno.pessoaFisica.cpf === null) {
-      this.aluno.pessoaFisica.cpf = this.aluno.id;
+      this.aluno.pessoaFisica.cpf = String(this.aluno.id);
     }
 
     this.alunoService.alterar(this.aluno).pipe(
