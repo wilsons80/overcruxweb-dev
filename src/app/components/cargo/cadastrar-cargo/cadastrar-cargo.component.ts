@@ -1,7 +1,7 @@
 import { Cbo } from './../../../core/cbo';
 import { CboService } from './../../../services/cbo/cbo.service';
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Cargo } from 'src/app/core/cargo';
 import { CargosService } from 'src/app/services/cargos/cargos.service';
@@ -15,7 +15,8 @@ import { Acesso } from 'src/app/core/acesso';
   styleUrls: ['./cadastrar-cargo.component.css']
 })
 export class CadastrarCargoComponent implements OnInit {
-
+  @ViewChild('formCadastro', { static: false }) formCadastro;
+  
   cargo: Cargo = new Cargo();
 
   cbos: Cbo[] = [];
@@ -59,6 +60,10 @@ export class CadastrarCargoComponent implements OnInit {
       this.isAtualizar = true;
       this.cargoService.getById(idCargo).subscribe((cargo: Cargo) => {
         this.cargo = cargo;
+
+        if( !this.cargo.cbo) {
+          this.cargo.cbo = new Cbo();
+        }
       });
     }
 
