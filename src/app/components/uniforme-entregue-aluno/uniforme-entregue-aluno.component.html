@@ -15,7 +15,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <button mat-raised-button fxFlex="10%" (click)="consultar()" *ngIf="filtroBusca.atividade.id">
+                <button mat-raised-button fxFlex="10%" (click)="consultar()" *ngIf="filtroBusca.atividade && filtroBusca.atividade.id">
                     CONSULTAR
                 </button>
 
@@ -25,7 +25,7 @@
 
             </div>
 
-            <div *ngIf="filtroBusca.atividade.id">
+            <div *ngIf="filtroBusca.atividade && filtroBusca.atividade.id">
                 <dados-atividade [atividade]=filtroBusca.atividade></dados-atividade>
             </div>
 
@@ -93,17 +93,15 @@
                             <ng-template #comboDataEntregaTemplate>
                                 <mat-form-field>
                                     <input matInput
-                                        [disabled]="element.disabilitado"
-                                        [max]="maxDate"
-                                        [min]="minDate"
-                                        #datareferencia="ngModel"
-                                        [matDatepicker]="datareferencia"
-                                        [ngModelOptions]="{standalone: true}"
-                                        [(ngModel)]="element.dataUniformeEntregue">
+                                           [disabled]="element.disabilitado"
+                                           name="dataUniformeEntregue"
+                                           [max]="maxDate"
+                                           [min]="minDate"
+                                           [matDatepicker]="datareferencia"
+                                           [(ngModel)]="element.dataUniformeEntregue">
                                     <mat-datepicker-toggle matSuffix [for]="datareferencia"></mat-datepicker-toggle>
                                     <mat-datepicker #datareferencia></mat-datepicker>
                                 </mat-form-field>
-
                             </ng-template>
                     </td>
                 </ng-container>
@@ -157,7 +155,7 @@
             </div>
         </div>
 
-        <div fxLayout="row" *ngIf="perfilAcesso.insere && filtroBusca.atividade.id"
+        <div fxLayout="row" *ngIf="perfilAcesso.insere && filtroBusca.atividade && filtroBusca.atividade.id"
              fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
             <div>
                 <button matTooltip="Adicionar nova entrega de uniforme" mat-fab color="primary" (click)="novo()">
