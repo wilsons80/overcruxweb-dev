@@ -22,8 +22,8 @@
             rota="matriculas" toolTip="Matrícula na Turma"></sub-menu>
 
         <!-- AVALIACAO ATIVIDADE -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ATIVIDADE)" icone="done_all"
-            titulo="Avaliação da Turma" rota="avaliacaoatividade" toolTip="Avaliação da Turma"></sub-menu>
+        <!--sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ATIVIDADE)" icone="done_all"
+            titulo="Avaliação da Turma" rota="avaliacaoatividade" toolTip="Avaliação da Turma"></sub-menu-->
 
         <!-- OFICINA -->
         <sub-menu *ngIf="verificaAcesso(getModulos().OFICINA)" icone="pages" titulo="Oficinas" rota="oficinas"
@@ -47,7 +47,7 @@
 
         <!-- ALUNO TRABALHANDO -->
         <sub-menu *ngIf="verificaAcesso(getModulos().ALUNO_TRABALHANDO)" icone="accessibility"
-            titulo="Cadastro Menor Aprendiz" rota="alunotrabalhando" toolTip="Cadastro Menor Aprendiz"></sub-menu>
+            titulo="Cadastro de Aprendiz" rota="alunotrabalhando" toolTip="Cadastro de Aprendiz"></sub-menu>
 
         <!-- TIPO_OCORRENCIA_ALUNO -->
         <!--sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipo de ocorrência do aluno"

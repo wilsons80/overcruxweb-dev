@@ -15,18 +15,24 @@
 
     <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
 
-        <!-- TIPO_OCORRENCIA_ALUNO -->
-        <div style="padding-left: 15px">
-            <sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipos de ocorrências"
-            rota="tipoocorrenciaaluno" toolTip="Tipos de ocorrências"></sub-menu>
-        </div>
-
-
         <!-- NIVEIS TURMAS -->
         <div style="padding-left: 15px">
             <sub-menu *ngIf="verificaAcesso(getModulos().NIVEIS_TURMAS)" icone="timeline" titulo="Níveis de turmas" 
             rota="niveisturmas" toolTip="Níveis de Turmas"></sub-menu>
         </div>
+
+        <!-- AVALIACAO ATIVIDADE -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().AVALIACAO_ATIVIDADE)" icone="done_all"
+            titulo="Tipos de Avaliações" rota="avaliacaoatividade" toolTip="Tipos de Avaliações"></sub-menu>
+        </div>
+
+            <!-- TIPO_OCORRENCIA_ALUNO -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipos de ocorrências"
+            rota="tipoocorrenciaaluno" toolTip="Tipos de ocorrências"></sub-menu>
+        </div>
+
 
     </div>
 </mat-nav-list>

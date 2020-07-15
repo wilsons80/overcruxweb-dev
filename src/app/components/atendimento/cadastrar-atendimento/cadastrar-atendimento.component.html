@@ -18,9 +18,9 @@
 
             <!-- ALUNO -->
             <div fxLayout="column" fxFlex="80%">
-                <mat-toolbar class="titulopartes">Aluno</mat-toolbar>
+                <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
                 <mat-form-field style="margin: 0 20px 20px 20px">
-                    <mat-label>Alunos:</mat-label>
+                    <mat-label>Beneficiários:</mat-label>
                     <mat-select [(ngModel)]="atendimento.aluno.id" name="aluno" required
                         (selectionChange)="mostrarDadosAluno($event.value)">
                         <mat-option></mat-option>
@@ -28,7 +28,7 @@
                             {{i.pessoaFisica.nome}}
                         </mat-option>
                     </mat-select>
-                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum aluno
+                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum Beneficiário
                         cadastrado</mat-hint>
                 </mat-form-field>
             </div>

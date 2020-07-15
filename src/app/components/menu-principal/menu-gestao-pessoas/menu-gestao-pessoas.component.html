@@ -16,27 +16,29 @@
        <!-- COLABORADORES -->
        <sub-menu *ngIf="verificaAcesso(getModulos().FUNCIONARIO)" icone="accessibility" titulo="Colaboradores" rota="funcionario" toolTip="Colaboradores"></sub-menu>
 
+       <!-- CARGO -->
+       <sub-menu  *ngIf="verificaAcesso(getModulos().CARGO)" icone="view_compact" titulo="Cargos e Salários" rota="cargo" toolTip="Cargos e Salários"></sub-menu>
+
        <!-- CONTROLE DE FREQUENCIA-->
        <sub-menu *ngIf="verificaAcesso(getModulos().FALTAS_FUNCIONARIO)" icone="warning" titulo="Controle de Frequência" rota="faltasfuncionario" toolTip="Controle de Frequência"></sub-menu>
-       
+
+       <!-- CONTROLE_PPRA_PCMSO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().CONTROLE_PPRA_PCMSO)" icone="drag_indicator" titulo="Controle PPRA/PCMSO" rota="home" toolTip="Controle PPRA/PCMSO"></sub-menu>
+
+       <!-- CURSO DE FORMACAO -->
+       <sub-menu *ngIf="verificaAcesso(getModulos().CURSO_FORMACAO)" icone="library_books" titulo="Formação do Colaborador" rota="cursoformacao" toolTip="Formação do Colaborador"></sub-menu>
+
        <!-- PLANO DE CARGO E SALARIO --> 
        <sub-menu *ngIf="verificaAcesso(getModulos().PLANO_CARGO_SALARIO)" icone="attach_money" titulo="Plano de Cargos e Salários" rota="home" toolTip="Plano de Cargos e Salários"></sub-menu>
-
-       <!-- SUB MENU GESTAO DESEMPENHO-->
-       <sub-menu-gestao-desempenho></sub-menu-gestao-desempenho>
 
        <!-- PLANO DE TREINAMENTO -->
        <sub-menu *ngIf="verificaAcesso(getModulos().PLANO_DESENVOLVIMENTO_INDIVIDUAL)" icone="assignment" titulo="Plano de Treinamento" rota="home" toolTip="Plano de Treinamento"></sub-menu>
        
-       <!-- CONTROLE_PPRA_PCMSO -->
-       <sub-menu *ngIf="verificaAcesso(getModulos().CONTROLE_PPRA_PCMSO)" icone="drag_indicator" titulo="Controle PPRA/PCMSO" rota="home" toolTip="Controle PPRA/PCMSO"></sub-menu>
-
-       <!-- CARGO -->
-       <sub-menu  *ngIf="verificaAcesso(getModulos().CARGO)" icone="view_compact" titulo="Cargos e Salários" rota="cargo" toolTip="Cargos e Salários"></sub-menu>
-
         <!-- TALENTO -->
         <sub-menu *ngIf="verificaAcesso(getModulos().TALENTO)" icone="grade" titulo="Talentos" rota="talento" toolTip="Talentos"></sub-menu>
        
+       <!-- SUB MENU GESTAO DESEMPENHO-->
+       <sub-menu-gestao-desempenho></sub-menu-gestao-desempenho>
 
        <!-- TABELAS REFERENCIA -->
        <tb-referencia-gestao-pessoas></tb-referencia-gestao-pessoas>
