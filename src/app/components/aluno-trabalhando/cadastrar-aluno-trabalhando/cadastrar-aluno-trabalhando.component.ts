@@ -7,6 +7,8 @@ import { AlunoTrabalhandoService } from 'src/app/services/aluno-trabalhando/alun
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
+import { EmpresaService } from 'src/app/services/empresa/empresa.service';
+import { Empresa } from 'src/app/core/empresa';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
   alunos: Aluno[];
   alunoTrabalhando: AlunoTrabalhando = new AlunoTrabalhando();
 
+  empresas: Empresa[];
 
   perfilAcesso: Acesso;
   mostrarBotaoCadastrar = true
@@ -28,6 +31,7 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
   constructor(
     private alunoService: AlunoService,
+    private empresaService: EmpresaService,
     private alunoTrabalhandoService: AlunoTrabalhandoService,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
@@ -37,8 +41,8 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.alunoTrabalhando.aluno = new Aluno();
+    this.alunoTrabalhando.empresa = new Empresa();
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
@@ -52,7 +56,12 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
     this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
       this.alunos = alunos;
-    })
+    });
+
+    this.empresaService.getAll().subscribe((empresas: Empresa[]) => {
+      this.empresas = empresas;
+    });
+
 
     let idAlunoTrabalhando: number;
     idAlunoTrabalhando = this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando ? this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando : null;

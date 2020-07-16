@@ -68,7 +68,7 @@ export class FaltasFuncionarioComponent implements OnInit {
     this.faltasFuncionarioService.getPorFuncionario(this.funcionario.id).subscribe((faltasFuncionario: FaltasFuncionario[]) => {
       if (!faltasFuncionario) {
         this.mostrarTabela = false
-        this.msg = "Nenhum registro para a pesquisa selecionada"
+        this.msg = "Nenhuma falta para o funcionário selecionado."
       } else {
         this.dataSource.data = faltasFuncionario;
         this.mostrarTabela = true;

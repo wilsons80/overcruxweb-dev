@@ -22,7 +22,7 @@ import * as moment from "node_modules/moment/moment";
 
 
 class FiltroBusca {
-  dataReferencia: Moment;
+  dataReferencia: Date;
   atividade: Atividade = new Atividade();
 }
 
@@ -193,7 +193,7 @@ export class FrequenciaAlunoComponent implements OnInit {
       this.frequenciasAluno = [];
     }
 
-    this.frequenciaAluno.dataFrequencia = this.filtroBusca.dataReferencia.toDate();
+    this.frequenciaAluno.dataFrequencia = this.filtroBusca.dataReferencia;
     this.frequenciaAluno.frequencia = true;
 
     this.frequenciasAluno.push(this.frequenciaAluno);

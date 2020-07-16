@@ -58,8 +58,10 @@ export class CadastroReservaAtividadeComponent implements OnInit {
 
     this.cadastroReservaAtividadeService.getAll().subscribe(
       (cadastroReservaAtividade: CadastroReservaAtividade[]) => {
-        this.dataSource.data = cadastroReservaAtividade;
-        this.mostrarTabela = true;
+        if(cadastroReservaAtividade && cadastroReservaAtividade.length > 0) {
+          this.dataSource.data = cadastroReservaAtividade;
+          this.mostrarTabela = true;
+        }
       });
   }
 

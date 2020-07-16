@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Avaliação de aluno</mat-toolbar>
+<mat-toolbar class="subtitulo">Avaliação do Beneficiário</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formulario="ngForm">
@@ -82,7 +82,7 @@
                    style="margin-top: 10px">
 
                 <ng-container matColumnDef="aluno">
-                    <th mat-header-cell *matHeaderCellDef> Aluno </th>
+                    <th mat-header-cell *matHeaderCellDef> Beneficiário </th>
                     <td mat-cell *matCellDef="let element;  let i = index" style="width: 280px">
                         {{element.atividadesAluno.aluno?.pessoaFisica?.nome}}
                     </td>

@@ -1,4 +1,5 @@
 import {Aluno} from './aluno';
+import { Empresa } from './empresa';
 
 export class AlunoTrabalhando {
 	id: number;
@@ -7,5 +8,6 @@ export class AlunoTrabalhando {
 	dataInicioAlunoTrabalhando: Date;
 	nomeEmpreendimento: string;
 	aluno: Aluno;
+	empresa: Empresa;
 	usuarioAlteracao: number;
 }

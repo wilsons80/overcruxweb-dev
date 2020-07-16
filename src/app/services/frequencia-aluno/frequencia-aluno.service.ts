@@ -14,21 +14,21 @@ export class FrequenciaAlunoService extends BaseService<FrequenciaAluno> {
     super(http, Rotas.FREQUENCIA_ALUNO);
   }
 
-  alterarAll(frequenciasAluno: FrequenciaAluno[], idAtividade: number, dataReferencia: Moment) {
+  alterarAll(frequenciasAluno: FrequenciaAluno[], idAtividade: number, dataReferencia: Date) {
     return this.http.put(`${Rotas.FREQUENCIA_ALUNO}matriculado/atividade/${idAtividade}`, frequenciasAluno, { params: {
-      datafrequencia: `${dataReferencia.toDate().getTime()}`   }
+      datafrequencia: `${dataReferencia.getTime()}`   }
     });
   }
 
-  getListaFrequencia(idAtividade: number, dataReferencia: Moment) {
+  getListaFrequencia(idAtividade: number, dataReferencia: Date) {
     return this.http.get(Rotas.FREQUENCIA_ALUNO + 'frequencia/atividade/' + idAtividade, { params: {
-      datafrequencia: `${dataReferencia.toDate().getTime()}`   }
+      datafrequencia: `${dataReferencia.getTime()}`   }
     });
   }
 
-  getAlunosMatriculados(idAtividade: number, dataReferencia: Moment) {
+  getAlunosMatriculados(idAtividade: number, dataReferencia: Date) {
     return this.http.get(Rotas.FREQUENCIA_ALUNO + 'matriculado/atividade/' + idAtividade, { params: {
-      datafrequencia: `${dataReferencia.toDate().getTime()}`   }
+      datafrequencia: `${dataReferencia.getTime()}`   }
     });
   }
 }

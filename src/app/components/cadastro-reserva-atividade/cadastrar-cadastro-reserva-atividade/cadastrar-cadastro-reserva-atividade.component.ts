@@ -49,7 +49,6 @@ export class CadastrarCadastroReservaAtividadeComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.cadastroReserva.pessoasFisica = new PessoaFisica();
     this.cadastroReserva.atividade = new Atividade();
 
     this.pessoaService.getAll().subscribe((pessoas: PessoaFisica[]) => {
@@ -82,7 +81,7 @@ export class CadastrarCadastroReservaAtividadeComponent implements OnInit {
   cadastrar() {
     this.cadastroReservaAtividadeService.cadastrar(this.cadastroReserva).subscribe(() => {
       this.router.navigate(['cadastroreservaatividade']);
-      this.toastService.showSucesso("Cadastro de Reserva da Atividade cadastrado com sucesso");
+      this.toastService.showSucesso("Cadastro de Reserva da Atividade realizado com sucesso.");
     });
   }
 
@@ -99,12 +98,15 @@ export class CadastrarCadastroReservaAtividadeComponent implements OnInit {
   atualizar() {
     this.cadastroReservaAtividadeService.alterar(this.cadastroReserva).subscribe(() => {
       this.router.navigate(['cadastroreservaatividade']);
-      this.toastService.showSucesso("Cadastro de Reserva da Atividade atualizado com sucesso");
+      this.toastService.showSucesso("Cadastro de reserva da atividade atualizado com sucesso.");
     });
 
   }
 
   mostrarDadosAtividade(idAtividade: number) {
-    this.cadastroReserva.atividade = _.cloneDeep(_.find(this.atividades, (ati: Atividade) => ati.id === idAtividade));
+    this.cadastroReserva.atividade = new Atividade();
+    if(idAtividade) {
+      this.cadastroReserva.atividade = _.cloneDeep(_.find(this.atividades, (ati: Atividade) => ati.id === idAtividade));
+    }
   }
 }
