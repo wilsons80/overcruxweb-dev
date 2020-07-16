@@ -7,11 +7,10 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Unidade } from 'src/app/core/unidade';
 import { Empresa } from 'src/app/core/empresa';
 import { Departamento } from 'src/app/core/departamento';
-import { Programa } from 'src/app/core/programa';
-import { Projeto } from 'src/app/core/projeto';
-import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { Banco } from 'src/app/core/banco';
+import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -28,17 +27,32 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
     private movimentacoesService: MovimentacoesService,
     private autenticadorService: AutenticadorService
-  ) { }
+  ) {
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+    
     this.inicializarObjetos();
    
+    if (!this.perfilAcesso.insere){
+      this.mostrarBotaoCadastrar = false;
+    }
+
+    if (!this.perfilAcesso.altera){
+      this.mostrarBotaoAtualizar = false;
+    }
+    
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
@@ -83,7 +97,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       .subscribe( (movimentacao: Movimentacoes) => {
         this.movimentacoes = movimentacao;
       });
-
     });
 
   }
@@ -93,8 +106,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.unidade = new Unidade();
     this.movimentacoes.empresa = new Empresa();
     this.movimentacoes.departamento = new Departamento();
-    this.movimentacoes.programa = new Programa();
-    this.movimentacoes.projeto = new Projeto();
+    this.movimentacoes.rateios = []
     this.movimentacoes.itensMovimentacoes = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];

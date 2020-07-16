@@ -15,6 +15,8 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
 import * as _ from 'lodash';
+import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
+import { Acesso } from 'src/app/core/acesso';
 
 
 @Component({
@@ -26,6 +28,7 @@ import * as _ from 'lodash';
 export class DadosMovimentacaoComponent implements OnInit {
 
   @Input() movimentacoes:Movimentacoes;
+  @Input() perfilAcesso: Acesso;
 
   empresas:Empresa[];
   projetos:Projeto[];
@@ -37,7 +40,8 @@ export class DadosMovimentacaoComponent implements OnInit {
   tiposMovimentacao = [
     {id: 'E', descricao: 'ENTRADA'},
     {id: 'S', descricao: 'SAÍDA'}
-  ]
+  ];
+
 
   constructor(
     private empresaService: EmpresaService,
@@ -96,5 +100,34 @@ export class DadosMovimentacaoComponent implements OnInit {
       this.movimentacoes.contaBancaria = _.cloneDeep(_.find(this.contasBancarias,  (c: ContasBancaria) => c.id === this.movimentacoes.contaBancaria.id));
     }
   }
- 
+
+  
+  addRateio() {
+    if (!this.movimentacoes.rateios) {
+      this.movimentacoes.rateios = [];
+    }
+
+    const rateio:any = new RateiosMovimentacoes();
+    rateio.programa = new Programa();
+    rateio.projeto  = new Projeto();
+    rateio.placeHolderRateio = 'Valor do rateio';
+
+    this.movimentacoes.rateios.push(rateio);
+  }
+
+  deletarRateio(index){
+    this.movimentacoes.rateios.splice(index, 1);
+  }
+
+
+  onCampoPorcentagem(rateio: any) {
+    rateio.statusPercentual = !rateio.statusPercentual;
+
+    if(rateio.statusPercentual) {
+      rateio.placeHolderRateio = 'Porcentagem';
+    } else {
+      rateio.placeHolderRateio = 'Valor do rateio';
+    }
+  }
+
 }

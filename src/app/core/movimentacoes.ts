@@ -7,6 +7,7 @@ import { Unidade } from './unidade';
 import { Fatura } from './fatura';
 import { PagamentosFatura } from './pagamentos-fatura';
 import { ContasBancaria } from './contas-bancaria';
+import { RateiosMovimentacoes } from './rateios-movimentacoes';
 
 export class Movimentacoes{
     id:number;
@@ -17,14 +18,13 @@ export class Movimentacoes{
 	nrDocumento:string;
 	dataDocumento:Date;
 	valorMovimentacao:number;
-	programa:Programa;
-	projeto:Projeto;
 	unidade:Unidade;
 	departamento:Departamento;
 	qtdParcelas:number;
 	itensMovimentacoes:ItensMovimentacoes[]
 	faturas:Fatura[]
 	pagamentosFatura:PagamentosFatura[];
+	rateios: RateiosMovimentacoes[];
 
     valorISS:number;
 	valorICMS:number;
