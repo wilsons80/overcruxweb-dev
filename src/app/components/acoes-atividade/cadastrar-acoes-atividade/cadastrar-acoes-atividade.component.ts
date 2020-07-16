@@ -96,6 +96,23 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
   atualizar() {
     if (!this.validarDatas() ) { return; }
 
+    if(this.acoes.materiaisAcao) {
+      const temQuantidadeInvalida = this.acoes.materiaisAcao.find(m => !m.quantidadeMaterial || m.quantidadeMaterial === 0);
+      if(temQuantidadeInvalida) {
+        this.toastService.showSucesso('Existem materiais com quantidade não informada ou com valor zero(0)');
+        return;
+      }
+
+
+      const materiaisTemp = this.acoes.materiaisAcao.map(m => m.material.nome);
+      const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+      const jaExiste = findDuplicates(materiaisTemp);
+      if(jaExiste && jaExiste.length) {
+        this.toastService.showAlerta('Existem materiais duplicados na oficina.');
+        return;
+      }
+    }
+
     this.acoesAtividadeService.alterar(this.acoes).subscribe(() => {
       this.router.navigate(['acoesoficinas']);
       this.toastService.showSucesso('Ações atividade atualizada com sucesso');

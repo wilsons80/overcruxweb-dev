@@ -4,6 +4,7 @@ import { MateriaisAcao } from 'src/app/core/materiais-acao';
 import { Material } from 'src/app/core/material';
 import { MaterialService } from 'src/app/services/material/material.service';
 import * as _ from 'lodash';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'cadastrar-materiais-acao',
@@ -19,7 +20,8 @@ export class CadastrarMateriaisAcaoComponent implements OnInit {
 
   isAtualizar = false;
 
-  constructor(private materialService: MaterialService) { }
+  constructor(private materialService: MaterialService,
+              private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.initObjeto();
@@ -51,9 +53,20 @@ export class CadastrarMateriaisAcaoComponent implements OnInit {
       Object.assign(materiaisAcao, this.materialAcao);
       materiaisAcao.idAcao = this.acao.id;
 
+
+      if(!this.materialAcao.quantidadeMaterial || this.materialAcao.quantidadeMaterial <= 0) {
+        this.toastService.showAlerta('A quantidade do material deve ser maior que zero (0).');
+        return;
+      }
+
+      const jaExiste = this.acao.materiaisAcao.find(m => m.material.nome === this.materialAcao.material.nome);
+      if(jaExiste) {
+        this.toastService.showAlerta('Esse material já está incluso na oficina.');
+        return;
+      }
+
       this.acao.materiaisAcao.push(materiaisAcao);
       this.initObjeto();
-
   }
 
   atualizar() {
