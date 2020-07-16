@@ -6,14 +6,20 @@
         <mat-toolbar class="titulopartes">Dados</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                <input #codigo 
+                <input #codigo
+                       matInput 
+                       maxlength="10"  
+                       name="codigo" 
+                       placeholder="Código" 
+                       [(ngModel)]="nivelTurma.codigo" required>
+                <!--input #codigo 
                        matInput 
                        maxlength="10" 
                        name="codigo" 
                        placeholder="Código" 
                        [(ngModel)]="nivelTurma.codigo"
                        pattern="[0-9]+$"
-                       required>
+                       required-->
                 <mat-hint align="end">{{codigo.value.length}} / 10</mat-hint>
             </mat-form-field>
         </div>

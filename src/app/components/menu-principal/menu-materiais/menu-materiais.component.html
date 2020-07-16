@@ -13,13 +13,13 @@
     <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
 
     <!-- MATERIAL -->
-    <sub-menu *ngIf="verificaAcesso(getModulos().MATERIAL)" icone="collections_bookmark" titulo="Cadastro de Materiais" rota="material" toolTip="Cadastro de Materiais"></sub-menu>
+    <sub-menu *ngIf="verificaAcesso(getModulos().MATERIAL)" icone="collections_bookmark" titulo="Bens Permanentes e de Consumo" rota="material" toolTip="Bens Permanentes e de Consumo"></sub-menu>
 
     <!-- COTACOES_MATERIAIS -->
-    <sub-menu *ngIf="verificaAcesso(getModulos().COTACOES_MATERIAIS)" icone="trending_up" titulo="Cotações Materiais" rota="cotacoesmateriais" toolTip="Cotações de Materiais"></sub-menu>
+    <sub-menu *ngIf="verificaAcesso(getModulos().COTACOES_MATERIAIS)" icone="trending_up" titulo="Cotações" rota="cotacoesmateriais" toolTip="Cotações"></sub-menu>
 
     <!-- MOVIMENTACOES_MATERIAIS -->
-    <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES_MATERIAIS)" icone="sync_alt" titulo="Movimentações Materiais" rota="movimentacoesmateriais" toolTip="Movimentações de Materiais"></sub-menu>
+    <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES_MATERIAIS)" icone="sync_alt" titulo="Movimentações Bens" rota="movimentacoesmateriais" toolTip="Movimentações de Bens"></sub-menu>
    
     <!-- PEDIDOS_MATERIAIS -->
     <sub-menu *ngIf="verificaAcesso(getModulos().PEDIDOS_MATERIAIS)" icone="shopping_basket" titulo="Pedidos Materiais" rota="pedidosmateriais" toolTip="Pedidos Materiais"></sub-menu>

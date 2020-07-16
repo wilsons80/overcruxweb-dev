@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Cadastro Material</mat-toolbar>
+<mat-toolbar class="subtitulo">Cadastro Bens Permanente e de Consumo</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
      <form #formCadastro="ngForm">
@@ -18,7 +18,7 @@
                </mat-form-field>
           
                <mat-form-field fxFlex="70%">
-                    <input #nome matInput maxlength="200" name="nome" placeholder="Nome do Material:"
+                    <input #nome matInput maxlength="200" name="nome" placeholder="Nome do Bem:"
                          [(ngModel)]="material.nome" required>
                     <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
                </mat-form-field>
@@ -66,7 +66,7 @@
           <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
                <mat-form-field fxFlex="50%" fxFlexOffset="20px">
-                    <input  #nomeMaterialNotafiscal  matInput maxlength="200" name="nomeMaterialNotafiscal" placeholder="Nome Material Nota Fiscal:"
+                    <input  #nomeMaterialNotafiscal  matInput maxlength="200" name="nomeMaterialNotafiscal" placeholder="Nome Bem na Nota Fiscal:"
                          [(ngModel)]="material.nomeNotaFiscal">
                          <mat-hint align="end">{{nomeMaterialNotafiscal.value.length}} / 200</mat-hint>
                </mat-form-field>

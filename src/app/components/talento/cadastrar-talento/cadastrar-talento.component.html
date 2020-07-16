@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Cadastrar Talentos do Funcionário</mat-toolbar>
+<mat-toolbar class="subtitulo">Cadastrar Talentos do Colaborador</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
@@ -6,9 +6,9 @@
          <!-- FUNCIONÁRIO -->
          <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <div fxLayout="column" fxFlex="50%" fxLayoutAlign="center stretch" fxFlexFill>
-                <mat-toolbar class="titulopartes">Funcionário</mat-toolbar>
+                <mat-toolbar class="titulopartes">Colaborador</mat-toolbar>
                 <mat-form-field fxFlex="80%" style="margin-left: 20px; margin-right: 20px">
-                    <mat-label>Seleciona um funcionário:</mat-label>
+                    <mat-label>Seleciona um Colaborador:</mat-label>
                     <mat-select [(ngModel)]="talento.funcionario.id" name="funcionario"
                         (selectionChange)="mostrarFuncionario($event.value)" required>
                         <mat-option></mat-option>
@@ -16,7 +16,7 @@
                             {{o.pessoasFisica.nome}}
                         </mat-option>
                     </mat-select>
-                    <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
+                    <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum colcaborador cadastrado</mat-hint>
                 </mat-form-field>
             </div>
 
