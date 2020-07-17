@@ -74,6 +74,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   }
 
   cadastrar() {
+    if( !this.isValorTotalRateioValido() ) {return;}
+
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe(() => {
       this.router.navigate(['movimentacoes']);
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
@@ -92,8 +94,31 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     return this.isAtualizar ? 'Atualizar' : 'Cadastrar';
   }
 
+  isValorTotalRateioValido() {
+    let valorMovimentacao = this.movimentacoes.valorMovimentacao;
+
+    let valorTotal = 0;
+    this.movimentacoes.rateios.forEach(rateio => {
+      if(rateio.valorRateio) {
+        if(rateio.statusPercentual) {
+          valorTotal += (valorMovimentacao *  rateio.valorRateio)/100;
+        } else {
+          valorTotal += rateio.valorRateio;
+        }
+      }
+    });
+
+    if(valorTotal > valorMovimentacao) {
+      this.toastService.showSucesso('O valor do rateio está superior ao valor do movimento.');
+      return false;
+    }
+
+    return true;
+  }
 
   atualizar() {
+    if( !this.isValorTotalRateioValido() ) {return;}
+
     this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
       this.autenticadorService.revalidarSessao();
