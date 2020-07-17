@@ -189,56 +189,19 @@
         </div>
 
 
-        <mat-toolbar class="titulopartes">Rateio</mat-toolbar>
+        <mat-toolbar class="titulopartes">Rateio entre Programas/Projetos</mat-toolbar>
         <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateio">
                 <div *ngFor="let rateio of movimentacoes.rateios; let index = index">
-
-                    <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                        <mat-label>Programa</mat-label>
-                        <mat-select [(ngModel)]=rateio.programa.id [ngModelOptions]="{standalone: true}">
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of programas" [value]=i.id>
-                                {{i.nome}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
-                    </mat-form-field>
-
-                    <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                        <mat-label>Projeto</mat-label>
-                        <mat-select [(ngModel)]=rateio.projeto.id name="projeto">
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of projetos" [value]=i.id>
-                                {{i.nome}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
-                    </mat-form-field>  
-
-
-                    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
-                        <input [(ngModel)]=rateio.valorRateio 
-                               currencyMask 
-                               name="valorRateio" 
-                               placeholder={{rateio.placeHolderRateio}}
-                               matInput 
-                               maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix *ngIf="!rateio.statusPercentual">R$&nbsp;</span>
-                    </mat-form-field> 
-
-                    <div fxFlex style="margin-top: 18px;margin-left: 26px;" >
-                        <mat-slide-toggle (click)="onCampoPorcentagem(rateio)">(%)</mat-slide-toggle>
-
-                        <button mat-icon-button 
-                                *ngIf="perfilAcesso.deleta" 
-                                (click)="deletarRateio(index)"
-                                style="padding: 0px;">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>                                
-                    </div>
+                    <formulario-rateio [rateio]="rateio" 
+                                       [index]="index"
+                                       [rateios]="movimentacoes.rateios"   
+                                       [perfilAcesso]="perfilAcesso" 
+                                       [programas]="programas" 
+                                       [projetos]="projetos"
+                                       (onDeletarRegistro)="deletarRateio(index)">
+                    </formulario-rateio>
                 </div>
                 <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
                     <div>

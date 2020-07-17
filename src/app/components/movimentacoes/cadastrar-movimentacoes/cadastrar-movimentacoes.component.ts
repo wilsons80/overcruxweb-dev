@@ -1,6 +1,6 @@
 import { AutenticadorService } from './../../../services/autenticador/autenticador.service';
 import { MovimentacoesService } from './../../../services/movimentacoes/movimentacoes.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -33,11 +33,16 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private drc: ChangeDetectorRef,
     private toastService: ToastService,
     private movimentacoesService: MovimentacoesService,
     private autenticadorService: AutenticadorService
   ) {
     this.carregarPerfil = new CarregarPerfil();
+  }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
   }
 
   ngOnInit() {
@@ -95,7 +100,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
       this.movimentacoesService.getById(this.movimentacoes.id)
       .subscribe( (movimentacao: Movimentacoes) => {
-        this.movimentacoes = movimentacao;
+        Object.assign(this.movimentacoes, movimentacao);
       });
     });
 

@@ -4,7 +4,7 @@ import { DepartamentoService } from 'src/app/services/departamento/departamento.
 import { ProgramaService } from './../../../../services/programa/programa.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from './../../../../core/empresa';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
@@ -50,8 +50,13 @@ export class DadosMovimentacaoComponent implements OnInit {
     private departamentoService: DepartamentoService,
     private unidadeService: UnidadeService,
     private toastService: ToastService,
-    private contasBancariaService: ContasBancariaService
+    private contasBancariaService: ContasBancariaService,
+    private drc: ChangeDetectorRef
   ) { }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+  }
 
   ngOnInit() {
 
@@ -110,6 +115,8 @@ export class DadosMovimentacaoComponent implements OnInit {
     const rateio:any = new RateiosMovimentacoes();
     rateio.programa = new Programa();
     rateio.projeto  = new Projeto();
+    
+    rateio.statusPercentual = false;
     rateio.placeHolderRateio = 'Valor do rateio';
 
     this.movimentacoes.rateios.push(rateio);
@@ -117,17 +124,6 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   deletarRateio(index){
     this.movimentacoes.rateios.splice(index, 1);
-  }
-
-
-  onCampoPorcentagem(rateio: any) {
-    rateio.statusPercentual = !rateio.statusPercentual;
-
-    if(rateio.statusPercentual) {
-      rateio.placeHolderRateio = 'Porcentagem';
-    } else {
-      rateio.placeHolderRateio = 'Valor do rateio';
-    }
   }
 
 }
