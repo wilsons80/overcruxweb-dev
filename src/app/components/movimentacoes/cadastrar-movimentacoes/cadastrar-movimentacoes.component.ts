@@ -108,8 +108,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       }
     });
 
-    if(valorTotal > valorMovimentacao) {
-      this.toastService.showSucesso('O valor do rateio está superior ao valor do movimento.');
+    if(valorTotal != valorMovimentacao) {
+      this.toastService.showSucesso('O valor do rateio está diferente do valor do movimento.');
       return false;
     }
 
