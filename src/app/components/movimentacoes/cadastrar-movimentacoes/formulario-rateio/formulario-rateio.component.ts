@@ -24,8 +24,6 @@ export class FormularioRateioComponent implements OnInit {
   @Input() programas: Programa[];
   @Input() projetos: Projeto[];
 
-  @Output() onDeletarRegistro = new EventEmitter();
-
   pinPrograma = Date.now();
   pinProjeto  = Date.now();
   pinValor    = Date.now();
@@ -61,10 +59,10 @@ export class FormularioRateioComponent implements OnInit {
   }
 
   deletarRateio() {
-    this.onDeletarRegistro.emit(this.rateio);
+    this.rateios.splice(this.index, 1);
   }
 
-  onCampoPorcentagem(rateio: any) {
+  onCampoPorcentagem(rateio: RateiosMovimentacoes) {
     rateio.statusPercentual = !rateio.statusPercentual;
 
     if(rateio.statusPercentual) {

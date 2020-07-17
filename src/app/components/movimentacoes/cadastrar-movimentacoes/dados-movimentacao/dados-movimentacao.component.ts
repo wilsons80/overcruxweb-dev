@@ -122,8 +122,5 @@ export class DadosMovimentacaoComponent implements OnInit {
     this.movimentacoes.rateios.push(rateio);
   }
 
-  deletarRateio(index){
-    this.movimentacoes.rateios.splice(index, 1);
-  }
 
 }

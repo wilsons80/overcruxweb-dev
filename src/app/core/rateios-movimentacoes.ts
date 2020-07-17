@@ -9,4 +9,5 @@ export class RateiosMovimentacoes{
 	statusPercentual: boolean;
 	valorRateio: number;
 	usuarioAlteracao: number;
+	placeHolderRateio?: string;
 }
