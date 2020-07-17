@@ -31,7 +31,7 @@
         <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
             <!-- DESCRICAO -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
+            <mat-form-field fxFlexOffset="20px" fxFlex="100%" appearance="outline">
                 <mat-label>Descrição:</mat-label>
                 <textarea [(ngModel)]=movimentacoes.descricaoMovimentacao matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                     cdkAutosizeMinRows="3" maxlength="200">
@@ -46,7 +46,7 @@
              fxLayoutGap="50px" 
              style="margin-top: 10px; margin-bottom: 10px" 
              fxFlexFill>
-            <mat-form-field fxFlex="90%" fxFlexOffset="20px">
+            <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                 <mat-label>Agência - Conta Corrente</mat-label>
                 <mat-select name="contaBancaria" 
                            [(ngModel)]="movimentacoes.contaBancaria.id"
@@ -64,7 +64,7 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- NR DOCUMENTOS -->
-            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+            <mat-form-field fxFlexOffset="20px" fxFlex="18%">
                 <input [(ngModel)]=movimentacoes.nrDocumento 
                        #numeroDocumento 
                        matInput maxlength="20" 
@@ -74,7 +74,7 @@
             </mat-form-field>
 
             <!-- DATA DOCUMENTOS -->
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="18%">
                 <input matInput [(ngModel)]=movimentacoes.dataDocumento 
                        name="dataDocumento" [matDatepicker]="dataDocumento" 
                        placeholder="Data do documento:">
@@ -95,7 +95,7 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="18%">
                 <input [(ngModel)]=movimentacoes.qtdParcelas 
                         type="number" 
                         min=0 matInput maxlength="3" 
@@ -108,7 +108,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+            <mat-form-field fxFlexOffset="20px" fxFlex="18%">
                 <input [(ngModel)]=movimentacoes.valorISS 
                        currencyMask 
                        name="valorISS" 
@@ -118,7 +118,7 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="18%">
                 <input [(ngModel)]=movimentacoes.valorICMS 
                        currencyMask 
                        name="valorICMS" 
@@ -128,7 +128,7 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="15%">
                 <input [(ngModel)]=movimentacoes.valorIPI 
                        currencyMask 
                        name="valorIPI" 
@@ -138,7 +138,7 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
-            <mat-form-field fxFlex="20%">
+            <mat-form-field fxFlex="18%">
                 <input [(ngModel)]=movimentacoes.valorPisConfinsCsll 
                        currencyMask 
                        name="valorPisConfinsCsll" 
@@ -189,7 +189,11 @@
         </div>
 
 
-        <mat-toolbar class="titulopartes">Rateio entre Programas/Projetos</mat-toolbar>
+        <mat-toolbar class="titulopartes">
+            <span>Rateio entre Programas/Projetos</span>
+            <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
+            <span *ngIf="valorRateioSuperior" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está superior ao valor do movimento.</span>
+        </mat-toolbar>
         <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateio">

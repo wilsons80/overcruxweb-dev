@@ -3,7 +3,7 @@ import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 import { Acesso } from 'src/app/core/acesso';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, NgForm, FormControl } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
@@ -24,14 +24,21 @@ export class FormularioRateioComponent implements OnInit {
   @Input() programas: Programa[];
   @Input() projetos: Projeto[];
 
-  pinPrograma = Date.now();
-  pinProjeto  = Date.now();
-  pinValor    = Date.now();
+  pinPrograma    = Date.now();
+  pinProjeto     = Date.now();
+  pinValor       = Date.now();
+  pinCheckRateio = Date.now();
 
+  toogle = new FormControl('', []);
+  
   constructor(private drc: ChangeDetectorRef,
               private toastService: ToastService,) { }
 
   ngOnInit(): void {
+    this.toogle.valueChanges.subscribe(newToogleValue=> {
+      console.log("toogleValue", newToogleValue);
+      this.rateio.statusPercentual = newToogleValue;
+   });
   }
 
   ngAfterContentChecked(): void {

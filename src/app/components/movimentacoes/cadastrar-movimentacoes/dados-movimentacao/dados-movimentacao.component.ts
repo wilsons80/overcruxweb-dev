@@ -42,6 +42,7 @@ export class DadosMovimentacaoComponent implements OnInit {
     {id: 'S', descricao: 'SAÍDA'}
   ];
 
+  valorRateioSuperior = false;
 
   constructor(
     private empresaService: EmpresaService,
@@ -117,9 +118,32 @@ export class DadosMovimentacaoComponent implements OnInit {
     rateio.projeto  = new Projeto();
     
     rateio.statusPercentual = false;
+    rateio.valorRateio = 0;
     rateio.placeHolderRateio = 'Valor do rateio';
 
     this.movimentacoes.rateios.push(rateio);
+  }
+
+  getValorTotalRateio() {
+    this.valorRateioSuperior = false;
+    let valorMovimentacao = this.movimentacoes.valorMovimentacao;
+
+    let valorTotal = 0;
+    this.movimentacoes.rateios.forEach(rateio => {
+      if(rateio.valorRateio) {
+        if(rateio.statusPercentual) {
+          valorTotal += (valorMovimentacao *  rateio.valorRateio)/100;
+        } else {
+          valorTotal += rateio.valorRateio;
+        }
+      }
+    });
+
+    if(valorTotal > valorMovimentacao) {
+      this.valorRateioSuperior = true;
+    }
+
+    return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
 
