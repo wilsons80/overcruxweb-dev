@@ -1,4 +1,3 @@
-import { Aluno } from './aluno';
 import {EntidadesSociais} from './entidades-sociais';
 
 export class EncaminhamentoAluno {
@@ -6,7 +5,7 @@ export class EncaminhamentoAluno {
     id: number;
 	descricao: string;
 	dataEncaminhaAluno: Date;
-	aluno: Aluno;
+	idAluno: number;
 	entidadeSocial: EntidadesSociais;
     usuarioAlteracao: number;
 }

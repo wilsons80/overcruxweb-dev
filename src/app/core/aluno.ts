@@ -2,6 +2,7 @@ import { NiveisTurmas } from './niveis-turmas';
 import { VulnerabilidadesAluno } from './vulnerabilidades-aluno';
 import { Unidade } from './unidade';
 import { PessoaFisica } from './pessoa-fisica';
+import { EncaminhamentoAluno } from './encaminhamento-aluno';
 
 
 export class Aluno {
@@ -31,4 +32,5 @@ export class Aluno {
 	nivelTurma: NiveisTurmas;
 
 	vulnerabilidades: VulnerabilidadesAluno[];
+	encaminhamentos: EncaminhamentoAluno[];
 }

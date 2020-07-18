@@ -11,6 +11,8 @@ import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 import { Acesso } from 'src/app/core/acesso';
+import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
+import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 
 @Component({
   selector: 'app-cadastar-aluno',
@@ -34,6 +36,8 @@ export class CadastarAlunoComponent implements OnInit {
     private toastService: ToastService,
     private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
     private fileUtils: FileUtils,
+    private autenticadorService: AutenticadorService,
+    private loadingPopupService: LoadingPopupService,
   ) {
   }
   
@@ -123,6 +127,7 @@ export class CadastarAlunoComponent implements OnInit {
       this.aluno.pessoaFisica.cpf = String(this.aluno.id);
     }
 
+    this.loadingPopupService.mostrarMensagemDialog('Salvando dados do aluno, aguarde...');
     this.alunoService.alterar(this.aluno).pipe(
       switchMap((aluno: Aluno) => {
         if (this.aluno.pessoaFisica.isFotoChanged && this.aluno.pessoaFisica.foto) {
@@ -131,9 +136,18 @@ export class CadastarAlunoComponent implements OnInit {
          return new Observable(obs => obs.next());
         }
       })
-    ).subscribe(() => {
-      this.location.back();
-      this.toastService.showSucesso('Aluno atualizado com sucesso');
+    ).subscribe(
+      () => {
+        this.loadingPopupService.closeDialog();
+        this.toastService.showSucesso('Aluno atualizado com sucesso');
+        this.autenticadorService.revalidarSessao();
+      
+        this.alunoService.getById(this.aluno.id).subscribe((aluno: Aluno) => {
+          Object.assign(this.aluno, aluno);
+        });
+    },
+    (error) => {
+      this.loadingPopupService.closeDialog();
     });
 
   }

@@ -1,0 +1,44 @@
+<mat-form-field fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="20px">
+    <mat-label>Entidade Social</mat-label>
+    <mat-select [(ngModel)]="encaminhamento.entidadeSocial.id"
+                name="entidadeSocial_{{pinEntidadeSocial}}"
+                (selectionChange)="carregarDadosEntidadeSocial()"
+                required>
+        <mat-option></mat-option>
+        <mat-option *ngFor="let i of entidadesSociais" [value]=i.id>
+            {{i.empresa.nomeRazaoSocial}}
+        </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="entidadesSociais?.length === 0" align="start">Nenhuma entidade social cadastrada</mat-hint>
+</mat-form-field>
+
+
+<mat-form-field fxFlex="17%" fxFlexOffset="20px">
+    <input matInput 
+           name="dataEncaminhaAluno_{{pinDataEncaminhamento}}" 
+           [matDatepicker]="dataEncaminhaAluno" 
+           placeholder="Data de encaminhamento"
+           [(ngModel)]="encaminhamento.dataEncaminhaAluno"
+           required>
+    <mat-datepicker-toggle matSuffix [for]="dataEncaminhaAluno"></mat-datepicker-toggle>
+    <mat-datepicker #dataEncaminhaAluno></mat-datepicker>
+</mat-form-field> 
+
+<mat-form-field fxFlex fxFlexOffset="20px"  >
+    <input #descricao 
+           matInput maxlength="200" 
+           name="descricao_{{pinDescricao}}" 
+           placeholder="Descrição do encaminhamento"
+           [(ngModel)]="encaminhamento.descricao">
+    <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+</mat-form-field>
+
+
+<div style="margin-top: 18px;margin-left: 26px;" >
+    <button mat-icon-button 
+            *ngIf="perfilAcesso.deleta" 
+            (click)="deletar()"
+            style="padding: 0px;">
+        <mat-icon>delete_forever</mat-icon>
+    </button>                                
+</div>

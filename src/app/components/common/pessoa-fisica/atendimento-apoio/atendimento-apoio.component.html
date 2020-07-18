@@ -123,3 +123,25 @@
 
 </div>
 
+<mat-toolbar class="titulopartes">Origem do Beneficiário</mat-toolbar>
+<div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoEncaminhamento">
+        <div *ngFor="let encaminhamento of encaminhamentos; let index = index">
+            <formulario-encaminhamento [encaminhamento]="encaminhamento" 
+                                       [index]="index"
+                                       [encaminhamentos]="encaminhamentos"   
+                                       [perfilAcesso]="perfilAcesso" 
+                                       [entidadesSociais]="entidadesSociais">
+            </formulario-encaminhamento>
+        </div>
+        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+            <div>
+                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addEncaminhamento()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>                
+    </div>
+
+</div>

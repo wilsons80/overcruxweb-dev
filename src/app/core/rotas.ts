@@ -9,7 +9,6 @@ export enum Rotas {
     AVALIACAO_ALUNO                 = 'api/avaliacaoaluno/',
     AVALIACAO_ATIVIDADE             = 'api/avaliacoes/',
     DIAGNOSTICOS                    = 'api/diagnosticos/',
-    ENCAMINHAMENTO_ALUNO            = 'api/encaminhaaluno/',
     ENTIDADE_SOCIAL                 = 'api/entidadessociais/',
     FAMILIARES                      = 'api/familiar/',
     FREQUENCIA_ALUNO                = 'api/frequenciaaluno/',

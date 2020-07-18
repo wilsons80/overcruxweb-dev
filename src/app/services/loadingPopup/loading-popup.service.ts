@@ -18,20 +18,37 @@ export class LoadingPopupService {
     ) {
   }
 
+  
+  mostrarMensagemDialog(texto: string): void {
+    if (this.dialogRef !== undefined && this.dialogRef.componentInstance !== null){
+      this.changeMassageDialog(texto);
+    } else {
+      this.openDialog(texto);
+    }
+  }
+
+  private changeMassageDialog(texto: string): void {
+    this.dialogRef.componentInstance.mensagem = texto;
+  }
+
   mostrarDialog(): void {
     this.toolbarPrincipalService.loadingCompleto = false;
   }
-
+  
   closeDialog() {
     this.toolbarPrincipalService.loadingCompleto = true;
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 
+  private openDialog(texto: string): void {
+    dialogConfig.disableClose = true;
+    dialogConfig.data = {
+      mensagem: texto
+    };
 
-  private openDialog(): void {
-    this.dialogRef = this.dialog.open(LoadingPopupComponent, {
-      disableClose: true
-    }
-    );
+    this.dialogRef = this.dialog.open(LoadingPopupComponent, dialogConfig);
   }
 
 

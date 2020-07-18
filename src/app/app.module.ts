@@ -62,7 +62,6 @@ import { DepartamentoModule } from './components/departamento/departamento.modul
 import { DiagnosticoAtendimentoModule } from './components/diagnostico-atendimento/diagnostico-atendimento.module';
 import { DocumentoAtividadeModule } from './components/documento-atividade/documento-atividade.module';
 import { EmpresaModule } from './components/empresa/empresa.module';
-import { EncaminhamentoAlunoModule } from './components/encaminhamento-aluno/encaminhamento-aluno.module';
 import { EntidadeSocialModule } from './components/entidade-social/entidade-social.module';
 import { FaltasFuncionarioModule } from './components/faltas-funcionario/faltas-funcionario.module';
 import { FamiliarAlunoModule } from './components/familiar-aluno/familiar-aluno.module';
@@ -187,7 +186,6 @@ registerLocaleData(localePt, 'pt-BR');
     DiagnosticoAtendimentoModule,
     SolucaoAtendimentoModule,
     EntidadeSocialModule,
-    EncaminhamentoAlunoModule,
     ReprovacaoAlunoModule,
     AtividadeAlunoModule,
     FrequenciaAlunoModule,

@@ -14,6 +14,7 @@ import { AtendimentoApoioComponent } from './atendimento-apoio/atendimento-apoio
 import { NgxCurrencyModule } from "ngx-currency";
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
 import { CadastroEnderecoModule } from '../cadastro-endereco/cadastro-endereco.module';
+import { FormularioEncaminhamentoComponent } from './formulario-encaminhamento/formulario-encaminhamento.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CadastroEnderecoModule } from '../cadastro-endereco/cadastro-endereco.m
     AcademicoComponent,
     EscolarComponent,
     AtendimentoApoioComponent,
+    FormularioEncaminhamentoComponent,
   ],
   imports: [
     CommonModule,
