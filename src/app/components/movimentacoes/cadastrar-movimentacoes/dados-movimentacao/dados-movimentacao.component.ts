@@ -118,6 +118,7 @@ export class DadosMovimentacaoComponent implements OnInit {
     rateio.projeto  = new Projeto();
     
     rateio.statusPercentual = false;
+    rateio.id = undefined;
     rateio.valorRateio = 0;
     rateio.placeHolderRateio = 'Valor do rateio';
 
@@ -139,7 +140,7 @@ export class DadosMovimentacaoComponent implements OnInit {
       }
     });
 
-    if(valorTotal > valorMovimentacao) {
+    if(valorTotal != valorMovimentacao) {
       this.valorRateioSuperior = true;
     }
 

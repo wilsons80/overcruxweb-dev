@@ -110,31 +110,57 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     });
   }
 
+  private getValorByDate(valor) {
+    if(valor === null || valor === undefined) return null;
+
+    if(valor && valor instanceof Date) {
+      const data = valor.toLocaleDateString().split('/');
+      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
+    }
+
+    if(valor && !(valor instanceof Date)) {
+      const dataString = new Date(valor).toLocaleDateString();
+      const data = dataString.split('/');
+      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
+    }
+  }
+
+
   validarDatas(): boolean {
-    if (this.atividadeAluno.dataInicioAtividade &&
-        new Date(this.atividadeAluno.dataInicioAtividade).getTime() < new Date(this.atividadeAluno.atividade.dataInicio).getTime()) {
+    const dataInicioAtividade     = this.getValorByDate(this.atividadeAluno.atividade.dataInicio);
+    const dataFimAtividade        = this.getValorByDate(this.atividadeAluno.atividade.dataFim);
+
+    const dataIncioMatricula          = this.getValorByDate(this.atividadeAluno.dataInicioAtividade);
+    const dataDesvinculacaoMatricula  = this.getValorByDate(this.atividadeAluno.dataDesvinculacao);
+
+    
+    if (dataIncioMatricula && dataIncioMatricula.getTime() < dataInicioAtividade.getTime()) {
       this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
       return false;
     }
 
-    if (this.atividadeAluno.atividade.dataFim) {
-      if (this.atividadeAluno.dataInicioAtividade &&
-        this.atividadeAluno.dataInicioAtividade.getTime() > new Date(this.atividadeAluno.atividade.dataFim).getTime()) {
+    if (dataFimAtividade) {
+      if (dataIncioMatricula && dataIncioMatricula.getTime() > dataFimAtividade.getTime()) {
         this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
         return false;
       }
     }
 
-    if (this.atividadeAluno.atividade.dataFim &&
-        this.atividadeAluno.dataDesvinculacao &&
-        new Date(this.atividadeAluno.dataDesvinculacao).getTime() > new Date(this.atividadeAluno.atividade.dataFim).getTime()) {
+    if (dataFimAtividade && dataDesvinculacaoMatricula &&
+        dataDesvinculacaoMatricula.getTime() > dataFimAtividade.getTime()) {
       this.toastService.showAlerta('A data de desvinculação informada não pode ser maior que a data de fim da atividade selecionada.');
       return false;
     }
 
-    if (this.atividadeAluno.dataDesvinculacao &&
-        new Date(this.atividadeAluno.dataDesvinculacao).getTime() < new Date(this.atividadeAluno.atividade.dataInicio).getTime()) {
+    if (dataDesvinculacaoMatricula &&
+        dataDesvinculacaoMatricula.getTime() < dataInicioAtividade.getTime()) {
       this.toastService.showAlerta('A data de desvinculação informada não pode ser menor que a data de início da atividade selecionada.');
+      return false;
+    }
+
+    if (dataDesvinculacaoMatricula && dataIncioMatricula &&
+      dataDesvinculacaoMatricula.getTime() < dataIncioMatricula.getTime()) {
+      this.toastService.showAlerta('A data de desvinculação não pode ser menor que a data de inicio.');
       return false;
     }
 

@@ -31,7 +31,6 @@ export class CadastroReservaAtividadeComponent implements OnInit {
   perfilAcesso: Acesso;
 
   displayedColumns: string[] = [
-    "id",
     "descricaoCadastroReserva",
     "atividade",
     "pessoa",
@@ -56,10 +55,16 @@ export class CadastroReservaAtividadeComponent implements OnInit {
       this.listaAtividade = listaAtividade;
     });
 
+
+    this.getAllCadastroReservaAtividade();
+  }
+
+  private getAllCadastroReservaAtividade() {
     this.cadastroReservaAtividadeService.getAll().subscribe(
       (cadastroReservaAtividade: CadastroReservaAtividade[]) => {
+        this.dataSource.data = cadastroReservaAtividade;
+        
         if(cadastroReservaAtividade && cadastroReservaAtividade.length > 0) {
-          this.dataSource.data = cadastroReservaAtividade;
           this.mostrarTabela = true;
         }
       });
@@ -73,6 +78,14 @@ export class CadastroReservaAtividadeComponent implements OnInit {
   }
 
   consultar() {
+    if(this.atividade && this.atividade.id) {
+      this.getCadastroReservaPorAtividade();
+    } else {
+      this.getAllCadastroReservaAtividade();
+    }
+  }
+
+  private getCadastroReservaPorAtividade() {
     this.cadastroReservaAtividadeService.getPorAtividade(this.atividade.id).subscribe(
       (cadastroReservaAtividade: CadastroReservaAtividade[]) => {
         if (!cadastroReservaAtividade) {
@@ -113,11 +126,9 @@ export class CadastroReservaAtividadeComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-        this.cadastroReservaAtividadeService
-          .excluir(cadastroReservaAtividade.id)
+        this.cadastroReservaAtividadeService.excluir(cadastroReservaAtividade.id)
           .subscribe(() => {
             this.consultar();
-            this.atividade.id = null;
           });
       } else {
         dialogRef.close();

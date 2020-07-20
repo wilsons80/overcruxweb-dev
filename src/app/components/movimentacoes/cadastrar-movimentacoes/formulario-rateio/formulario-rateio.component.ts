@@ -47,7 +47,7 @@ export class FormularioRateioComponent implements OnInit {
 
   validarDuplicado() {
     if(this.rateio.programa && this.rateio.programa.id) {
-      const jaExiste = this.rateios.find(m => m.id !== this.rateio.id && m.programa.id === this.rateio.programa.id);
+      const jaExiste = this.rateios.find(m => m != this.rateio &&  m.programa.id === this.rateio.programa.id);
       if(jaExiste) {
         this.toastService.showAlerta('Esse programa já está incluso na lista.');
         this.campoPrograma.ngControl.control.setValue(null);
@@ -56,7 +56,7 @@ export class FormularioRateioComponent implements OnInit {
     }
     
     if(this.rateio.projeto && this.rateio.projeto.id) {
-      const jaExiste = this.rateios.find(m => m.id !== this.rateio.id && m.projeto.id === this.rateio.projeto.id);
+      const jaExiste = this.rateios.find(m => m != this.rateio && m.projeto.id === this.rateio.projeto.id);
       if(jaExiste) {
         this.toastService.showAlerta('Esse projeto já está incluso na lista.');
         this.campoProjeto.ngControl.control.setValue(null);

@@ -126,32 +126,55 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     });
   }
 
+  private getValorByDate(valor) {
+    if(valor === null || valor === undefined) return null;
 
+    if(valor && valor instanceof Date) {
+      const data = valor.toLocaleDateString().split('/');
+      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
+    }
+
+    if(valor && !(valor instanceof Date)) {
+      const dataString = new Date(valor).toLocaleDateString();
+      const data = dataString.split('/');
+      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
+    }
+  }
 
   validarDatas(): boolean {
-    if (this.acoes.dataInicio && new Date(this.acoes.dataInicio).getTime() < new Date(this.acoes.oficina.dataInicio).getTime()) {
+    const dataInicioAtividade     = this.getValorByDate(this.acoes.oficina.dataInicio);
+    const dataFimAtividade        = this.getValorByDate(this.acoes.oficina.dataFim);
+
+    const dataIncioMatricula      = this.getValorByDate(this.acoes.dataInicio);
+    const dataFimMatricula        = this.getValorByDate(this.acoes.dataFim);
+
+    if (dataIncioMatricula && dataIncioMatricula.getTime() < dataInicioAtividade.getTime()) {
       this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
       return false;
     }
 
-    if (this.acoes.oficina.dataFim) {
-      if (this.acoes.dataInicio &&
-        new Date(this.acoes.dataInicio).getTime() > new Date(this.acoes.oficina.dataFim).getTime()) {
+    if (dataFimAtividade) {
+      if (dataIncioMatricula && dataIncioMatricula.getTime() > dataFimAtividade.getTime()) {
         this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
         return false;
       }
     }
 
-    if (this.acoes.oficina.dataFim &&
-        this.acoes.dataFim &&
-        new Date(this.acoes.dataFim).getTime() > new Date(this.acoes.oficina.dataFim).getTime()) {
+    if (dataFimAtividade && dataFimMatricula &&
+      dataFimMatricula.getTime() > dataFimAtividade.getTime()) {
       this.toastService.showAlerta('A data de fim informada não pode ser maior que a data de fim da atividade selecionada.');
       return false;
     }
 
-    if (this.acoes.dataFim &&
-        new Date(this.acoes.dataFim).getTime() < new Date(this.acoes.oficina.dataInicio).getTime()) {
+    if (dataFimMatricula &&
+      dataFimMatricula.getTime() < dataInicioAtividade.getTime()) {
       this.toastService.showAlerta('A data de fim informada não pode ser menor que a data de início da atividade selecionada.');
+      return false;
+    }
+
+    if (dataFimMatricula && dataIncioMatricula &&
+      dataFimMatricula.getTime() < dataIncioMatricula.getTime()) {
+      this.toastService.showAlerta('A data fim não pode ser menor que a data de inicio.');
       return false;
     }
 
