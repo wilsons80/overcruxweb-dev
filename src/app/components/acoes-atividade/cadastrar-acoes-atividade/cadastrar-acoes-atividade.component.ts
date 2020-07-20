@@ -86,6 +86,13 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
   limpar() {
     this.acoes = new Acoes();
+    this.acoes.oficina = new Atividade();
+
+    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
+    this.acoes.funcionarioAprovaAcao = new Funcionario();
+    this.acoes.funcionarioExecutaAcao = new Funcionario();
+  
+    this.acoes.materiaisAcao =  [];
   }
 
   cancelar() {
