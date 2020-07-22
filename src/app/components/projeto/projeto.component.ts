@@ -25,7 +25,7 @@ export class ProjetoComponent implements OnInit {
 
   mostrarTabela = false;
 
-  displayedColumns: string[] = ['nome', 'dataPrevisaoInicio', 'dataInicio', 'dataFim', 'acoes'];
+  displayedColumns: string[] = ['nome', 'dataPrevisaoInicio', 'dataInicio', 'dataFim', 'restricao', 'acoes'];
   dataSource: MatTableDataSource<Projeto> = new MatTableDataSource();
 
   perfilAcesso: Acesso;
@@ -67,6 +67,9 @@ export class ProjetoComponent implements OnInit {
 
 
   atualizar(projeto: Projeto) {
+
+    this.tratarDados()
+
     this.router.navigate(['/projetos/cadastrar'], { queryParams: { idProjeto: projeto.id } });
   }
 
@@ -112,4 +115,9 @@ export class ProjetoComponent implements OnInit {
       this.mostrarTabela = true; 
     }
   }
+
+  tratarDados(){
+    this.projeto.restricao = this.projeto.restricao ? 'S' : 'N'
+  }
+
 }

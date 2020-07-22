@@ -12,6 +12,7 @@ export class Projeto {
 	id: number;
 	nome: string;
 	descricao: string;
+	restricao:string;
 	dataFim: Date;
 	dataInicio: Date;
 	dataPrevisaoInicio: Date;

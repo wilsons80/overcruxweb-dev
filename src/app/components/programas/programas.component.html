@@ -55,6 +55,11 @@
                 <td mat-cell *matCellDef="let element"> {{element.dataFim | dataSimples}} </td>
               </ng-container>
 
+              <ng-container matColumnDef="restricao">
+                <th mat-header-cell *matHeaderCellDef> Com Restição:  </th>
+                <td mat-cell *matCellDef="let element"> {{element.restricao === 'true' ? 'Sim' : 'Não'}} </td>
+              </ng-container>
+
               <ng-container matColumnDef="acoes">
                 <th mat-header-cell *matHeaderCellDef> Ações </th>
                 <td mat-cell *matCellDef="let element">

@@ -10,6 +10,7 @@ export class Programa {
 	id: number;
 	nome: string;
 	descricao: string;
+	restricao:string;
 	dataInicio: Date;
 	dataFim: Date;
 	idCoordenador: number;
