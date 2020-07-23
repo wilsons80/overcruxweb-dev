@@ -12,6 +12,6 @@ import { OrderByPipe } from './order-by.pipe';
   imports: [
     CommonModule
   ],
-  exports:[DataSimplesPipe,FormatTimePipe,CnpjPipe]
+  exports:[DataSimplesPipe,FormatTimePipe, OrderByPipe , CnpjPipe]
 })
 export class SharedPipesModule { }

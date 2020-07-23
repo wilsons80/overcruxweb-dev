@@ -12,8 +12,6 @@ import { FuncionarioService } from 'src/app/services/funcionario/funcionario.ser
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { TipoFuncionario } from 'src/app/core/tipo-funcionario';
 import * as _ from 'lodash';
-import { Departamento } from 'src/app/core/departamento';
-import { Dependentes } from 'src/app/core/dependentes';
 
 @Component({
   selector: 'app-funcionario',
@@ -32,7 +30,7 @@ export class FuncionarioComponent implements OnInit {
 
   tiposFuncionario: TipoFuncionario = new TipoFuncionario();
 
-  displayedColumns: string[] = ['matricula', 'nome', 'dataAdmissao', 'tipoFuncionario', 'cargo', 'acoes'];
+  displayedColumns: string[] = ['nome','matricula', 'dataAdmissao', 'tipoFuncionario', 'cargo', 'acoes'];
   dataSource: MatTableDataSource<Funcionario> = new MatTableDataSource();
 
   constructor(
@@ -107,7 +105,13 @@ export class FuncionarioComponent implements OnInit {
 
   getAll() {
     this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
-      this.funcionarios = funcionarios;
+      this.funcionarios = funcionarios ? funcionarios.sort((a,b) => {
+        if (a.pessoasFisica?.nome > b.pessoasFisica?.nome) {return 1;}
+        if (a.pessoasFisica?.nome < b.pessoasFisica?.nome) {return -1;}
+        return 0;
+      }) : [];
+
+
       this.dataSource.data = funcionarios ? funcionarios : [];
       this.verificaMostrarTabela(funcionarios);
     })

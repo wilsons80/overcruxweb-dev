@@ -75,7 +75,12 @@ export class FuncionalComponent implements OnInit {
     });
 
     this.cargosService.getAll().subscribe((cargos: Cargo[])=> {
-      this.cargos = cargos;
+      // Ordenação de array
+      this.cargos = cargos ? cargos.sort((a,b) => {
+            if (a.nome > b.nome) {return 1;}
+            if (a.nome < b.nome) {return -1;}
+            return 0;
+        }) : [];
     });
 
     this.empresaService.getAll().subscribe((empresas: Empresa[])=> {
