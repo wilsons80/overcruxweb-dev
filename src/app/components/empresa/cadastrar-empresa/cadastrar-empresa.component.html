@@ -37,7 +37,12 @@
                        [(ngModel)]="empresa.nomeFantasia">
             </mat-form-field>
 
-            <mat-slide-toggle fxFlexOffset="20px" name="campoAtiva" [(ngModel)]="empresa.ativa">Ativa</mat-slide-toggle>
+            <mat-checkbox fxFlexOffset="20px" 
+                          color="primary"
+                          name="campoAtiva" 
+                          [(ngModel)]="empresa.ativa">
+                Ativa
+            </mat-checkbox>
 
         </div>
 

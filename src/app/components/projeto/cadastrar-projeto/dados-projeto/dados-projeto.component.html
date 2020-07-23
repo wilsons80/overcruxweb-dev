@@ -1,6 +1,7 @@
 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
 <div fxLayout="row" fxFlexFill>
-        <mat-form-field style="margin-bottom: 10px" fxFlex="85%" 
+        <mat-form-field style="margin-bottom: 10px" 
+                        fxFlex="85%" 
                         fxFlexOffset="20px">
                 <input #nome matInput maxlength="200" name="nome" placeholder="Nome :" 
                        [(ngModel)]="projeto.nome"
@@ -8,7 +9,13 @@
                 <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
         </mat-form-field>
 
-        <mat-slide-toggle fxFlexOffset="20px" name="campoRestricao" [(ngModel)]="projeto.restricao">Com Restrição</mat-slide-toggle>
+        <mat-checkbox fxFlexOffset="20px" 
+                      style="padding-top: 24px;" 
+                      color="primary"
+                      name="campoRestricao" 
+                      [(ngModel)]="projeto.restricao">
+            Com Restrição
+        </mat-checkbox>        
 
 </div>
 

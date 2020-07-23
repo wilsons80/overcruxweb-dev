@@ -6,9 +6,16 @@
     <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
   </mat-form-field>
 
-  <mat-slide-toggle fxFlexOffset="20px" name="campoRestricao" [(ngModel)]="programa.restricao">Com Restrição</mat-slide-toggle>
-
+  <mat-checkbox fxFlexOffset="20px"
+                style="padding-top: 24px;" 
+                color="primary"
+                name="campoRestricao" 
+                [(ngModel)]="programa.restricao">
+      Com Restrição
+  </mat-checkbox>
 </div>
+
+
 <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
   <mat-form-field style="margin-left: 20px" fxFlex="90%" appearance="outline">
     <mat-label>Descrição:</mat-label>

@@ -67,9 +67,6 @@ export class ProjetoComponent implements OnInit {
 
 
   atualizar(projeto: Projeto) {
-
-    this.tratarDados()
-
     this.router.navigate(['/projetos/cadastrar'], { queryParams: { idProjeto: projeto.id } });
   }
 
@@ -114,10 +111,6 @@ export class ProjetoComponent implements OnInit {
     }else{
       this.mostrarTabela = true; 
     }
-  }
-
-  tratarDados(){
-    this.projeto.restricao = this.projeto.restricao ? 'S' : 'N'
   }
 
 }

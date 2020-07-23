@@ -73,11 +73,7 @@ export class ProgramasComponent implements OnInit {
 
 
   atualizar(programa: Programa) {
-
-    this.tratarDados()
-      
     this.router.navigate(['/programas/cadastrar'], { queryParams: { idPrograma: programa.id } });
-    
   }
 
   deletar(programa: Programa) {
@@ -122,10 +118,5 @@ export class ProgramasComponent implements OnInit {
       this.mostrarTabela = true;
     }
   }
-
-  tratarDados(){
-    this.programa.restricao = this.programa.restricao ? 'S' : 'N'
-  }
-
 
 }

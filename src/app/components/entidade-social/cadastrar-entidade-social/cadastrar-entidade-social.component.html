@@ -25,8 +25,12 @@
                 <span matSuffix>%</span>
             </mat-form-field>
 
-            <mat-slide-toggle name="campoAtiva" style="padding-top: 25px;"
-                              [(ngModel)]="entidadeSocial.empresa.ativa">Ativa</mat-slide-toggle>
+            <mat-checkbox style="padding-top: 25px;"
+                            color="primary"
+                            name="campoAtiva" 
+                            [(ngModel)]="entidadeSocial.empresa.ativa">
+                Ativa
+            </mat-checkbox>
 
         </div>
 
