@@ -35,7 +35,7 @@
                                 required>
                         <mat-option></mat-option>                                
                         <mat-option *ngFor="let i of turmas" [value]="i.id">
-                            {{i.descricao}}
+                            {{getDadosTurma(i)}}
                         </mat-option>
                     </mat-select>
                     <mat-hint *ngIf="turmas?.length === 0" align="start">Nenhuma turma cadastrada</mat-hint>

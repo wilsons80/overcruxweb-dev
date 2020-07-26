@@ -6,9 +6,9 @@
                     <mat-panel-title>Dados do Colaborador</mat-panel-title>
                 </mat-expansion-panel-header>
     
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px" >
                     
-                    <mat-form-field fxFlex="50%" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                         <mat-label>Funcionário:</mat-label>
                         <mat-select [(ngModel)]="colaboradoresPrograma.funcionario.id" name="unidade" required>
                             <mat-option></mat-option>
@@ -19,7 +19,7 @@
                         <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50%">
+                    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                         <mat-label>Cargo:</mat-label>
                         <mat-select [(ngModel)]="colaboradoresPrograma.cargo.id" name="cargo" required (selectionChange)="verificaComposicaoCargo()">
                             <mat-option></mat-option>
@@ -32,9 +32,9 @@
 
                 </div>
 
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px">
                     
-                    <mat-form-field fxFlex="50%" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                         <mat-label>Tipo Contratação:</mat-label>
                         <mat-select [(ngModel)]="colaboradoresPrograma.tiposContratacoes.id" name="tiposContratacoes">
                             <mat-option></mat-option>
@@ -45,20 +45,20 @@
                         <mat-hint *ngIf="listaTiposContratacoes?.length === 0" align="start">Nenhum tipo contratação cadastrado</mat-hint>
                     </mat-form-field>
                     
-                    <mat-form-field fxFlex="20%">
+                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                         <input matInput name= "dtImplantacao" [matDatepicker]="dataInicio" placeholder="Data de entrada:" [(ngModel)]="colaboradoresPrograma.dataInicio" required>
                         <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
                         <mat-datepicker #dataInicio></mat-datepicker>
                     </mat-form-field>
     
-                    <mat-form-field fxFlex="20%">
+                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                         <input matInput name= "dtTermino" [matDatepicker]="dataTermino" placeholder="Data de saída:" [(ngModel)]="colaboradoresPrograma.dataFim">
                         <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
                         <mat-datepicker #dataTermino></mat-datepicker>
                     </mat-form-field>
                 </div>
     
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                <div fxLayout="row" style="margin-top: 10px; margin-bottom: 10px">
                     <mat-form-field fxFlex="45%" fxFlexOffset="20px">
                         <input matInput type="number" maxlength="3" name="percentual"
                             placeholder="Valor em Percentual de participação"

@@ -166,4 +166,13 @@ export class CadastrarMatriculaComponent implements OnInit {
     }
   }
 
+  getDadosTurma(turma: Turmas) {
+    return turma.descricao + (turma.programa ? ' - Programa: ' + turma.programa.nome : '') + 
+           (turma.projeto ? ' - Projeto: ' + turma.projeto.nome : '') +
+           ' - Turno: ' + turma.turno;
+  }
+
+
+  
+
 }
