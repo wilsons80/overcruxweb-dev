@@ -60,10 +60,14 @@ export class DadosTurmaComponent implements OnInit {
       this.programas = programas;
     });
 
-    this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
+    this.unidadeService.getAllUnidadesInstituicaoUsuarioLogado().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
     });
 
+   // this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
+   //   this.unidades = unidades;
+   // });
+    
 
   }
 
