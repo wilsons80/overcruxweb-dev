@@ -99,7 +99,7 @@ export class FuncionalComponent implements OnInit {
 
   zerarCamposEntrevista(){
     if(!this.mostrarCamposEntrevista()){
-      this.funcionario.funcionarioEntrevistador = null;
+      this.funcionario.funcionarioEntrevistador = new Funcionario();
       this.funcionario.dtHrEntrevista = null;
       this.funcionario.horaEntrevista = null;
       this.funcionario.salarioPretendido = null;

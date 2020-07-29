@@ -93,6 +93,8 @@ export class CadastrarFuncionarioComponent implements OnInit {
 
 
   cadastrar() {
+    if(this.isDatasAlocacaoFuncionarioInvalidas()) {return;}
+    
     this.tratarDados();
 
     this.funcionarioService.cadastrar(this.funcionario).pipe(
@@ -148,7 +150,31 @@ export class CadastrarFuncionarioComponent implements OnInit {
     this.router.navigate(['funcionario']);
   }
 
+
+  private isDatasAlocacaoFuncionarioInvalidas(): boolean {
+    if(!_.isEmpty(this.funcionario.alocacoesFuncionario)) {
+      const isSemDataFim = this.funcionario.alocacoesFuncionario.filter(a => !a.dataFimVinculacao);
+      if(isSemDataFim.length > 0) {
+        this.toastService.showAlerta('Informe a data final de todas as alocações.')
+        return true;
+      }
+    }
+
+    if(!_.isEmpty(this.funcionario.alocacoesFuncionario)) {
+      const isSemDataFim = this.funcionario.alocacoesFuncionario.filter(a => !a.dataInicioVinculacao);
+      if(isSemDataFim.length > 0) {
+        this.toastService.showAlerta('Informe a data de início de todas as alocações.')
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
   atualizar() {
+
+    if(this.isDatasAlocacaoFuncionarioInvalidas()) {return;}
 
     this.tratarDados();
     this.funcionarioService.alterar(this.funcionario).pipe(
