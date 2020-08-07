@@ -8,12 +8,13 @@ import { Atividade } from 'src/app/core/atividade';
 import { Turmas } from 'src/app/core/turmas';
 import { AlunosTurma } from 'src/app/core/alunos-turma';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
-import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { MatriculaService } from 'src/app/services/matricula/matricula.service';
 import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'cadastrar-matricula',
@@ -21,6 +22,8 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./cadastrar-matricula.component.css']
 })
 export class CadastrarMatriculaComponent implements OnInit {
+
+  todasMatriculasDoAluno: AlunosTurma[];
 
   matricula: AlunosTurma = new AlunosTurma();
   alunos: Aluno[];
@@ -41,6 +44,7 @@ export class CadastrarMatriculaComponent implements OnInit {
   constructor(
     private matriculasService: MatriculaService,
     private atividadeAlunoService: AtividadeAlunoService,
+    private dialog: MatDialog,
     private turmasService: TurmasService,
     private alunoService: AlunoService,
     private activatedRoute: ActivatedRoute,
@@ -74,6 +78,24 @@ export class CadastrarMatriculaComponent implements OnInit {
       this.isAtualizar = true;
       this.matriculasService.getById(id).subscribe((matricula: AlunosTurma) => {
         this.matricula = matricula;
+
+        this.matricula.oficinas.sort((a,b) => {
+          if (a.dataInicioAtividade > b.dataInicioAtividade) {return 1;}
+          if (a.dataInicioAtividade < b.dataInicioAtividade) {return -1;}
+          return 0;
+          });
+      });
+    }
+
+    this.consultarTodasMatriculasDoAluno();
+  }
+
+
+  consultarTodasMatriculasDoAluno() {
+    if (this.matricula.aluno && this.matricula.aluno.id) {
+      this.matriculasService.getFilter(null, this.matricula.aluno.id, null)
+      .subscribe((matriculas: AlunosTurma[]) => {
+        this.todasMatriculasDoAluno = matriculas;
       });
     }
   }
@@ -108,7 +130,19 @@ export class CadastrarMatriculaComponent implements OnInit {
       });
     }
 
+    
+
     return dataValida;
+  }
+
+  atualizar() {
+    if (!this.validarDatas() ) { return; }
+
+    this.matriculasService.alterar(this.matricula).subscribe(() => {
+      this.router.navigate(['matriculas']);
+      this.toastService.showSucesso('Matricula do aluno atualizada com sucesso!');
+    });
+
   }
 
   limpar() {
@@ -124,18 +158,7 @@ export class CadastrarMatriculaComponent implements OnInit {
   cancelar() {
     this.router.navigate(['matriculas']);
   }
-
-
-  atualizar() {
-    if (!this.validarDatas() ) { return; }
-
-    this.matriculasService.alterar(this.matricula).subscribe(() => {
-      this.router.navigate(['matriculas']);
-      this.toastService.showSucesso('Matricula do aluno atualizada com sucesso!');
-    });
-
-  }
-
+  
   mostrarDadosAluno(idAluno) {
     this.matricula.aluno = _.cloneDeep(_.find(this.alunos, (a: Aluno) => a.id === idAluno));
   }
@@ -154,16 +177,30 @@ export class CadastrarMatriculaComponent implements OnInit {
   }
 
   deletarOficina(oficina: AtividadeAluno) {
-    const index = this.matricula.oficinas.indexOf( this.matricula.oficinas.find(reg => reg === oficina));
-    if (index >= 0) {
-      this.matricula.oficinas.splice(index, 1);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      pergunta: `Certeza que deseja excluir a matrícula ?`,
+      textoConfirma: 'SIM',
+      textoCancela: 'NÃO'
+    };
 
-      if (oficina.id) {
-        this.atividadeAlunoService.excluir(oficina.id).subscribe(() => {
-          this.toastService.showSucesso('Oficina apagada com sucesso.');
-        });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(confirma => {
+      if (confirma) {
+        const index = this.matricula.oficinas.indexOf( this.matricula.oficinas.find(reg => reg === oficina));
+        if (index >= 0) {
+          this.matricula.oficinas.splice(index, 1);
+    
+          if (oficina.id) {
+            this.atividadeAlunoService.excluir(oficina.id).subscribe(() => {
+              this.toastService.showSucesso('Matrícula apagada com sucesso.');
+            });
+          }
+        }
+      } else {
+        dialogRef.close();
       }
-    }
+    });
   }
 
   getDadosTurma(turma: Turmas) {

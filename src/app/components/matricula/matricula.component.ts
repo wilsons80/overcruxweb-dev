@@ -92,7 +92,7 @@ export class MatriculaComponent implements OnInit {
 
   consultar() {
     if (this.turma.id || this.atividade.id || this.aluno.id) {
-      this.matriculasService.getFilter(this.turma.id, this.atividade.id, this.aluno.id)
+      this.matriculasService.getFilter(this.turma.id, this.aluno.id, this.atividade.id)
       .subscribe((matriculas: AlunosTurma[]) => {
         this.carregar(matriculas);
       });

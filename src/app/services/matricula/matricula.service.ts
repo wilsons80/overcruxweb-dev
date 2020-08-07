@@ -13,15 +13,15 @@ export class MatriculaService extends BaseService<AlunosTurma> {
     super(http, Rotas.MATRICULAS);
   }
 
-  getFilter(idTurma: string|number, idOficina: string|number, idAluno: string|number) {
+  getFilter(idTurma: string|number, idAluno: string|number, idOficina: string|number) {
     idTurma = idTurma || '';
     idOficina = idOficina || '';
     idAluno = idAluno || '';
 
     return this.http.get(Rotas.MATRICULAS + 'alunos', { params: {
         turma: `${idTurma}` ,
-        oficina: `${idOficina}` ,
-        aluno: `${idAluno}`
+        aluno: `${idAluno}`,
+        oficina: `${idOficina}`
       }
     });
   }

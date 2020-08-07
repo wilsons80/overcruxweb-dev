@@ -68,47 +68,46 @@
 
         </div>
 
-        <mat-toolbar class="titulopartes">Oficinas matriculadas</mat-toolbar>
-
-        <div *ngIf="matricula.turma.oficinas?.length; else msgSemOficina">
-            <div fxLayout="row">
-                <div fxLayout="column" fxFlex="100%">
-    
-                    <div fxLayout="column" fxFlex="100%" *ngFor="let o of matricula.oficinas">
-                        <dados-oficina [oficina]="o" 
-                                       [oficinas]="matricula.turma.oficinas"
-                                       [perfilAcesso]="perfilAcesso"
-                                       (onDeletar)="deletarOficina($event)"></dados-oficina>
+        <div *ngIf="isAtualizar && mostrarBotaoAtualizar" >
+            <mat-toolbar class="titulopartes">Oficinas matriculadas</mat-toolbar>
+            <div *ngIf="matricula.turma.oficinas?.length; else msgSemOficina">
+                <div fxLayout="row">
+                    <div fxLayout="column" fxFlex="100%">
+                        <div fxLayout="column" fxFlex="100%" *ngFor="let o of matricula.oficinas">
+                            <dados-oficina [oficina]="o" 
+                                           [oficinas]="matricula.turma.oficinas"
+                                           [perfilAcesso]="perfilAcesso"
+                                           (onDeletar)="deletarOficina($event)"></dados-oficina>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" 
+                     *ngIf="perfilAcesso.insere" 
+                     fxLayoutAlign="end center" 
+                     fxLayoutGap="16px"
+                     style="padding-top: 10px">
+                    <div>
+                        <button matTooltip="Adicionar nova matricula" 
+                                mat-fab color="primary"
+                                (click)="novaMatricula()">
+                            <mat-icon>add</mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div fxLayout="row" 
-                 *ngIf="perfilAcesso.insere" 
-                 fxLayoutAlign="end center" 
-                 fxLayoutGap="16px"
-                 style="padding-top: 10px">
-                <div>
-                    <button matTooltip="Adicionar nova matricula" 
-                            mat-fab color="primary"
-                            (click)="novaMatricula()">
-                        <mat-icon>add</mat-icon>
-                    </button>
+            <ng-template #msgSemOficina>
+                <div fxLayout="row" 
+                     *ngIf="matricula.turma.id"
+                     fxLayoutAlign="center center" >
+                     <div style="text-align: center; border-style: solid; border-color: coral; width: 30%;">
+                         <span style="color: blue">
+                             Esta turma não possui oficinas.
+                         </span>
+                     </div>            
                 </div>
-            </div>
+            </ng-template>
         </div>
-        <ng-template #msgSemOficina>
-            <div fxLayout="row" 
-                 *ngIf="matricula.turma.id"
-                 fxLayoutAlign="center center" >
-                 <div style="text-align: center; border-style: solid; border-color: coral; width: 30%;">
-                     <span style="color: blue">
-                         Esta turma não possui oficinas.
-                     </span>
-                 </div>            
-            </div>
-        </ng-template>
         
-
 
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -134,3 +133,4 @@
     </form>
 
 </div>
+<pre>{{matricula.oficinas | json}}</pre>
