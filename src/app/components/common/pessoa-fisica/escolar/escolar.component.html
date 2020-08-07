@@ -2,7 +2,7 @@
 <mat-toolbar class="titulopartes">Escolar</mat-toolbar>
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-        <mat-label>Tipo da escola regular onde o beneficiário está matriculado:</mat-label>
+        <mat-label>Tipo da escola regular onde está matriculado:</mat-label>
         <mat-select [(ngModel)]="pessoaFisica.tipoEscola" name="tipoEscola">
             <mat-option *ngFor="let m of tipoEscola" [value]="m.flag">
                 {{m.tipo}}
@@ -13,7 +13,7 @@
 </div>
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
-            <mat-label>Identificação da escola frequentada pelo familiar:</mat-label>
+            <mat-label>Identificação da escola frequentada:</mat-label>
             <textarea matInput #escola
                     name="escola"
                     [(ngModel)]="pessoaFisica.escola"
@@ -26,7 +26,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
-      <mat-label>Descrição do turno de frequência da escola pelo familiar:</mat-label>
+      <mat-label>Descrição do turno de frequência da escola:</mat-label>
       <textarea matInput #turno
               name="turno"
               [(ngModel)]="pessoaFisica.turno"
@@ -42,7 +42,7 @@
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
-        <mat-label>Nome do curso da escola regular onde o beneficiário está matriculado:</mat-label>
+        <mat-label>Nome do curso da escola regular onde está matriculado:</mat-label>
         <textarea matInput #cursoEscola
                 name="cursoEscola"
                 [(ngModel)]="pessoaFisica.cursoEscola"
@@ -55,7 +55,7 @@
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
-      <mat-label>Período do curso da escola regular onde o beneficiário está matriculado:</mat-label>
+      <mat-label>Período do curso da escola regular onde está matriculado:</mat-label>
       <textarea matInput #periodoEscola
               name="periodoEscola"
               [(ngModel)]="pessoaFisica.periodoEscola"
@@ -71,7 +71,7 @@
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlexOffset="20px" fxFlex= "50%" appearance="outline" >
-            <mat-label>Série do curso da escola regular onde o beneficiário está matriculado:</mat-label>
+            <mat-label>Série do curso da escola regular onde está matriculado:</mat-label>
             <textarea matInput #serieEscola
                     name="serieEscola"
                     [(ngModel)]="pessoaFisica.serieEscola"

@@ -2,7 +2,7 @@
 <mat-toolbar class="titulopartes">Saúde</mat-toolbar>
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="95%" fxFlexOffset="20px">
-        <input matInput maxlength="200" name="nome" placeholder="Descrição de Problemas de Saúde do Responsável:"
+        <input matInput maxlength="200" name="nome" placeholder="Descrição de Problemas de Saúde:"
             [(ngModel)]="pessoaFisica.problemaSaude">
     </mat-form-field>
 
@@ -11,7 +11,7 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="95%" fxFlexOffset="20px">
         <input matInput maxlength="200" name="nome"
-            placeholder="Descrição dos Medicamentos Controlados Utilizados pelo Responsável:"
+            placeholder="Descrição dos Medicamentos Controlados Utilizados:"
             [(ngModel)]="pessoaFisica.medicamentosControlados">
     </mat-form-field>
 
@@ -22,7 +22,7 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="95%" fxFlexOffset="20px">
         <input matInput maxlength="200" name="nome"
-            placeholder="Descrição Relevante do Atendimento do Aluno por Outro órgão da Rede:"
+            placeholder="Descrição Relevante do Atendimento por Outro órgão da Rede:"
             [(ngModel)]="pessoaFisica.descricaoPessoaFisicaAtendidoOrgaoRede">
     </mat-form-field>
 

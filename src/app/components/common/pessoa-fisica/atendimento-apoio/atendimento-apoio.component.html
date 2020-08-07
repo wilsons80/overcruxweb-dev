@@ -21,14 +21,14 @@
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição de problemas de saúde do responsável:</mat-label>
+        <mat-label>Descrição de problemas de saúde:</mat-label>
         <textarea matInput #problemaSaude name="problemaSaude" [(ngModel)]="pessoaFisica.problemaSaude"
             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200"></textarea>
         <mat-hint align="end">{{problemaSaude.value.length}} / 200</mat-hint>
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição dos medicamentos controlados utilizados pelo responsável:</mat-label>
+        <mat-label>Descrição dos medicamentos controlados utilizados:</mat-label>
         <textarea matInput #medicamentosControlados name="medicamentosControlados"
             [(ngModel)]="pessoaFisica.medicamentosControlados" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="3" maxlength="200"></textarea>
@@ -74,7 +74,7 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição relevante do atendimento do aluno por outro órgão da rede:</mat-label>
+        <mat-label>Descrição relevante do atendimento por outro órgão da rede:</mat-label>
         <textarea matInput #descricaoPessoaFisicaAtendidoOrgaoRede name="descricaoPessoaFisicaAtendidoOrgaoRede"
             [(ngModel)]="pessoaFisica.descricaoPessoaFisicaAtendidoOrgaoRede" cdkTextareaAutosize
             #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
