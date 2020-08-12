@@ -46,8 +46,11 @@
 
         <div fxLayout="row">
             <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
-                <input style="margin-left: 20px" matInput name="dataInicio" [matDatepicker]="dataInicio"
-                    placeholder="Data Início" [(ngModel)]="matricula.dataInicio" required>
+                <input style="margin-left: 20px" matInput 
+                       name="dataInicio" 
+                       [matDatepicker]="dataInicio"
+                       placeholder="Data início matricula"
+                       [(ngModel)]="matricula.dataInicio" required>
                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
                 <mat-datepicker #dataInicio></mat-datepicker>
             </mat-form-field>
@@ -108,6 +111,22 @@
             </ng-template>
         </div>
         
+        <div *ngIf="conflitos && conflitos.length > 0" style="padding-top: 25px;">
+            <mat-toolbar class="titulopartes" style="background-color: #fbad76;color: black;">
+                Conflitos de matrículas
+            </mat-toolbar>
+
+            <mat-list *ngFor="let reg of conflitos">
+                <div mat-subheader style="font-size: 16px;font-weight: 300;color: red;" fxLayout="row" >
+                    {{reg.oficina.atividade.descricao}} - Período: {{getPeriodoConflito(reg.oficina)}} - Horário: {{reg.oficina.atividade.horaInicio}} às {{reg.oficina.atividade.horaFim}} - Dia(s): {{getDadosConflito(reg.oficina)}}
+                </div>
+                <mat-list-item style="padding-left: 30px;" *ngFor="let conf of reg.conflitos">                  
+                  <div mat-line>{{conf.atividade.descricao}} - Período: {{getPeriodoConflito(conf)}} - Horário: {{conf.atividade.horaInicio}} às {{conf.atividade.horaFim}}</div>
+                  <div mat-line>Dia(s): {{getDadosConflito(conf)}}</div>                  
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </mat-list>
+        </div>
 
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -133,4 +152,3 @@
     </form>
 
 </div>
-<pre>{{matricula.oficinas | json}}</pre>

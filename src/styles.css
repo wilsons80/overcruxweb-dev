@@ -62,8 +62,8 @@ button.mat-fab.mat-button-base{
 
 
 /* TELAS DE CONSULTA */
-.painel-principal  {
-    /* margin-top: 5%; */
+.painel-principal {
+    margin-top: 1%;
     /* margin-left: 15%;
     margin-right: 15%; */
     /* border: 3px solid #73AD21; */
@@ -152,5 +152,7 @@ tr:not(th):active {
   z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
 }
 
-
+.backgroud-error {
+  background-color: #961818 !important;
+}
 

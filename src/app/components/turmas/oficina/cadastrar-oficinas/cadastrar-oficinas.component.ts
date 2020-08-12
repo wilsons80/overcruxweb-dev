@@ -1,5 +1,5 @@
 import { TurmasService } from './../../../../services/turmas/turmas.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { Turmas } from 'src/app/core/turmas';
 import { Atividade } from 'src/app/core/atividade';
 import { Unidade } from 'src/app/core/unidade';
@@ -7,17 +7,23 @@ import { PlanosAcao } from 'src/app/core/planos-acao';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
 import * as _ from 'lodash';
+import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 
 @Component({
   selector: 'cadastrar-oficinas',
   templateUrl: './cadastrar-oficinas.component.html',
-  styleUrls: ['./cadastrar-oficinas.component.css']
+  styleUrls: ['./cadastrar-oficinas.component.css'],
+  viewProviders: [
+    { provide: ControlContainer, useExisting: NgForm },
+    { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }
+   ]
 })
 export class CadastrarOficinasComponent implements OnInit {
 
   @Input() turma: Turmas;
-  oficina: Atividade = new Atividade();
+  @Input() isValidarFormulario = false;
 
+  oficina: Atividade = new Atividade();
   isAtualizar = false;
   turmas: Turmas[];
 

@@ -8,11 +8,11 @@
 
     <mat-form-field fxFlexOffset="20px" fxFlex="30%">
         <mat-label>Niveis da turma</mat-label>
-        <mat-select [(ngModel)]="turma.niveisTurma.id" name="nivelTurma">
+        <mat-select [(ngModel)]="turma.niveisTurma.id" name="nivelTurma" 
+                    (selectionChange)="setNivelTurma()">
             <mat-option></mat-option>
             <mat-option *ngFor="let u of niveisTurma"
-                        [value]="u.id"
-                        (selectionChange)=setNivelTurma($event.value)>
+                        [value]="u.id">
                 {{u.descricao}}
             </mat-option>
         </mat-select>
@@ -32,24 +32,25 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlexOffset="20px" fxFlex="35%">
         <mat-label>Unidade</mat-label>
-        <mat-select [(ngModel)]="turma.unidade.idUnidade" name="unidade" required>
+        <mat-select [(ngModel)]="turma.unidade.idUnidade" name="unidade" 
+                    (selectionChange)="setUnidade()"
+                    required>
             <mat-option></mat-option>
             <mat-option *ngFor="let u of unidades"
-                        [value]="u.idUnidade"
-                        (selectionChange)=setUnidade($event.value)>
+                        [value]="u.idUnidade">
                 {{u.nomeUnidade}}
             </mat-option>
         </mat-select>
         <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrada</mat-hint>
     </mat-form-field>
 
-
     <mat-form-field fxFlex="30%">
         <mat-label>Programa</mat-label>
-        <mat-select [(ngModel)]="turma.programa.id" name="programa">
+        <mat-select [(ngModel)]="turma.programa.id" name="programa" 
+                    [required]="!turma.projeto?.id"
+                    (selectionChange)="carregarPrograma()">
             <mat-option></mat-option>
-            <mat-option *ngFor="let u of programas" [value]="u.id"
-                        (selectionChange)=setPrograma($event.value)>
+            <mat-option *ngFor="let u of programas" [value]="u.id">
                 {{u.nome}}
             </mat-option>
         </mat-select>
@@ -59,10 +60,12 @@
 
     <mat-form-field fxFlex="30%">
         <mat-label>Projeto</mat-label>
-        <mat-select [(ngModel)]="turma.projeto.id" name="projeto">
+        <mat-select [(ngModel)]="turma.projeto.id" 
+                    name="projeto" 
+                    (selectionChange)="carregarProjeto()"
+                    [required]="!turma.programa?.id">
             <mat-option></mat-option>
-            <mat-option *ngFor="let u of projetos" [value]="u.id"
-                       (selectionChange)=setProjeto($event.value)>
+            <mat-option *ngFor="let u of projetos" [value]="u.id">
                 {{u.nome}}
             </mat-option>
         </mat-select>
@@ -76,29 +79,49 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
     <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-        <input matInput name="dataInicioTurma" [matDatepicker]="dataInicioTurma" placeholder="Data de Início"
-            [(ngModel)]="turma.dataInicioTurma">
+        <input matInput name="dataInicioTurma" 
+               [matDatepicker]="dataInicioTurma" placeholder="Data de Início"
+               required
+               [min]="turma.projeto.dataInicio || turma.programa.dataInicio"
+               [(ngModel)]="turma.dataInicioTurma">
         <mat-datepicker-toggle matSuffix [for]="dataInicioTurma"></mat-datepicker-toggle>
         <mat-datepicker #dataInicioTurma></mat-datepicker>
+
+
+        <mat-error *ngIf="turma.projeto?.id; else errorPrograma">A data deve ser maior/igual que a data do projeto</mat-error>
+        <ng-template #errorPrograma>
+            <mat-error *ngIf="turma.programa?.id">A data deve ser maior/igual que a data do programa</mat-error>
+        </ng-template>
     </mat-form-field>
 
     <mat-form-field fxFlex="20%">
-        <input matInput name="dataFimTurma" [matDatepicker]="dataFimTurma" placeholder="Data Fim"
-            [(ngModel)]="turma.dataFimTurma">
+        <input matInput name="dataFimTurma" 
+               [matDatepicker]="dataFimTurma" 
+               placeholder="Data Fim"
+               [min]="turma.dataInicioTurma"
+               [(ngModel)]="turma.dataFimTurma">
         <mat-datepicker-toggle matSuffix [for]="dataFimTurma"></mat-datepicker-toggle>
         <mat-datepicker #dataFimTurma></mat-datepicker>
+
+        <mat-error>Inferior a data de início</mat-error>
     </mat-form-field>
 
     <!-- HORARIO INICIO -->
     <mat-form-field fxFlex="15%">
-        <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
-            placeholder="Hora Início" [(ngModel)]="turma.horaInicio">
+        <input matInput #horaInicio="ngModel" 
+               mat-hide-icons="calendar" 
+               type="time" name="horaInicio"               
+               placeholder="Hora Início" 
+               [(ngModel)]="turma.horaInicio">
     </mat-form-field>
 
     <!-- HORARIO FIM -->
     <mat-form-field fxFlex="15%">
-        <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim" placeholder="Hora Fim"
-            [(ngModel)]="turma.horaFim">
+        <input matInput #horaFim="ngModel" 
+               mat-hide-icons="calendar" 
+               type="time" name="horaFim" 
+               placeholder="Hora Fim"               
+               [(ngModel)]="turma.horaFim">
     </mat-form-field>
 
     <!-- CARGA HORÁRIA -->
@@ -116,8 +139,8 @@
 
 
 <!-- DATA PREVISTA -->
-<mat-toolbar class="titulopartes">Data Prevista</mat-toolbar>
-<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+<mat-toolbar style="margin-top: 15px;" class="titulopartes">Data Prevista</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
 
     <mat-form-field fxFlex="20%" fxFlexOffset="20px">
         <input matInput name="dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio"

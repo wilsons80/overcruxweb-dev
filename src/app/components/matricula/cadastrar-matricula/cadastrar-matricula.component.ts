@@ -15,6 +15,10 @@ import * as _ from 'lodash';
 import { FormControl } from '@angular/forms';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
+import { tap } from 'rxjs/operators';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
+
 
 @Component({
   selector: 'cadastrar-matricula',
@@ -23,7 +27,7 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
 })
 export class CadastrarMatriculaComponent implements OnInit {
 
-  todasMatriculasDoAluno: AlunosTurma[];
+  conflitos = [];
 
   matricula: AlunosTurma = new AlunosTurma();
   alunos: Aluno[];
@@ -49,7 +53,9 @@ export class CadastrarMatriculaComponent implements OnInit {
     private alunoService: AlunoService,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private dataUtilService: DataUtilService,
+    private autenticadorService: AutenticadorService
   ) {
   }
 
@@ -87,17 +93,7 @@ export class CadastrarMatriculaComponent implements OnInit {
       });
     }
 
-    this.consultarTodasMatriculasDoAluno();
-  }
-
-
-  consultarTodasMatriculasDoAluno() {
-    if (this.matricula.aluno && this.matricula.aluno.id) {
-      this.matriculasService.getFilter(null, this.matricula.aluno.id, null)
-      .subscribe((matriculas: AlunosTurma[]) => {
-        this.todasMatriculasDoAluno = matriculas;
-      });
-    }
+    
   }
 
   mostrarBotaoLimpar() {
@@ -109,40 +105,108 @@ export class CadastrarMatriculaComponent implements OnInit {
   }
 
   cadastrar() {
-    if (!this.validarDatas() ) { return; }
+    if (!this.validarDatasInicioMatriculadasNaTurma() ) { return; }
 
-    this.matriculasService.cadastrar(this.matricula).subscribe(() => {
-      this.router.navigate(['matriculas']);
-      this.toastService.showSucesso('Matricula do aluno cadastrada com sucesso!');
+    this.atividadeAlunoService.getAllByAlunoAndInstituicao(this.matricula.aluno.id)
+    .subscribe((matriculas: AtividadeAluno[]) => {
+      let hasDataMatriculaConflitando = this.validarConflitosDeMatriculas(matriculas);
+
+      if(hasDataMatriculaConflitando) {
+        this.toastService.showAlerta('Essas matrículas estão conflitando com outras matrículas no mesmo período.');
+      } else {
+        this.matriculasService.cadastrar(this.matricula).subscribe(() => {
+          this.toastService.showSucesso('Matricula do aluno cadastrada com sucesso!');
+          this.autenticadorService.revalidarSessao();
+
+          this.matriculasService.getById(this.matricula.id)
+          .subscribe((matricula: AlunosTurma) => {          
+            Object.assign(this.matricula, matricula);
+          });
+        });
+      }
     });
   }
 
-  validarDatas(): boolean {
+  validarDatasInicioMatriculadasNaTurma(): boolean {
     let dataValida = true;
+
+    const dataInicioMatricula = this.dataUtilService.getDataTruncata(this.matricula.dataInicio);
+    const dataInicioTurma     = this.dataUtilService.getDataTruncata(this.matricula.turma.dataInicioTurma);
+
+    if(dataInicioMatricula.getTime() < dataInicioTurma.getTime()) {
+      this.toastService.showAlerta('A data de início da matricula (' + dataInicioMatricula.toLocaleDateString() 
+                                   +') é menor que a data de início da turma ('+ dataInicioTurma.toLocaleDateString() +')');
+      return;
+    }
 
     if (this.matricula.oficinas) {
       this.matricula.oficinas.forEach(oficina => {
-        if (oficina.dataInicioAtividade &&
-            new Date(oficina.dataInicioAtividade).getTime() < new Date(this.matricula.dataInicio).getTime()) {
-           this.toastService.showAlerta('Oficina não pode ter data de início menor que a data de início da turma.');
+        const dataInicio = this.dataUtilService.getDataTruncata(oficina.dataInicioAtividade);
+        if (dataInicio.getTime() < dataInicioMatricula.getTime()) {
+           this.toastService.showAlerta(oficina.atividade.descricao.toUpperCase() +' não pode ter data de início menor que a data de início da matrícula.');
            dataValida = false;
         }
       });
     }
-
-    
-
     return dataValida;
   }
 
-  atualizar() {
-    if (!this.validarDatas() ) { return; }
 
-    this.matriculasService.alterar(this.matricula).subscribe(() => {
-      this.router.navigate(['matriculas']);
-      this.toastService.showSucesso('Matricula do aluno atualizada com sucesso!');
+  private validarConflitosDeMatriculas(matriculas: AtividadeAluno[]): boolean {
+    this.conflitos = [];
+
+    const matriculasTurma   = matriculas.filter(m => m.atividade.idTurma === this.matricula.turma.id);
+    const outrasMatriculas  = matriculas.filter(m => m.atividade.idTurma !== this.matricula.turma.id);
+    
+    matriculasTurma.forEach(oficina => {
+      let temp: any[] = outrasMatriculas.filter(om => ((om.atividade.domingo && oficina.atividade.domingo) || 
+                                                       (om.atividade.segunda && oficina.atividade.segunda) || 
+                                                       (om.atividade.terca   && oficina.atividade.terca)   || 
+                                                       (om.atividade.quarta  && oficina.atividade.quarta)  || 
+                                                       (om.atividade.quinta  && oficina.atividade.quinta)  || 
+                                                       (om.atividade.sexta   && oficina.atividade.sexta)   || 
+                                                       (om.atividade.sabado  && oficina.atividade.sabado)) 
+                                                      &&
+                                                      (
+                                                        oficina.atividade.horaInicio >= om.atividade.horaInicio && oficina.atividade.horaInicio <= om.atividade.horaFim 
+                                                        || 
+                                                        oficina.atividade.horaFim >= om.atividade.horaInicio && oficina.atividade.horaFim <= om.atividade.horaFim
+                                                      )
+                                                      &&
+                                                      this.dataUtilService.isEntreDatasTruncada( oficina.dataInicioAtividade, oficina.dataDesvinculacao, om.dataInicioAtividade, om.dataDesvinculacao)
+                                                      );  
+
+      
+      if(temp.length > 0) {
+        this.conflitos.push({oficina: oficina, conflitos: temp});  
+      }                                         
     });
 
+    return this.conflitos.length > 0;
+  }
+
+
+  atualizar() {
+    if (!this.validarDatasInicioMatriculadasNaTurma() ) { return; }
+
+    this.atividadeAlunoService.getAllByAlunoAndInstituicao(this.matricula.aluno.id)
+    .subscribe((matriculas: AtividadeAluno[]) => {
+      let hasDataMatriculaConflitando = this.validarConflitosDeMatriculas(matriculas);
+
+      if(hasDataMatriculaConflitando) {
+        this.toastService.showAlerta('Essas matrículas estão conflitando com outras matrículas no mesmo período.');
+      } else {
+        this.matriculasService.alterar(this.matricula).subscribe(() => {
+          this.toastService.showSucesso('Matricula do aluno atualizada com sucesso!');
+          this.autenticadorService.revalidarSessao();
+
+          this.matriculasService.getById(this.matricula.id)
+          .subscribe((matricula: AlunosTurma) => {          
+            Object.assign(this.matricula, matricula);
+          });
+        });
+      }
+    });
   }
 
   limpar() {
@@ -206,10 +270,31 @@ export class CadastrarMatriculaComponent implements OnInit {
   getDadosTurma(turma: Turmas) {
     return turma.descricao + (turma.programa ? ' - Programa: ' + turma.programa.nome : '') + 
            (turma.projeto ? ' - Projeto: ' + turma.projeto.nome : '') +
-           ' - Turno: ' + turma.turno;
+           ' - Turno: ' + turma.turno + ' - Início: ' + new Date(turma.dataInicioTurma).toLocaleDateString();
   }
 
 
-  
+  getDadosConflito(reg: AtividadeAluno) {
+    const dias = [];
+
+    reg.atividade.domingo ? dias.push('Domingo') : ''; 
+    reg.atividade.segunda ? dias.push('Segunda') : '';
+    reg.atividade.terca ? dias.push('Terça') : ''; 
+    reg.atividade.quarta ? dias.push('Quarta') : ''; 
+    reg.atividade.quinta ? dias.push('Quinta') : ''; 
+    reg.atividade.sexta ? dias.push('Sexta') : ''; 
+    reg.atividade.sabado ? dias.push('Sábado') : ''; 
+
+    return dias.join(', ');
+  }
+
+  getPeriodoConflito(atividade: AtividadeAluno) {
+    if(!atividade.dataDesvinculacao) {
+      return 'a partir de ' + this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString();
+    }
+    
+    return this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString() + ' até ' +
+           this.dataUtilService.getDataTruncata(atividade.dataDesvinculacao).toLocaleDateString()
+  }
 
 }

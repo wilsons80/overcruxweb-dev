@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Turmas</mat-toolbar>
+<mat-toolbar class="subtitulo">Turmas {{turma.descricao ? (' -> ' + turma.descricao) : ''}}</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
     <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
@@ -7,7 +7,9 @@
         <mat-step [stepControl]="formCadastroDadosTurma">
             <form #formCadastroDadosTurma="ngForm">
                 <ng-template matStepLabel>DADOS DA TURMA</ng-template>
-                <dados-turma [turma]='turma'></dados-turma>
+                <div ngModelGroup="grupoTurma">
+                    <dados-turma [turma]="turma"></dados-turma>
+                </div>                
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -40,7 +42,9 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroOficinas">
             <form #formCadastroOficinas="ngForm">
                 <ng-template matStepLabel>OFICINAS</ng-template>
-                <oficina [turma]='turma'></oficina>
+                <div [ngModelGroup]="grupoCadastrarTurma">
+                    <oficina [turma]='turma'></oficina>
+                </div>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

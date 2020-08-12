@@ -11,18 +11,19 @@ export class ToastService {
   constructor(private _snackBar: MatSnackBar) { }
 
   showAlerta(mensagem: string, id?: number) {
-    this.showToast(mensagem, 5000, id);
+    this.showToast(true, mensagem, 10000, id);
   }
 
   showSucesso(mensagem: string) {
-    this.showToast(mensagem, 5000);
+    this.showToast(false, mensagem, 5000);
   }
 
-  private showToast(mensagem: string, duracao: number, id?: number) {
+  private showToast(isError: boolean, mensagem: string, duracao: number, id?: number) {
     this._snackBar.openFromComponent(HttpErrorToastComponent, {
       duration: duracao,
       horizontalPosition: 'left',
       data: { mensagem, id },
+      panelClass: isError ? 'backgroud-error' : ''
     });
   }
 

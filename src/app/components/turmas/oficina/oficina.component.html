@@ -1,13 +1,15 @@
 <mat-accordion>
 
-    <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
+    <mat-expansion-panel [ngModelGroup]="grupoOficina"
+                         [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Dados da Oficina
             </mat-panel-title>
         </mat-expansion-panel-header>
+        
+        <cadastrar-oficinas #cadastrarOficinas [turma]="turma" [isValidarFormulario]="openFormCadastro"></cadastrar-oficinas>
 
-        <cadastrar-oficinas #cadastrarOficinas [turma]="turma"></cadastrar-oficinas>
     </mat-expansion-panel>
 
 

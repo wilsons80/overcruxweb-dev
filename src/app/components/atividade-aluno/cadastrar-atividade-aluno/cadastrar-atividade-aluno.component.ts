@@ -11,6 +11,8 @@ import { AlunoService } from './../../../services/aluno/aluno.service';
 import * as _ from 'lodash';
 import { TurmasService } from 'src/app/services/turmas/turmas.service';
 import { Turmas } from 'src/app/core/turmas';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
 
 @Component({
   selector: 'app-cadastrar-atividade-aluno',
@@ -18,6 +20,8 @@ import { Turmas } from 'src/app/core/turmas';
   styleUrls: ['./cadastrar-atividade-aluno.component.css']
 })
 export class CadastrarAtividadeAlunoComponent implements OnInit {
+
+  conflitos = [];
 
   atividadeAluno: AtividadeAluno = new AtividadeAluno();
   alunos: Aluno[];
@@ -39,7 +43,9 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     private atividadeService: AtividadeService,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private dataUtilService: DataUtilService,
+    private autenticadorService: AutenticadorService
   ) {
   }
 
@@ -101,6 +107,7 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     return true;
   }
 
+  /*
   cadastrar() {
     if (!this.validarDatas() ) { return; }
 
@@ -109,29 +116,72 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
       this.toastService.showSucesso('Atividade aluno cadastrada com sucesso');
     });
   }
+  */
 
-  private getValorByDate(valor) {
-    if(valor === null || valor === undefined) return null;
+  private validarConflitosDeMatriculas(matriculasRealizadas: AtividadeAluno[]): boolean {
+    this.conflitos = [];
 
-    if(valor && valor instanceof Date) {
-      const data = valor.toLocaleDateString().split('/');
-      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
-    }
+    const matriculas        = matriculasRealizadas.filter(m => m.id === this.atividadeAluno.id);
+    const outrasMatriculas  = matriculasRealizadas.filter(m => m.id !== this.atividadeAluno.id);
+    
+    matriculas.forEach(oficina => {
+      let temp: any[] = outrasMatriculas.filter(om => ((om.atividade.domingo && oficina.atividade.domingo) || 
+                                                       (om.atividade.segunda && oficina.atividade.segunda) || 
+                                                       (om.atividade.terca   && oficina.atividade.terca)   || 
+                                                       (om.atividade.quarta  && oficina.atividade.quarta)  || 
+                                                       (om.atividade.quinta  && oficina.atividade.quinta)  || 
+                                                       (om.atividade.sexta   && oficina.atividade.sexta)   || 
+                                                       (om.atividade.sabado  && oficina.atividade.sabado)) 
+                                                      &&
+                                                      (
+                                                        oficina.atividade.horaInicio >= om.atividade.horaInicio && oficina.atividade.horaInicio <= om.atividade.horaFim 
+                                                        || 
+                                                        oficina.atividade.horaFim >= om.atividade.horaInicio && oficina.atividade.horaFim <= om.atividade.horaFim
+                                                      )
+                                                      &&
+                                                      this.dataUtilService.isEntreDatasTruncada( oficina.dataInicioAtividade, oficina.dataDesvinculacao, om.dataInicioAtividade, om.dataDesvinculacao)
+                                                      );  
+     
+      if(temp.length > 0) {
+        this.conflitos.push({oficina: oficina, conflitos: temp});  
+      }                                         
+    });
 
-    if(valor && !(valor instanceof Date)) {
-      const dataString = new Date(valor).toLocaleDateString();
-      const data = dataString.split('/');
-      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
-    }
+    return this.conflitos.length > 0;
+  }
+
+  cadastrar() {
+    if (!this.validarDatas() ) { return; }
+
+    this.atividadeAlunoService.getAllByAlunoAndInstituicao(this.atividadeAluno.aluno.id)
+    .subscribe((matriculas: AtividadeAluno[]) => {
+      let hasDataMatriculaConflitando = this.validarConflitosDeMatriculas(matriculas);
+
+      if(hasDataMatriculaConflitando) {
+        this.toastService.showAlerta('Essa matrícula está conflitando com outras matrículas no mesmo período.');
+      } else {
+        this.atividadeAlunoService.cadastrar(this.atividadeAluno).subscribe(() => {
+          this.toastService.showSucesso('Matricula do aluno cadastrada com sucesso!');
+          this.autenticadorService.revalidarSessao();
+
+          this.atividadeAlunoService.getById(this.atividadeAluno.id)
+          .subscribe((atividadeAluno: AtividadeAluno) => {          
+            Object.assign(this.atividadeAluno, atividadeAluno);
+          });
+        });
+      }
+    });
   }
 
 
-  validarDatas(): boolean {
-    const dataInicioAtividade     = this.getValorByDate(this.atividadeAluno.atividade.dataInicio);
-    const dataFimAtividade        = this.getValorByDate(this.atividadeAluno.atividade.dataFim);
 
-    const dataIncioMatricula          = this.getValorByDate(this.atividadeAluno.dataInicioAtividade);
-    const dataDesvinculacaoMatricula  = this.getValorByDate(this.atividadeAluno.dataDesvinculacao);
+
+  validarDatas(): boolean {
+    const dataInicioAtividade     = this.dataUtilService.getValorByDate(this.atividadeAluno.atividade.dataInicio);
+    const dataFimAtividade        = this.dataUtilService.getValorByDate(this.atividadeAluno.atividade.dataFim);
+
+    const dataIncioMatricula          = this.dataUtilService.getValorByDate(this.atividadeAluno.dataInicioAtividade);
+    const dataDesvinculacaoMatricula  = this.dataUtilService.getValorByDate(this.atividadeAluno.dataDesvinculacao);
 
     
     if (dataIncioMatricula && dataIncioMatricula.getTime() < dataInicioAtividade.getTime()) {
@@ -183,12 +233,26 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
   atualizar() {
     if (!this.validarDatas() ) { return; }
 
-    this.atividadeAlunoService.alterar(this.atividadeAluno).subscribe(() => {
-      this.router.navigate(['atividadealuno']);
-      this.toastService.showSucesso('Atividade aluno atualizado com sucesso');
-    });
+    this.atividadeAlunoService.getAllByAlunoAndInstituicao(this.atividadeAluno.aluno.id)
+    .subscribe((matriculas: AtividadeAluno[]) => {
+      let hasDataMatriculaConflitando = this.validarConflitosDeMatriculas(matriculas);
 
+      if(hasDataMatriculaConflitando) {
+        this.toastService.showAlerta('Essa matrícula está conflitando com outras matrículas no mesmo período.');
+      } else {
+        this.atividadeAlunoService.alterar(this.atividadeAluno).subscribe(() => {
+          this.toastService.showSucesso('Matricula do aluno atualizada com sucesso!');
+          this.autenticadorService.revalidarSessao();
+
+          this.atividadeAlunoService.getById(this.atividadeAluno.id)
+          .subscribe((atividadeAluno: AtividadeAluno) => {          
+            Object.assign(this.atividadeAluno, atividadeAluno);
+          });
+        });
+      }
+    });
   }
+
 
   mostrarDadosAluno(idAluno) {
     this.atividadeAluno.aluno = _.cloneDeep(_.find(this.alunos, (a: Aluno) => a.id === idAluno));
@@ -216,5 +280,36 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
 
   isOficina() {
     return this.tipoOficina === 'O';
+  }
+
+
+
+  getDadosTurma(turma: Turmas) {
+    return turma.descricao + (turma.programa ? ' - Programa: ' + turma.programa.nome : '') + 
+           (turma.projeto ? ' - Projeto: ' + turma.projeto.nome : '') +
+           ' - Turno: ' + turma.turno + ' - Início: ' + new Date(turma.dataInicioTurma).toLocaleDateString();
+  }
+
+  getDadosConflito(reg: AtividadeAluno) {
+    const dias = [];
+
+    reg.atividade.domingo ? dias.push('Domingo') : ''; 
+    reg.atividade.segunda ? dias.push('Segunda') : '';
+    reg.atividade.terca ? dias.push('Terça') : ''; 
+    reg.atividade.quarta ? dias.push('Quarta') : ''; 
+    reg.atividade.quinta ? dias.push('Quinta') : ''; 
+    reg.atividade.sexta ? dias.push('Sexta') : ''; 
+    reg.atividade.sabado ? dias.push('Sábado') : ''; 
+
+    return dias.join(', ');
+  }
+
+  getPeriodoConflito(atividade: AtividadeAluno) {
+    if(!atividade.dataDesvinculacao) {
+      return 'a partir de ' + this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString();
+    }
+    
+    return this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString() + ' até ' +
+           this.dataUtilService.getDataTruncata(atividade.dataDesvinculacao).toLocaleDateString()
   }
 }

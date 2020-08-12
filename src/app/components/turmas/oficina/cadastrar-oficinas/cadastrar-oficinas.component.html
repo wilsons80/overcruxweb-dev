@@ -1,4 +1,4 @@
-<div class="painel-principal" style="padding: 10px;">
+<div class="painel-principal" style="padding: 10px;" *ngIf="isValidarFormulario">
 
     <copiar-dados-oficina [oficina]="oficina" [turmas]="turmas"></copiar-dados-oficina>
 
@@ -6,9 +6,9 @@
 
         <!-- DADOS OFICINA -->
         <mat-tab label="OFICINA">
-            <form #formCadastroDadosAtividade="ngForm">
+            <div [ngModelGroup]="grupoCadastroOficina">
                 <dados-atividade [atividade]=oficina></dados-atividade>
-            </form>
+            </div>
         </mat-tab>
 
         <!-- DADOS COLABORADORES ATIVIDADE -->
