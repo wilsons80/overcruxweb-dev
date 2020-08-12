@@ -42,7 +42,7 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroOficinas">
             <form #formCadastroOficinas="ngForm">
                 <ng-template matStepLabel>OFICINAS</ng-template>
-                <div [ngModelGroup]="grupoCadastrarTurma">
+                <div ngModelGroup="grupoCadastrarTurma">
                     <oficina [turma]='turma'></oficina>
                 </div>
             </form>
