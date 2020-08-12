@@ -66,11 +66,11 @@ export class DataUtilService {
   }
 
   public isEntreDatasTruncada(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
-    const p_dataPesqIni = this.getDataTruncata(dataPesquisaInicio);
-    const p_dataPesqFim = this.getDataTruncata(dataPesquisaFim);
     const p_dataIni     = this.getDataTruncata(dataInicio);
     const p_dataFim     = this.getDataTruncata(dataFim);
-    return this.entreDatas(p_dataIni, p_dataFim, p_dataPesqIni, p_dataPesqFim);
+    const p_dataPesqIni = this.getDataTruncata(dataPesquisaInicio);
+    const p_dataPesqFim = this.getDataTruncata(dataPesquisaFim);
+    return this.entreDatas(p_dataIni, p_dataFim, p_dataPesqIni, p_dataPesqFim );
   }
 
   public isEntreDatas(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
@@ -82,13 +82,13 @@ export class DataUtilService {
   }
 
   private entreDatas(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
-    return this.isVigente(dataInicio, dataPesquisaInicio, dataPesquisaFim) || this.isVigente(dataFim, dataPesquisaInicio, dataPesquisaFim);
+    return this.isVigente(dataPesquisaInicio, dataInicio, dataFim) && this.isVigente(dataPesquisaFim, dataInicio, dataFim);
   }
 
 
   private isVigente(dataReferencia: Date, dataIni: Date, dataFim: Date): boolean {
-    if(!dataReferencia){ dataReferencia = this.getDataTruncata(new Date()); }
-    if(!dataFim){ dataFim = this.getDataTruncata(new Date());}
+    if(!dataReferencia){ dataReferencia = this.getDataTruncata(new Date()); dataReferencia.setFullYear(dataReferencia.getFullYear() + 5000); }
+    if(!dataFim){ dataFim = this.getDataTruncata(new Date()); dataFim.setFullYear(dataFim.getFullYear() + 5000);}
 
     if(this.getValorByDate(dataReferencia).getTime() >= this.getValorByDate(dataIni).getTime()
        &&
@@ -96,7 +96,6 @@ export class DataUtilService {
        ) {
       return true;
     }
-
     return false;
   }
 
