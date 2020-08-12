@@ -85,7 +85,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div [hidden]="!mostrarTabela">
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[20,30,50,100]" showFirstLastButtons></mat-paginator>
         </div>
         <ng-template #tabelaSemDados>
             <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">

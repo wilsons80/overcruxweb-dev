@@ -155,7 +155,7 @@ export class CadastrarMatriculaComponent implements OnInit {
   private validarConflitosDeMatriculas(matriculas: AtividadeAluno[]): boolean {
     this.conflitos = [];
 
-    const matriculasTurma   = matriculas.filter(m => m.atividade.idTurma === this.matricula.turma.id);
+    const matriculasTurma   = this.matricula.oficinas;
     const outrasMatriculas  = matriculas.filter(m => m.atividade.idTurma !== this.matricula.turma.id);
     
     matriculasTurma.forEach(oficina => {

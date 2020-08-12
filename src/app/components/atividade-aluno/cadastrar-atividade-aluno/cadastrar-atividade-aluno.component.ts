@@ -107,21 +107,10 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     return true;
   }
 
-  /*
-  cadastrar() {
-    if (!this.validarDatas() ) { return; }
-
-    this.atividadeAlunoService.cadastrar(this.atividadeAluno).subscribe(() => {
-      this.router.navigate(['atividadealuno']);
-      this.toastService.showSucesso('Atividade aluno cadastrada com sucesso');
-    });
-  }
-  */
-
   private validarConflitosDeMatriculas(matriculasRealizadas: AtividadeAluno[]): boolean {
     this.conflitos = [];
 
-    const matriculas        = matriculasRealizadas.filter(m => m.id === this.atividadeAluno.id);
+    const matriculas        = [this.atividadeAluno];
     const outrasMatriculas  = matriculasRealizadas.filter(m => m.id !== this.atividadeAluno.id);
     
     matriculas.forEach(oficina => {
