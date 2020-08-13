@@ -30,16 +30,16 @@ export class CadastrarEntidadeSocialComponent implements OnInit {
     {id: CategoriaEmpresa.OUTRO, descricao: 'OUTRO'},
   ];
 
-  
+ /* 
   tiposEmpresa: any [] = [
     {tipo: TipoEmpresa.PARCEIRA, descricao: 'PARCEIRA'},
     {tipo: TipoEmpresa.CONVENIO, descricao: 'CONVÊNIO'},
     {tipo: TipoEmpresa.CONTRATO, descricao: 'CONTRATO'},
     {tipo: TipoEmpresa.FORNECEDOR, descricao: 'FORNECEDOR'},
-    {tipo: TipoEmpresa.CLIENTE, descricao: 'CLIENTE'},
+    {tipo: TipoEmpresa.CLIENTE, descricao: 'CLIENTE'}
     {tipo: TipoEmpresa.OUTRO, descricao: 'OUTRO'}
   ]
-
+*/
   ufs: any[] = [
     {nome: 'DF'}
   ]
