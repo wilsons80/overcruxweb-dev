@@ -114,11 +114,13 @@ export class CadastrarMatriculaComponent implements OnInit {
       if(hasDataMatriculaConflitando) {
         this.toastService.showAlerta('Essas matrículas estão conflitando com outras matrículas no mesmo período.');
       } else {
-        this.matriculasService.cadastrar(this.matricula).subscribe(() => {
+        this.matriculasService.cadastrar(this.matricula).subscribe(
+          (matriculaSalva: AlunosTurma) => {
+
           this.toastService.showSucesso('Matricula do aluno cadastrada com sucesso!');
           this.autenticadorService.revalidarSessao();
 
-          this.matriculasService.getById(this.matricula.id)
+          this.matriculasService.getById(matriculaSalva.id)
           .subscribe((matricula: AlunosTurma) => {          
             Object.assign(this.matricula, matricula);
           });
@@ -131,7 +133,14 @@ export class CadastrarMatriculaComponent implements OnInit {
     let dataValida = true;
 
     const dataInicioMatricula = this.dataUtilService.getDataTruncata(this.matricula.dataInicio);
+    const dataFimMatricula    = this.dataUtilService.getDataTruncata(this.matricula.dataDesvinculacao);
     const dataInicioTurma     = this.dataUtilService.getDataTruncata(this.matricula.turma.dataInicioTurma);
+
+
+    if(dataFimMatricula && dataInicioMatricula.getTime() > dataFimMatricula.getTime()) {
+      this.toastService.showAlerta('A data de fim da matrícula tem que maior ou igual à data de início.');
+      return;
+    }
 
     if(dataInicioMatricula.getTime() < dataInicioTurma.getTime()) {
       this.toastService.showAlerta('A data de início da matricula (' + dataInicioMatricula.toLocaleDateString() 
@@ -156,7 +165,7 @@ export class CadastrarMatriculaComponent implements OnInit {
     this.conflitos = [];
 
     const matriculasTurma   = this.matricula.oficinas;
-    const outrasMatriculas  = matriculas.filter(m => m.atividade.idTurma !== this.matricula.turma.id);
+    const outrasMatriculas  = matriculas;
     
     matriculasTurma.forEach(oficina => {
       let temp: any[] = outrasMatriculas.filter(om => ((om.atividade.domingo && oficina.atividade.domingo) || 
@@ -228,9 +237,29 @@ export class CadastrarMatriculaComponent implements OnInit {
   }
 
   carregarDadosTurma() {
+    this.matricula.oficinas = [];
+
     if (this.matricula.turma.id) {
       this.matricula.turma = _.cloneDeep(_.find(this.turmas, (t: Turmas) => t.id === this.matricula.turma.id));
+
+      this.matricula.turma.oficinas.forEach(oficina => {
+
+        const atividade = new AtividadeAluno();
+        atividade.dataInicioAtividade = this.matricula.dataInicio;
+        atividade.dataDesvinculacao   = this.matricula.dataDesvinculacao;
+        atividade.aluno               = this.matricula.aluno;
+        atividade.atividade           = oficina;
+
+        this.matricula.oficinas.push(atividade);
+      })
     }
+  }
+
+  carregarDataInicioOficinas() {
+    this.matricula.oficinas.forEach(oficina => {
+      oficina.dataInicioAtividade = oficina.dataInicioAtividade || this.matricula.dataInicio;
+      oficina.dataDesvinculacao   = oficina.dataDesvinculacao || this.matricula.dataDesvinculacao;
+    })
   }
 
   novaMatricula() {

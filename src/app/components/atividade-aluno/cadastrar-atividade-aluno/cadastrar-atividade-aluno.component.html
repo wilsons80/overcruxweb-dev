@@ -84,9 +84,11 @@
                 </mat-form-field>
 
                 <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
-                    <input style="margin-left: 20px" matInput name="dataDesvinculacao"
-                        [matDatepicker]="dataDesvinculacao" placeholder="Data de desvinculação"
-                        [(ngModel)]="atividadeAluno.dataDesvinculacao">
+                    <input style="margin-left: 20px" 
+                           matInput name="dataDesvinculacao"
+                           [min]="atividadeAluno.dataInicioAtividade"
+                           [matDatepicker]="dataDesvinculacao" placeholder="Data de desvinculação"
+                           [(ngModel)]="atividadeAluno.dataDesvinculacao">
                     <mat-datepicker-toggle matSuffix [for]="dataDesvinculacao"></mat-datepicker-toggle>
                     <mat-datepicker #dataDesvinculacao></mat-datepicker>
                 </mat-form-field>

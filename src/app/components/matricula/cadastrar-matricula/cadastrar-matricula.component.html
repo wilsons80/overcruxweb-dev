@@ -49,6 +49,7 @@
                 <input style="margin-left: 20px" matInput 
                        name="dataInicio" 
                        [matDatepicker]="dataInicio"
+                       (blur)="carregarDataInicioOficinas()"
                        placeholder="Data início matricula"
                        [(ngModel)]="matricula.dataInicio" required>
                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
@@ -56,8 +57,13 @@
             </mat-form-field>
 
             <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
-                <input style="margin-left: 20px" matInput name="dataDesvinculacao" [matDatepicker]="dataDesvinculacao"
-                    placeholder="Data de desvinculação" [(ngModel)]="matricula.dataDesvinculacao">
+                <input style="margin-left: 20px" 
+                       matInput 
+                       name="dataDesvinculacao" 
+                       [min]="matricula.dataInicio"
+                       [matDatepicker]="dataDesvinculacao"
+                       (blur)="carregarDataInicioOficinas()"
+                       placeholder="Data de desvinculação" [(ngModel)]="matricula.dataDesvinculacao">
                 <mat-datepicker-toggle matSuffix [for]="dataDesvinculacao"></mat-datepicker-toggle>
                 <mat-datepicker #dataDesvinculacao></mat-datepicker>
             </mat-form-field>
@@ -71,7 +77,7 @@
 
         </div>
 
-        <div *ngIf="isAtualizar && mostrarBotaoAtualizar" >
+        <div >
             <mat-toolbar class="titulopartes">Oficinas matriculadas</mat-toolbar>
             <div *ngIf="matricula.turma.oficinas?.length; else msgSemOficina">
                 <div fxLayout="row">

@@ -149,11 +149,13 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
       if(hasDataMatriculaConflitando) {
         this.toastService.showAlerta('Essa matrícula está conflitando com outras matrículas no mesmo período.');
       } else {
-        this.atividadeAlunoService.cadastrar(this.atividadeAluno).subscribe(() => {
+        this.atividadeAlunoService.cadastrar(this.atividadeAluno).subscribe(
+          (atividadeAlunoSalva: AtividadeAluno) => {
+
           this.toastService.showSucesso('Matricula do aluno cadastrada com sucesso!');
           this.autenticadorService.revalidarSessao();
 
-          this.atividadeAlunoService.getById(this.atividadeAluno.id)
+          this.atividadeAlunoService.getById(atividadeAlunoSalva.id)
           .subscribe((atividadeAluno: AtividadeAluno) => {          
             Object.assign(this.atividadeAluno, atividadeAluno);
           });

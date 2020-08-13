@@ -17,6 +17,7 @@ import { MatriculaService } from 'src/app/services/matricula/matricula.service';
 import * as _ from 'lodash';
 import { TurmasService } from 'src/app/services/turmas/turmas.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'matricula',
@@ -53,7 +54,7 @@ export class MatriculaComponent implements OnInit {
     private turmasService: TurmasService,
     private atividadeService: AtividadeService,
     private alunoService: AlunoService,
-
+    private toastService: ToastService,
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
@@ -136,6 +137,7 @@ export class MatriculaComponent implements OnInit {
         this.matriculasService.excluir(matricula.id).subscribe(() => {
           this.matricula.id = null;
           this.consultar();
+          this.toastService.showSucesso('Matrícula excluída com sucesso.')
         });
       } else {
         dialogRef.close();
