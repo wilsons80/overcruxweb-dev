@@ -2,7 +2,8 @@
 
     <mat-form-field style="margin: 0 20px 20px 20px">
         <mat-label>Oficina:</mat-label>
-        <mat-select [(ngModel)]="oficina.atividade.id" name="oficina_{{pinOficina}}" required>
+        <mat-select [(ngModel)]="oficina.atividade.id" name="oficina_{{pinOficina}}" required
+                    (selectionChange)="carregarDadosOficina()">
             <mat-option *ngFor="let i of oficinas" [value]="i.id">
                 {{i.descricao}}
             </mat-option>

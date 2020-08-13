@@ -49,7 +49,7 @@
                 <input style="margin-left: 20px" matInput 
                        name="dataInicio" 
                        [matDatepicker]="dataInicio"
-                       (blur)="carregarDataInicioOficinas()"
+                       (change)="carregarDataInicioOficinas()"
                        placeholder="Data início matricula"
                        [(ngModel)]="matricula.dataInicio" required>
                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
@@ -62,7 +62,7 @@
                        name="dataDesvinculacao" 
                        [min]="matricula.dataInicio"
                        [matDatepicker]="dataDesvinculacao"
-                       (blur)="carregarDataInicioOficinas()"
+                       (change)="carregarDataInicioOficinas()"
                        placeholder="Data de desvinculação" [(ngModel)]="matricula.dataDesvinculacao">
                 <mat-datepicker-toggle matSuffix [for]="dataDesvinculacao"></mat-datepicker-toggle>
                 <mat-datepicker #dataDesvinculacao></mat-datepicker>

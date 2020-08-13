@@ -134,7 +134,9 @@ export class CadastrarMatriculaComponent implements OnInit {
 
     const dataInicioMatricula = this.dataUtilService.getDataTruncata(this.matricula.dataInicio);
     const dataFimMatricula    = this.dataUtilService.getDataTruncata(this.matricula.dataDesvinculacao);
+
     const dataInicioTurma     = this.dataUtilService.getDataTruncata(this.matricula.turma.dataInicioTurma);
+    const dataFimTurma        = this.dataUtilService.getDataTruncata(this.matricula.turma.dataFimTurma);
 
 
     if(dataFimMatricula && dataInicioMatricula.getTime() > dataFimMatricula.getTime()) {
@@ -148,15 +150,49 @@ export class CadastrarMatriculaComponent implements OnInit {
       return;
     }
 
+    //Não permite que a data de início das oficinas sejam menores que a data de inicio da matrícula da turma
     if (this.matricula.oficinas) {
       this.matricula.oficinas.forEach(oficina => {
         const dataInicio = this.dataUtilService.getDataTruncata(oficina.dataInicioAtividade);
+        const dataFim    = this.dataUtilService.getDataTruncata(oficina.dataDesvinculacao);
+
+        
+        if (dataInicio && dataFimMatricula && dataInicio.getTime() > dataFimMatricula.getTime()) {
+          this.toastService.showAlerta(oficina.atividade.descricao.toUpperCase() +' não pode ter data de início maior que a data de fim da matrícula.');
+          dataValida = false;
+          return dataValida;
+        }
+
+        if( (!dataFim && dataFimMatricula) ||
+            (dataFimMatricula && dataFim.getTime() > dataFimMatricula.getTime())) {
+          this.toastService.showAlerta(oficina.atividade.descricao.toUpperCase() +' não pode ter data de desvinculação maior que a data de desvinculação da matrícula.');
+          dataValida = false;
+          return dataValida;
+        }
+
+
         if (dataInicio.getTime() < dataInicioMatricula.getTime()) {
            this.toastService.showAlerta(oficina.atividade.descricao.toUpperCase() +' não pode ter data de início menor que a data de início da matrícula.');
            dataValida = false;
+           return dataValida;
         }
+
+        //Valida conflitos entres oficinas da turma
+        const matriculasMesmaOficina = this.matricula.oficinas.filter(o => o.atividade.id === oficina.atividade.id && oficina.id != o.id);
+        if(matriculasMesmaOficina) {
+          matriculasMesmaOficina.forEach(m => {
+            const matriculaConflito = this.dataUtilService.isEntreDatasTruncada(oficina.dataInicioAtividade, oficina.dataDesvinculacao, m.dataInicioAtividade, m.dataDesvinculacao);
+            if(matriculasMesmaOficina) {
+              this.toastService.showAlerta('Favor verificar conflitos de períodos na oficina >>> ' + oficina.atividade.descricao.toUpperCase());
+              dataValida = false;
+              return dataValida;
+            }            
+          })
+        } 
+
       });
     }
+
     return dataValida;
   }
 

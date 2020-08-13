@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Atividade } from 'src/app/core/atividade';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Acesso } from 'src/app/core/acesso';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'dados-oficina',
@@ -30,4 +31,13 @@ export class DadosOficinaComponent implements OnInit {
   deletar(oficina: AtividadeAluno) {
     this.onDeletar.emit(oficina);
   }
+
+  carregarDadosOficina() {
+    if(this.oficina.atividade.id) {
+      this.oficina.atividade = _.cloneDeep(_.find(this.oficinas, (a: Atividade) => a.id === this.oficina.atividade.id));
+    } else {
+      this.oficina.atividade = new Atividade();
+    }
+  }
+
 }
