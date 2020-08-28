@@ -127,7 +127,7 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   getValorTotalRateio() {
     this.valorRateioSuperior = false;
-    let valorMovimentacao = this.movimentacoes.valorMovimentacao;
+    let valorMovimentacao = this.movimentacoes.valorMovimentacao || 0;
 
     let valorTotal = 0;
     this.movimentacoes.rateios.forEach(rateio => {
@@ -140,7 +140,7 @@ export class DadosMovimentacaoComponent implements OnInit {
       }
     });
 
-    if(valorTotal != valorMovimentacao) {
+    if(Number(valorTotal.toFixed(2)) != Number(valorMovimentacao.toFixed(2))) {
       this.valorRateioSuperior = true;
     }
 
