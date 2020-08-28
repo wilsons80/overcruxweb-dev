@@ -95,7 +95,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   }
 
   isValorTotalRateioValido() {
-    let valorMovimentacao = this.movimentacoes.valorMovimentacao;
+    let valorMovimentacao = this.movimentacoes.valorMovimentacao || 0;
 
     let valorTotal = 0;
     this.movimentacoes.rateios.forEach(rateio => {
@@ -108,7 +108,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       }
     });
 
-    if(valorTotal != valorMovimentacao) {
+    if(Number(valorTotal.toFixed(2)) != Number(valorMovimentacao.toFixed(2))) {
       this.toastService.showSucesso('O valor do rateio está diferente do valor do movimento.');
       return false;
     }
