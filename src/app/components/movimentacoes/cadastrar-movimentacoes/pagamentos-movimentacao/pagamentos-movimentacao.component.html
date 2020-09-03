@@ -13,7 +13,7 @@
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
                     <!-- FATURAS -->
-                    <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="27%" fxFlexOffset="20px">
                         <mat-label>Fatura:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.fatura.id name="fatura" required>
                             <mat-option></mat-option>
@@ -27,7 +27,7 @@
                     </mat-form-field>
 
                     <!-- CONTAS BANCARIAS -->
-                    <mat-form-field fxFlex="70%">
+                    <mat-form-field fxFlex>
                         <mat-label>Conta bancária:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias">
                             <mat-option></mat-option>
@@ -54,7 +54,7 @@
                     </mat-form-field>
 
                     <!-- DATA -->
-                    <mat-form-field fxFlex="15%">
+                    <mat-form-field fxFlex="170px">
                         <input [(ngModel)]="pagamentosFatura.dataPagamento"
                                matInput 
                                #campoPagamentoMovimento
@@ -65,13 +65,12 @@
                                required>
                         <mat-datepicker-toggle matSuffix [for]="dataPagamentoMovimento"></mat-datepicker-toggle>
                         <mat-datepicker #dataPagamentoMovimento></mat-datepicker>
-
                         <mat-error *ngIf="campoPagamentoMovimento.value">A data está inválida ou superior a hoje</mat-error>
                     </mat-form-field>
                 
 
                     <!-- FORMA DE PAGAMENTO -->
-                    <mat-form-field fxFlex="65%">
+                    <mat-form-field fxFlex="250px">
                         <mat-label>Forma de pagamento:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
                             <mat-option></mat-option>
@@ -82,16 +81,14 @@
                     </mat-form-field>
 
                     <!-- NUMERO CHEQUE -->
-                    <mat-form-field fxFlex="20%">
+                    <mat-form-field fxFlex="200px">
                         <input [(ngModel)]=pagamentosFatura.numeroDocPagamento 
                                matInput min="0" name="nrDocumento" placeholder="Número da Transação"
                                [disabled]="pagamentosFatura.formaPagamento !== 'C'" />
                     </mat-form-field>
 
-                </div>
-
-                <div fxLayout="row" fxLayoutGap="50px">
-                    <mat-form-field fxFlex="10%" fxFlexOffset="20px">
+                
+                    <mat-form-field fxFlex="150px" fxFlexOffset="20px">
                         <input [(ngModel)]="pagamentosFatura.valorMulta" 
                                currencyMask name="valorMulta"
                                placeholder="Valor da multa:" matInput maxlength="13"
@@ -99,7 +96,7 @@
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="10%">
+                    <mat-form-field fxFlex="150px">
                         <input [(ngModel)]="pagamentosFatura.valorJuros" 
                                currencyMask name="valorJuros"
                                placeholder="Valor da juros:" matInput maxlength="13"
@@ -107,6 +104,41 @@
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
                 </div>
+
+                
+                <mat-toolbar class="titulopartes">Reembolso</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    
+                    <mat-form-field fxFlex fxFlexOffset="20px">
+                        <mat-label>Conta reembolso</mat-label>
+                        <mat-select [(ngModel)]=pagamentosFatura.contaReembolso.id
+                                    (selectionChange)="validarContaReembolso()" 
+                                    name="contasReembolso">
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
+                                {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C. {{i.numeroContaBancaria}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+                    </mat-form-field>
+
+                    
+                    <mat-form-field fxFlex="170px">
+                        <input [(ngModel)]="pagamentosFatura.dataReembolso"
+                               matInput 
+                               #campoDataReembolso
+                               name="dataReembolso"
+                               [min]="pagamentosFatura.dataPagamento"
+                               [required]="pagamentosFatura.contaReembolso.id"
+                               [matDatepicker]="dataReembolso"
+                               placeholder="Data do reembolso">
+                        <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
+                        <mat-datepicker #dataReembolso></mat-datepicker>
+                        <mat-error *ngIf="campoPagamentoMovimento.value">A data deve ser maior ou igual a data do pagamento</mat-error>
+                    </mat-form-field>
+
+                </div>
+                
             </div>
 
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
@@ -135,7 +167,7 @@
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <span>Lista de Pagamentos ( {{movimentacoes.pagamentosFatura?.length || 0}} ) -</span>
-                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valoresSuperiorValorMovimento ? 'red' : 'green'">(Valor Total: {{getValorTotal() | currency: 'BRL'}})</span>      
+                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valoresSuperiorValorMovimento ? 'red' : 'green'">Valor Total: {{getValorTotal() | currency: 'BRL'}}</span>      
                     <span *ngIf="valoresSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores de pagamento está superior ao valor do movimento.</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>

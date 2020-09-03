@@ -11,6 +11,7 @@ import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { Banco } from 'src/app/core/banco';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -21,9 +22,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   movimentacoes: Movimentacoes;
 
-  isAtualizar = false;
-
-  
+  isAtualizar = false;  
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -35,6 +34,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     private router: Router,
     private drc: ChangeDetectorRef,
     private toastService: ToastService,
+    private dataUtilService: DataUtilService,
     private movimentacoesService: MovimentacoesService,
     private autenticadorService: AutenticadorService
   ) {
@@ -75,6 +75,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   cadastrar() {
     if( !this.isValorTotalRateioValido() ) {return;}
+    if( !this.isContaReembolsoValida()) { return; }
 
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe(() => {
       this.router.navigate(['movimentacoes']);
@@ -118,6 +119,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   atualizar() {
     if( !this.isValorTotalRateioValido() ) {return;}
+    if( !this.isContaReembolsoValida()) { return; }
 
     this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
@@ -151,5 +153,25 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
     return true;
   }
+
+
+  isContaReembolsoValida(): boolean {
+    if(this.movimentacoes.contaBancaria) {
+      const contaReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.id === this.movimentacoes.contaBancaria.id);
+      if(contaReembolso){
+        this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta do movimento.');
+        return false;
+      }
+
+      const dataReembolso = this.movimentacoes.pagamentosFatura.filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
+      if(dataReembolso) {
+        this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
+        return false;
+      }
+
+    }
+    return true;
+  }
+  
 
 }

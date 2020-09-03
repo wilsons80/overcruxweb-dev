@@ -12,6 +12,7 @@ import { Fatura } from 'src/app/core/fatura';
 import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 import { FormaPagamento } from 'src/app/core/forma-pagamento';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -41,12 +42,12 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   isAtualizar = false;
   contasBancarias: ContasBancaria[];
   listaFaturas: Fatura[];
-
   valoresSuperiorValorMovimento = false;
 
   constructor(
     private contasBancariaService: ContasBancariaService,
-    private faturaService: FaturaService
+    private faturaService: FaturaService,
+    private toastService: ToastService
   ) { 
     this.maxDataPagamento = new Date();
   }
@@ -127,6 +128,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   initObjetos() {
     this.pagamentosFatura = new PagamentosFatura();
     this.pagamentosFatura.contaBancaria = new ContasBancaria();
+    this.pagamentosFatura.contaReembolso = new ContasBancaria();
     this.pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
     this.pagamentosFatura.fatura = new Fatura();
   }
@@ -172,5 +174,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       return valorItens;
     }
     return 0;
+  }
+
+  validarContaReembolso() {
+    if(this.movimentacoes.contaBancaria.id === this.pagamentosFatura.contaReembolso.id) {
+      this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta do movimento.');
+    }
   }
 }

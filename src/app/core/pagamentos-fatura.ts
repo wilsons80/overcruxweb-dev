@@ -20,4 +20,6 @@ export class PagamentosFatura{
 	valorMulta: number;
 	valorJuros: number;
 
+	contaReembolso: ContasBancaria;
+	dataReembolso: Date;
 }
