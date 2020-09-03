@@ -11,34 +11,33 @@
                 <!-- DADOS INICIAIS -->
                 <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                    <mat-form-field fxFlex="120px" fxFlexOffset="20px">
+                    <mat-form-field fxFlex="200px" fxFlexOffset="20px">
                         <input [(ngModel)]="fatura.dataVencimento" 
                                matInput name="dataVencimento" 
                                [matDatepicker]="dataVencimento"
                                placeholder="Data de vencimento"
-                               required
-                               >
+                               required>
                         <mat-datepicker-toggle matSuffix [for]="dataVencimento">
                         </mat-datepicker-toggle>
                         <mat-datepicker #dataVencimento></mat-datepicker>
                     </mat-form-field>
 
-                    <mat-form-field fxFlexOffset="20px" fxFlex="120%">
+                    <mat-form-field fxFlexOffset="20px" fxFlex="160px">
                         <input [(ngModel)]="fatura.valor" 
                                currencyMask name="valorFatura" 
-                               placeholder="Valor da Fatura:" 
+                               placeholder="Valor da Fatura" 
                                matInput maxlength="13"
                                [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
                                required/>
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50px" >
+                    <mat-form-field fxFlex="80px" >
                         <input type="number" 
                                [(ngModel)]="fatura.numeroParcela" 
                                matInput min="0" 
                                maxlength="10" name="qtdParcelas"
-                               placeholder="Parcela:" 
+                               placeholder="Parcela" 
                                required/>
                     </mat-form-field>
                 </div>
@@ -80,7 +79,9 @@
             (closed)="openFormCadastro = true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Lista de Faturas ( {{listaFaturas?.length}} )
+                    <span>Lista de Faturas ( {{movimentacoes.faturas?.length || 0}} ) -</span>
+                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valoresSuperiorValorMovimento ? 'red' : 'green'">(Valor Total: {{getValorTotal() | currency: 'BRL'}})</span>      
+                    <span *ngIf="valoresSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores das faturas está superior ao valor do movimento.</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 

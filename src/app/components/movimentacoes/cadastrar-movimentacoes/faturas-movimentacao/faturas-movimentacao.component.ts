@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Acesso } from 'src/app/core/acesso';
 import { Fatura } from 'src/app/core/fatura';
 import * as _ from 'lodash';
+import { Movimentacoes } from 'src/app/core/movimentacoes';
 
 @Component({
   selector: 'faturas-movimentacao',
@@ -15,10 +16,8 @@ import * as _ from 'lodash';
 })
 export class FaturasMovimentacaoComponent implements OnInit {
 
-  @Input() listaFaturas: Fatura[] = [];
-  @Input() listaPagamentos: PagamentosFatura[] = [];
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() movimentacoes:Movimentacoes;
 
   mostrarTabela = false;
   msg: string = "Nenhum fatura adicionada";
@@ -28,12 +27,11 @@ export class FaturasMovimentacaoComponent implements OnInit {
   dataSource: MatTableDataSource<Fatura> = new MatTableDataSource();
 
   fatura: Fatura;
-
   perfilAcesso: Acesso;
-
   openFormCadastro = false;
   isAtualizar = false;
 
+  valoresSuperiorValorMovimento = false;
 
   constructor(
     private toastService: ToastService
@@ -45,15 +43,15 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["listaFaturas"] && changes["listaFaturas"].currentValue) {
+    //if (changes["movimentacoes.faturas"] && changes["movimentacoes.faturas"].currentValue) {
       this.carregarLista();
-    }
+    //}
   }
 
   adicionar() {
     const contasCentrosCustoSelecionada = new Fatura();
     Object.assign(contasCentrosCustoSelecionada, this.fatura);
-    this.listaFaturas.push(contasCentrosCustoSelecionada);
+    this.movimentacoes.faturas.push(contasCentrosCustoSelecionada);
     this.limpar();
     this.openFormCadastro = !this.openFormCadastro;
   }
@@ -86,11 +84,11 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   carregarLista() {
-    if (this.listaFaturas.length === 0) {
+    if (this.movimentacoes.faturas.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhuma fatura adicionada.';
     } else {
-      this.dataSource.data = this.listaFaturas ? this.listaFaturas : [];
+      this.dataSource.data = this.movimentacoes.faturas ? this.movimentacoes.faturas : [];
       this.mostrarTabela = true;
     }
   }
@@ -105,11 +103,9 @@ export class FaturasMovimentacaoComponent implements OnInit {
       this.toastService.showAlerta("Não é possui excluir essa fatura pois existem pagamentos vinculados a ela.")
       return;
     }
-
-
-    const index = this.listaFaturas.indexOf(this.listaFaturas.find(fi => fi === fatura));
+    const index = this.movimentacoes.faturas.indexOf(this.movimentacoes.faturas.find(fi => fi === fatura));
     if (index >= 0) {
-      this.listaFaturas.splice(index, 1);
+      this.movimentacoes.faturas.splice(index, 1);
       this.carregarLista();
     }
   }
@@ -122,7 +118,18 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   existemPagamentos(fatura: Fatura) {
-    return this.listaPagamentos.find((l: PagamentosFatura) => l.fatura.id == fatura.id)
+    return this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.find((l: PagamentosFatura) => l.fatura.id == fatura.id)
   }
 
+  getValorTotal() {
+    this.valoresSuperiorValorMovimento = false;
+    if(this.movimentacoes.faturas && this.movimentacoes.faturas.length > 0) {
+      const valorItens = this.movimentacoes.faturas.map(v => v.valor).reduce( (valor, total) => total += valor) 
+      if(valorItens > this.movimentacoes.valorMovimentacao) {
+        this.valoresSuperiorValorMovimento = true;
+      }
+      return valorItens;
+    }
+    return 0;
+  }
 }

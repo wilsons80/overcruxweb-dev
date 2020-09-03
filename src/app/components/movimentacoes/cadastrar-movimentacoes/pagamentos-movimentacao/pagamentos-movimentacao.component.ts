@@ -11,6 +11,7 @@ import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { Fatura } from 'src/app/core/fatura';
 import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 import { FormaPagamento } from 'src/app/core/forma-pagamento';
+import { Movimentacoes } from 'src/app/core/movimentacoes';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -19,7 +20,7 @@ import { FormaPagamento } from 'src/app/core/forma-pagamento';
 })
 export class PagamentosMovimentacaoComponent implements OnInit {
 
-  @Input() listaPagamentosFatura: PagamentosFatura[];
+  @Input() movimentacoes:Movimentacoes;
   @Input() idMovimentacao: number;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -28,15 +29,12 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   msg = "Nenhum item movimentação adicionado";
 
   maxDataPagamento = new Date();
-
   formasPagamento: FormaPagamento = new FormaPagamento();
-
 
   displayedColumns: string[] = ['fatura', 'formaPagamento', 'dataPagamento', 'valorPagamento', 'acoes'];
   dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
 
   pagamentosFatura: PagamentosFatura;
-
   perfilAcesso: Acesso;
 
   openFormCadastro = false;
@@ -44,6 +42,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   contasBancarias: ContasBancaria[];
   listaFaturas: Fatura[];
 
+  valoresSuperiorValorMovimento = false;
 
   constructor(
     private contasBancariaService: ContasBancariaService,
@@ -61,9 +60,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["listaPagamentosFatura"] && changes["listaPagamentosFatura"].currentValue) {
+    //if (changes["listaPagamentosFatura"] && changes["listaPagamentosFatura"].currentValue) {
       this.carregarLista();
-    }
+    //}
     
     if (changes["idMovimentacao"] && changes["idMovimentacao"].currentValue) {
       this.faturaService.getAllPorMovimentacoes(this.idMovimentacao).subscribe((listaFaturas: Fatura[]) => {
@@ -78,7 +77,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
     this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
 
-    this.listaPagamentosFatura.push(contasCentrosCustoSelecionada);
+    this.movimentacoes.pagamentosFatura.push(contasCentrosCustoSelecionada);
     this.limpar();
     this.openFormCadastro = !this.openFormCadastro;
   }
@@ -115,11 +114,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   carregarLista() {
-    if (this.listaPagamentosFatura.length === 0) {
+    if (this.movimentacoes.pagamentosFatura.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhum nenhum pagamento adicionado.';
     } else {
-      this.dataSource.data = this.listaPagamentosFatura ? this.listaPagamentosFatura : [];
+      this.dataSource.data = this.movimentacoes.pagamentosFatura ? this.movimentacoes.pagamentosFatura : [];
       this.mostrarTabela = true;
     }
   }
@@ -133,9 +132,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   deletar(pagamentosFatura: PagamentosFatura): void {
-    const index = this.listaPagamentosFatura.indexOf(this.listaPagamentosFatura.find(fi => fi === pagamentosFatura));
+    const index = this.movimentacoes.pagamentosFatura.indexOf(this.movimentacoes.pagamentosFatura.find(fi => fi === pagamentosFatura));
     if (index >= 0) {
-      this.listaPagamentosFatura.splice(index, 1);
+      this.movimentacoes.pagamentosFatura.splice(index, 1);
       this.carregarLista();
     }
   }
@@ -163,4 +162,15 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   }
 
+  getValorTotal() {
+    this.valoresSuperiorValorMovimento = false;
+    if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
+      const valorItens = this.movimentacoes.pagamentosFatura.map(v => v.valorPagamento).reduce( (valor, total) => total += valor) 
+      if(valorItens > this.movimentacoes.valorMovimentacao) {
+        this.valoresSuperiorValorMovimento = true;
+      }
+      return valorItens;
+    }
+    return 0;
+  }
 }

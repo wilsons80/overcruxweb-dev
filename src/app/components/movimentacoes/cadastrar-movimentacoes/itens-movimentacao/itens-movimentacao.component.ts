@@ -3,10 +3,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import * as _ from 'lodash';
-import { Acesso } from 'src/app/core/acesso';
 import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
 import { Material } from 'src/app/core/material';
+import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
@@ -19,21 +19,17 @@ import { PedidosMateriaisService } from './../../../../services/pedidosMateriais
 })
 export class ItensMovimentacaoComponent implements OnInit {
 
-  @Input() listaItensMovimentacoes: ItensMovimentacoes[];
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  @Input() movimentacoes:Movimentacoes;
 
   mostrarTabela = false;
   msg: string = "Nenhum item movimentação adicionado";
-
-
 
   displayedColumns: string[] = ['descricaoItemMovimentacao', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
   dataSource: MatTableDataSource<ItensMovimentacoes> = new MatTableDataSource();
 
   itensMovimentacoes: ItensMovimentacoes;
-
-  perfilAcesso: Acesso;
 
   openFormCadastro = false;
   isAtualizar = false;
@@ -41,13 +37,12 @@ export class ItensMovimentacaoComponent implements OnInit {
   categorias: CategoriasContabeis[];
   pedidosMateriais: PedidosMateriais[];
 
+  valorItensSuperiorValorMovimento = false;
 
   constructor(
-
     private materialService: MaterialService,
     private categoriasContabeisService: CategoriasContabeisService,
     private pedidosMateriaisService: PedidosMateriaisService
-
   ) { }
 
   ngOnInit() {
@@ -68,9 +63,9 @@ export class ItensMovimentacaoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["listaItensMovimentacoes"] && changes["listaItensMovimentacoes"].currentValue) {
+    //if (changes["movimentacoes.itensMovimentacoes"] && changes["movimentacoes.itensMovimentacoes"].currentValue) {
       this.carregarLista();
-    }
+    //}
   }
 
   adicionar() {
@@ -79,7 +74,7 @@ export class ItensMovimentacaoComponent implements OnInit {
 
     this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
 
-    this.listaItensMovimentacoes.push(contasCentrosCustoSelecionada);
+    this.movimentacoes.itensMovimentacoes.push(contasCentrosCustoSelecionada);
     this.limpar();
     this.openFormCadastro = !this.openFormCadastro;
   }
@@ -103,13 +98,10 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.isAtualizar = false;
   }
 
-
-
   atualizarFuncao(itensMovimentacoes: ItensMovimentacoes) {
     this.itensMovimentacoes = itensMovimentacoes;
     this.openFormCadastro = true;
     this.isAtualizar = true;
-
   }
 
   limpar() {
@@ -117,11 +109,11 @@ export class ItensMovimentacaoComponent implements OnInit {
   }
 
   carregarLista() {
-    if (this.listaItensMovimentacoes.length === 0) {
+    if (this.movimentacoes.itensMovimentacoes.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhum item movimentação adicionado.';
     } else {
-      this.dataSource.data = this.listaItensMovimentacoes ? this.listaItensMovimentacoes : [];
+      this.dataSource.data = this.movimentacoes.itensMovimentacoes ? this.movimentacoes.itensMovimentacoes : [];
       this.mostrarTabela = true;
     }
   }
@@ -138,9 +130,9 @@ export class ItensMovimentacaoComponent implements OnInit {
   }
 
   deletar(itensMovimentacoes: ItensMovimentacoes): void {
-    const index = this.listaItensMovimentacoes.indexOf(this.listaItensMovimentacoes.find(fi => fi === itensMovimentacoes));
+    const index = this.movimentacoes.itensMovimentacoes.indexOf(this.movimentacoes.itensMovimentacoes.find(fi => fi === itensMovimentacoes));
     if (index >= 0) {
-      this.listaItensMovimentacoes.splice(index, 1);
+      this.movimentacoes.itensMovimentacoes.splice(index, 1);
       this.carregarLista();
     }
   }
@@ -178,4 +170,18 @@ export class ItensMovimentacaoComponent implements OnInit {
     }
   }
   
+
+  getValorTotalItens() {
+    this.valorItensSuperiorValorMovimento = false;
+
+    if(this.movimentacoes.itensMovimentacoes && this.movimentacoes.itensMovimentacoes.length > 0) {
+      const valorItens = this.movimentacoes.itensMovimentacoes.map(v => v.valorTotalItem).reduce( (valor, total) => total += valor) 
+      if(valorItens > this.movimentacoes.valorMovimentacao) {
+        this.valorItensSuperiorValorMovimento = true;
+      }
+      return valorItens;
+    }
+
+    return 0;
+  }
 }

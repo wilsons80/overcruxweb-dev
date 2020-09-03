@@ -34,8 +34,7 @@
                                 {{i.descricaoPedido}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material
-                            cadastrado</mat-hint>
+                        <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material cadastrado</mat-hint>
                     </mat-form-field>
         
                 </div>
@@ -44,8 +43,11 @@
         
                     <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                         <mat-label>Descrição item movimentação:</mat-label>
-                        <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                            cdkAutosizeMinRows="3" maxlength="200" >
+                        <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao 
+                                  matInput #message name="descricao" 
+                                  cdkTextareaAutosize 
+                                  #autosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="3" maxlength="200" >
                         </textarea>
                         <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
                     </mat-form-field>
@@ -53,20 +55,31 @@
         
                 <div fxLayout="row" fxLayoutGap="50px">
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input (ngModelChange)="multiplicar($event)" [(ngModel)]="itensMovimentacoes.valorUnitarioItem" currencyMask name="valorUnitario" placeholder="Valor Unitário:" matInput maxlength="13"
-                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <input (ngModelChange)="multiplicar($event)" 
+                               [(ngModel)]="itensMovimentacoes.valorUnitarioItem" 
+                               currencyMask name="valorUnitario" 
+                               placeholder="Valor Unitário:" 
+                               matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
         
                     <mat-form-field fxFlex="10%" >
-                        <input type="number" (input)="multiplicarComQuantidade()" [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  matInput min="0" maxlength="3" name="qtdParcelas"
-                            placeholder="Quantidade:" />
+                        <input type="number" (input)="multiplicarComQuantidade()" 
+                               [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  
+                               matInput min="0" 
+                               maxlength="3" 
+                               name="qtdParcelas"
+                               placeholder="Quantidade:" />
                     </mat-form-field>
         
                     <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input [(ngModel)]=itensMovimentacoes.valorTotalItem currencyMask name="valorTotal" 
-                        placeholder="Valor Total:" matInput maxlength="13"
-                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" disabled />
+                        <input [(ngModel)]="itensMovimentacoes.valorTotalItem"
+                               currencyMask name="valorTotal" 
+                               placeholder="Valor Total:" 
+                               matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                               disabled />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
         
@@ -156,9 +169,12 @@
             (closed)="openFormCadastro = true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Lista de Itens ( {{listaItensMovimentacoes?.length}} )
+                    <span>Lista de Itens ( {{listaItensMovimentacoes?.length || 0}} ) -</span>
+                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorItensSuperiorValorMovimento ? 'red' : 'green'">(Valor Total: {{getValorTotalItens() | currency: 'BRL'}})</span>      
+                    <span *ngIf="valorItensSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores dos itens está superior ao valor do movimento.</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
+
 
             <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
                 style="margin-top: 20px">
