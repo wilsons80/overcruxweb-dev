@@ -106,4 +106,5 @@ export enum Modulos{
     , MATERIAIS                             = 'MATERIAIS'
     , SALDOS_CONTAS_BANCARIA                = 'SALDOS_CONTAS_BANCARIA'
     , PEDIDOS_MATERIAIS                     = 'PEDIDOS_MATERIAIS'
+    , TRANSFERENCIA_VALORES                 = 'TRANSFERENCIA_VALORES'
 }

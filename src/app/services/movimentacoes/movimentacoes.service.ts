@@ -12,4 +12,13 @@ export class MovimentacoesService extends BaseService<Movimentacoes> {
   constructor(http: HttpClient) {
     super(http, Rotas.MOVIMENTACOES);
   }
+
+  getAllDestino() {
+    return this.http.get(Rotas.MOVIMENTACOES + `destino`);
+  }
+
+  getAllOrigem() {
+    return this.http.get(Rotas.MOVIMENTACOES + `origem`);
+  }
+
 }

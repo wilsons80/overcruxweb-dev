@@ -115,6 +115,7 @@ import { PedidosMateriaisModule } from './components/pedidos-materiais/pedidos-m
 import { UnidadeResolver } from './guards/unidades.resolve';
 import { AcessoModuloResolver } from './guards/acesso-modulo.resolve';
 import { DATE_FORMAT_PT_BR, ComonsDateAdapter } from './date-config/comons-date-adapter';
+import { TransferenciaValoresModule } from './components/transferencia-valores/transferencia-valores.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -223,6 +224,7 @@ registerLocaleData(localePt, 'pt-BR');
     EstoquesModule,
     SaldosContasBancariaModule,
     PedidosMateriaisModule,
+    TransferenciaValoresModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

@@ -32,5 +32,6 @@ export class Movimentacoes{
 	valorPisConfinsCsll:number;
 	valorInss:number;
 	contaBancaria: ContasBancaria;
+	contaBancariaDestino: ContasBancaria;
 
 }

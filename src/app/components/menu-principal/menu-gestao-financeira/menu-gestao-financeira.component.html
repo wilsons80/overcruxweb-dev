@@ -19,6 +19,9 @@
             <!-- SALDOS_CONTAS_BANCARIA -->
             <sub-menu  *ngIf="verificaAcesso(getModulos().SALDOS_CONTAS_BANCARIA)" icone="monetization_on" titulo="Saldos de contas bancárias" rota="saldoscontasbancaria" toolTip="Saldos de contas bancárias"></sub-menu>
 
+            <!-- TRANSFERENCIA_VALORES -->
+            <sub-menu *ngIf="verificaAcesso(getModulos().TRANSFERENCIA_VALORES)" icone="compare_arrows" titulo="Transferência de valores" rota="transferenciavalores" toolTip="Transferência de valores"></sub-menu>
+
             <!-- TABELAS REFERENCIA -->
             <tb-referencia-financeiro></tb-referencia-financeiro>
 

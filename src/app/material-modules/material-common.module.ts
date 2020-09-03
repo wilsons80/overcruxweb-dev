@@ -32,6 +32,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SharedPipesModule } from 'src/app/pipes/shared-pipes.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 const modulos = [
@@ -65,6 +66,7 @@ const modulos = [
     , MatExpansionModule
     , MatRadioModule
     , MatTabsModule
+    , NgxCurrencyModule
 ]
 
 @NgModule({

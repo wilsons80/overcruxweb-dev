@@ -1,0 +1,108 @@
+<mat-toolbar class="subtitulo">Transferência de Valores</mat-toolbar>
+
+<form #formulario="ngForm">
+    <div class="painel-principal" style="padding: 10px;">
+        <mat-toolbar class="titulopartes">Conta Bancária Origem</mat-toolbar>
+        <div fxLayout="row" 
+                fxLayoutGap="50px" 
+                style="margin-bottom: 10px" 
+                fxFlexFill>
+            <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                <mat-label>Agência - Conta Corrente</mat-label>
+                <mat-select name="contaBancaria" 
+                            [(ngModel)]="movimentacoes.contaBancaria.id"
+                            (selectionChange)="carregarContaBancaria()"
+                            required>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let m of contasBancarias" [value]="m.id">
+                        Banco: {{m.banco.numero}} - {{m.banco.nome}} - Agência: {{m.numeroAgencia}} - Conta: {{m.numeroContaBancaria}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">Conta Bancária Destino</mat-toolbar>
+        <div fxLayout="row" 
+                fxLayoutGap="50px" 
+                style="margin-top: 10px; margin-bottom: 10px" 
+                fxFlexFill>
+            <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                <mat-label>Agência - Conta Corrente</mat-label>
+                <mat-select name="contaBancariaDestino" 
+                            [(ngModel)]="movimentacoes.contaBancariaDestino.id"
+                            (selectionChange)="carregarContaBancariaDestino()"
+                            required>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let m of contasBancarias" [value]="m.id">
+                        Banco: {{m.banco.numero}} - {{m.banco.nome}} - Agência: {{m.numeroAgencia}} - Conta: {{m.numeroContaBancaria}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>            
+
+        <!-- DADOS -->
+        <mat-toolbar class="titulopartes">Dados</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field fxFlex="180px" fxFlexOffset="20px">
+                <input matInput [(ngModel)]=movimentacoes.dataDocumento 
+                       name="dataDocumento" 
+                       [matDatepicker]="dataDocumento" 
+                       required
+                       placeholder="Data">
+                <mat-datepicker-toggle matSuffix [for]="dataDocumento">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataDocumento></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="180px">
+                <input [(ngModel)]=movimentacoes.valorMovimentacao 
+                        currencyMask name="valorMovimentacao" 
+                        placeholder="Valor" 
+                        required
+                        #valorMovimentacao
+                        (blur)="validarValorDocumento(valorMovimentacao.value)"
+                        matInput maxlength="13"
+                        [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex="100%" appearance="outline">
+                <mat-label>Descrição:</mat-label>
+                <textarea [(ngModel)]=movimentacoes.descricaoMovimentacao 
+                          matInput #message 
+                          name="descricao" 
+                          cdkTextareaAutosize 
+                          #autosize="cdkTextareaAutosize"
+                          cdkAutosizeMinRows="3" maxlength="200">
+                </textarea>
+                <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+    </div>
+</form>
+
+ <!-- BOTOES -->
+ <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+      fxFlexFill>
+    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]=formulario.invalid
+            mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
+            Cadastrar
+    </button>
+
+    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formulario.invalid
+            mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
+            Atualizar
+    </button>
+
+    <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+            Limpar
+    </button>
+    <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+            Cancelar
+    </button>
+
+</div>
+
