@@ -41,7 +41,6 @@
             </div>
     
             <div fxLayout="row" style="padding-top: 20px; padding-bottom: 20px;" fxLayoutGap="50px" fxFlexFill>
-    
                 <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
                     <mat-label>Descrição item movimentação:</mat-label>
                     <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao 
@@ -161,8 +160,6 @@
             </div>
 
         </mat-expansion-panel>
-
-
      
 
         <mat-expansion-panel [expanded]="!openFormCadastro" (opened)="carregarLista()"
