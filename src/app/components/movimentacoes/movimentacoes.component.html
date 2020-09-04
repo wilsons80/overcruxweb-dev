@@ -36,7 +36,7 @@
             <ng-container matColumnDef="contaBancaria">
                 <th mat-header-cell *matHeaderCellDef style="width: 30%;"> Conta bancária </th>
                 <td mat-cell *matCellDef="let element"> 
-                    {{element.contaBancaria.banco.nome}} - Agência: {{element.contaBancaria.numeroAgencia}} - Conta: {{element.contaBancaria.numeroContaBancaria}}
+                    {{getDadosContaBancaria(element)}}
                 </td>
             </ng-container>
            

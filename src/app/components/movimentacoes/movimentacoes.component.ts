@@ -117,4 +117,10 @@ export class MovimentacoesComponent implements OnInit {
     }
   }
 
+  getDadosContaBancaria(movimento: Movimentacoes) {
+    if(movimento.contaBancaria.banco) {
+      return `${movimento.contaBancaria?.banco?.nome} - Agência: ${movimento.contaBancaria?.numeroAgencia} - Conta: ${movimento.contaBancaria?.numeroContaBancaria}`;
+    }
+    return '';
+  }
 }
