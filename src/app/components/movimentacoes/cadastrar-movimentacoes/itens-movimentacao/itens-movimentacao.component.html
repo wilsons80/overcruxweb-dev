@@ -6,145 +6,142 @@
                 <mat-panel-title>Dados do Item</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <form #formCadastro="ngForm">
-
-                <!-- DADOS INICIAIS -->
-                <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-        
-                    <!-- CATEGORIAS -->
-                    <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                        <mat-label>Categoria Contábil:</mat-label>
-                        <mat-select name="categoria" 
-                                    [(ngModel)]=itensMovimentacoes.categoria.id 
-                                    (selectionChange)="carregarContaContabil()"
-                                    required>
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of categorias" [value]=i.id>
-                                {{i.nome}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="categorias?.length === 0" align="start">Nenhuma categoria
-                            cadastrada</mat-hint>
-                    </mat-form-field>
-        
-                    <!-- PEDIDO MATERIAL -->
-                    <mat-form-field fxFlex="70%">
-                        <mat-label>Pedido Material:</mat-label>
-                        <mat-select name="pedidoMaterial" [(ngModel)]=itensMovimentacoes.pedidosMateriais.id>
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of pedidosMateriais" [value]=i.id>
-                                {{i.descricaoPedido}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material cadastrado</mat-hint>
-                    </mat-form-field>
-        
-                </div>
-        
-                <div fxLayout="row" style="padding-top: 20px; padding-bottom: 20px;" fxLayoutGap="50px" fxFlexFill>
-        
-                    <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
-                        <mat-label>Descrição item movimentação:</mat-label>
-                        <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao 
-                                  matInput #message name="descricao" 
-                                  cdkTextareaAutosize 
-                                  #autosize="cdkTextareaAutosize"
-                                  cdkAutosizeMinRows="3" maxlength="200" >
-                        </textarea>
-                        <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
-                    </mat-form-field>
-                </div>
-        
-                <div fxLayout="row" fxLayoutGap="50px">
-                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input (ngModelChange)="multiplicar($event)" 
-                               [(ngModel)]="itensMovimentacoes.valorUnitarioItem" 
-                               currencyMask name="valorUnitario" 
-                               placeholder="Valor Unitário:" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-                    <mat-form-field fxFlex="10%" >
-                        <input type="number" (input)="multiplicarComQuantidade()" 
-                               [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  
-                               matInput min="0" 
-                               maxlength="3" 
-                               name="qtdParcelas"
-                               placeholder="Quantidade:" />
-                    </mat-form-field>
-        
-                    <mat-form-field fxFlexOffset="20px" fxFlex="15%">
-                        <input [(ngModel)]="itensMovimentacoes.valorTotalItem"
-                               currencyMask name="valorTotal" 
-                               placeholder="Valor Total:" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
-                               disabled />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-                </div>
+            <!-- DADOS INICIAIS -->
+            <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    
+                <!-- CATEGORIAS -->
+                <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                    <mat-label>Categoria Contábil:</mat-label>
+                    <mat-select name="categoria" 
+                                [(ngModel)]=itensMovimentacoes.categoria.id 
+                                (selectionChange)="carregarContaContabil()"
+                                required>
+                        <mat-option></mat-option>
+                        <mat-option *ngFor="let i of categorias" [value]=i.id>
+                            {{i.nome}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="categorias?.length === 0" align="start">Nenhuma categoria
+                        cadastrada</mat-hint>
+                </mat-form-field>
+    
+                <!-- PEDIDO MATERIAL -->
+                <mat-form-field fxFlex="70%">
+                    <mat-label>Pedido Material:</mat-label>
+                    <mat-select name="pedidoMaterial" [(ngModel)]=itensMovimentacoes.pedidosMateriais.id>
+                        <mat-option></mat-option>
+                        <mat-option *ngFor="let i of pedidosMateriais" [value]=i.id>
+                            {{i.descricaoPedido}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material cadastrado</mat-hint>
+                </mat-form-field>
+    
+            </div>
+    
+            <div fxLayout="row" style="padding-top: 20px; padding-bottom: 20px;" fxLayoutGap="50px" fxFlexFill>
+    
+                <mat-form-field fxFlexOffset="20px" fxFlex="64%" appearance="outline">
+                    <mat-label>Descrição item movimentação:</mat-label>
+                    <textarea [(ngModel)]=itensMovimentacoes.descricaoItemMovimentacao 
+                                matInput #message name="descricao" 
+                                cdkTextareaAutosize 
+                                #autosize="cdkTextareaAutosize"
+                                cdkAutosizeMinRows="3" maxlength="200" >
+                    </textarea>
+                    <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+                </mat-form-field>
+            </div>
+    
+            <div fxLayout="row" fxLayoutGap="50px">
+                <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                    <input (ngModelChange)="multiplicar($event)" 
+                            [(ngModel)]="itensMovimentacoes.valorUnitarioItem" 
+                            currencyMask name="valorUnitario" 
+                            placeholder="Valor Unitário:" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+                <mat-form-field fxFlex="10%" >
+                    <input type="number" (input)="multiplicarComQuantidade()" 
+                            [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  
+                            matInput min="0" 
+                            maxlength="3" 
+                            name="qtdParcelas"
+                            placeholder="Quantidade:" />
+                </mat-form-field>
+    
+                <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+                    <input [(ngModel)]="itensMovimentacoes.valorTotalItem"
+                            currencyMask name="valorTotal" 
+                            placeholder="Valor Total:" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
+                            disabled />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+            </div>
 
 
-                <mat-toolbar class="titulopartes">Valores</mat-toolbar>
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-toolbar class="titulopartes">Valores</mat-toolbar>
+            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    
+                <mat-form-field fxFlexOffset="20px" fxFlex="20%">
+                    <input [(ngModel)]=itensMovimentacoes.valorISS 
+                            currencyMask 
+                            name="valorISS" 
+                            placeholder="Valor do ISS" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+                <mat-form-field fxFlex="20%">
+                    <input [(ngModel)]=itensMovimentacoes.valorICMS 
+                            currencyMask 
+                            name="valorICMS" 
+                            placeholder="Valor do ICMS" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+                <mat-form-field fxFlex="20%">
+                    <input [(ngModel)]=itensMovimentacoes.valorIPI 
+                            currencyMask 
+                            name="valorIPI" 
+                            placeholder="Valor do IPI" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+                <mat-form-field fxFlex="20%">
+                    <input [(ngModel)]=itensMovimentacoes.valorPisConfinsCsll 
+                            currencyMask 
+                            name="valorPisConfinsCsll" 
+                            placeholder="Valor do PIS/COFINS/CSLL" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+    
+    
+                <mat-form-field fxFlex="20%">
+                    <input [(ngModel)]=itensMovimentacoes.valorInss 
+                            currencyMask 
+                            name="valorInss" 
+                            placeholder="Valor do INSS" 
+                            matInput maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>            
+            </div>
         
-                    <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                        <input [(ngModel)]=itensMovimentacoes.valorISS 
-                               currencyMask 
-                               name="valorISS" 
-                               placeholder="Valor do ISS" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-                    <mat-form-field fxFlex="20%">
-                        <input [(ngModel)]=itensMovimentacoes.valorICMS 
-                               currencyMask 
-                               name="valorICMS" 
-                               placeholder="Valor do ICMS" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-                    <mat-form-field fxFlex="20%">
-                        <input [(ngModel)]=itensMovimentacoes.valorIPI 
-                               currencyMask 
-                               name="valorIPI" 
-                               placeholder="Valor do IPI" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-                    <mat-form-field fxFlex="20%">
-                        <input [(ngModel)]=itensMovimentacoes.valorPisConfinsCsll 
-                               currencyMask 
-                               name="valorPisConfinsCsll" 
-                               placeholder="Valor do PIS/COFINS/CSLL" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>
-        
-        
-                    <mat-form-field fxFlex="20%">
-                        <input [(ngModel)]=itensMovimentacoes.valorInss 
-                               currencyMask 
-                               name="valorInss" 
-                               placeholder="Valor do INSS" 
-                               matInput maxlength="13"
-                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                        <span matPrefix>R$&nbsp;</span>
-                    </mat-form-field>            
-                </div>
-        
-            </form>
             
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
                 style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
