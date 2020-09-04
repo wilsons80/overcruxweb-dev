@@ -15,7 +15,10 @@
                     <!-- CATEGORIAS -->
                     <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                         <mat-label>Categoria Contábil:</mat-label>
-                        <mat-select name="categoria" [(ngModel)]=itensMovimentacoes.categoria.id required>
+                        <mat-select name="categoria" 
+                                    [(ngModel)]=itensMovimentacoes.categoria.id 
+                                    (selectionChange)="carregarContaContabil()"
+                                    required>
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of categorias" [value]=i.id>
                                 {{i.nome}}
@@ -179,9 +182,9 @@
             <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
                 style="margin-top: 20px">
 
-                <ng-container matColumnDef="descricaoItemMovimentacao">
-                    <th mat-header-cell *matHeaderCellDef> Descrição </th>
-                    <td mat-cell *matCellDef="let element"> {{element.descricaoItemMovimentacao}} </td>
+                <ng-container matColumnDef="categoriaContabil">
+                    <th mat-header-cell *matHeaderCellDef> Categoria Contábil </th>
+                    <td mat-cell *matCellDef="let element"> {{element.categoria.nome}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantidadeMaterial">

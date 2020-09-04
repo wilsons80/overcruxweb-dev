@@ -26,7 +26,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   mostrarTabela = false;
   msg: string = "Nenhum item movimentação adicionado";
 
-  displayedColumns: string[] = ['descricaoItemMovimentacao', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
+  displayedColumns: string[] = ['categoriaContabil', 'quantidadeMaterial', 'valorUnitarioItem', 'valorTotalItem', 'acoes'];
   dataSource: MatTableDataSource<ItensMovimentacoes> = new MatTableDataSource();
 
   itensMovimentacoes: ItensMovimentacoes;
@@ -183,5 +183,11 @@ export class ItensMovimentacaoComponent implements OnInit {
     }
 
     return 0;
+  }
+
+  carregarContaContabil(){
+    if (this.itensMovimentacoes.categoria && this.itensMovimentacoes.categoria.id) {
+      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.categorias,  (c: CategoriasContabeis) => c.id === this.itensMovimentacoes.categoria.id));
+    }
   }
 }
