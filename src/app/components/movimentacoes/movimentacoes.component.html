@@ -40,18 +40,18 @@
                 </td>
             </ng-container>
            
-            <ng-container matColumnDef="dataMovimentacao">
-                <th mat-header-cell *matHeaderCellDef style="width: 15;"> Data Movimentação: </th>
-                <td mat-cell *matCellDef="let element"> {{ element.dataMovimentacao | dataSimples }} </td>
+            <ng-container matColumnDef="dataDocumento">
+                <th mat-header-cell *matHeaderCellDef style="width: 15;"> Data Documento </th>
+                <td mat-cell *matCellDef="let element"> {{ element.dataDocumento | dataSimples }} </td>
             </ng-container>
 
             <ng-container matColumnDef="valorMovimentacao">
-                <th mat-header-cell *matHeaderCellDef style="width: 15;"> Valor da Movimentação: </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 15;"> Valor da Movimentação </th>
                 <td mat-cell *matCellDef="let element"> {{ element.valorMovimentacao | currency: 'BRL' }} </td>
             </ng-container>
             
             <ng-container matColumnDef="qtdParcelas">
-                <th mat-header-cell *matHeaderCellDef> Quantidade de Parcelas fim: </th>
+                <th mat-header-cell *matHeaderCellDef> Parcelas</th>
                 <td mat-cell *matCellDef="let element"> {{ element.qtdParcelas }} </td>
             </ng-container>
 
