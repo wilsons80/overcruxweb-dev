@@ -15,6 +15,7 @@
                         <input [(ngModel)]="fatura.dataVencimento" 
                                matInput name="dataVencimento" 
                                [matDatepicker]="dataVencimento"
+                               [min]="movimentacoes.dataDocumento"
                                placeholder="Data de vencimento"
                                required>
                         <mat-datepicker-toggle matSuffix [for]="dataVencimento">
