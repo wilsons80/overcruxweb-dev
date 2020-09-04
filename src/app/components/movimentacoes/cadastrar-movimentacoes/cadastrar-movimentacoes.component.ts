@@ -158,17 +158,16 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isContaReembolsoValida(): boolean {
     if(this.movimentacoes.contaBancaria) {
       const contaReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.id === this.movimentacoes.contaBancaria.id);
-      if(contaReembolso){
+      if(contaReembolso.length > 0){
         this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta do movimento.');
         return false;
       }
 
       const dataReembolso = this.movimentacoes.pagamentosFatura.filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
-      if(dataReembolso) {
+      if(dataReembolso.length > 0) {
         this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
         return false;
       }
-
     }
     return true;
   }
