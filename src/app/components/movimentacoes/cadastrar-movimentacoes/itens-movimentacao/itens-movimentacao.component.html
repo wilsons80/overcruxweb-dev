@@ -184,7 +184,7 @@
 
                 <ng-container matColumnDef="categoriaContabil">
                     <th mat-header-cell *matHeaderCellDef> Categoria Contábil </th>
-                    <td mat-cell *matCellDef="let element"> {{element.categoria.nome}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.categoria?.nome}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantidadeMaterial">
