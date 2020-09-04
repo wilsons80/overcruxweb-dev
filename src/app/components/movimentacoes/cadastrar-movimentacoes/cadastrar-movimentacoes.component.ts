@@ -156,7 +156,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
 
   isContaReembolsoValida(): boolean {
-    if(this.movimentacoes.contaBancaria) {
+    if(this.movimentacoes.contaBancaria && this.movimentacoes.contaBancaria.id) {
       const contaReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.id === this.movimentacoes.contaBancaria.id);
       if(contaReembolso.length > 0){
         this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta do movimento.');
