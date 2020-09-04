@@ -176,7 +176,7 @@ export class ItensMovimentacaoComponent implements OnInit {
 
     if(this.movimentacoes.itensMovimentacoes && this.movimentacoes.itensMovimentacoes.length > 0) {
       const valorItens = this.movimentacoes.itensMovimentacoes.map(v => v.valorTotalItem).reduce( (valor, total) => total += valor) 
-      if(valorItens > this.movimentacoes.valorMovimentacao) {
+      if(valorItens !== this.movimentacoes.valorMovimentacao) {
         this.valorItensSuperiorValorMovimento = true;
       }
       return valorItens;

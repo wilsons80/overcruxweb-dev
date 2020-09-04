@@ -163,7 +163,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
         return false;
       }
 
-      const dataReembolso = this.movimentacoes.pagamentosFatura.filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
+      const dataReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.dataReembolso)
+                                                               .filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
       if(dataReembolso.length > 0) {
         this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
         return false;

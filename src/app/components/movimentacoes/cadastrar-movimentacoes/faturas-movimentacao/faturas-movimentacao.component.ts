@@ -125,7 +125,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
     this.valoresSuperiorValorMovimento = false;
     if(this.movimentacoes.faturas && this.movimentacoes.faturas.length > 0) {
       const valorItens = this.movimentacoes.faturas.map(v => v.valor).reduce( (valor, total) => total += valor) 
-      if(valorItens > this.movimentacoes.valorMovimentacao) {
+      if(valorItens !== this.movimentacoes.valorMovimentacao) {
         this.valoresSuperiorValorMovimento = true;
       }
       return valorItens;

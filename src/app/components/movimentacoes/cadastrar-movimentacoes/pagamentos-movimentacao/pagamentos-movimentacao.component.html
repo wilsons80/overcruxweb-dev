@@ -18,7 +18,7 @@
                         <mat-select [(ngModel)]=pagamentosFatura.fatura.id name="fatura" required>
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of listaFaturas" [value]=i.id>
-                                {{i.dataVencimento | dataSimples}} - R$: {{i.valor}}
+                                {{i.dataVencimento | dataSimples}} - {{i.valor | currency : 'BRL'}}
                             </mat-option>
                         </mat-select>
                         <mat-hint *ngIf="listaFaturas?.length === 0" align="start">Nenhuma fatura cadastrada para essa
@@ -60,6 +60,7 @@
                                #campoPagamentoMovimento
                                name="dataPagamentoMovimento"
                                [max]="maxDataPagamento"
+                               [min]="movimentacoes.dataDocumento"
                                [matDatepicker]="dataPagamentoMovimento"
                                placeholder="Data do pagamento" 
                                required>
