@@ -28,17 +28,17 @@
                     <!-- CONTAS BANCARIAS -->
                     <mat-form-field fxFlex>
                         <mat-label>Conta bancária:</mat-label>
-                        <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id name="contasBancarias">
+                        <mat-select [(ngModel)]=pagamentosFatura.contaBancaria.id 
+                                    (selectionChange)="validarContaReembolso()"
+                                    name="contasBancarias">
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
                                 {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C.
                                 {{i.numeroContaBancaria}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária
-                            cadastrada</mat-hint>
+                        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
                     </mat-form-field>
-
                 </div>
 
 
@@ -148,16 +148,15 @@
                     Limpar
                 </button>
 
-                <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid
+                <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]="formulario.invalid || !isContaReembolsoValida"
                     fxFlex="20%" color="primary" (click)="adicionar()">
                     Adicionar
                 </button>
 
-                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid
+                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]="formulario.invalid || !isContaReembolsoValida"
                     fxFlex="20%" color="primary" (click)="atualizar()">
                     Atualizar
                 </button>
-
             </div>
 
         </mat-expansion-panel>

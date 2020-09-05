@@ -132,6 +132,7 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
     this.movimentacoes.empresa = new Empresa();
     this.movimentacoes.departamento = new Departamento();
     this.movimentacoes.rateios = []
+    this.movimentacoes.rateiosUnidades = [];
     this.movimentacoes.itensMovimentacoes = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];

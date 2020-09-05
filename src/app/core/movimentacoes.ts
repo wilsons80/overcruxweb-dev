@@ -8,6 +8,7 @@ import { Fatura } from './fatura';
 import { PagamentosFatura } from './pagamentos-fatura';
 import { ContasBancaria } from './contas-bancaria';
 import { RateiosMovimentacoes } from './rateios-movimentacoes';
+import { RateiosMovimentacoesUnidades } from './rateios-movimentacoes-unidades';
 
 export class Movimentacoes{
     id:number;
@@ -25,6 +26,7 @@ export class Movimentacoes{
 	faturas:Fatura[]
 	pagamentosFatura:PagamentosFatura[];
 	rateios: RateiosMovimentacoes[];
+	rateiosUnidades: RateiosMovimentacoesUnidades[];
 
     valorISS:number;
 	valorICMS:number;

@@ -135,6 +135,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.empresa = new Empresa();
     this.movimentacoes.departamento = new Departamento();
     this.movimentacoes.rateios = []
+    this.movimentacoes.rateiosUnidades = [];
     this.movimentacoes.itensMovimentacoes = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];
@@ -152,15 +153,16 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
 
   isContaReembolsoValida(): boolean {
-    if(this.movimentacoes.contaBancaria && this.movimentacoes.contaBancaria.id) {
-      const contaReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.id === this.movimentacoes.contaBancaria.id);
+    const pagamentos = this.movimentacoes.pagamentosFatura.filter(c => c.contaBancaria && c.contaReembolso);
+    if(pagamentos) {
+      const contaReembolso = pagamentos.filter(c => c.contaReembolso.id === c.contaBancaria.id);
       if(contaReembolso.length > 0){
-        this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta do movimento.');
+        this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta bancária.');
         return false;
       }
-
-      const dataReembolso = this.movimentacoes.pagamentosFatura.filter(c => c.dataReembolso)
-                                                               .filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
+  
+      const dataReembolso = pagamentos.filter(c => c.dataReembolso)
+                                      .filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
       if(dataReembolso.length > 0) {
         this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
         return false;

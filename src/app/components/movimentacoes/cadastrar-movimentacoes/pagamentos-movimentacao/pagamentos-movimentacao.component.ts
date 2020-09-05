@@ -42,6 +42,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   isAtualizar = false;
   contasBancarias: ContasBancaria[];
   valoresSuperiorValorMovimento = false;
+  isContaReembolsoValida = true;
 
   constructor(
     private contasBancariaService: ContasBancariaService,
@@ -179,8 +180,14 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   validarContaReembolso() {
-    if(this.movimentacoes.contaBancaria.id === this.pagamentosFatura.contaReembolso.id) {
-      this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta do movimento.');
+    this.isContaReembolsoValida = true;
+    if(this.pagamentosFatura.contaBancaria && this.pagamentosFatura.contaBancaria.id 
+       && 
+       this.pagamentosFatura.contaReembolso && this.pagamentosFatura.contaReembolso.id) {
+      if(this.pagamentosFatura.contaBancaria.id === this.pagamentosFatura.contaReembolso.id) {
+        this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta bancária do pagamento.');
+        this.isContaReembolsoValida = false;
+      }
     }
   }
 

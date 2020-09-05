@@ -25,7 +25,7 @@ export class MovimentacoesComponent implements OnInit {
   movimentacoes: Movimentacoes = new Movimentacoes();
   msg: string;
 
-  displayedColumns: string[] = ['contaBancaria', 'dataDocumento', 'valorMovimentacao', 'qtdParcelas', 'acoes'];
+  displayedColumns: string[] = ['empresa','tipoMovimento', 'dataDocumento', 'valorMovimentacao', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
@@ -117,10 +117,5 @@ export class MovimentacoesComponent implements OnInit {
     }
   }
 
-  getDadosContaBancaria(movimento: Movimentacoes) {
-    if(movimento.contaBancaria.banco) {
-      return `${movimento.contaBancaria?.banco?.nome} - Agência: ${movimento.contaBancaria?.numeroAgencia} - Conta: ${movimento.contaBancaria?.numeroContaBancaria}`;
-    }
-    return '';
-  }
+
 }
