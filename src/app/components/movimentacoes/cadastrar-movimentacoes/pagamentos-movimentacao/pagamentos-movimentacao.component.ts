@@ -41,7 +41,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   openFormCadastro = false;
   isAtualizar = false;
   contasBancarias: ContasBancaria[];
-  listaFaturas: Fatura[];
   valoresSuperiorValorMovimento = false;
 
   constructor(
@@ -65,11 +64,14 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       this.carregarLista();
     //}
     
-    if (changes["idMovimentacao"] && changes["idMovimentacao"].currentValue) {
+    /*
+    //if (changes["idMovimentacao"] && changes["idMovimentacao"].currentValue) {
+    if (this.idMovimentacao) {
       this.faturaService.getAllPorMovimentacoes(this.idMovimentacao).subscribe((listaFaturas: Fatura[]) => {
         this.listaFaturas = listaFaturas;
       })
     }
+    */
   }
 
   adicionar() {
@@ -86,7 +88,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   getObjetosCompletosParaLista(pagamentosFatura: PagamentosFatura) {
     pagamentosFatura.contaBancaria = _.find(this.contasBancarias, (m: ContasBancaria) => m.id == pagamentosFatura.contaBancaria.id);
-    pagamentosFatura.fatura = _.find(this.listaFaturas, (m: Fatura) => m.id == pagamentosFatura.fatura.id);
+    pagamentosFatura.fatura = _.find(this.movimentacoes.faturas, (m: Fatura) => m.id == pagamentosFatura.fatura.id);
   }
 
   novo() {
@@ -181,4 +183,10 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta do movimento.');
     }
   }
+
+
+  getFaturas(): Fatura[] {
+    return this.movimentacoes.faturas.filter(f => f.id);
+  }
+  
 }

@@ -19,7 +19,7 @@
                                 required>
                         <mat-option></mat-option>
                         <mat-option *ngFor="let i of categorias" [value]=i.id>
-                            {{i.nome}}
+                            {{i.nome.toUpperCase()}}
                         </mat-option>
                     </mat-select>
                     <mat-hint *ngIf="categorias?.length === 0" align="start">Nenhuma categoria

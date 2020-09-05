@@ -77,9 +77,10 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
 
-    this.movimentacoesService.cadastrar(this.movimentacoes).subscribe(() => {
-      this.router.navigate(['movimentacoes']);
+    this.movimentacoesService.cadastrar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
+      this.autenticadorService.revalidarSessao();
+      Object.assign(this.movimentacoes, movimentacao);
     });
   }
 
@@ -121,16 +122,11 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
 
-    this.movimentacoesService.alterar(this.movimentacoes).subscribe(() => {
+    this.movimentacoesService.alterar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
       this.autenticadorService.revalidarSessao();
-
-      this.movimentacoesService.getById(this.movimentacoes.id)
-      .subscribe( (movimentacao: Movimentacoes) => {
-        Object.assign(this.movimentacoes, movimentacao);
-      });
+      Object.assign(this.movimentacoes, movimentacao);
     });
-
   }
 
   inicializarObjetos() {
