@@ -36,7 +36,6 @@ export class FormularioRateioComponent implements OnInit {
 
   ngOnInit(): void {
     this.toogle.valueChanges.subscribe(newToogleValue=> {
-      console.log("toogleValue", newToogleValue);
       this.rateio.statusPercentual = newToogleValue;
    });
   }

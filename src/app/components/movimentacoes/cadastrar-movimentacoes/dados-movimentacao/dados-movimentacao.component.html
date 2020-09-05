@@ -10,11 +10,10 @@
                 <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let i of empresas" [value]=i.id>
-                        {{i.nomeFantasia}}
+                        {{i.nomeRazaoSocial.toUpperCase()}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
-                    cadastrada</mat-hint>
+                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa cadastrada</mat-hint>
             </mat-form-field>
 
             <!-- TIPO MOVIMENTACAO -->
@@ -173,11 +172,10 @@
 
         <mat-toolbar class="titulopartes">
             <span>Rateio entre Programas/Projetos</span>
-            <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
-            <span *ngIf="valorRateioSuperior" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está superior ao valor do movimento.</span>
+            <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior && movimentacoes.rateios.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
+            <span *ngIf="valorRateioSuperior && movimentacoes.rateios.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está diferente ao valor do movimento.</span>
         </mat-toolbar>
-        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
+        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
             <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateio">
                 <div *ngFor="let rateio of movimentacoes.rateios; let index = index">
                     <formulario-rateio [rateio]="rateio" 
@@ -196,7 +194,32 @@
                     </div>
                 </div>                
             </div>
+        </div>
 
+
+        <mat-toolbar class="titulopartes" style="margin-top: 20px;">
+            <span>Rateio entre Unidades</span>
+            <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioUnidadeSuperior && movimentacoes.rateiosUnidades.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateioUnidades()}})</span>
+            <span *ngIf="valorRateioUnidadeSuperior && movimentacoes.rateiosUnidades.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio das unidades está diferente ao valor do movimento.</span>
+        </mat-toolbar>
+        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateioUnidade">
+                <div *ngFor="let rateio of movimentacoes.rateiosUnidades; let index = index">
+                    <formulario-rateio-unidade [rateio]="rateio" 
+                                               [index]="index"
+                                               [rateios]="movimentacoes.rateiosUnidades"   
+                                               [perfilAcesso]="perfilAcesso" 
+                                               [unidades]="unidades">
+                    </formulario-rateio-unidade>
+                </div>
+                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                    <div>
+                        <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addRateioUnidade()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>                
+            </div>
         </div>
 
 </div>

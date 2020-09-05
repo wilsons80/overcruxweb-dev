@@ -36,14 +36,14 @@
             <ng-container matColumnDef="empresa">
                 <th mat-header-cell *matHeaderCellDef style="width: 30%"> Empresa </th>
                 <td mat-cell *matCellDef="let element"> 
-                    {{element.empresa?.nomeRazaoSocial}}
+                    {{element.empresa?.nomeRazaoSocial.toUpperCase()}}                    
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="tipoMovimento">
                 <th mat-header-cell *matHeaderCellDef style="width: 20%"> Tipo de Movimento </th>
                 <td mat-cell *matCellDef="let element"> 
-                    {{element.stTipoMovimentacao === 'E' ? 'Entrada' : 'Saída'  }}
+                    {{element.stTipoMovimentacao === 'E' ? 'ENTRADA' : 'SAÍDA'  }}
                 </td>
             </ng-container>
            

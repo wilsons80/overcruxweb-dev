@@ -17,6 +17,7 @@ import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-b
 import * as _ from 'lodash';
 import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 import { Acesso } from 'src/app/core/acesso';
+import { RateiosMovimentacoesUnidades } from 'src/app/core/rateios-movimentacoes-unidades';
 
 
 @Component({
@@ -38,11 +39,12 @@ export class DadosMovimentacaoComponent implements OnInit {
   contasBancarias: ContasBancaria[];
 
   tiposMovimentacao = [
-    {id: 'E', descricao: 'ENTRADA'},
-    {id: 'S', descricao: 'SAÍDA'}
+    {id: 'E', descricao: 'DESPESA'},
+    {id: 'S', descricao: 'RECEITA'}
   ];
 
   valorRateioSuperior = false;
+  valorRateioUnidadeSuperior = false;
 
   constructor(
     private empresaService: EmpresaService,
@@ -143,9 +145,44 @@ export class DadosMovimentacaoComponent implements OnInit {
     if(Number(valorTotal.toFixed(2)) != Number(valorMovimentacao.toFixed(2))) {
       this.valorRateioSuperior = true;
     }
-
     return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
 
+  addRateioUnidade() {
+    if (!this.movimentacoes.rateiosUnidades) {
+      this.movimentacoes.rateiosUnidades = [];
+    }
+
+    const rateio:any = new RateiosMovimentacoesUnidades();
+    
+    rateio.statusPercentual = false;
+    rateio.idUnidade = undefined;
+    rateio.id = undefined;
+    rateio.valorRateio = 0;
+    rateio.placeHolderRateio = 'Valor do rateio';
+
+    this.movimentacoes.rateiosUnidades.push(rateio);
+  }
+
+  getValorTotalRateioUnidades() {
+    this.valorRateioUnidadeSuperior = false;
+    let valorMovimentacao = this.movimentacoes.valorMovimentacao || 0;
+
+    let valorTotal = 0;
+    this.movimentacoes.rateiosUnidades.forEach(rateio => {
+      if(rateio.valorRateio) {
+        if(rateio.statusPercentual) {
+          valorTotal += (valorMovimentacao *  rateio.valorRateio)/100;
+        } else {
+          valorTotal += rateio.valorRateio;
+        }
+      }
+    });
+
+    if(Number(valorTotal.toFixed(2)) != Number(valorMovimentacao.toFixed(2))) {
+      this.valorRateioUnidadeSuperior = true;
+    }
+    return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
 }
