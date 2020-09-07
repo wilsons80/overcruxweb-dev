@@ -10,7 +10,7 @@
                     <mat-select fxFlexOffset="20px" name="movimentacoes">
                         <mat-option></mat-option>
                         <mat-option *ngFor="let d of listaMovimentacoes" [value]="d">
-                            Data: {{d.dataMovimentacao}}
+                            Data: {{d.dataMovimentacao | dataSimples}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
