@@ -40,14 +40,14 @@
             </ng-container>
             
             <ng-container matColumnDef="empresa">
-                <th mat-header-cell *matHeaderCellDef style="width: 20%"> Empresa </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 22%"> Empresa </th>
                 <td mat-cell *matCellDef="let element"> 
                     {{element.empresa?.nomeRazaoSocial.toUpperCase()}}                    
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="tipoMovimento">
-                <th mat-header-cell *matHeaderCellDef style="width: 10%"> Tipo de Movimento </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> Tipo</th>
                 <td mat-cell *matCellDef="let element"> 
                     {{element.stTipoMovimentacao === 'E' ? 'ENTRADA' : 'SAÍDA'  }}
                 </td>
