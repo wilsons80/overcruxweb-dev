@@ -9,6 +9,7 @@ import { PagamentosFatura } from './pagamentos-fatura';
 import { ContasBancaria } from './contas-bancaria';
 import { RateiosMovimentacoes } from './rateios-movimentacoes';
 import { RateiosMovimentacoesUnidades } from './rateios-movimentacoes-unidades';
+import { Doadores } from './doadores';
 
 export class Movimentacoes{
     id:number;
@@ -35,5 +36,7 @@ export class Movimentacoes{
 	valorInss:number;
 	contaBancaria: ContasBancaria;
 	contaBancariaDestino: ContasBancaria;
+
+	doador: Doadores;
 
 }

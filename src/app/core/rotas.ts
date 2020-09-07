@@ -23,6 +23,7 @@ export enum Rotas {
     GRAUS_INSTRUCAO                 = 'api/grausinstrucao/',
     QUESTIONARIO                    = 'api/questionarios/',
     EMPRESAS                        = 'api/empresas/',
+    DOADORES                        = 'api/doadores/',
     FUNCIONARIOS                    = 'api/funcionario/',
     FALTAS_FUNCIONARIOS             = 'api/faltasfuncionario/',
     TALENTOS                        = 'api/talentospf/',

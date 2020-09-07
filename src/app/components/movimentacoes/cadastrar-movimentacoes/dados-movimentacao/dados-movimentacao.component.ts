@@ -18,6 +18,8 @@ import * as _ from 'lodash';
 import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 import { Acesso } from 'src/app/core/acesso';
 import { RateiosMovimentacoesUnidades } from 'src/app/core/rateios-movimentacoes-unidades';
+import { DoadoresService } from 'src/app/services/doadores/doadores.service';
+import { Doadores } from 'src/app/core/doadores';
 
 
 @Component({
@@ -37,6 +39,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   departamentos:Departamento[];
   unidades: Unidade[];
   contasBancarias: ContasBancaria[];
+  doadores: Doadores[];
 
   tiposMovimentacao = [
     {id: 'E', descricao: 'DESPESA'},
@@ -54,6 +57,7 @@ export class DadosMovimentacaoComponent implements OnInit {
     private unidadeService: UnidadeService,
     private toastService: ToastService,
     private contasBancariaService: ContasBancariaService,
+    private doadoresService: DoadoresService,
     private drc: ChangeDetectorRef
   ) { }
 
@@ -81,6 +85,10 @@ export class DadosMovimentacaoComponent implements OnInit {
 
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades:Unidade[]) => {
       this.unidades = unidades;
+    })
+
+    this.doadoresService.getAll().subscribe((doadores: Doadores[]) => {
+      this.doadores = doadores;
     })
 
     this.contasBancariaService.getAllComboByInstituicaoLogada()
@@ -184,5 +192,22 @@ export class DadosMovimentacaoComponent implements OnInit {
       this.valorRateioUnidadeSuperior = true;
     }
     return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  getDescricaoDoador(doador: Doadores): string {
+    if(doador.empresa) {
+      return doador.empresa.nomeRazaoSocial.toUpperCase();
+    }
+    if(doador.pessoasFisica){
+      return doador.pessoasFisica.nome.toUpperCase();
+    }
+  }
+  getIdDoador(doador: Doadores): number {
+    if(doador.empresa) {
+      return doador.empresa.id;
+    }
+    if(doador.pessoasFisica){
+      return doador.pessoasFisica.id;
+    }
   }
 }

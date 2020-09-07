@@ -168,6 +168,18 @@
                 <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum departamento cadastrado</mat-hint>
             </mat-form-field>
         </div>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Doadores</mat-label>
+                <mat-select [(ngModel)]=movimentacoes.doador.id name="doadores">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of doadores" [value]="getIdDoador(i)">
+                        {{getDescricaoDoador(i)}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
+            </mat-form-field>
+        </div>
 
 
         <mat-toolbar class="titulopartes">
