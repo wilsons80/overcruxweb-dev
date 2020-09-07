@@ -24,6 +24,8 @@ export class ProjetoProgramaCellComponent implements OnInit {
     this.dadosTooltip = this.dados ? this.dados.slice(1)
                                                //.map(o => (o.projeto && o.projeto.id ? o.projeto.nome : (o.programa && o.programa.id ? o.programa.nome: '')) + ', ')
                                                .join('\n') : '' ;
+
+    this.dadosTooltip = this.dadosTooltip.substring(0, this.dadosTooltip.length-2);
   }
 
   getPrimeiroRegistro(){
