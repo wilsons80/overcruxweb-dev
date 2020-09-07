@@ -9,6 +9,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class MovimentacoesComponent implements OnInit {
   movimentacoes: Movimentacoes = new Movimentacoes();
   msg: string;
 
-  displayedColumns: string[] = ['empresa','tipoMovimento', 'dataDocumento', 'valorMovimentacao', 'nrDocumento', 'acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'dataDocumento', 'dataMovimentacao', 'valorMovimentacao', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;

@@ -146,7 +146,7 @@
         <!-- OUTRAS INFORMACOES -->
         <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlex="25%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Unidade</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.unidade.idUnidade name="unidade" required>
                     <mat-option></mat-option>
@@ -154,10 +154,10 @@
                         {{i.nomeUnidade}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
+                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
             </mat-form-field>
 
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Departamento</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.departamento.idDepartamento name="departamento">
                     <mat-option></mat-option>
@@ -165,11 +165,10 @@
                         {{i.nmDepartamento}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum departamento cadastrado</mat-hint>
+                <mat-hint *ngIf="departamentos?.length === 0" align="start">Nenhum departamento cadastrado</mat-hint>
             </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+
+            <mat-form-field fxFlex="45%" fxLayoutGap="20px" fxFlexOffset="20px">
                 <mat-label>Doadores</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.doador.id name="doadores">
                     <mat-option></mat-option>
@@ -177,7 +176,7 @@
                         {{getDescricaoDoador(i)}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhuma unidade cadastrado</mat-hint>
+                <mat-hint *ngIf="doadores?.length === 0" align="start">Nenhum doador cadastrado</mat-hint>
             </mat-form-field>
         </div>
 

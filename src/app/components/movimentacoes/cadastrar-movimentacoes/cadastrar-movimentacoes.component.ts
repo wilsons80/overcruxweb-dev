@@ -12,6 +12,7 @@ import { Banco } from 'src/app/core/banco';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { Doadores } from 'src/app/core/doadores';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -141,6 +142,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.pagamentosFatura = [];
     this.movimentacoes.contaBancaria = new ContasBancaria();
     this.movimentacoes.contaBancaria.banco = new Banco();
+    this.movimentacoes.doador = new Doadores();
   }
 
   mostrarBotaoLimpar() {
