@@ -13,6 +13,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { Doadores } from 'src/app/core/doadores';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -64,6 +65,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.isAtualizar = true;
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
+        
+        BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL').emit(this.movimentacoes);
 
         if (!this.movimentacoes.contaBancaria) {
           this.movimentacoes.contaBancaria = new ContasBancaria();
@@ -82,6 +85,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
       this.autenticadorService.revalidarSessao();
       Object.assign(this.movimentacoes, movimentacao);
+
+      BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES').emit(this.movimentacoes);
     });
   }
 
@@ -127,6 +132,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
       this.autenticadorService.revalidarSessao();
       Object.assign(this.movimentacoes, movimentacao);
+
+      BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES').emit(this.movimentacoes);
     });
   }
 

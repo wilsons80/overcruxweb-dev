@@ -13,6 +13,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { FormularioRateioComponent } from './cadastrar-movimentacoes/formulario-rateio/formulario-rateio.component';
 import { FormularioRateioUnidadeComponent } from './cadastrar-movimentacoes/formulario-rateio-unidade/formulario-rateio-unidade.component';
 import { TableCellModule } from '../common/table-cell/table-cell.module';
+import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesquisavel.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { TableCellModule } from '../common/table-cell/table-cell.module';
     MovimentacoesRoutingModule,
     MaterialCommonModule,
     NgxCurrencyModule,
-    TableCellModule
+    TableCellModule,
+    ComboPesquisavelModule
   ]
 })
 export class MovimentacoesModule { }

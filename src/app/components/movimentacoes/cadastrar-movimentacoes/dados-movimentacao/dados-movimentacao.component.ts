@@ -20,6 +20,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { RateiosMovimentacoesUnidades } from 'src/app/core/rateios-movimentacoes-unidades';
 import { DoadoresService } from 'src/app/services/doadores/doadores.service';
 import { Doadores } from 'src/app/core/doadores';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 
 @Component({
@@ -49,6 +50,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   valorRateioSuperior = false;
   valorRateioUnidadeSuperior = false;
 
+
   constructor(
     private empresaService: EmpresaService,
     private programaService: ProgramaService,
@@ -67,8 +69,14 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   ngOnInit() {
 
+    BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES')
+    .subscribe((movimentacao: Movimentacoes) => {
+      this.selecionaEmpresa(movimentacao.empresa.id);
+    });
+    
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
+      this.selecionaEmpresa(this.movimentacoes.empresa.id);
     })
 
     this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
@@ -208,6 +216,19 @@ export class DadosMovimentacaoComponent implements OnInit {
     }
     if(doador.pessoasFisica){
       return doador.pessoasFisica.id;
+    }
+  }
+
+  onValorChange(item) {
+    this.movimentacoes.empresa = item;
+  }
+
+  selecionaEmpresa(idEmpresa: number) {
+    if(this.empresas) {
+      const empresa = this.empresas.find((item: any) => item.id === idEmpresa);
+      if (!!empresa) {
+        this.onValorChange(empresa);
+      }
     }
   }
 }

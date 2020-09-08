@@ -117,6 +117,7 @@ import { AcessoModuloResolver } from './guards/acesso-modulo.resolve';
 import { DATE_FORMAT_PT_BR, ComonsDateAdapter } from './date-config/comons-date-adapter';
 import { TransferenciaValoresModule } from './components/transferencia-valores/transferencia-valores.module';
 import { TableCellModule } from './components/common/table-cell/table-cell.module';
+import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/combo-pesquisavel.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -226,7 +227,8 @@ registerLocaleData(localePt, 'pt-BR');
     SaldosContasBancariaModule,
     PedidosMateriaisModule,
     TransferenciaValoresModule,
-    TableCellModule
+    TableCellModule,
+    ComboPesquisavelModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

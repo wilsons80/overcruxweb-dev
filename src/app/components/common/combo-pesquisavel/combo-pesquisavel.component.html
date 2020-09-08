@@ -1,0 +1,26 @@
+<mat-select class="combopesquisavel"
+            #itensSelect="ngModel"
+            [placeholder]="placeholder"
+            name="{{nome}}-{{data}}"
+            style="border-bottom: 1px solid; margin: 8px 0;"
+            [disabled]="desabilitado"
+            [multiple]="multiplaSelecao"
+            [ngModel]="item"
+            (ngModelChange)="change($event)"               
+            [required]="obrigatorio"
+            (click)="onClick($event)"
+            >
+    <mat-option>
+        <ngx-mat-select-search ngModel #itemSearch
+                        [placeholderLabel]="itensSelect.placeholder"
+                        clearSearchInput="true"
+                        noEntriesFoundLabel="Nenhum elemento encontrado."
+                        (input)="filtrarItens(itemSearch.value)"
+                        [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
+    </mat-option>
+
+    <mat-option></mat-option>
+    <mat-option *ngFor="let item of itensFilter | async" [value]="item" matTooltip="{{ itemToString(item) }}">
+        {{ itemToString(item).toUpperCase() }}
+    </mat-option>
+</mat-select>

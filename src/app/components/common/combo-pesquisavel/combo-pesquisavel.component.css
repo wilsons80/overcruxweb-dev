@@ -1,0 +1,9 @@
+.mat-select:focus:not(.mat-select-disabled).combopesquisavel
+.mat-select-arrow, .mat-select-underline, .mat-select-trigger {
+    color: #0d47a1 !important;    
+}
+
+.mat-select:focus:not(.mat-select-disabled).combopesquisavel {
+    color: #0d47a1 !important;        
+    border-bottom: 2px solid !important;
+}

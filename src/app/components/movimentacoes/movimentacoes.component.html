@@ -1,26 +1,109 @@
 <mat-toolbar class="subtitulo">Movimentações</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
-        <form #formConsultarDepartamento="ngForm">
+        <form #formulario="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
 
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione uma movimentação</mat-label>
-                    <mat-select fxFlexOffset="20px" name="movimentacoes">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of listaMovimentacoes" [value]="d">
-                            Data: {{d.dataMovimentacao | dataSimples}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <div ngModelGroup="comboEmpresa" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboEmpresa 
+                                       nome="empresa" 
+                                       [itens]="empresas" 
+                                       itemDescricao="nomeRazaoSocial"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Informe a empresa..."
+                                       [(valor)]="filtro.empresa">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboPrograma" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboPrograma 
+                                       nome="programa" 
+                                       [itens]="programas" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Informe o programa..."
+                                       [obrigatorio]="false"
+                                       [(valor)]="filtro.programa">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboProjeto" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboProjeto 
+                                       nome="projeto" 
+                                       [itens]="projetos" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Informe o projeto..."
+                                       [obrigatorio]="false"
+                                       [(valor)]="filtro.projeto">
+                    </combo-pesquisavel>
+                </div>
             </div>
 
+
+            <div fxLayout="row">
+                <fieldset sy fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <legend>Documento</legend>
+                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" 
+                         style="height: 67%;">
+                        <mat-form-field fxFlex= "120px" >
+                            <input matInput name= "dataInicio"
+                                   [matDatepicker]="dataInicio" 
+                                   placeholder="Data início" 
+                                   [(ngModel)]="filtro.dataInicioDoc">
+                            <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                            <mat-datepicker #dataInicio></mat-datepicker>
+                        </mat-form-field>
+                    
+                        <mat-form-field fxFlex= "120px" >
+                            <input matInput name= "dataFim"
+                                   [matDatepicker]="dataFim" 
+                                   [min]="filtro.dataInicioDoc"
+                                   placeholder="Data fim" 
+                                   [(ngModel)]="filtro.dataFimDoc">
+                            <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                            <mat-datepicker #dataFim></mat-datepicker>
+
+                            <mat-error>Não pode ser inferior a data de início</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex= "120px" fxFlexOffset="20px">
+                            <input [(ngModel)]="filtro.valor"
+                                   currencyMask 
+                                   name="valor"
+                                   placeholder="Valor"
+                                   matInput 
+                                   maxlength="13"
+                                   [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                            <span matPrefix>R$&nbsp;</span>
+                        </mat-form-field>
+                    </div>  
+                </fieldset> 
+
+                
+                <fieldset sy fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <legend>Vencimento</legend>
+                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" style="height: 67%;">
+                        <mat-form-field fxFlex= "160px" >
+                            <input matInput name= "dataVencimento"
+                                   [matDatepicker]="dataVencimento" 
+                                   placeholder="Data vencimento" 
+                                   [(ngModel)]="filtro.dataVencimento">
+                            <mat-datepicker-toggle matSuffix [for]="dataVencimento"></mat-datepicker-toggle>
+                            <mat-datepicker #dataVencimento></mat-datepicker>
+                        </mat-form-field>
+                    </div>  
+                </fieldset> 
+            </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
                 fxFlexFill>
 
-                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                <button mat-raised-button fxFlex="20%" (click)="consultar()" [disabled]="formulario.invalid">
                     CONSULTAR
                 </button>
 

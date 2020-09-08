@@ -9,8 +9,23 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
-import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
+import { Empresa } from 'src/app/core/empresa';
+import { Projeto } from 'src/app/core/projeto';
+import { Programa } from 'src/app/core/programa';
+import { EmpresaService } from 'src/app/services/empresa/empresa.service';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
+class Filter {
+  empresa: Empresa;
+  programa: Programa;
+  projeto: Projeto;
+  valor: number;
+  dataInicioDoc: Date;
+  dataFimDoc: Date;
+  dataVencimento: Date;
+}
 
 @Component({
   selector: 'movimentacoes',
@@ -26,22 +41,44 @@ export class MovimentacoesComponent implements OnInit {
   movimentacoes: Movimentacoes = new Movimentacoes();
   msg: string;
 
+  empresas:Empresa[];
+  projetos:Projeto[];
+  programas:Programa[];
+
+  filtro = new Filter();
+
   displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'dataDocumento', 'dataMovimentacao', 'valorMovimentacao', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
 
-
   constructor(
     private movimentacoesService: MovimentacoesService,
     private router: Router,
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private empresaService: EmpresaService,
+    private programaService: ProgramaService,
+    private projetoService: ProjetoService,
+    private dataUtilService: DataUtilService
   ) { }
 
   ngOnInit() {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
 
+    this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
+      this.empresas = empresas;
+    })
+
+    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
+      this.programas = programas;
+    })
+
+    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
+      this.projetos = projetos;
+    })
+
+    this.limpar();
     this.dataSource.paginator = this.paginator;
     this.getAllOrigem();
   }
@@ -51,6 +88,11 @@ export class MovimentacoesComponent implements OnInit {
     this.mostrarTabela = false;
     this.movimentacoes = new Movimentacoes()
     this.dataSource.data = [];
+    this.filtro = new Filter();
+    this.filtro.empresa  = new Empresa();
+    this.filtro.projeto  = new Projeto();
+    this.filtro.programa = new Programa();
+    this.filtro.valor    = 0;
   }
 
   consultar() {
@@ -102,7 +144,14 @@ export class MovimentacoesComponent implements OnInit {
   }
 
   getAllOrigem() {
-    this.movimentacoesService.getAllOrigem().subscribe((listaMovimentacoes: Movimentacoes[]) => {
+    this.movimentacoesService.getFilterOrigem(this.filtro.empresa.id,
+                                              this.filtro.programa.id,
+                                              this.filtro.projeto.id,
+                                              this.filtro.valor,
+                                              this.filtro.dataInicioDoc,
+                                              this.filtro.dataFimDoc,
+                                              this.filtro.dataVencimento)
+    .subscribe((listaMovimentacoes: Movimentacoes[]) => {
       this.listaMovimentacoes = listaMovimentacoes;
       this.dataSource.data = listaMovimentacoes ? listaMovimentacoes : [];
       this.verificaMostrarTabela(listaMovimentacoes);

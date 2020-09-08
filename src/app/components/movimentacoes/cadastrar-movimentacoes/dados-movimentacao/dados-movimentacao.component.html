@@ -5,16 +5,21 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- EMPRESAS -->
-            <mat-form-field fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Empresa:</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of empresas" [value]=i.id>
-                        {{i.nomeRazaoSocial.toUpperCase()}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa cadastrada</mat-hint>
-            </mat-form-field>
+            <div ngModelGroup="comboEmpresa" fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px"
+                 style="padding-top: 15px;">
+                <combo-pesquisavel #comboEmpresa 
+                                   nome="empresa" 
+                                   [itens]="empresas" 
+                                   itemDescricao="nomeRazaoSocial"
+                                   itemId="id"
+                                   [showDisplayId]="false" 
+                                   [obrigatorio]="false"
+                                   placeholder="Informe a empresa..."
+                                   [(valor)]="movimentacoes.empresa"
+                                   (valorChange)="onValorChange($event)">
+                </combo-pesquisavel>
+            </div>
+
 
             <!-- TIPO MOVIMENTACAO -->
             <mat-form-field fxFlex="30%">
