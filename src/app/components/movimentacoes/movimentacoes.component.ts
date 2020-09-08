@@ -47,7 +47,7 @@ export class MovimentacoesComponent implements OnInit {
 
   filtro = new Filter();
 
-  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'dataDocumento', 'dataMovimentacao', 'valorMovimentacao', 'nrDocumento', 'acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'dataDocumento', 'valorMovimentacao', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
