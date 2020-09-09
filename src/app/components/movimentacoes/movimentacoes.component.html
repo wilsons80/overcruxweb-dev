@@ -72,6 +72,41 @@
                         </mat-form-field>
 
                         <mat-form-field fxFlex= "120px" fxFlexOffset="20px">
+                            <input [(ngModel)]="filtro.numeroDocumento"
+                                   name="numeroDocumento"
+                                   placeholder="Número"
+                                   matInput maxlength="20"
+                                   />
+                        </mat-form-field>
+                    </div>  
+                </fieldset> 
+
+                <fieldset sy fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <legend>Movimento</legend>
+                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" 
+                         style="height: 67%;">
+                        <mat-form-field fxFlex= "120px" >
+                            <input matInput name= "dataInicioMov"
+                                   [matDatepicker]="dataInicioMov" 
+                                   placeholder="Data início" 
+                                   [(ngModel)]="filtro.dataInicioMov">
+                            <mat-datepicker-toggle matSuffix [for]="dataInicioMov"></mat-datepicker-toggle>
+                            <mat-datepicker #dataInicioMov></mat-datepicker>
+                        </mat-form-field>
+                    
+                        <mat-form-field fxFlex= "120px" >
+                            <input matInput name= "dataFimMov"
+                                   [matDatepicker]="dataFimMov" 
+                                   [min]="filtro.dataFimMov"
+                                   placeholder="Data fim" 
+                                   [(ngModel)]="filtro.dataFimMov">
+                            <mat-datepicker-toggle matSuffix [for]="dataFimMov"></mat-datepicker-toggle>
+                            <mat-datepicker #dataFimMov></mat-datepicker>
+
+                            <mat-error>Não pode ser inferior a data de início</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex= "120px" fxFlexOffset="20px">
                             <input [(ngModel)]="filtro.valor"
                                    currencyMask 
                                    name="valor"
@@ -81,11 +116,12 @@
                                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                             <span matPrefix>R$&nbsp;</span>
                         </mat-form-field>
+
                     </div>  
                 </fieldset> 
 
                 
-                <fieldset sy fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <fieldset fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
                     <legend>Vencimento</legend>
                     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px" style="height: 67%;">
                         <mat-form-field fxFlex= "160px" >
@@ -114,17 +150,20 @@
             </div>
         </form>
 
-        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px;">
+        <div [hidden]="!mostrarTabela" style="margin-top: 20px;">
+            <mat-paginator #paginator [pageSizeOptions]="[30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
+        </div>
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource">
 
             <ng-container matColumnDef="programaprojeto">
-                <th mat-header-cell *matHeaderCellDef style="width: 29%"> Projeto/Programa </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 25%"> Projeto/Programa </th>
                 <td mat-cell *matCellDef="let element"> 
                     <projeto-programa-cell [rateios]="element.rateios"></projeto-programa-cell>                 
                 </td>
             </ng-container>
             
             <ng-container matColumnDef="empresa">
-                <th mat-header-cell *matHeaderCellDef style="width: 25%"> Empresa </th>
+                <th mat-header-cell *matHeaderCellDef style="width: 22%"> Empresa </th>
                 <td mat-cell *matCellDef="let element"> 
                     {{element.empresa?.nomeRazaoSocial.toUpperCase()}}                    
                 </td>
@@ -141,6 +180,11 @@
                 <th mat-header-cell *matHeaderCellDef style="width: 10%"> Data Documento </th>
                 <td mat-cell *matCellDef="let element"> {{ element.dataDocumento | dataSimples }} </td>
             </ng-container>
+
+            <ng-container matColumnDef="dataMovimento">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> Data Movimento </th>
+                <td mat-cell *matCellDef="let element"> {{ element.dataMovimentacao | dataSimples }} </td>
+            </ng-container>            
 
             <ng-container matColumnDef="valorMovimentacao">
                 <th mat-header-cell *matHeaderCellDef style="width: 10%"> Valor Movimento </th>
@@ -168,7 +212,12 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div [hidden]="!mostrarTabela">
-            <mat-paginator [pageSizeOptions]="[30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
+            <mat-paginator (page)="handlePageBottom($event)" 
+                           [pageSize]="paginator.pageSize"
+                           [pageIndex]="paginator.pageIndex" 
+                           [length]="paginator.length"
+                           [pageSizeOptions]="paginator.pageSizeOptions">
+            </mat-paginator>
         </div>
         
         <ng-template #tabelaSemDados >

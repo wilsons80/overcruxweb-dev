@@ -2,7 +2,7 @@ import { MovimentacoesService } from './../../services/movimentacoes/movimentaco
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfig} from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { Acesso } from 'src/app/core/acesso';
@@ -15,7 +15,7 @@ import { Programa } from 'src/app/core/programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
-import { DataUtilService } from 'src/app/services/commons/data-util.service';
+
 
 class Filter {
   empresa: Empresa;
@@ -25,6 +25,9 @@ class Filter {
   dataInicioDoc: Date;
   dataFimDoc: Date;
   dataVencimento: Date;
+  dataInicioMov: Date;
+  dataFimMov: Date;
+  numeroDocumento: string
 }
 
 @Component({
@@ -35,6 +38,7 @@ class Filter {
 export class MovimentacoesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    
 
   listaMovimentacoes: Movimentacoes[];
   mostrarTabela: boolean = false;
@@ -47,7 +51,7 @@ export class MovimentacoesComponent implements OnInit {
 
   filtro = new Filter();
 
-  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'dataDocumento', 'valorMovimentacao', 'nrDocumento', 'acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'valorMovimentacao', 'dataDocumento', 'dataMovimento', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
@@ -60,7 +64,6 @@ export class MovimentacoesComponent implements OnInit {
     private empresaService: EmpresaService,
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
-    private dataUtilService: DataUtilService
   ) { }
 
   ngOnInit() {
@@ -80,9 +83,16 @@ export class MovimentacoesComponent implements OnInit {
 
     this.limpar();
     this.dataSource.paginator = this.paginator;
+    
     this.getAllOrigem();
   }
 
+
+  public handlePageBottom(event: PageEvent) {
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.page.emit(event);
+}
 
   limpar() {
     this.mostrarTabela = false;
@@ -165,7 +175,11 @@ export class MovimentacoesComponent implements OnInit {
                                               this.filtro.valor,
                                               this.filtro.dataInicioDoc,
                                               this.filtro.dataFimDoc,
-                                              this.filtro.dataVencimento)
+                                              this.filtro.dataVencimento,
+                                              this.filtro.dataInicioMov,
+                                              this.filtro.dataFimMov,
+                                              this.filtro.numeroDocumento
+                                              )
     .subscribe((listaMovimentacoes: Movimentacoes[]) => {
       this.listaMovimentacoes = listaMovimentacoes;
       this.dataSource.data = listaMovimentacoes ? listaMovimentacoes : [];

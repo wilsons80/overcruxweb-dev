@@ -26,27 +26,36 @@ export class MovimentacoesService extends BaseService<Movimentacoes> {
                   idPrograma: string|number,
                   idProjeto: string|number,
                   valor: string|number,
-                  dataInicio: any,
-                  dataFim: any,
-                  dataVencimento: any ) {
+                  dataInicioDoc: any,
+                  dataFimDoc: any,
+                  dataVencimento: any,
+                  dataInicioMov: any,
+                  dataFimMov: any,
+                  numeroDocumento: string ) {
 
-    idEmpresa  = idEmpresa || '';
-    idPrograma = idPrograma || '';
-    idProjeto  = idProjeto || '';
-    valor      = valor || '';
+    idEmpresa       = idEmpresa || '';
+    idPrograma      = idPrograma || '';
+    idProjeto       = idProjeto || '';
+    valor           = valor || '';
+    numeroDocumento = numeroDocumento || '';
 
-    const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
-    const p_dataFim = dataFim ? dataFim.getTime() : '';
+    const p_dataInicioDoc = dataInicioDoc ? dataInicioDoc.getTime() : '';
+    const p_dataFimDoc = dataFimDoc ? dataFimDoc.getTime() : '';
     const p_dataVencimento = dataVencimento ? dataVencimento.getTime() : '';
+    const p_dataInicioMov = dataInicioMov ? dataInicioMov.getTime() : '';
+    const p_dataFimMov = dataFimMov ? dataFimMov.getTime() : '';
 
     return this.http.get(Rotas.MOVIMENTACOES + 'filter/origem', { params: {
         empresa: `${idEmpresa}` ,
         programa: `${idPrograma}` ,
         projeto: `${idProjeto}`,
         valor: `${valor}`,
-        dataInicio: `${p_dataInicio}`,
-        dataFim: `${p_dataFim}`,
+        dataInicioDoc: `${p_dataInicioDoc}`,
+        dataFimDoc: `${p_dataFimDoc}`,
         dataVencimento: `${p_dataVencimento}`,
+        dataInicioMov: `${p_dataInicioMov}`,
+        dataFimMov: `${p_dataFimMov}`,
+        numeroDocumento: `${numeroDocumento}`,
         }
     });
   }
