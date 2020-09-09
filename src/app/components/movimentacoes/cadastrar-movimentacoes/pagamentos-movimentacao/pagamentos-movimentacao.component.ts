@@ -195,4 +195,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     const fatura = _.find(faturas, (m: Fatura) => m.id == idFatura);
     return fatura;
   }
+
+  isInformaNumeroTransacao(formaPagamento: string) : boolean{
+    return formaPagamento === 'C' || formaPagamento === 'B';
+  }
 }

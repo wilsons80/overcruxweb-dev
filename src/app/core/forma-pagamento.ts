@@ -1,7 +1,7 @@
 export class FormaPagamento {
     tipos = [
         {id: 'A', descricao: 'CARTÃO DE CRÉDITO' },
-        {id: 'B', descricao: 'DÉBITO EM CARTÃO' },
+        {id: 'B', descricao: 'DÉBITO EM CONTA CORRENTE' },
         {id: 'C', descricao: 'CHEQUE' },
         {id: 'D', descricao: 'EM DINHEIRO' }
      ];

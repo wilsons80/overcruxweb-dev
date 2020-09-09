@@ -20,4 +20,6 @@ export class PagamentosFatura{
 
 	contaReembolso: ContasBancaria;
 	dataReembolso: Date;
+
+	descricao: string;
 }
