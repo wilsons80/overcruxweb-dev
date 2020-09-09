@@ -118,6 +118,7 @@ import { DATE_FORMAT_PT_BR, ComonsDateAdapter } from './date-config/comons-date-
 import { TransferenciaValoresModule } from './components/transferencia-valores/transferencia-valores.module';
 import { TableCellModule } from './components/common/table-cell/table-cell.module';
 import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/combo-pesquisavel.module';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -228,7 +229,8 @@ registerLocaleData(localePt, 'pt-BR');
     PedidosMateriaisModule,
     TransferenciaValoresModule,
     TableCellModule,
-    ComboPesquisavelModule
+    ComboPesquisavelModule,
+    NgxMatSelectSearchModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,
