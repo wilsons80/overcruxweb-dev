@@ -1,12 +1,10 @@
-import { FormaPagamento } from './forma-pagamento';
 import { SaldosContasBancaria } from './saldos-contas-bancaria';
-import { Fatura } from './fatura';
 import { ContasBancaria } from './contas-bancaria';
 
 export class PagamentosFatura{
 
     id: number;
-	fatura: Fatura;
+	idFatura: number;
 	contaBancaria: ContasBancaria;
 	saldoContaBancaria: SaldosContasBancaria;
 	valorPagamento: number;

@@ -118,7 +118,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   existemPagamentos(fatura: Fatura) {
-    return this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.find((l: PagamentosFatura) => l.fatura.id == fatura.id)
+    return this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.find((l: PagamentosFatura) => l.idFatura == fatura.id)
   }
 
   getValorTotal() {

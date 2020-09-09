@@ -143,7 +143,22 @@ export class MovimentacoesComponent implements OnInit {
     );
   }
 
+  private initFiltro() {
+    if(!this.filtro.empresa) {
+      this.filtro.empresa  = new Empresa();
+    }
+
+    if(!this.filtro.programa) {
+      this.filtro.programa = new Programa();
+    }
+
+    if(!this.filtro.projeto) {
+      this.filtro.projeto  = new Projeto();
+    }
+  }
+
   getAllOrigem() {
+    this.initFiltro();
     this.movimentacoesService.getFilterOrigem(this.filtro.empresa.id,
                                               this.filtro.programa.id,
                                               this.filtro.projeto.id,

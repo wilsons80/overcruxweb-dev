@@ -89,7 +89,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   getObjetosCompletosParaLista(pagamentosFatura: PagamentosFatura) {
     pagamentosFatura.contaBancaria = _.find(this.contasBancarias, (m: ContasBancaria) => m.id == pagamentosFatura.contaBancaria.id);
-    pagamentosFatura.fatura = _.find(this.movimentacoes.faturas, (m: Fatura) => m.id == pagamentosFatura.fatura.id);
   }
 
   novo() {
@@ -133,7 +132,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.pagamentosFatura.contaBancaria = new ContasBancaria();
     this.pagamentosFatura.contaReembolso = new ContasBancaria();
     this.pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
-    this.pagamentosFatura.fatura = new Fatura();
   }
 
   deletar(pagamentosFatura: PagamentosFatura): void {
@@ -155,10 +153,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   preencherObjetosVazios(pagamentosFatura: PagamentosFatura){
     if(!pagamentosFatura.contaBancaria){
       pagamentosFatura.contaBancaria = new ContasBancaria();
-    }
-
-    if(!pagamentosFatura.fatura){
-      pagamentosFatura.fatura = new Fatura();
     }
    
     if(!pagamentosFatura.saldoContaBancaria){
@@ -196,4 +190,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     return this.movimentacoes.faturas.filter(f => f.id);
   }
   
+  getDadosFatura(idFatura: number): Fatura {
+    const faturas = this.getFaturas();
+    const fatura = _.find(faturas, (m: Fatura) => m.id == idFatura);
+    return fatura;
+  }
 }
