@@ -13,6 +13,7 @@ import { SaldosContasBancaria } from 'src/app/core/saldos-contas-bancaria';
 import { FormaPagamento } from 'src/app/core/forma-pagamento';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -23,11 +24,12 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   @Input() movimentacoes:Movimentacoes;
   @Input() idMovimentacao: number;
+  @Input() perfilAcesso: Acesso;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   mostrarTabela = false;
-  msg = "Nenhum item movimentação adicionado";
+  msg = "Nenhum item adicionado.";
 
   maxDataPagamento = new Date();
   formasPagamento: FormaPagamento = new FormaPagamento();
@@ -36,7 +38,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
 
   pagamentosFatura: PagamentosFatura;
-  perfilAcesso: Acesso;
+  
 
   openFormCadastro = false;
   isAtualizar = false;
@@ -130,7 +132,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   initObjetos() {
     this.pagamentosFatura = new PagamentosFatura();
     this.pagamentosFatura.contaBancaria = new ContasBancaria();
-    this.pagamentosFatura.contaReembolso = new ContasBancaria();
+    this.pagamentosFatura.reembolsos = [];
+    this.pagamentosFatura.rateioPagamento = [];
     this.pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
   }
 
@@ -173,18 +176,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     return 0;
   }
 
-  validarContaReembolso() {
-    this.isContaReembolsoValida = true;
-    if(this.pagamentosFatura.contaBancaria && this.pagamentosFatura.contaBancaria.id 
-       && 
-       this.pagamentosFatura.contaReembolso && this.pagamentosFatura.contaReembolso.id) {
-      if(this.pagamentosFatura.contaBancaria.id === this.pagamentosFatura.contaReembolso.id) {
-        this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta bancária do pagamento.');
-        this.isContaReembolsoValida = false;
-      }
-    }
-  }
-
 
   getFaturas(): Fatura[] {
     return this.movimentacoes.faturas.filter(f => f.id);
@@ -199,4 +190,41 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   isInformaNumeroTransacao(formaPagamento: string) : boolean{
     return formaPagamento === 'C' || formaPagamento === 'B';
   }
+
+
+
+  addReembolso() {
+    if (!this.pagamentosFatura.reembolsos) {
+      this.pagamentosFatura.reembolsos = [];
+    }
+
+    const reemboso:any = new ReembolsosPagamentos();
+    reemboso.contaBancaria = new ContasBancaria();
+    
+    reemboso.id = undefined;
+    reemboso.idPagamentoFatura = this.pagamentosFatura.id;
+    reemboso.descricao = '';
+    reemboso.data = new Date();
+    reemboso.statusPercentual = false;
+    reemboso.valor = 0;
+    reemboso.placeHolderReembolso = 'Valor do reembolso';
+
+    this.pagamentosFatura.reembolsos.push(reemboso);
+  }
+
+  getContaReembolsoValida(valor) {
+    this.isContaReembolsoValida = valor;
+  }
+
+  validarContaReembolso() {
+    this.isContaReembolsoValida = true;
+    if(this.pagamentosFatura.contaBancaria && this.pagamentosFatura.contaBancaria.id) {
+      const contasReembolsoConflitantes = this.pagamentosFatura.reembolsos.filter(r => r.contaBancaria.id === this.pagamentosFatura.contaBancaria.id);
+      if(contasReembolsoConflitantes && contasReembolsoConflitantes.length > 0) {
+        this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta bancária do pagamento.');
+        this.isContaReembolsoValida = false;
+      }
+    }
+  }
+
 }

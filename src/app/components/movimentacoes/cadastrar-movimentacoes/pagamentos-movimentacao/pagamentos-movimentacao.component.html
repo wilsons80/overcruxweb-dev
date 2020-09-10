@@ -53,7 +53,6 @@
                     </mat-form-field>
                 </div>
 
-                <mat-toolbar class="titulopartes">Impostos</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px">
 
                     <!-- VALOR -->
@@ -117,39 +116,32 @@
                     </mat-form-field>
                 </div>
 
-                <mat-toolbar class="titulopartes">Reembolso</mat-toolbar>
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                    
-                    <mat-form-field fxFlex fxFlexOffset="20px">
-                        <mat-label>Conta reembolso</mat-label>
-                        <mat-select [(ngModel)]=pagamentosFatura.contaReembolso.id
-                                    (selectionChange)="validarContaReembolso()" 
-                                    name="contasReembolso">
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
-                                {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C. {{i.numeroContaBancaria}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
-                    </mat-form-field>
 
-                    
-                    <mat-form-field fxFlex="170px">
-                        <input [(ngModel)]="pagamentosFatura.dataReembolso"
-                               matInput 
-                               #campoDataReembolso
-                               name="dataReembolso"
-                               [min]="pagamentosFatura.dataPagamento"
-                               [required]="pagamentosFatura.contaReembolso.id"
-                               [matDatepicker]="dataReembolso"
-                               placeholder="Data do reembolso">
-                        <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
-                        <mat-datepicker #dataReembolso></mat-datepicker>
-                        <mat-error *ngIf="campoPagamentoMovimento.value">A data deve ser maior ou igual a data do pagamento</mat-error>
-                    </mat-form-field>
-
+                <mat-toolbar class="titulopartes">
+                    <span>Reembolso(s)</span>
+                </mat-toolbar>
+                <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
+                    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoReembolso">
+                        <div *ngFor="let reembolso of pagamentosFatura.reembolsos; let index = index">
+                            <formulario-reembolso [reembolso]="reembolso"
+                                                  [pagamentosFatura]="pagamentosFatura" 
+                                                  [index]="index"
+                                                  [perfilAcesso]="perfilAcesso" 
+                                                  [rateios]="movimentacoes.rateios"
+                                                  [contasBancarias]="contasBancarias"
+                                                  (onContaReembolsoValida)="getContaReembolsoValida($event)">
+                            </formulario-reembolso>
+                        </div>
+                        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                            <div>
+                                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addReembolso()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>                
+                    </div>
                 </div>
-                
+               
             </div>
 
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"

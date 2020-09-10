@@ -1,5 +1,7 @@
 import { SaldosContasBancaria } from './saldos-contas-bancaria';
 import { ContasBancaria } from './contas-bancaria';
+import { RateiosPagamentos } from './rateios-pagamentos';
+import { ReembolsosPagamentos } from './reembolsos-pagamentos';
 
 export class PagamentosFatura{
 
@@ -17,9 +19,8 @@ export class PagamentosFatura{
 
 	valorMulta: number;
 	valorJuros: number;
-
-	contaReembolso: ContasBancaria;
-	dataReembolso: Date;
-
 	descricao: string;
+
+	rateioPagamento: RateiosPagamentos[];
+	reembolsos: ReembolsosPagamentos[];
 }

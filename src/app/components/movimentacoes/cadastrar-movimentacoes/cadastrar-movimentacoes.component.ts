@@ -14,6 +14,7 @@ import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { Doadores } from 'src/app/core/doadores';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
+import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -162,20 +163,28 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
 
   isContaReembolsoValida(): boolean {
-    const pagamentos = this.movimentacoes.pagamentosFatura.filter(c => c.contaBancaria && c.contaReembolso);
-    if(pagamentos) {
-      const contaReembolso = pagamentos.filter(c => c.contaReembolso.id === c.contaBancaria.id);
-      if(contaReembolso.length > 0){
-        this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta bancária.');
-        return false;
-      }
-  
-      const dataReembolso = pagamentos.filter(c => c.dataReembolso)
-                                      .filter(c => this.dataUtilService.getDataTruncata(c.dataReembolso).getTime() < this.dataUtilService.getDataTruncata(c.dataPagamento).getTime()   );
-      if(dataReembolso.length > 0) {
-        this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
-        return false;
-      }
+    const contaBancariaMovimentacao = this.movimentacoes.contaBancaria;
+
+    const pagamentos:PagamentosFatura[] = this.movimentacoes.pagamentosFatura.filter(c => c.contaBancaria);
+    
+    if(pagamentos && pagamentos.length > 0) {
+      pagamentos.forEach(pagamento => {
+        const contaReembolso = pagamento.reembolsos.filter(c => c.contaBancaria.id === contaBancariaMovimentacao.id);
+        if(contaReembolso.length > 0){
+          this.toastService.showAlerta('Os pagamentos devem ter a conta de reembolso diferente da conta bancária.');
+          return false;
+        }
+    
+        const dataReembolso = pagamento.reembolsos
+                                       .filter(c => c.data)
+                                       .filter(c => this.dataUtilService.getDataTruncata(c.data).getTime() < this.dataUtilService.getDataTruncata(pagamento.dataPagamento).getTime()   );
+        if(dataReembolso.length > 0) {
+          this.toastService.showAlerta('A data do reembolso dos pagamento não pode ser menor que a data do pagamento.');
+          return false;
+        }
+
+      });
+      
     }
     return true;
   }

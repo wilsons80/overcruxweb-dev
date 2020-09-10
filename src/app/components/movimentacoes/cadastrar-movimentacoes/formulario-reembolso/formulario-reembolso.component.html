@@ -1,0 +1,65 @@
+<div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
+
+    <mat-form-field fxFlex fxFlexOffset="20px">
+        <mat-label>Conta reembolso</mat-label>
+        <mat-select [(ngModel)]=reembolso.contaBancaria.id
+                    (selectionChange)="validarContaReembolso()" 
+                    required
+                    name="contasReembolso_{{pinContaBancaria}}">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
+                {{i.banco.numero}} - {{i.banco.nome}}: Ag. {{i.numeroAgencia}} C. {{i.numeroContaBancaria}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field fxFlex="170px">
+        <input [(ngModel)]="reembolso.data"
+               matInput 
+               #campoDataReembolso
+               name="dataReembolso_{{pinDataReembolso}}"
+               [min]="pagamentosFatura.dataPagamento"
+               [required]="reembolso.contaBancaria.id"
+               [matDatepicker]="dataReembolso"
+               placeholder="Data do reembolso">
+        <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
+        <mat-datepicker #dataReembolso></mat-datepicker>
+        <mat-error *ngIf="campoDataReembolso.value">A data deve ser maior ou igual a data do pagamento</mat-error>
+    </mat-form-field>
+
+    <!-- VALOR -->
+    <mat-form-field fxFlex="170px" fxFlexOffset="20px">
+        <input [(ngModel)]=reembolso.valor 
+               currencyMask 
+               name="valorReembolso_{{pinValorReembolso}}"
+               placeholder={{reembolso.placeHolderReembolso}}
+               required
+               matInput 
+               maxlength="13"
+               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+        <span matPrefix *ngIf="!reembolso.statusPercentual">R$&nbsp;</span>
+        <span matSuffix *ngIf="reembolso.statusPercentual" style="padding-left: 5px;">%&nbsp;</span>
+    </mat-form-field>
+
+    <div fxFlex="10%" style="margin-top: 22px; margin-left: 20px;" >
+        <mat-checkbox color="primary"
+                      title="Escolha a forma de reembolso entre % ou R$" 
+                      name="checkReembolso_{{pinCheckReembolso}}" 
+                      [(ngModel)]="reembolso.statusPercentual">
+            (%)
+        </mat-checkbox>
+    
+        <button mat-icon-button 
+                *ngIf="perfilAcesso.deleta" 
+                (click)="deletar()"
+                style="padding: 0px;">
+            <mat-icon>delete_forever</mat-icon>
+        </button>                                
+    </div>    
+
+
+    
+</div>
+
+
