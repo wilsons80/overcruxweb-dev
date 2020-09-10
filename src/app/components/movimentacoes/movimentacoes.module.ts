@@ -15,6 +15,7 @@ import { FormularioRateioUnidadeComponent } from './cadastrar-movimentacoes/form
 import { TableCellModule } from '../common/table-cell/table-cell.module';
 import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesquisavel.module';
 import { FormularioReembolsoComponent } from './cadastrar-movimentacoes/formulario-reembolso/formulario-reembolso.component';
+import { FormularioRateioPagamentoComponent } from './cadastrar-movimentacoes/formulario-rateio-pagamento/formulario-rateio-pagamento.component';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { FormularioReembolsoComponent } from './cadastrar-movimentacoes/formular
                  DadosMovimentacaoComponent, 
                  ItensMovimentacaoComponent, 
                  FaturasMovimentacaoComponent, 
-                 PagamentosMovimentacaoComponent, FormularioRateioComponent, FormularioRateioUnidadeComponent, FormularioReembolsoComponent],
+                 PagamentosMovimentacaoComponent, FormularioRateioComponent, FormularioRateioUnidadeComponent, FormularioReembolsoComponent, FormularioRateioPagamentoComponent],
   imports: [
     CommonModule,
     MovimentacoesRoutingModule,

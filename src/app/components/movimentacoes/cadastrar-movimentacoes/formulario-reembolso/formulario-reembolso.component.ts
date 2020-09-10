@@ -3,9 +3,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { Acesso } from 'src/app/core/acesso';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
-import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
-import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
@@ -20,9 +18,7 @@ export class FormularioReembolsoComponent implements OnInit {
   @Input() reembolso: ReembolsosPagamentos;
   @Input() perfilAcesso: Acesso;
   @Input() pagamentosFatura: PagamentosFatura;
-  @Input() rateios: RateiosMovimentacoes[];
   @Input() contasBancarias: ContasBancaria[];
-
   @Output() onContaReembolsoValida = new EventEmitter()
     
   pinContaBancaria  = Date.now();

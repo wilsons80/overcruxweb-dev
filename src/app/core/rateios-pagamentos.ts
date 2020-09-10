@@ -1,9 +1,12 @@
+import { ContasBancaria } from './contas-bancaria';
+
 export class RateiosPagamentos{
 
 	id: number;
 	idPagamentoFatura: number;
-	idRateioMovimentacao: number;
+	contaBancaria: ContasBancaria;
 	statusPercentual: boolean;
 	valorRateio: number;
 	usuarioAlteracao: number;
+	placeHolder?:string;
 }

@@ -117,6 +117,35 @@
 
 
                 <mat-toolbar class="titulopartes">
+                    <span>Ratio pagamento</span>
+                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior && pagamentosFatura.rateioPagamento?.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
+                    <span *ngIf="valorRateioSuperior && pagamentosFatura.rateioPagamento?.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está diferente ao valor do pagamento.</span>
+                </mat-toolbar>
+                <div fxLayout="column" fxLayoutGap="50px" fxFlexFill>
+                    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateioPagamento">
+                        <div *ngFor="let rateio of pagamentosFatura.rateioPagamento; let index = index">
+                            <fieldset style="margin-bottom: 5px;">
+                                <formulario-rateio-pagamento [rateio]="rateio"
+                                                             [pagamentosFatura]="pagamentosFatura" 
+                                                             [index]="index"
+                                                             [perfilAcesso]="perfilAcesso" 
+                                                             [contasBancarias]="contasBancariasReembolso"
+                                                             (onContaRateioValida)="getContaReembolsoValida($event)">
+                                </formulario-rateio-pagamento>
+                            </fieldset>
+                        </div>
+                        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                            <div>
+                                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addRateioPagamento()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+
+
+                <mat-toolbar class="titulopartes" style="margin-top: 10px;">
                     <span>Reembolso(s)</span>
                 </mat-toolbar>
                 <div fxLayout="column" fxLayoutGap="50px" fxFlexFill>
@@ -127,7 +156,6 @@
                                                       [pagamentosFatura]="pagamentosFatura" 
                                                       [index]="index"
                                                       [perfilAcesso]="perfilAcesso" 
-                                                      [rateios]="movimentacoes.rateios"
                                                       [contasBancarias]="contasBancariasReembolso"
                                                       (onContaReembolsoValida)="getContaReembolsoValida($event)">
                                 </formulario-reembolso>

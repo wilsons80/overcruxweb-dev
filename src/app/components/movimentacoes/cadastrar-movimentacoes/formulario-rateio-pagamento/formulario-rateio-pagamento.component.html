@@ -1,0 +1,48 @@
+<div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
+
+    <mat-form-field fxFlex fxFlexOffset="20px">
+        <mat-label>Conta rateio</mat-label>
+        <mat-select [(ngModel)]=rateio.contaBancaria.id
+                    (selectionChange)="validarContaBancaria()" 
+                    required
+                    name="contasRateio_{{pinContaBancaria}}">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
+                {{i.banco.numero}} - {{i.banco.nome}} | Ag. {{i.numeroAgencia}} | C. {{i.numeroContaBancaria}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+    </mat-form-field>
+    
+    <!-- VALOR -->
+    <mat-form-field fxFlex="170px" fxFlexOffset="20px">
+        <input [(ngModel)]="rateio.valorRateio" 
+               currencyMask 
+               name="valor_{{pinValor}}"
+               placeholder={{rateio.placeHolder}}
+               required
+               matInput 
+               maxlength="13"
+               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+        <span matPrefix *ngIf="!rateio.statusPercentual">R$&nbsp;</span>
+        <span matSuffix *ngIf="rateio.statusPercentual" style="padding-left: 5px;">%&nbsp;</span>
+    </mat-form-field>
+
+    <div fxFlex="10%" style="margin-top: 22px; margin-left: 20px;" >
+        <mat-checkbox color="primary"
+                      title="Escolha a forma de rateio entre % ou R$" 
+                      name="checkRateio_{{pinCheck}}" 
+                      [(ngModel)]="rateio.statusPercentual">
+            (%)
+        </mat-checkbox>
+    
+        <button mat-icon-button 
+                *ngIf="perfilAcesso.deleta" 
+                (click)="deletar()"
+                style="padding: 0px;">
+            <mat-icon>delete_forever</mat-icon>
+        </button>                                
+    </div>    
+ 
+</div>
+

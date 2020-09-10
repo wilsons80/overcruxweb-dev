@@ -14,6 +14,7 @@ import { FormaPagamento } from 'src/app/core/forma-pagamento';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
+import { RateiosPagamentos } from 'src/app/core/rateios-pagamentos';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -40,6 +41,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   pagamentosFatura: PagamentosFatura;
   
+  valorRateioSuperior = false;
 
   openFormCadastro = false;
   isAtualizar = false;
@@ -82,6 +84,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   adicionar() {
     const pagamentosFatura = new PagamentosFatura();
+    pagamentosFatura.valorJuros = 0;
+    pagamentosFatura.valorMulta = 0;
+    pagamentosFatura.valorPagamento = 0;
     Object.assign(pagamentosFatura, this.pagamentosFatura);
 
     this.getObjetosCompletosParaLista(pagamentosFatura);
@@ -134,6 +139,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   initObjetos() {
     this.pagamentosFatura = new PagamentosFatura();
+    this.pagamentosFatura.valorJuros = 0;
+    this.pagamentosFatura.valorMulta = 0;
+    this.pagamentosFatura.valorPagamento = 0;
     this.pagamentosFatura.contaBancaria = new ContasBancaria();
     this.pagamentosFatura.reembolsos = [];
     this.pagamentosFatura.rateioPagamento = [];
@@ -165,6 +173,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       pagamentosFatura.saldoContaBancaria = new SaldosContasBancaria();
     }
 
+    pagamentosFatura.valorPagamento = pagamentosFatura.valorPagamento || 0;
+    pagamentosFatura.valorJuros     = pagamentosFatura.valorJuros || 0;
+    pagamentosFatura.valorMulta     = pagamentosFatura.valorMulta || 0;
   }
 
   getValorTotal() {
@@ -194,7 +205,23 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     return formaPagamento === 'C' || formaPagamento === 'B';
   }
 
+  addRateioPagamento() {
+    if (!this.pagamentosFatura.rateioPagamento) {
+      this.pagamentosFatura.rateioPagamento = [];
+    }
 
+    const rateio:any = new RateiosPagamentos();
+    rateio.contaBancaria = new ContasBancaria();
+    
+    rateio.id = undefined;
+    rateio.idPagamentoFatura = this.pagamentosFatura.id;
+    rateio.statusPercentual = false;
+    rateio.valorRateio = 0;
+    rateio.placeHolder = 'Valor do rateio';
+
+    this.pagamentosFatura.rateioPagamento.push(rateio);
+
+  }
 
   addReembolso() {
     if (!this.pagamentosFatura.reembolsos) {
@@ -228,6 +255,30 @@ export class PagamentosMovimentacaoComponent implements OnInit {
         this.isContaReembolsoValida = false;
       }
     }
+  }
+
+
+
+
+  getValorTotalRateio() {
+    this.valorRateioSuperior = false;
+    let valorJurosMulta = (this.pagamentosFatura.valorJuros || 0) + (this.pagamentosFatura.valorMulta || 0);
+
+    let valorTotal = 0;
+    this.pagamentosFatura.rateioPagamento.forEach(rateio => {
+      if(rateio.valorRateio) {
+        if(rateio.statusPercentual) {
+          valorTotal += (valorJurosMulta *  rateio.valorRateio)/100;
+        } else {
+          valorTotal += rateio.valorRateio;
+        }
+      }
+    });
+
+    if(Number(valorTotal.toFixed(2)) != Number(valorJurosMulta.toFixed(2))) {
+      this.valorRateioSuperior = true;
+    }
+    return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
 }
