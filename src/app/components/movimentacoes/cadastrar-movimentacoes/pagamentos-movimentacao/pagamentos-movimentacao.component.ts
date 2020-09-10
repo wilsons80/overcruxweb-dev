@@ -25,6 +25,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() idMovimentacao: number;
   @Input() perfilAcesso: Acesso;
+  @Input() contasBancariasReembolso;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -48,7 +49,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   constructor(
     private contasBancariaService: ContasBancariaService,
-    private faturaService: FaturaService,
     private toastService: ToastService
   ) { 
     this.maxDataPagamento = new Date();
@@ -59,10 +59,13 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
     this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
       this.contasBancarias = contasBancarias;
-    })
+    });
+
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     //if (changes["listaPagamentosFatura"] && changes["listaPagamentosFatura"].currentValue) {
       this.carregarLista();
     //}
@@ -78,12 +81,12 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   }
 
   adicionar() {
-    const contasCentrosCustoSelecionada = new PagamentosFatura();
-    Object.assign(contasCentrosCustoSelecionada, this.pagamentosFatura);
+    const pagamentosFatura = new PagamentosFatura();
+    Object.assign(pagamentosFatura, this.pagamentosFatura);
 
-    this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
+    this.getObjetosCompletosParaLista(pagamentosFatura);
 
-    this.movimentacoes.pagamentosFatura.push(contasCentrosCustoSelecionada);
+    this.movimentacoes.pagamentosFatura.push(pagamentosFatura);
     this.limpar();
     this.openFormCadastro = !this.openFormCadastro;
   }

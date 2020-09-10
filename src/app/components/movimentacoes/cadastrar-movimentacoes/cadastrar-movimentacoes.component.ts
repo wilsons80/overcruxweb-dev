@@ -28,9 +28,12 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isAtualizar = false;  
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
+  isContasReembolsoInvalidas = false;
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
+
+  contasBancariasReembolso: ContasBancaria[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -163,6 +166,12 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
 
   isContaReembolsoValida(): boolean {
+
+    if(this.isContasReembolsoInvalidas) {
+      this.toastService.showAlerta('Há reembolso(s) que não correspondem a contas dos projetos/programas.');
+      return false;
+    }
+
     const contaBancariaMovimentacao = this.movimentacoes.contaBancaria;
 
     const pagamentos:PagamentosFatura[] = this.movimentacoes.pagamentosFatura.filter(c => c.contaBancaria);
@@ -189,5 +198,41 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     return true;
   }
   
+  carregarContasBancarios(evento) {
+    // ABA DE PAGAMENTOS
+    this.contasBancariasReembolso = [];
+    if(evento.selectedIndex === 3) {    
+      if(this.movimentacoes.rateios) {
+        this.movimentacoes.rateios.forEach(rateio => {
+          const contasPrograma = rateio.programa.contasCentrosCusto ? rateio.programa.contasCentrosCusto.map(c => c.contasBancaria) : [];
+          const contasProjeto  = rateio.projeto.contasCentrosCusto ? rateio.projeto.contasCentrosCusto.map(c => c.contasBancaria) : [];
+    
+          if(contasPrograma) {
+            contasPrograma.forEach(c => this.contasBancariasReembolso.push(c));
+          }
+          if(contasProjeto) {
+            contasProjeto.forEach(c => this.contasBancariasReembolso.push(c));
+          }
+        });
+      }
+
+      this.isContasReembolsoInvalidas = false;
+      if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
+        this.movimentacoes.pagamentosFatura.forEach(pag => {
+          if(pag.reembolsos && pag.reembolsos.length > 0) {
+            pag.reembolsos.forEach(re => {
+              const contas = this.contasBancariasReembolso.filter(conta => conta.id === re.contaBancaria.id );
+              if(contas.length === 0) {
+                re.contaBancaria = new ContasBancaria();
+                this.isContasReembolsoInvalidas = true;
+              }          
+            })
+          }
+        })
+      }
+    }
+   
+  }
+
 
 }

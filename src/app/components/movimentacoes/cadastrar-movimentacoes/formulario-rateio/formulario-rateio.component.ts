@@ -5,6 +5,7 @@ import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
 import { ControlContainer, NgForm, FormControl } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'formulario-rateio',
@@ -52,7 +53,13 @@ export class FormularioRateioComponent implements OnInit {
         this.campoPrograma.ngControl.control.setValue(null);
         return;
       }
+      if (this.rateio.programa && this.rateio.programa.id) {
+        this.rateio.programa = _.cloneDeep(_.find(this.programas,  (c: Programa) => c.id === this.rateio.programa.id));
+      }
+    }else {
+      this.rateio.programa = new Programa();
     }
+
     
     if(this.rateio.projeto && this.rateio.projeto.id) {
       const jaExiste = this.rateios.find(m => m != this.rateio && m.projeto.id === this.rateio.projeto.id);
@@ -61,6 +68,11 @@ export class FormularioRateioComponent implements OnInit {
         this.campoProjeto.ngControl.control.setValue(null);
         return;
       }
+      if (this.rateio.projeto && this.rateio.projeto.id) {
+        this.rateio.projeto = _.cloneDeep(_.find(this.projetos,  (c: Projeto) => c.id === this.rateio.projeto.id));
+      }
+    } else {
+      this.rateio.projeto = new Projeto();
     }
   }
 

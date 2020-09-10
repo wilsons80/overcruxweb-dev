@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Acesso } from 'src/app/core/acesso';
+import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 import { RateiosMovimentacoes } from 'src/app/core/rateios-movimentacoes';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
@@ -20,7 +21,7 @@ export class FormularioReembolsoComponent implements OnInit {
   @Input() perfilAcesso: Acesso;
   @Input() pagamentosFatura: PagamentosFatura;
   @Input() rateios: RateiosMovimentacoes[];
-  @Input() contasBancarias: ContasBancariaService[];
+  @Input() contasBancarias: ContasBancaria[];
 
   @Output() onContaReembolsoValida = new EventEmitter()
     
@@ -30,7 +31,6 @@ export class FormularioReembolsoComponent implements OnInit {
   pinValorReembolso = Date.now();
 
   constructor(private toastService: ToastService) { 
-
   }
 
   ngOnInit(): void {
@@ -40,6 +40,8 @@ export class FormularioReembolsoComponent implements OnInit {
     this.pagamentosFatura.reembolsos.splice(this.index, 1);
   }
 
+
+
   validarContaReembolso() {
     if(this.pagamentosFatura.contaBancaria && this.pagamentosFatura.contaBancaria.id 
        && 
@@ -47,9 +49,20 @@ export class FormularioReembolsoComponent implements OnInit {
       if(this.pagamentosFatura.contaBancaria.id === this.reembolso.contaBancaria.id) {
         this.toastService.showAlerta('A conta de reembolso deve ser diferente da conta bancária do pagamento.');
         this.onContaReembolsoValida.emit(false);
-      }else {
-        this.onContaReembolsoValida.emit(true);
+        return;
       }
     }
+
+
+    const contaReembolsoConflitante = this.pagamentosFatura.reembolsos
+                                                           .filter(r => r.contaBancaria.id === this.reembolso.contaBancaria.id);
+    if(contaReembolsoConflitante && contaReembolsoConflitante.length > 1) {
+      this.toastService.showAlerta('Essa conta de reembolso já está cadastrada para esse pagamento.');
+      this.onContaReembolsoValida.emit(false);
+      return;
+    }
+
+
+    this.onContaReembolsoValida.emit(true);
   }
 }
