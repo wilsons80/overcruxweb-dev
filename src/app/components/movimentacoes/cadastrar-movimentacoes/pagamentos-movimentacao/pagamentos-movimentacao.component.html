@@ -122,14 +122,16 @@
                 <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
                     <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoReembolso">
                         <div *ngFor="let reembolso of pagamentosFatura.reembolsos; let index = index">
-                            <formulario-reembolso [reembolso]="reembolso"
-                                                  [pagamentosFatura]="pagamentosFatura" 
-                                                  [index]="index"
-                                                  [perfilAcesso]="perfilAcesso" 
-                                                  [rateios]="movimentacoes.rateios"
-                                                  [contasBancarias]="contasBancariasReembolso"
-                                                  (onContaReembolsoValida)="getContaReembolsoValida($event)">
-                            </formulario-reembolso>
+                            <fieldset style="margin-top: 5px;">
+                                <formulario-reembolso [reembolso]="reembolso"
+                                                      [pagamentosFatura]="pagamentosFatura" 
+                                                      [index]="index"
+                                                      [perfilAcesso]="perfilAcesso" 
+                                                      [rateios]="movimentacoes.rateios"
+                                                      [contasBancarias]="contasBancariasReembolso"
+                                                      (onContaReembolsoValida)="getContaReembolsoValida($event)">
+                                </formulario-reembolso>
+                            </fieldset>
                         </div>
                         <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
                             <div>

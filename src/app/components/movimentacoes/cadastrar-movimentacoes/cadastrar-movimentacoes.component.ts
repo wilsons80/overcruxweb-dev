@@ -15,6 +15,7 @@ import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { Doadores } from 'src/app/core/doadores';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
+import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -168,7 +169,13 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isContaReembolsoValida(): boolean {
 
     if(this.isContasReembolsoInvalidas) {
-      this.toastService.showAlerta('Há reembolso(s) que não correspondem a contas dos projetos/programas.');
+      this.toastService.showAlerta('Há reembolso(s) de pagamentos que não correspondem a contas dos projetos/programas.');
+      return false;
+    }
+
+    const reembolsosSemContaBancaria = this.movimentacoes.pagamentosFatura.filter(p => p.reembolsos.find(r => !r.contaBancaria.id));
+    if(reembolsosSemContaBancaria && reembolsosSemContaBancaria.length > 0) {
+      this.toastService.showAlerta('Há reembolso(s) de pagamentos sem informação da conta bancária.');
       return false;
     }
 
