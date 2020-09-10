@@ -3,6 +3,8 @@ export class TipoDespesa {
     tipos = [
       {id: 'D', descricao: 'DESPESA'},
       {id: 'R', descricao: 'RECEITA'},
+      {id: 'A', descricao: 'ATIVO'},
+      {id: 'P', descricao: 'PASSIVO'},
     ];
 
     getTipo(tipoParam: string) {

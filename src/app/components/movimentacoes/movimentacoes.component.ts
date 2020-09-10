@@ -51,7 +51,7 @@ export class MovimentacoesComponent implements OnInit {
 
   filtro = new Filter();
 
-  displayedColumns: string[] = ['programaprojeto', 'empresa','tipoMovimento', 'valorMovimentacao', 'dataDocumento', 'dataMovimento', 'nrDocumento', 'acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'empresa', 'dataDocumento', 'valorUltimoPagamento', 'valorMovimentacao',  'dataMovimento', 'nrDocumento', 'acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
@@ -197,4 +197,18 @@ export class MovimentacoesComponent implements OnInit {
   }
 
 
+  getUltimoPagamento(movimento: Movimentacoes): number {
+    let pagamentos  = movimento.pagamentosFatura;
+
+    // Ordenação de array (decrescente)
+    pagamentos = pagamentos.sort((a,b) => {
+      if (a.dataPagamento > b.dataPagamento) {return -1;}
+      if (a.dataPagamento < b.dataPagamento) {return 1;}
+      return 0;
+    });
+
+
+    const ultimoPagamento = pagamentos[0];
+    return ultimoPagamento ? ultimoPagamento.valorPagamento : 0;
+  }
 }

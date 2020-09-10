@@ -119,10 +119,10 @@
                 <mat-toolbar class="titulopartes">
                     <span>Reembolso(s)</span>
                 </mat-toolbar>
-                <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
+                <div fxLayout="column" fxLayoutGap="50px" fxFlexFill>
                     <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoReembolso">
                         <div *ngFor="let reembolso of pagamentosFatura.reembolsos; let index = index">
-                            <fieldset style="margin-top: 5px;">
+                            <fieldset style="margin-bottom: 5px;">
                                 <formulario-reembolso [reembolso]="reembolso"
                                                       [pagamentosFatura]="pagamentosFatura" 
                                                       [index]="index"
