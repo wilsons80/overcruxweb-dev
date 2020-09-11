@@ -6,24 +6,25 @@
 
             <!-- EMPRESAS -->
             <div ngModelGroup="comboEmpresa" fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px"
-                 style="padding-top: 15px;">
+                 class="marginCombo">
                 <combo-pesquisavel #comboEmpresa 
-                                   nome="empresa" 
-                                   [itens]="empresas" 
-                                   itemDescricao="nomeRazaoSocial"
-                                   itemId="id"
-                                   [showDisplayId]="false" 
-                                   [obrigatorio]="false"
-                                   placeholder="Informe a empresa..."
-                                   [(valor)]="movimentacoes.empresa"
-                                   (valorChange)="onValorChange($event)">
+                                    nome="empresa" 
+                                    [itens]="empresas" 
+                                    itemDescricao="nomeRazaoSocial"
+                                    itemId="id"
+                                    label="Empresa"
+                                    [showDisplayId]="false" 
+                                    [obrigatorio]="false"
+                                    placeholder="Informe a empresa..."
+                                    [(valor)]="movimentacoes.empresa"
+                                    (valorChange)="onValorChange($event)">
                 </combo-pesquisavel>
             </div>
 
 
             <!-- TIPO MOVIMENTACAO -->
             <mat-form-field fxFlex="30%">
-                <mat-label>Tipo de Movimentação:</mat-label>
+                <mat-label>Tipo de Movimentação</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.stTipoMovimentacao name="tiposMovimentacao" required>
                     <mat-option *ngFor="let i of tiposMovimentacao" [value]=i.id>
                         {{i.descricao}}
@@ -81,59 +82,26 @@
     
         </div>
 
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlexOffset="20px" fxFlex="18%">
-                <input [(ngModel)]=movimentacoes.valorISS 
-                       currencyMask 
-                       name="valorISS" 
-                       placeholder="Valor do ISS" 
-                       matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="18%">
-                <input [(ngModel)]=movimentacoes.valorICMS 
-                       currencyMask 
-                       name="valorICMS" 
-                       placeholder="Valor do ICMS" 
-                       matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="15%">
-                <input [(ngModel)]=movimentacoes.valorIPI 
-                       currencyMask 
-                       name="valorIPI" 
-                       placeholder="Valor do IPI" 
-                       matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>
-
-            <mat-form-field fxFlex="18%">
-                <input [(ngModel)]=movimentacoes.valorPisConfinsCsll 
-                       currencyMask 
-                       name="valorPisConfinsCsll" 
-                       placeholder="Valor do PIS/COFINS/CSLL" 
-                       matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>
-
-
-            <mat-form-field fxFlex="20%">
-                <input [(ngModel)]=movimentacoes.valorInss 
-                       currencyMask 
-                       name="valorInss" 
-                       placeholder="Valor do INSS" 
-                       matInput maxlength="13"
-                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                <span matPrefix>R$&nbsp;</span>
-            </mat-form-field>            
+        <mat-toolbar class="titulopartes">Tributos</mat-toolbar>
+        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
+            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoTributo">
+                <div *ngFor="let tributo of movimentacoes.tributos; let index = index">
+                    <formulario-tributo [tributoMovimentacao]="tributo" 
+                                        [index]="index"
+                                        [tributosMovimentacao]="movimentacoes.tributos"  
+                                        [tributos]="tributos" 
+                                        [perfilAcesso]="perfilAcesso">
+                    </formulario-tributo>
+                </div>
+                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                    <div>
+                        <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addTributo()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>                
+            </div>
         </div>
-
 
 
         <!-- OUTRAS INFORMACOES -->

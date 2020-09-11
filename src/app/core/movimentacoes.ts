@@ -10,6 +10,7 @@ import { ContasBancaria } from './contas-bancaria';
 import { RateiosMovimentacoes } from './rateios-movimentacoes';
 import { RateiosMovimentacoesUnidades } from './rateios-movimentacoes-unidades';
 import { Doadores } from './doadores';
+import { TributoMovimentacao } from './tributo-movimentacao';
 
 export class Movimentacoes{
     id:number;
@@ -29,14 +30,10 @@ export class Movimentacoes{
 	rateios: RateiosMovimentacoes[];
 	rateiosUnidades: RateiosMovimentacoesUnidades[];
 
-    valorISS:number;
-	valorICMS:number;
-	valorIPI:number;
-	valorPisConfinsCsll:number;
-	valorInss:number;
 	contaBancaria: ContasBancaria;
 	contaBancariaDestino: ContasBancaria;
 
 	doador: Doadores;
+	tributos: TributoMovimentacao[];
 
 }

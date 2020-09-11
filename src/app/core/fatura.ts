@@ -1,4 +1,5 @@
 import { Movimentacoes } from './movimentacoes';
+import { TributoMovimentacao } from './tributo-movimentacao';
 export class Fatura{
 
     id:number;
@@ -7,5 +8,7 @@ export class Fatura{
 	valor:number;
 	numeroParcela:number;
 	codigoBarra: string;
+	tributoMovimentacao: TributoMovimentacao;
+	descricao: string;
     
 }

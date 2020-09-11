@@ -21,6 +21,9 @@ import { RateiosMovimentacoesUnidades } from 'src/app/core/rateios-movimentacoes
 import { DoadoresService } from 'src/app/services/doadores/doadores.service';
 import { Doadores } from 'src/app/core/doadores';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
+import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
+import { Tributos } from 'src/app/core/tributos';
+import { TributosService } from 'src/app/services/tributos/tributos.service';
 
 
 @Component({
@@ -41,6 +44,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   unidades: Unidade[];
   contasBancarias: ContasBancaria[];
   doadores: Doadores[];
+  tributos: Tributos[];
 
   tiposMovimentacao = [
     {id: 'E', descricao: 'DESPESA'},
@@ -60,7 +64,8 @@ export class DadosMovimentacaoComponent implements OnInit {
     private toastService: ToastService,
     private contasBancariaService: ContasBancariaService,
     private doadoresService: DoadoresService,
-    private drc: ChangeDetectorRef
+    private drc: ChangeDetectorRef,
+    private tributosService: TributosService
   ) { }
 
   ngAfterContentChecked(): void {
@@ -102,6 +107,11 @@ export class DadosMovimentacaoComponent implements OnInit {
     this.contasBancariaService.getAllComboByInstituicaoLogada()
     .subscribe((contasBancarias: ContasBancaria[]) => {
       this.contasBancarias = contasBancarias;
+    });
+
+
+    this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
+      this.tributos = tributos;
     })
   }
 
@@ -125,6 +135,20 @@ export class DadosMovimentacaoComponent implements OnInit {
     }
   }
 
+
+  addTributo() {
+    if (!this.movimentacoes.tributos) {
+      this.movimentacoes.tributos = [];
+    }
+
+    const tributoMovimentacao:any = new TributoMovimentacao();
+    tributoMovimentacao.tributo = new Tributos();
+    tributoMovimentacao.idMovimentacao = this.movimentacoes.id;    
+    tributoMovimentacao.id    = undefined;
+    tributoMovimentacao.valor = 0;
+
+    this.movimentacoes.tributos.push(tributoMovimentacao);
+  }
   
   addRateio() {
     if (!this.movimentacoes.rateios) {

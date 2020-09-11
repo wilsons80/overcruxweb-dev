@@ -1,3 +1,4 @@
+<mat-label>{{label}}</mat-label>
 <mat-select class="combopesquisavel"
             #itensSelect="ngModel"
             [placeholder]="placeholder"
@@ -12,11 +13,11 @@
             >
     <mat-option>
         <ngx-mat-select-search ngModel #itemSearch
-                        [placeholderLabel]="placeholder"
-                        clearSearchInput="true"
-                        noEntriesFoundLabel="Nenhum elemento encontrado."
-                        (input)="filtrarItens(itemSearch.value)"
-                        [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
+                               [placeholderLabel]="placeHolderPesquise"
+                               clearSearchInput="true"
+                               noEntriesFoundLabel="Nenhum elemento encontrado."
+                               (input)="filtrarItens(itemSearch.value)"
+                               [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
     </mat-option>
 
     <mat-option></mat-option>

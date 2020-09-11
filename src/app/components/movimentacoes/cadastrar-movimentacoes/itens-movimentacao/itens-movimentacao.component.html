@@ -168,7 +168,7 @@
                 <mat-panel-title>
                     <span>Lista de Itens ( {{movimentacoes.itensMovimentacoes?.length || 0}} ) -</span>
                     <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorItensSuperiorValorMovimento ? 'red' : 'green'">Valor Total: {{getValorTotalItens() | currency: 'BRL'}}</span>      
-                    <span *ngIf="valorItensSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores dos itens está superior ao valor do movimento.</span>
+                    <span *ngIf="valorItensSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores dos itens está diferente ao valor do movimento.</span>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 

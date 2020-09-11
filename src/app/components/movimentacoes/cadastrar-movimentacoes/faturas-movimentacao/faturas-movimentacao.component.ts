@@ -8,6 +8,10 @@ import { Acesso } from 'src/app/core/acesso';
 import { Fatura } from 'src/app/core/fatura';
 import * as _ from 'lodash';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { TributosService } from 'src/app/services/tributos/tributos.service';
+import { Tributos } from 'src/app/core/tributos';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
+import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
 
 @Component({
   selector: 'faturas-movimentacao',
@@ -26,6 +30,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
   displayedColumns: string[] = ['dataVencimento', 'valor', 'numeroParcela', 'acoes'];
   dataSource: MatTableDataSource<Fatura> = new MatTableDataSource();
 
+  tributos: Tributos[];
   fatura: Fatura;
   perfilAcesso: Acesso;
   openFormCadastro = false;
@@ -34,12 +39,18 @@ export class FaturasMovimentacaoComponent implements OnInit {
   valoresSuperiorValorMovimento = false;
 
   constructor(
-    private toastService: ToastService
+    private toastService: ToastService,
+    private tributosService: TributosService
 
   ) { }
 
   ngOnInit() {
     this.initObjetos();
+   
+    this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
+      this.tributos = tributos;
+      this.selecionaTributo(this.fatura.tributoMovimentacao.tributo.id);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -96,6 +107,8 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   initObjetos() {
     this.fatura = new Fatura();
+    this.fatura.tributoMovimentacao = new TributoMovimentacao();
+    this.fatura.tributoMovimentacao.tributo = new Tributos();
   }
 
   deletar(fatura: Fatura): void {
@@ -131,5 +144,20 @@ export class FaturasMovimentacaoComponent implements OnInit {
       return valorItens;
     }
     return 0;
+  }
+
+
+  onValorTributoChange(item) {
+    this.fatura.tributoMovimentacao.idMovimentacao = this.movimentacoes.id;
+    this.fatura.tributoMovimentacao.tributo = item;
+  }
+
+  selecionaTributo(idTributo: number) {
+    if(this.tributos) {
+      const tributo = this.tributos.find((item: any) => item.id === idTributo);
+      if (!!tributo) {
+        this.onValorTributoChange(tributo);
+      }
+    }
   }
 }

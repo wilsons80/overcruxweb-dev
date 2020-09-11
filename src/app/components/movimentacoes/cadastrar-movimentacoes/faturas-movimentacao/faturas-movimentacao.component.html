@@ -21,7 +21,7 @@
                     <mat-datepicker #dataVencimento></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field fxFlexOffset="20px" fxFlex="160px">
+                <mat-form-field fxFlex="160px">
                     <input [(ngModel)]="fatura.valor" 
                             currencyMask name="valorFatura" 
                             placeholder="Valor da Fatura" 
@@ -39,6 +39,29 @@
                             placeholder="Parcela" 
                             required/>
                 </mat-form-field>
+
+                <div ngModelGroup="comboTributos" 
+                     fxFlex="200px"
+                     style="padding-top: 12px;">
+                    <combo-pesquisavel #comboTributos 
+                                       nome="tributos" 
+                                       [itens]="tributos" 
+                                       itemDescricao="codigo"
+                                       itemId="id"
+                                       placeholder="Tributo..."
+                                       [(valor)]="fatura.tributoMovimentacao.tributo"
+                                       (valorChange)="onValorTributoChange($event)">
+                    </combo-pesquisavel>
+                </div>
+
+                <mat-form-field fxFlexOffset="20px" fxFlex>
+                    <input [(ngModel)]="fatura.descricao" 
+                            currencyMask 
+                            name="destinatario" 
+                            placeholder="Destinatário" 
+                            matInput maxlength="200"/>
+                </mat-form-field>
+
             </div>
     
             <div fxLayout="row"  fxFlexFill>

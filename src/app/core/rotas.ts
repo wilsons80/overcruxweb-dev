@@ -69,4 +69,5 @@ export enum Rotas {
     ITENS_MOVIMENTACOES             = 'api/itensmovimentacoes/',
     ACAO                            = 'api/acoesoficinas/',
     EXTRATO                         = 'api/extrato/',
+    TRIBUTOS                        = 'api/tributos/',
 }
