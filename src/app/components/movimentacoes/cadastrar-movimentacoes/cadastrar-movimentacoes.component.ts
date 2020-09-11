@@ -122,7 +122,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     });
 
     if(Number(valorTotal.toFixed(2)) != Number(valorMovimentacao.toFixed(2))) {
-      this.toastService.showSucesso('O valor do rateio está diferente do valor do movimento.');
+      this.toastService.showSucesso('O valor do rateio de programa/projeto está diferente do valor do movimento.');
       return false;
     }
 
