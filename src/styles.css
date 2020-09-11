@@ -26,8 +26,8 @@ mat-toolbar.mat-toolbar.mat-toolbar-single-row.titulopartes{
   height: auto;
   font-size: large;
   color: rgb(142,142,142);
-  margin-bottom: 20px
-
+  margin-bottom: 20px;
+  margin: 0px;
 }
 
 .nav-caption{

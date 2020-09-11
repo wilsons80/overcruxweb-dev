@@ -1,10 +1,12 @@
 <div ngModelGroup="comboTributos" 
-     fxFlex="200px"
+     fxFlex="300px"
+     fxFlexOffset="20px"
      style="padding-top: 12px;">
     <combo-pesquisavel #comboTributos 
                         nome="tributos" 
                         [itens]="tributos" 
                         itemDescricao="codigo"
+                        [obrigatorio]="true"
                         itemId="id"
                         placeholder="Tributo..."
                         [(valor)]="tributoMovimentacao.tributo"
@@ -12,11 +14,10 @@
     </combo-pesquisavel>
 </div>
 
-<mat-form-field fxFlex fxFlexOffset="20px">
+<mat-form-field fxFlex="150px" fxFlexOffset="20px">
     <input [(ngModel)]="tributoMovimentacao.valor" 
            currencyMask 
-           name="valor_{{pinValor}}"
-           placeholder="Valor do tributo"
+           name="valor_{{pinValor}}"           
            matInput 
            maxlength="13"
            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />

@@ -4,6 +4,7 @@
             [placeholder]="placeholder"
             name="{{nome}}-{{data}}"
             style="border-bottom: 1px solid; margin: 8px 0;"
+            [ngClass]="{'bordaObrigatoria': obrigatorio && !item}"
             [disabled]="desabilitado"
             [multiple]="multiplaSelecao"
             [ngModel]="item"

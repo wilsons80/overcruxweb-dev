@@ -8,3 +8,7 @@
     /*color: #0d47a1 !important;        */
     border-bottom: 2px solid !important;
 }
+
+.bordaObrigatoria {
+    color: red;
+}

@@ -83,8 +83,8 @@
         </div>
 
         <mat-toolbar class="titulopartes">Tributos</mat-toolbar>
-        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
-            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoTributo">
+        <div fxLayout="column" fxLayoutGap="50px" fxFlexFill>
+            <div fxFlex="100%" fxFlexOffset="20px" ngModelGroup="grupoTributo">
                 <div *ngFor="let tributo of movimentacoes.tributos; let index = index">
                     <formulario-tributo [tributoMovimentacao]="tributo" 
                                         [index]="index"
@@ -93,7 +93,9 @@
                                         [perfilAcesso]="perfilAcesso">
                     </formulario-tributo>
                 </div>
-                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" 
+                     fxLayoutGap="16px" 
+                     style="padding-top: 6px; padding-left: 20px; padding-bottom: 10px;">
                     <div>
                         <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addTributo()">
                             <mat-icon>add</mat-icon>

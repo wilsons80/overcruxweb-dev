@@ -20,7 +20,7 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
   @Input() itemId = 'id';
   @Input() itemDescricao = 'descricao';
   @Input() nome = 'item';
-  @Input() obrigatorio = false; // se o parâmetro não for informado o campo será obrigatório por default
+  @Input() obrigatorio = false; // se o parâmetro não for informado o campo não será obrigatório por default
   @Input() desabilitado = false; // se o parâmetro não for informado o campo não será habilitado por default
   @Input() multiplaSelecao = false; // se o parâmetro não for informado o campo não será seleção única por default
   @Input() placeholder = 'Digite para pesquisar...';
