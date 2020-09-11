@@ -8,5 +8,4 @@ export class RateiosPagamentos{
 	statusPercentual: boolean;
 	valorRateio: number;
 	usuarioAlteracao: number;
-	placeHolder?:string;
 }

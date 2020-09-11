@@ -9,5 +9,4 @@ export class ReembolsosPagamentos{
 	statusPercentual: boolean;
 	valor: number;
 	usuarioAlteracao: number;
-	placeHolderReembolso?: string;
 }

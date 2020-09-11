@@ -217,7 +217,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     rateio.idPagamentoFatura = this.pagamentosFatura.id;
     rateio.statusPercentual = false;
     rateio.valorRateio = 0;
-    rateio.placeHolder = 'Valor do rateio';
 
     this.pagamentosFatura.rateioPagamento.push(rateio);
 
@@ -237,7 +236,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     reemboso.data = new Date();
     reemboso.statusPercentual = false;
     reemboso.valor = 0;
-    reemboso.placeHolderReembolso = 'Valor do reembolso';
 
     this.pagamentosFatura.reembolsos.push(reemboso);
   }
