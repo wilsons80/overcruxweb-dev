@@ -85,6 +85,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   cadastrar() {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
+    if( this.isValidarTributoMovimentacao()) { return; }
 
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
@@ -132,6 +133,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   atualizar() {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
+    if( this.isValidarTributoMovimentacao()) { return; }
 
     this.movimentacoesService.alterar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
@@ -165,6 +167,19 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     return true;
   }
 
+  isValidarTributoMovimentacao() {
+    let retorno = false;
+
+    const tributosTemp = this.movimentacoes.tributos.map(t => t.tributo);
+    const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
+    const jaExiste = findDuplicates(tributosTemp);
+    if(jaExiste && jaExiste.length) {
+      this.toastService.showAlerta('Existem tributos do movimento duplicados.');
+      retorno = true;
+    }
+
+    return retorno;
+  }
 
   isContaReembolsoValida(): boolean {
 

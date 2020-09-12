@@ -10,7 +10,7 @@
                         itemId="id"
                         placeholder="Tributo..."
                         [(valor)]="tributoMovimentacao.tributo"
-                        (valorChange)="onValorTributoChange($event)">
+                        (valorChange)="onValorTributoChange($event); validarCadastroTributos();">
     </combo-pesquisavel>
 </div>
 
@@ -32,3 +32,4 @@
         <mat-icon>delete_forever</mat-icon>
     </button>                                
 </div>
+

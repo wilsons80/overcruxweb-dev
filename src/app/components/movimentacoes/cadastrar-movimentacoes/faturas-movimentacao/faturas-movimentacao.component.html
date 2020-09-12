@@ -55,8 +55,7 @@
                 </div>
 
                 <mat-form-field fxFlexOffset="20px" fxFlex>
-                    <input [(ngModel)]="fatura.descricao" 
-                            currencyMask 
+                    <input [(ngModel)]="fatura.descricao"                              
                             name="destinatario" 
                             placeholder="Destinatário" 
                             matInput maxlength="200"/>
@@ -121,6 +120,11 @@
                     <td mat-cell *matCellDef="let element"> {{element.numeroParcela}} </td>
                 </ng-container>
                
+                <ng-container matColumnDef="tributo">
+                    <th mat-header-cell *matHeaderCellDef> Tributo </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.tributoMovimentacao?.tributo?.codigo}} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="acoes">
                     <th mat-header-cell *matHeaderCellDef > Ações </th>
                     <td mat-cell *matCellDef="let element">

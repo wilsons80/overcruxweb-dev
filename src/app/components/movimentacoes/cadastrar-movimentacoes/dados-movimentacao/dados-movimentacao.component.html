@@ -1,7 +1,7 @@
-<div class="painel-principal" style="padding: 10px;">
+<div class="painel-principal">
 
         <!-- DADOS INICIAIS -->
-        <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
+        <mat-toolbar class="titulopartes" style="margin-bottom: 10px;">Dados Iniciais</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- EMPRESAS -->
@@ -90,7 +90,8 @@
                                         [index]="index"
                                         [tributosMovimentacao]="movimentacoes.tributos"  
                                         [tributos]="tributos" 
-                                        [perfilAcesso]="perfilAcesso">
+                                        [perfilAcesso]="perfilAcesso"
+                                        [faturas]="movimentacoes.faturas">
                     </formulario-tributo>
                 </div>
                 <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" 

@@ -4,7 +4,7 @@ import { DepartamentoService } from 'src/app/services/departamento/departamento.
 import { ProgramaService } from './../../../../services/programa/programa.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from './../../../../core/empresa';
-import { Component, OnInit, Input, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
@@ -37,6 +37,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
 
+
   empresas:Empresa[];
   projetos:Projeto[];
   programas:Programa[];
@@ -54,6 +55,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   valorRateioSuperior = false;
   valorRateioUnidadeSuperior = false;
 
+ 
 
   constructor(
     private empresaService: EmpresaService,
@@ -255,4 +257,7 @@ export class DadosMovimentacaoComponent implements OnInit {
       }
     }
   }
+
+ 
+  
 }

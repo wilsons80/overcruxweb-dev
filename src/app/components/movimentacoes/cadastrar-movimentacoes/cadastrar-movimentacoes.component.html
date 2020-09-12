@@ -8,7 +8,9 @@
         <mat-step [stepControl]="formDadosMovimentacao">
             <form #formDadosMovimentacao="ngForm">
                 <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
-                <dados-movimentacao [movimentacoes]="movimentacoes" [perfilAcesso]="perfilAcesso"></dados-movimentacao>
+                <dados-movimentacao [movimentacoes]="movimentacoes" 
+                                    [perfilAcesso]="perfilAcesso">
+                </dados-movimentacao>
                 <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                     fxFlexFill>
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
@@ -80,12 +82,14 @@
  <!-- BOTOES -->
  <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
       fxFlexFill>
-    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]=formDadosMovimentacao.invalid
+    <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" 
+            [disabled]="formDadosMovimentacao.invalid"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
             Cadastrar
     </button>
 
-    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formDadosMovimentacao.invalid
+    <button *ngIf="isAtualizar && mostrarBotaoAtualizar" 
+            [disabled]="formDadosMovimentacao.invalid"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
             Atualizar
     </button>
@@ -98,4 +102,3 @@
     </button>
 
 </div>
-

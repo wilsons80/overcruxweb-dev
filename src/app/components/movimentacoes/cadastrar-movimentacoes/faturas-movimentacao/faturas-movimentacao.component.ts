@@ -8,9 +8,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Fatura } from 'src/app/core/fatura';
 import * as _ from 'lodash';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
-import { TributosService } from 'src/app/services/tributos/tributos.service';
 import { Tributos } from 'src/app/core/tributos';
-import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
 
 @Component({
@@ -27,7 +25,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
   msg: string = "Nenhum fatura adicionada";
 
 
-  displayedColumns: string[] = ['dataVencimento', 'valor', 'numeroParcela', 'acoes'];
+  displayedColumns: string[] = ['dataVencimento', 'valor', 'numeroParcela','tributo', 'acoes'];
   dataSource: MatTableDataSource<Fatura> = new MatTableDataSource();
 
   tributos: Tributos[];
@@ -40,17 +38,10 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   constructor(
     private toastService: ToastService,
-    private tributosService: TributosService
-
   ) { }
 
   ngOnInit() {
     this.initObjetos();
-   
-    this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
-      this.tributos = tributos;
-      this.selecionaTributo(this.fatura.tributoMovimentacao.tributo.id);
-    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,6 +49,23 @@ export class FaturasMovimentacaoComponent implements OnInit {
       this.carregarLista();
     //}
   }
+
+  ngAfterContentChecked(): void {
+    this.carregarTributos();
+  }
+
+  carregarTributos() {
+    this.tributos = [];
+    if(this.movimentacoes.tributos) {
+      const distinct = (value, index, self) => self.indexOf(value) === index;
+      this.tributos = this.movimentacoes.tributos.map(t => t.tributo).filter(distinct);
+
+      if(this.fatura.tributoMovimentacao && this.fatura.tributoMovimentacao.tributo) {
+        this.selecionaTributo(this.fatura.tributoMovimentacao.tributo.id);
+      }
+    }
+  }
+
 
   adicionar() {
     const contasCentrosCustoSelecionada = new Fatura();
@@ -128,6 +136,9 @@ export class FaturasMovimentacaoComponent implements OnInit {
     this.fatura = fatura;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+
+    this.carregarTributos();
+
   }
 
   existemPagamentos(fatura: Fatura) {
