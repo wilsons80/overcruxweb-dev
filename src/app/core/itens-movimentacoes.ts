@@ -3,6 +3,7 @@ import { CategoriasContabeis } from './categorias-contabeis';
 import { Departamento } from './departamento';
 import { Material } from './material';
 import { Unidade } from './unidade';
+import { TributoItemMovimentacao } from './tributo-item-movimentacao';
 export class ItensMovimentacoes{
 
     id:number;
@@ -17,9 +18,6 @@ export class ItensMovimentacoes{
 	valorUnitarioItem:number;
 	pedidosMateriais:any;
 
-	valorISS:number;
-	valorICMS:number;
-	valorIPI:number;
-	valorPisConfinsCsll:number;
-	valorInss:number;
+	tributos: TributoItemMovimentacao[];
+
 }

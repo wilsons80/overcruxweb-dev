@@ -10,6 +10,7 @@
                 <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
                 <dados-movimentacao [movimentacoes]="movimentacoes" 
                                     [perfilAcesso]="perfilAcesso"
+                                    [tributos]="tributos"
                                     [projetos]="projetos"
                                     [programas]="programas">
                 </dados-movimentacao>
@@ -26,7 +27,10 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formItens" >
             <form #formItens="ngForm">
                 <ng-template matStepLabel>ITENS</ng-template>
-                <itens-movimentacao [movimentacoes]="movimentacoes"></itens-movimentacao>
+                <itens-movimentacao [movimentacoes]="movimentacoes"
+                                    [tributos]="tributos"
+                                    [perfilAcesso]="perfilAcesso">
+                </itens-movimentacao>
             </form>
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                 fxFlexFill>

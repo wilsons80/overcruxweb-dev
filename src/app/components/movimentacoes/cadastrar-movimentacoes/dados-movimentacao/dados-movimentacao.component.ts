@@ -38,6 +38,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   @Input() perfilAcesso: Acesso;
   @Input() projetos:Projeto[];
   @Input() programas:Programa[];
+  @Input() tributos: Tributos[];
 
   empresas:Empresa[];
 
@@ -45,7 +46,6 @@ export class DadosMovimentacaoComponent implements OnInit {
   unidades: Unidade[];
   contasBancarias: ContasBancaria[];
   doadores: Doadores[];
-  tributos: Tributos[];
 
   tiposMovimentacao = [
     {id: 'E', descricao: 'DESPESA'},
@@ -64,8 +64,7 @@ export class DadosMovimentacaoComponent implements OnInit {
     private toastService: ToastService,
     private contasBancariaService: ContasBancariaService,
     private doadoresService: DoadoresService,
-    private drc: ChangeDetectorRef,
-    private tributosService: TributosService
+    private drc: ChangeDetectorRef,    
   ) { }
 
   ngAfterContentChecked(): void {
@@ -102,9 +101,6 @@ export class DadosMovimentacaoComponent implements OnInit {
     });
 
 
-    this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
-      this.tributos = tributos;
-    })
   }
 
   validarValorNegativo( valor: number ) {

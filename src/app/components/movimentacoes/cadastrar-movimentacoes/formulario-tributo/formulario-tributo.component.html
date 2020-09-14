@@ -14,11 +14,11 @@
     </combo-pesquisavel>
 </div>
 
-<mat-form-field fxFlex="150px" fxFlexOffset="20px">
+<mat-form-field fxFlex="150px" fxFlexOffset="20px" *ngIf="showInputValor">
     <input [(ngModel)]="tributoMovimentacao.valor" 
            currencyMask 
            name="valor_{{pinValor}}"           
-           matInput 
+           matInput            
            maxlength="13"
            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
     <span matPrefix>R$&nbsp;</span>

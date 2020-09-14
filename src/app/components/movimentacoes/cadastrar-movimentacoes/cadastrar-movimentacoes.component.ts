@@ -21,6 +21,8 @@ import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
+import { Tributos } from 'src/app/core/tributos';
+import { TributosService } from 'src/app/services/tributos/tributos.service';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -38,6 +40,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   programas: Programa[] = [];
   projetos: Projeto[] = [];
+  tributos: Tributos[];
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
@@ -54,6 +57,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     private autenticadorService: AutenticadorService,
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
+    private tributosService: TributosService
   ) {
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -74,6 +78,11 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if (!this.perfilAcesso.altera){
       this.mostrarBotaoAtualizar = false;
     }
+    
+    
+    this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
+      this.tributos = tributos;
+    })
     
     this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
       this.programas = programas;

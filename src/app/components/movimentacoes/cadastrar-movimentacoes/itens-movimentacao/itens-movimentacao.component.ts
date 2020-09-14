@@ -3,10 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import * as _ from 'lodash';
+import { Acesso } from 'src/app/core/acesso';
 import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
 import { Material } from 'src/app/core/material';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { TributoItemMovimentacao } from 'src/app/core/tributo-item-movimentacao';
+import { Tributos } from 'src/app/core/tributos';
 import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
@@ -22,6 +25,9 @@ export class ItensMovimentacaoComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   @Input() movimentacoes:Movimentacoes;
+  @Input() perfilAcesso: Acesso;
+  @Input() tributos: Tributos[];
+
 
   mostrarTabela = false;
   msg: string = "Nenhum item movimentação adicionado";
@@ -190,4 +196,19 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.categorias,  (c: CategoriasContabeis) => c.id === this.itensMovimentacoes.categoria.id));
     }
   }
+
+
+  addTributo() {
+    if (!this.itensMovimentacoes.tributos) {
+      this.itensMovimentacoes.tributos = [];
+    }
+
+    const tributoMovimentacao:any      = new TributoItemMovimentacao();
+    tributoMovimentacao.tributo        = new Tributos();
+    tributoMovimentacao.idMovimentacao = this.movimentacoes.id;    
+    tributoMovimentacao.id             = undefined;
+
+    this.itensMovimentacoes.tributos.push(tributoMovimentacao);
+  }
+
 }

@@ -24,6 +24,7 @@ export class FormularioTributoComponent implements OnInit {
   @Input() tributos: Tributos[];
   @Input() perfilAcesso: Acesso;
   @Input() faturas: Fatura[];
+  @Input() showInputValor = true;
 
   pinTributo     = Date.now();
   pinValor       = Date.now();
