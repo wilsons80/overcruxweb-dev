@@ -69,15 +69,14 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   ngAfterContentChecked(): void {
     this.drc.detectChanges();
+
+    if(this.movimentacoes.empresa.id) {
+      this.selecionaEmpresa(this.movimentacoes.empresa.id);
+    }
   }
 
   ngOnInit() {
 
-    BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES')
-    .subscribe((movimentacao: Movimentacoes) => {
-      this.selecionaEmpresa(movimentacao.empresa.id);
-    });
-    
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
       this.selecionaEmpresa(this.movimentacoes.empresa.id);

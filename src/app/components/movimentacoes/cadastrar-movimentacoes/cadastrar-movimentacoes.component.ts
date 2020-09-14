@@ -118,8 +118,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
       this.autenticadorService.revalidarSessao();
       Object.assign(this.movimentacoes, movimentacao);
-
-      BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES').emit(this.movimentacoes);
     });
   }
 
@@ -166,8 +164,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
       this.autenticadorService.revalidarSessao();
       Object.assign(this.movimentacoes, movimentacao);
-
-      BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL_MOVIMENTACOES').emit(this.movimentacoes);
     });
   }
 
