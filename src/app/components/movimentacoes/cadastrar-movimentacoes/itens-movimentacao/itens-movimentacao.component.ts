@@ -10,6 +10,7 @@ import { Material } from 'src/app/core/material';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { TributoItemMovimentacao } from 'src/app/core/tributo-item-movimentacao';
 import { Tributos } from 'src/app/core/tributos';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
@@ -64,6 +65,12 @@ export class ItensMovimentacaoComponent implements OnInit {
 
     this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais: PedidosMateriais[]) => {
       this.pedidosMateriais = pedidosMateriais;
+    })
+
+
+    BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES')
+    .subscribe((movimentacao: Movimentacoes) => {
+      this.carregarLista();
     })
 
   }

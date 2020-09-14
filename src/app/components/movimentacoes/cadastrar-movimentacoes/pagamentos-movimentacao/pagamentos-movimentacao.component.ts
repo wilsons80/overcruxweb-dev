@@ -18,6 +18,7 @@ import { RateiosPagamentos } from 'src/app/core/rateios-pagamentos';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -70,6 +71,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
       this.contasBancarias = contasBancarias;
     });
 
+
+    BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES')
+    .subscribe((movimentacao: Movimentacoes) => {
+      this.carregarLista();
+    })
     
   }
 
@@ -136,7 +142,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   carregarLista() {
     if (this.movimentacoes.pagamentosFatura.length === 0) {
       this.mostrarTabela = false;
-      this.msg = 'Nenhum nenhum pagamento adicionado.';
+      this.msg = 'Nenhum pagamento adicionado.';
     } else {
       this.dataSource.data = this.movimentacoes.pagamentosFatura ? this.movimentacoes.pagamentosFatura : [];
       this.mostrarTabela = true;

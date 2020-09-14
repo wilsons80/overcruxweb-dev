@@ -11,6 +11,7 @@ import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { Tributos } from 'src/app/core/tributos';
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 @Component({
   selector: 'faturas-movimentacao',
@@ -44,6 +45,11 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   ngOnInit() {
     this.initObjetos();
+
+    BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES')
+    .subscribe((movimentacao: Movimentacoes) => {
+      this.carregarLista();
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
