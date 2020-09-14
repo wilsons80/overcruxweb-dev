@@ -36,11 +36,11 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
-
+  @Input() projetos:Projeto[];
+  @Input() programas:Programa[];
 
   empresas:Empresa[];
-  projetos:Projeto[];
-  programas:Programa[];
+
   departamentos:Departamento[];
   unidades: Unidade[];
   contasBancarias: ContasBancaria[];
@@ -59,8 +59,6 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   constructor(
     private empresaService: EmpresaService,
-    private programaService: ProgramaService,
-    private projetoService: ProjetoService,
     private departamentoService: DepartamentoService,
     private unidadeService: UnidadeService,
     private toastService: ToastService,
@@ -84,14 +82,6 @@ export class DadosMovimentacaoComponent implements OnInit {
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
       this.selecionaEmpresa(this.movimentacoes.empresa.id);
-    })
-
-    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
-      this.programas = programas;
-    })
-
-    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
-      this.projetos = projetos;
     })
 
     this.departamentoService.getAllCombo().subscribe((departamentos:Departamento[]) => {

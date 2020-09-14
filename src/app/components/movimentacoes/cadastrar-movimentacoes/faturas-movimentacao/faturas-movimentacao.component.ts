@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { Tributos } from 'src/app/core/tributos';
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'faturas-movimentacao',
@@ -38,6 +39,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   constructor(
     private toastService: ToastService,
+    private dataUtilService: DataUtilService
   ) { }
 
   ngOnInit() {
@@ -109,6 +111,16 @@ export class FaturasMovimentacaoComponent implements OnInit {
     } else {
       this.dataSource.data = this.movimentacoes.faturas ? this.movimentacoes.faturas : [];
       this.mostrarTabela = true;
+
+
+      if(this.dataSource.data && this.dataSource.data.length > 0) {
+        // Ordenação de array (decrescente)
+        this.dataSource.data = this.dataSource.data.sort((a,b) => {
+          if (this.dataUtilService.getDataTruncata(a.dataVencimento).getTime() + a.valor > this.dataUtilService.getDataTruncata(b.dataVencimento).getTime() + b.valor) {return -1;}
+          if (this.dataUtilService.getDataTruncata(a.dataVencimento).getTime() + a.valor < this.dataUtilService.getDataTruncata(b.dataVencimento).getTime() + b.valor) {return 1;}
+          return 0;
+        });
+      }
     }
   }
 

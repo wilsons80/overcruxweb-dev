@@ -9,7 +9,9 @@
             <form #formDadosMovimentacao="ngForm">
                 <ng-template matStepLabel>MOVIMENTAÇÃO</ng-template>
                 <dados-movimentacao [movimentacoes]="movimentacoes" 
-                                    [perfilAcesso]="perfilAcesso">
+                                    [perfilAcesso]="perfilAcesso"
+                                    [projetos]="projetos"
+                                    [programas]="programas">
                 </dados-movimentacao>
                 <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                     fxFlexFill>
@@ -62,6 +64,8 @@
                 <pagamentos-movimentacao [idMovimentacao]="movimentacoes.id"
                                          [movimentacoes]="movimentacoes"
                                          [perfilAcesso]="perfilAcesso"
+                                         [programas]="programas"
+                                         [projetos]="projetos"
                                          [contasBancariasReembolso]="contasBancariasReembolso"
                 ></pagamentos-movimentacao>
             </form>

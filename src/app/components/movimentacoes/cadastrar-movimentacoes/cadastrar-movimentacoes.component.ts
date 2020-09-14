@@ -16,6 +16,11 @@ import { Doadores } from 'src/app/core/doadores';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
+import { ContasCentrosCusto } from 'src/app/core/contas-centros-custo';
+import { Programa } from 'src/app/core/programa';
+import { Projeto } from 'src/app/core/projeto';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -31,10 +36,13 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   mostrarBotaoAtualizar = true;
   isContasReembolsoInvalidas = false;
 
+  programas: Programa[] = [];
+  projetos: Projeto[] = [];
+
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  contasBancariasReembolso: ContasBancaria[] = [];
+  contasBancariasReembolso: ContasCentrosCusto[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,7 +51,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     private toastService: ToastService,
     private dataUtilService: DataUtilService,
     private movimentacoesService: MovimentacoesService,
-    private autenticadorService: AutenticadorService
+    private autenticadorService: AutenticadorService,
+    private programaService: ProgramaService,
+    private projetoService: ProjetoService,
   ) {
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -65,6 +75,14 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
     
+    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
+      this.programas = programas;
+    })
+
+    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
+      this.projetos = projetos;
+    })
+
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
@@ -226,8 +244,8 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if(evento.selectedIndex === 3) {    
       if(this.movimentacoes.rateios) {
         this.movimentacoes.rateios.forEach(rateio => {
-          const contasPrograma = rateio.programa.contasCentrosCusto ? rateio.programa.contasCentrosCusto.map(c => c.contasBancaria) : [];
-          const contasProjeto  = rateio.projeto.contasCentrosCusto ? rateio.projeto.contasCentrosCusto.map(c => c.contasBancaria) : [];
+          const contasPrograma = rateio.programa.contasCentrosCusto ? rateio.programa.contasCentrosCusto : [];
+          const contasProjeto  = rateio.projeto.contasCentrosCusto ? rateio.projeto.contasCentrosCusto : [];
     
           if(contasPrograma) {
             contasPrograma.forEach(c => this.contasBancariasReembolso.push(c));
@@ -243,7 +261,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
         this.movimentacoes.pagamentosFatura.forEach(pag => {
           if(pag.reembolsos && pag.reembolsos.length > 0) {
             pag.reembolsos.forEach(re => {
-              const contas = this.contasBancariasReembolso.filter(conta => conta.id === re.contaBancaria.id );
+              const contas = this.contasBancariasReembolso.map(c => c.contasBancaria).filter(conta => conta.id === re.contaBancaria.id );
               if(contas.length === 0) {
                 re.contaBancaria = new ContasBancaria();
                 this.isContasReembolsoInvalidas = true;

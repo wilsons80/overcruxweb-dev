@@ -15,6 +15,9 @@ import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
 import { RateiosPagamentos } from 'src/app/core/rateios-pagamentos';
+import { Programa } from 'src/app/core/programa';
+import { Projeto } from 'src/app/core/projeto';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -27,6 +30,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @Input() idMovimentacao: number;
   @Input() perfilAcesso: Acesso;
   @Input() contasBancariasReembolso;
+  @Input() programas: Programa[];
+  @Input() projetos: Projeto[];
+
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -51,7 +57,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   constructor(
     private contasBancariaService: ContasBancariaService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private dataUtilService: DataUtilService,
   ) { 
     this.maxDataPagamento = new Date();
   }
@@ -133,6 +140,17 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     } else {
       this.dataSource.data = this.movimentacoes.pagamentosFatura ? this.movimentacoes.pagamentosFatura : [];
       this.mostrarTabela = true;
+
+      if(this.dataSource.data && this.dataSource.data.length > 0) {
+        // Ordenação de array (decrescente)
+        this.dataSource.data = this.dataSource.data.sort((a,b) => {
+          if (this.dataUtilService.getDataTruncata(a.dataPagamento).getTime() + a.valorPagamento > this.dataUtilService.getDataTruncata(b.dataPagamento).getTime() + b.valorPagamento) {return -1;}
+          if (this.dataUtilService.getDataTruncata(a.dataPagamento).getTime() + a.valorPagamento < this.dataUtilService.getDataTruncata(b.dataPagamento).getTime() + b.valorPagamento) {return 1;}
+          return 0;
+        });
+      }
+
+
     }
   }
 
