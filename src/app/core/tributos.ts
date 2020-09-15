@@ -8,5 +8,6 @@ export class Tributos {
 	idInstituicao: number;
 	categoria: CategoriasContabeis;
 	diaVencimento: number;
+	recebedor: string;
 
 }

@@ -57,10 +57,11 @@
                 </div>
 
                 <mat-form-field fxFlexOffset="20px" fxFlex>
-                    <input [(ngModel)]="fatura.descricao"                              
+                    <input [(ngModel)]="fatura.tributoMovimentacao.tributo.recebedor"                              
                             name="destinatario" 
+                            disabled
                             placeholder="Destinatário" 
-                            matInput maxlength="200"/>
+                            matInput/>
                 </mat-form-field>
 
             </div>

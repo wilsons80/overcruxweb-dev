@@ -24,6 +24,14 @@
     <span matPrefix>R$&nbsp;</span>
 </mat-form-field> 
 
+<mat-form-field fxFlex="350px" fxFlexOffset="20px">
+    <input [(ngModel)]="tributoMovimentacao.tributo.recebedor" 
+           name="recebedor_{{pinRecebedor}}"   
+           disabled
+           placeholder="Destinatário"        
+           matInput />
+</mat-form-field>
+
 <div fxFlex="10%" style="margin-top: 18px;margin-left: 26px;" >
     <button mat-icon-button 
             *ngIf="perfilAcesso.deleta" 

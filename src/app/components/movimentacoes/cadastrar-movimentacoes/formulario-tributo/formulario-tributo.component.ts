@@ -28,6 +28,7 @@ export class FormularioTributoComponent implements OnInit {
 
   pinTributo     = Date.now();
   pinValor       = Date.now();
+  pinRecebedor   = Date.now();
 
  
   constructor(private drc: ChangeDetectorRef,
