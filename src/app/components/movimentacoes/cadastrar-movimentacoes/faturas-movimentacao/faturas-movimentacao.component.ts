@@ -1,6 +1,6 @@
 import { ToastService } from './../../../../services/toast/toast.service';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
-import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -21,7 +21,10 @@ import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcas
 export class FaturasMovimentacaoComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   @Input() movimentacoes:Movimentacoes;
+  @Input() perfilAcesso: Acesso;
+  @Output() onValorTotalFaturaInvalidos = new EventEmitter();
 
   mostrarTabela = false;
   msg: string = "Nenhum fatura adicionada";
@@ -32,7 +35,6 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   tributos: Tributos[];
   fatura: Fatura;
-  perfilAcesso: Acesso;
   openFormCadastro = false;
   isAtualizar = false;
 
@@ -170,8 +172,10 @@ export class FaturasMovimentacaoComponent implements OnInit {
       if(valorItens !== this.movimentacoes.valorMovimentacao) {
         this.valoresSuperiorValorMovimento = true;
       }
+      this.onValorTotalFaturaInvalidos.emit(this.valoresSuperiorValorMovimento);
       return valorItens;
     }
+    this.onValorTotalFaturaInvalidos.emit(this.valoresSuperiorValorMovimento);
     return 0;
   }
 

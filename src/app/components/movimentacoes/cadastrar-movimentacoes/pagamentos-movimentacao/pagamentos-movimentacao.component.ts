@@ -1,6 +1,6 @@
 import { FaturaService } from './../../../../services/fatura/fatura.service';
 import { ContasBancariaService } from './../../../../services/contas-bancaria/contas-bancaria.service';
-import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -19,6 +19,8 @@ import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
+import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
+import { Tributos } from 'src/app/core/tributos';
 
 @Component({
   selector: 'pagamentos-movimentacao',
@@ -34,6 +36,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @Input() programas: Programa[];
   @Input() projetos: Projeto[];
 
+  @Output() onPagamentoInvalido = new EventEmitter();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -49,6 +52,8 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   pagamentosFatura: PagamentosFatura;
   
   valorRateioSuperior = false;
+  pagamentoInvalido = false;
+  msgValorPagamentoInvalido = 'O valor do pagamento está diferente do valor da fatura.';
 
   openFormCadastro = false;
   isAtualizar = false;
@@ -303,4 +308,38 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     return valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
+
+
+  validarValorPagamento() {
+    this.pagamentoInvalido = false;
+    if(this.pagamentosFatura.idFatura) {
+      const fatura = this.getDadosFatura(this.pagamentosFatura.idFatura);
+      if(Number(this.pagamentosFatura.valorPagamento.toFixed(2)) != Number(fatura.valor.toFixed(2))) {
+        this.pagamentoInvalido = true;
+      }
+    }else{
+      this.pagamentoInvalido = true;
+    }
+
+    this.onPagamentoInvalido.emit(this.pagamentoInvalido);
+  }
+
+
+  getInfoFatura(idFatura) {
+    if(!idFatura){
+      const dados = new Fatura();
+      dados.tributoMovimentacao = new TributoMovimentacao();
+      dados.tributoMovimentacao.tributo = new Tributos();
+      return dados;
+    }
+
+    const dadosFatura = this.getDadosFatura(idFatura);
+
+    if(!dadosFatura.tributoMovimentacao){
+      dadosFatura.tributoMovimentacao = new TributoMovimentacao();
+      dadosFatura.tributoMovimentacao.tributo = new Tributos();
+    }
+
+    return dadosFatura;
+  }
 }

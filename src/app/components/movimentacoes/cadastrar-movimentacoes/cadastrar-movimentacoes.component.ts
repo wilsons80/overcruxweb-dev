@@ -38,6 +38,11 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   mostrarBotaoAtualizar = true;
   isContasReembolsoInvalidas = false;
 
+  isValorTotalItensInvalido  = false;
+  isValorTotalFaturaInvalido = false;
+  isPagamentoInvalido        = false;
+
+
   programas: Programa[] = [];
   projetos: Projeto[] = [];
   tributos: Tributos[];
@@ -284,4 +289,17 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   }
 
 
+  getValorTotalItensInvalidos(valor: boolean) {
+    this.isValorTotalItensInvalido = valor;
+  }
+  getValorTotalFaturasInvalidos(valor: boolean) {
+    this.isValorTotalFaturaInvalido = valor;
+  }
+  getPagamentoInvalido(valor: boolean) {
+    this.isPagamentoInvalido = valor;
+  }
+
+  isDesabilitaBotao(): boolean {
+    return this.isValorTotalItensInvalido || this.isValorTotalFaturaInvalido || this.isPagamentoInvalido;
+  }
 }

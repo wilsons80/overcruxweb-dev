@@ -29,7 +29,8 @@
                 <ng-template matStepLabel>ITENS</ng-template>
                 <itens-movimentacao [movimentacoes]="movimentacoes"
                                     [tributos]="tributos"
-                                    [perfilAcesso]="perfilAcesso">
+                                    [perfilAcesso]="perfilAcesso"
+                                    (onValorTotalItensInvalidos)="getValorTotalItensInvalidos($event)">
                 </itens-movimentacao>
             </form>
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -47,7 +48,10 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
             <form #formFaturas="ngForm">
                 <ng-template matStepLabel>FATURAS</ng-template>
-                <faturas-movimentacao [movimentacoes]="movimentacoes"></faturas-movimentacao>
+                <faturas-movimentacao [movimentacoes]="movimentacoes"
+                                      [perfilAcesso]="perfilAcesso"
+                                      (onValorTotalFaturaInvalidos)="getValorTotalFaturasInvalidos($event)"
+                 ></faturas-movimentacao>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
@@ -71,6 +75,7 @@
                                          [programas]="programas"
                                          [projetos]="projetos"
                                          [contasBancariasReembolso]="contasBancariasReembolso"
+                                         (onPagamentoInvalido)="getPagamentoInvalido($event)"
                 ></pagamentos-movimentacao>
             </form>
 
@@ -91,13 +96,13 @@
  <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
       fxFlexFill>
     <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" 
-            [disabled]="formDadosMovimentacao.invalid"
+            [disabled]="formDadosMovimentacao.invalid || isDesabilitaBotao()"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
             Cadastrar
     </button>
 
     <button *ngIf="isAtualizar && mostrarBotaoAtualizar" 
-            [disabled]="formDadosMovimentacao.invalid"
+            [disabled]="formDadosMovimentacao.invalid || isDesabilitaBotao()"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
             Atualizar
     </button>

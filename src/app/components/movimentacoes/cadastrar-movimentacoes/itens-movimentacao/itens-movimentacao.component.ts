@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -28,6 +28,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
   @Input() tributos: Tributos[];
+  @Output() onValorTotalItensInvalidos = new EventEmitter();
 
 
   mostrarTabela = false;
@@ -94,9 +95,9 @@ export class ItensMovimentacaoComponent implements OnInit {
 
 
   getObjetosCompletosParaLista(itensMovimentacoes: ItensMovimentacoes) {
-    itensMovimentacoes.material = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
+    itensMovimentacoes.material         = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
     itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
-    itensMovimentacoes.categoria = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
+    itensMovimentacoes.categoria        = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
   }
 
   novo() {
@@ -192,9 +193,10 @@ export class ItensMovimentacaoComponent implements OnInit {
       if(valorItens !== this.movimentacoes.valorMovimentacao) {
         this.valorItensSuperiorValorMovimento = true;
       }
+      this.onValorTotalItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
       return valorItens;
     }
-
+    this.onValorTotalItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
     return 0;
   }
 

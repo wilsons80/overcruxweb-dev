@@ -120,11 +120,15 @@
                     Limpar
                 </button>
 
-                <button *ngIf="!isAtualizar"  mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid  fxFlex="20%" color="primary" (click)="adicionar()">
+                <button *ngIf="!isAtualizar"  mat-raised-button name="botaoAdicionar" 
+                        [disabled]="formulario.invalid || valorItensSuperiorValorMovimento"  
+                        fxFlex="20%" color="primary" (click)="adicionar()">
                     Adicionar
                 </button>
 
-                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid  fxFlex="20%" color="primary" (click)="atualizar()">
+                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" 
+                        [disabled]="formulario.invalid || valorItensSuperiorValorMovimento"  
+                        fxFlex="20%" color="primary" (click)="atualizar()">
                     Atualizar
                 </button>
 
