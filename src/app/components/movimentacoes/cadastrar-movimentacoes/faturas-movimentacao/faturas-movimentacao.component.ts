@@ -70,7 +70,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
       const distinct = (value, index, self) => self.indexOf(value) === index;
       this.tributos = this.movimentacoes.tributos.map(t => t.tributo).filter(distinct);
 
-      if(this.fatura.tributoMovimentacao && this.fatura.tributoMovimentacao.tributo) {
+      if(this.fatura.tributoMovimentacao && this.fatura.tributoMovimentacao.tributo.id) {
         this.selecionaTributo(this.fatura.tributoMovimentacao.tributo.id);
       }
     }
@@ -154,6 +154,13 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   atualizarRegistro(fatura: Fatura) {
     this.fatura = fatura;
+
+    if(!this.fatura.tributoMovimentacao.id) {
+      this.fatura.tributoMovimentacao = new TributoMovimentacao();
+      this.fatura.tributoMovimentacao.tributo = new Tributos();
+    }
+
+
     this.openFormCadastro = true;
     this.isAtualizar = true;
 
@@ -182,7 +189,11 @@ export class FaturasMovimentacaoComponent implements OnInit {
 
   onValorTributoChange(item) {
     this.fatura.tributoMovimentacao.idMovimentacao = this.movimentacoes.id;
+    
     this.fatura.tributoMovimentacao.tributo = item;
+    if(!item) {
+      this.fatura.tributoMovimentacao.tributo = new Tributos();
+    }
   }
 
   selecionaTributo(idTributo: number) {

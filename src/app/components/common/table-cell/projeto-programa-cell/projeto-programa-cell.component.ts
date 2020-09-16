@@ -16,7 +16,11 @@ export class ProjetoProgramaCellComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.rateios && this.rateios.length === 0) {
+    if(!this.dados) {
+      this.dados = [];
+    }
+
+    if (!this.rateios && this.rateios.length === 0) {
       this.dados[0] =  '' ;
     }
 
