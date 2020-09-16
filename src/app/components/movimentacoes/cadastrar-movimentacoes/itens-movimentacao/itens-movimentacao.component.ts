@@ -28,7 +28,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
   @Input() tributos: Tributos[];
-  @Output() onValorTotalItensInvalidos = new EventEmitter();
+  @Output() onItensInvalidos = new EventEmitter();
 
 
   mostrarTabela = false;
@@ -159,8 +159,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   }
 
  multiplicarComQuantidade() {
-    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem  * 
-      this.itensMovimentacoes.quantidadeMaterial
+    this.itensMovimentacoes.valorTotalItem = this.itensMovimentacoes.valorUnitarioItem  * this.itensMovimentacoes.quantidadeMaterial;
   }
 
   atualizarRegistro(itensMovimentacoes: ItensMovimentacoes) {
@@ -184,7 +183,6 @@ export class ItensMovimentacaoComponent implements OnInit {
     }
   }
   
-
   getValorTotalItens() {
     this.valorItensSuperiorValorMovimento = false;
 
@@ -193,10 +191,12 @@ export class ItensMovimentacaoComponent implements OnInit {
       if(valorItens !== this.movimentacoes.valorMovimentacao) {
         this.valorItensSuperiorValorMovimento = true;
       }
-      this.onValorTotalItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
+      
+      this.onItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
       return valorItens;
     }
-    this.onValorTotalItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
+
+    this.onItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
     return 0;
   }
 

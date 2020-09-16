@@ -67,12 +67,14 @@
                 </mat-form-field>
     
                 <mat-form-field fxFlex="10%" >
-                    <input type="number" (input)="multiplicarComQuantidade()" 
-                            [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  
-                            matInput min="0" 
-                            maxlength="3" 
-                            name="qtdParcelas"
-                            placeholder="Quantidade:" />
+                    <input type="number" 
+                           (input)="multiplicarComQuantidade()" 
+                           [(ngModel)]="itensMovimentacoes.quantidadeMaterial"  
+                           matInput 
+                           [min]="1" 
+                           maxlength="3" 
+                           name="qtdParcelas"
+                           placeholder="Quantidade" />
                 </mat-form-field>
     
                 <mat-form-field fxFlexOffset="20px" fxFlex="15%">

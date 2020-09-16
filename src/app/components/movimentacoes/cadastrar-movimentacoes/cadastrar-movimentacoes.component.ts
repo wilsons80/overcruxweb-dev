@@ -118,6 +118,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
     if( this.isValidarTributoMovimentacao()) { return; }
+    if( this.isItensValidados() ) { return; }
 
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
@@ -166,6 +167,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isValorTotalRateioValido() ) {return;}
     if( !this.isContaReembolsoValida()) { return; }
     if( this.isValidarTributoMovimentacao()) { return; }
+    if( this.isItensValidados() ) { return; }
 
     this.movimentacoesService.alterar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
@@ -197,6 +199,17 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if (!this.mostrarBotaoCadastrar) return false;
 
     return true;
+  }
+
+
+  isItensValidados() {
+    const itensInvalidos = this.movimentacoes.itensMovimentacoes.filter(item => item.quantidadeMaterial < 1);
+    if(itensInvalidos && itensInvalidos.length > 0) {
+      this.toastService.showAlerta('Não é permitido itens com quantidade igual a zero (0).');
+      return true;
+    }
+
+    return false;
   }
 
   isValidarTributoMovimentacao() {
