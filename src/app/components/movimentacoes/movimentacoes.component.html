@@ -151,7 +151,7 @@
         </form>
 
         <div [hidden]="!mostrarTabela" style="margin-top: 20px;">
-            <mat-paginator #paginator [pageSizeOptions]="[2, 5,30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
+            <mat-paginator #paginator [pageSizeOptions]="[30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
         </div>
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource">
 

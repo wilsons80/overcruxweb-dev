@@ -18,7 +18,7 @@
                         <mat-select [(ngModel)]=pagamentosFatura.idFatura name="fatura" required>
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of getFaturas()" [value]=i.id>
-                                {{i.dataVencimento | dataSimples}} - {{i.valor | currency : 'BRL'}} {{i.tributoMovimentacao?.tributo ? ' - ' + i.tributoMovimentacao?.tributo?.codigo : ''}}
+                                {{i.dataVencimento | dataSimples}} - {{i.valor | currency : 'BRL'}} {{i.tributoMovimentacao?.tributo?.id ? ' - ' + i.tributoMovimentacao?.tributo?.codigo : ''}}
                             </mat-option>
                         </mat-select>
                         <mat-hint *ngIf="getFaturas()?.length === 0" align="start">Nenhuma fatura cadastrada para essa movimentação
