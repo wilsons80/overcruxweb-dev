@@ -70,12 +70,14 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
 
   itemToString(item: any) {
     if (item) {
-      let result = this.showDisplayItemLabel ? item[this.itemLabel]  : '';
-      result += this.showDisplayId ? (this.showDisplayItemLabel ? ' - ':'') + item[this.itemId] : '';
-
+      let result = this.showDisplayId ? item[this.itemId] : '';
+      
       if (item[this.itemDescricao]) {
         result += (this.showDisplayId ? ' - ' : '') + item[this.itemDescricao];
       }
+
+      result += this.showDisplayItemLabel ? ' - ' + item[this.itemLabel]  : '';
+
       return result;
     }
     return '';

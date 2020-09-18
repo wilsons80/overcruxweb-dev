@@ -5,7 +5,7 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- EMPRESAS -->
-            <div ngModelGroup="comboEmpresa" fxFlex="25%" fxLayoutGap="20px" fxFlexOffset="20px"
+            <div ngModelGroup="comboEmpresa" fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="20px"
                  class="marginCombo">
                 <combo-pesquisavel #comboEmpresa 
                                     nome="empresa" 
@@ -22,7 +22,7 @@
             </div>
 
             <!-- FORNECEDOR/COLABORADOR -->
-            <div ngModelGroup="comboFornecedorColaborador" fxFlex="60%" fxLayoutGap="20px" fxFlexOffset="20px"
+            <div ngModelGroup="comboFornecedorColaborador" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px"
                  class="marginCombo">
                 <combo-pesquisavel #comboFornecedorColaborador 
                                     nome="fornecedorColaborador" 
@@ -34,7 +34,7 @@
                                     [showDisplayItemLabel]="true"
                                     itemLabel="tipo"
                                     [obrigatorio]="false"
-                                    placeholder="Escolha um fornecedor/colaborador..."
+                                    placeholder="Escolha..."
                                     [(valor)]="movimentacoes.fornecedorColaborador"
                                     (valorChange)="onValorFornecedorChange($event)">
                 </combo-pesquisavel>
