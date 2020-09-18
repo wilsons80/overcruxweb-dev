@@ -23,6 +23,7 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { Tributos } from 'src/app/core/tributos';
 import { TributosService } from 'src/app/services/tributos/tributos.service';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -182,6 +183,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes = new Movimentacoes();
     this.movimentacoes.unidade = new Unidade();
     this.movimentacoes.empresa = new Empresa();
+    this.movimentacoes.fornecedorColaborador = new PessoaFisica();
     this.movimentacoes.departamento = new Departamento();
     this.movimentacoes.rateios = []
     this.movimentacoes.rateiosUnidades = [];

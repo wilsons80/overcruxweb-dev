@@ -5,7 +5,7 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <!-- EMPRESAS -->
-            <div ngModelGroup="comboEmpresa" fxFlex="70%" fxLayoutGap="20px" fxFlexOffset="20px"
+            <div ngModelGroup="comboEmpresa" fxFlex="25%" fxLayoutGap="20px" fxFlexOffset="20px"
                  class="marginCombo">
                 <combo-pesquisavel #comboEmpresa 
                                     nome="empresa" 
@@ -21,9 +21,27 @@
                 </combo-pesquisavel>
             </div>
 
+            <!-- FORNECEDOR/COLABORADOR -->
+            <div ngModelGroup="comboFornecedorColaborador" fxFlex="60%" fxLayoutGap="20px" fxFlexOffset="20px"
+                 class="marginCombo">
+                <combo-pesquisavel #comboFornecedorColaborador 
+                                    nome="fornecedorColaborador" 
+                                    [itens]="colaboradoresFornecesores" 
+                                    itemDescricao="nome"
+                                    itemId="cpf"
+                                    label="Fornecedor/Colaborador"
+                                    [showDisplayId]="true" 
+                                    [showDisplayItemLabel]="true"
+                                    itemLabel="tipo"
+                                    [obrigatorio]="false"
+                                    placeholder="Escolha um fornecedor/colaborador..."
+                                    [(valor)]="movimentacoes.fornecedorColaborador"
+                                    (valorChange)="onValorFornecedorChange($event)">
+                </combo-pesquisavel>
+            </div>            
 
             <!-- TIPO MOVIMENTACAO -->
-            <mat-form-field fxFlex="30%">
+            <mat-form-field fxFlex="15%">
                 <mat-label>Tipo de Movimentação</mat-label>
                 <mat-select [(ngModel)]=movimentacoes.stTipoMovimentacao name="tiposMovimentacao" required>
                     <mat-option *ngFor="let i of tiposMovimentacao" [value]=i.id>
