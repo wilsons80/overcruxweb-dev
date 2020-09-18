@@ -24,6 +24,9 @@ import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcas
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
 import { Tributos } from 'src/app/core/tributos';
 import { TributosService } from 'src/app/services/tributos/tributos.service';
+import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import { FornecedorColaborador } from 'src/app/core/fornecedor-colaborador';
 
 
 @Component({
@@ -55,6 +58,7 @@ export class DadosMovimentacaoComponent implements OnInit {
   valorRateioSuperior = false;
   valorRateioUnidadeSuperior = false;
 
+  colaboradoresFornecesores: FornecedorColaborador[];
  
 
   constructor(
@@ -65,17 +69,28 @@ export class DadosMovimentacaoComponent implements OnInit {
     private contasBancariaService: ContasBancariaService,
     private doadoresService: DoadoresService,
     private drc: ChangeDetectorRef,    
+    private pessoaFisicaService: PessoaFisicaService
   ) { }
 
   ngAfterContentChecked(): void {
     this.drc.detectChanges();
 
-    if(this.movimentacoes.empresa.id) {
+    if(this.movimentacoes.empresa && this.movimentacoes.empresa.id) {
       this.selecionaEmpresa(this.movimentacoes.empresa.id);
+    }
+
+    if(this.movimentacoes.fornecedorColaborador && this.movimentacoes.fornecedorColaborador.id) {
+      this.selecionaFornecedorColaborador(this.movimentacoes.fornecedorColaborador.id)
     }
   }
 
   ngOnInit() {
+
+    this.pessoaFisicaService.getAllColaboradoresFornecedores()
+    .subscribe((pessoas: FornecedorColaborador[]) => {
+      this.colaboradoresFornecesores = pessoas;
+      this.selecionaFornecedorColaborador(this.movimentacoes.fornecedorColaborador.id);
+    })
 
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
@@ -239,6 +254,19 @@ export class DadosMovimentacaoComponent implements OnInit {
       const empresa = this.empresas.find((item: any) => item.id === idEmpresa);
       if (!!empresa) {
         this.onValorChange(empresa);
+      }
+    }
+  }
+
+  onValorFornecedorChange(item) {
+    this.movimentacoes.fornecedorColaborador = item;
+  }
+
+  selecionaFornecedorColaborador(id: number) {
+    if(this.colaboradoresFornecesores) {
+      const registro = this.colaboradoresFornecesores.find((item: any) => item.id === id);
+      if (!!registro) {
+        this.onValorFornecedorChange(registro);
       }
     }
   }

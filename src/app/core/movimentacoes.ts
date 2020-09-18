@@ -11,6 +11,7 @@ import { RateiosMovimentacoes } from './rateios-movimentacoes';
 import { RateiosMovimentacoesUnidades } from './rateios-movimentacoes-unidades';
 import { Doadores } from './doadores';
 import { TributoMovimentacao } from './tributo-movimentacao';
+import { PessoaFisica } from './pessoa-fisica';
 
 export class Movimentacoes{
     id:number;
@@ -36,4 +37,5 @@ export class Movimentacoes{
 	doador: Doadores;
 	tributos: TributoMovimentacao[];
 
+	fornecedorColaborador: any; //não está tipado pq o combo-pesquisável usa lista com objeto diferente
 }

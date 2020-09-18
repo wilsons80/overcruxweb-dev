@@ -23,6 +23,7 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { Tributos } from 'src/app/core/tributos';
 import { TributosService } from 'src/app/services/tributos/tributos.service';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -182,6 +183,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes = new Movimentacoes();
     this.movimentacoes.unidade = new Unidade();
     this.movimentacoes.empresa = new Empresa();
+    this.movimentacoes.fornecedorColaborador = new PessoaFisica();
     this.movimentacoes.departamento = new Departamento();
     this.movimentacoes.rateios = []
     this.movimentacoes.rateiosUnidades = [];
@@ -215,7 +217,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isValidarTributoMovimentacao() {
     let retorno = false;
 
-    const tributosTemp = this.movimentacoes.tributos.map(t => t.tributo);
+    const tributosTemp = this.movimentacoes.tributos ? this.movimentacoes.tributos.map(t => t.tributo) : [];
     const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
     const jaExiste = findDuplicates(tributosTemp);
     if(jaExiste && jaExiste.length) {

@@ -18,6 +18,7 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
 
   @Input() itens: any[];
   @Input() itemId = 'id';
+  @Input() itemLabel = '';
   @Input() itemDescricao = 'descricao';
   @Input() nome = 'item';
   @Input() obrigatorio = false; // se o parâmetro não for informado o campo não será obrigatório por default
@@ -25,6 +26,7 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
   @Input() multiplaSelecao = false; // se o parâmetro não for informado o campo não será seleção única por default
   @Input() placeholder = 'Digite para pesquisar...';
   @Input() showDisplayId: boolean = false;
+  @Input() showDisplayItemLabel: boolean = false;
   @Input() label = ' '; // label que será mostrada após seleção do item na combo
 
   placeHolderPesquise = "Pesquise...";
@@ -69,9 +71,13 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
   itemToString(item: any) {
     if (item) {
       let result = this.showDisplayId ? item[this.itemId] : '';
+      
       if (item[this.itemDescricao]) {
         result += (this.showDisplayId ? ' - ' : '') + item[this.itemDescricao];
       }
+
+      result += this.showDisplayItemLabel ? ' - ' + item[this.itemLabel]  : '';
+
       return result;
     }
     return '';

@@ -11,4 +11,10 @@ export class PessoaFisicaService extends BaseService<PessoaFisica> {
   constructor(http: HttpClient) {
     super(http, Rotas.PESSOA_FISICA);
   }
+
+
+  getAllColaboradoresFornecedores() {
+    return this.http.get(`${Rotas.PESSOA_FISICA}fornecedor_colaborador`);
+  }
+
 }
