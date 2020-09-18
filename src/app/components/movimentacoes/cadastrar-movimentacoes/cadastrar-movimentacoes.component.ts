@@ -217,7 +217,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isValidarTributoMovimentacao() {
     let retorno = false;
 
-    const tributosTemp = this.movimentacoes.tributos.map(t => t.tributo);
+    const tributosTemp = this.movimentacoes.tributos ? this.movimentacoes.tributos.map(t => t.tributo) : [];
     const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
     const jaExiste = findDuplicates(tributosTemp);
     if(jaExiste && jaExiste.length) {
