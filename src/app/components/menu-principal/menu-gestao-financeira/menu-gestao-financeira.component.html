@@ -22,6 +22,12 @@
             <!-- TRANSFERENCIA_VALORES -->
             <sub-menu *ngIf="verificaAcesso(getModulos().TRANSFERENCIA_VALORES)" icone="compare_arrows" titulo="Transferência de valores" rota="transferenciavalores" toolTip="Transferência de valores"></sub-menu>
 
+            <!-- CONCILIACAO_BANCARIA -->
+            <sub-menu *ngIf="verificaAcesso(getModulos().CONCILIACAO_BANCARIA)" icone="rule" titulo="Conciliação Bancária" rota="conciliacao" toolTip="Conciliação Bancária"></sub-menu>
+
+            <!-- PROVISAO -->
+            <sub-menu *ngIf="verificaAcesso(getModulos().PROVISAO)" icone="local_atm" titulo="Provisão" rota="provisao" toolTip="Provisão"></sub-menu>
+
             <!-- TABELAS REFERENCIA -->
             <tb-referencia-financeiro></tb-referencia-financeiro>
 

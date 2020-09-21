@@ -1,15 +1,15 @@
 export class Conciliacao {
-    id: number;
-	seq: number;
+	id :number;
+	seq :number;
 	tipo: string;
 	situacao: string;
 	numeroDocumento: string;
-	dataPagamentoRecebimento: Date;
+	data: Date;
 	banco: string;
-	apropriacaoFinanceira: string;
+	categoria: string;
 	fornecedor: string;
-	complementoHistorico: string;
-	nomeProjetoPrograma: string;
+	complemento: string;
+	centroCusto: string;
 	grupoContas: string;
 	valor: number;
 }

@@ -16,11 +16,9 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
 
   getFilter(dataInicio: any,
             dataFim: any,
-            idContaBancaria: string,
-            tipoAcao: string ) {
+            idContaBancaria: any) {
 
-    idContaBancaria = idContaBancaria || '';
-    tipoAcao        = tipoAcao || '';
+    idContaBancaria = idContaBancaria ? Number(idContaBancaria) : '';
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
@@ -28,20 +26,17 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
     return this.http.get(Rotas.CONCILIACAO + 'filter', { params: {
         dataInicio: `${p_dataInicio}`,
         dataFim: `${p_dataFim}`,
-        contaBancaria: `${idContaBancaria}`,
-        tipoAcao: `${tipoAcao}`
+        contaBancaria: `${idContaBancaria}`
         }
     });
   }
 
 
-  gerar(dataInicio: any,
-        dataFim: any,
-        idContaBancaria: string,
-        tipoAcao: string ) {
+  exportar(dataInicio: any,
+           dataFim: any,
+           idContaBancaria: any) {
 
     idContaBancaria = idContaBancaria || '';
-    tipoAcao        = tipoAcao || '';
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
@@ -49,8 +44,7 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
     return this.http.post(Rotas.CONCILIACAO + 'exportar', { params: {
         dataInicio: `${p_dataInicio}`,
         dataFim: `${p_dataFim}`,
-        contaBancaria: `${idContaBancaria}`,
-        tipoAcao: `${tipoAcao}`
+        contaBancaria: `${idContaBancaria}`
         }
     });
   }
