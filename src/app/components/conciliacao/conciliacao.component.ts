@@ -82,17 +82,7 @@ export class ConciliacaoComponent implements OnInit {
     this.limpar();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-    this.filtro.dataInicio = new Date();
-    this.filtro.dataInicio.setMonth(5);
-    this.filtro.dataFim = new Date();
-    this.filtro.contaBancaria.id = 15;
-
-  }
-
-  private initFiltro() {
-    this.filtro = new Filter();
-    this.filtro.contaBancaria  = new ContasBancaria();
+  
   }
 
   consultar() {
@@ -115,8 +105,6 @@ export class ConciliacaoComponent implements OnInit {
     }
   }
 
-
-
   public handlePageBottom(event: PageEvent) {
     this.paginator.pageSize = event.pageSize;
     this.paginator.pageIndex = event.pageIndex;
@@ -128,6 +116,7 @@ export class ConciliacaoComponent implements OnInit {
     this.dataSource.data = [];
     this.filtro = new Filter();
     this.filtro.contaBancaria  = new ContasBancaria();
+    this.conciliacoes = []
   }
 
 
@@ -160,8 +149,6 @@ export class ConciliacaoComponent implements OnInit {
   }
 
 
-
-
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -176,12 +163,5 @@ export class ConciliacaoComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  /** The label for the checkbox on the passed row 
-  checkboxLabel(row?: Conciliacao): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
-  */
+
 }
