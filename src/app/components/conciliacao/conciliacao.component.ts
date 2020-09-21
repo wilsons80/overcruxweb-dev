@@ -135,13 +135,13 @@ export class ConciliacaoComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-        this.conciliacaoService.exportar(this.filtro.dataInicio, 
-                                         this.filtro.dataFim, 
-                                         this.filtro.contaBancaria.id)
-        .subscribe(() => {
-          this.consultar();
-        })
 
+        console.log('Dados conciliaçoes:', this.dataSource.data);
+        
+        if(this.conciliacoes && this.conciliacoes.length > 0) {
+          this.consultar();
+          this.toastService.showSucesso('Dados exportados com sucesso!');
+        }
       } else {
         dialogRef.close();
       }
