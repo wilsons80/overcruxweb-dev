@@ -165,7 +165,7 @@
             <ng-container matColumnDef="empresa">
                 <th mat-header-cell *matHeaderCellDef style="width: 22%"> Empresa </th>
                 <td mat-cell *matCellDef="let element"> 
-                    {{element.empresa?.nomeRazaoSocial.toUpperCase()}}                    
+                    {{element.empresa?.nomeRazaoSocial?.toUpperCase()}}                    
                 </td>
             </ng-container>
 
