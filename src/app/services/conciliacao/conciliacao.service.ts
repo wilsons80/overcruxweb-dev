@@ -39,6 +39,22 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
     });
   }
 
+  carregar(dataInicio: any,
+           dataFim: any,
+           idContaBancaria: any) {
+
+    idContaBancaria = idContaBancaria ? Number(idContaBancaria) : '';
+
+    const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
+    const p_dataFim = dataFim ? dataFim.getTime() : '';
+
+    return this.http.get(Rotas.CONCILIACAO + 'carregar', { params: {
+        dataInicio: `${p_dataInicio}`,
+        dataFim: `${p_dataFim}`,
+        contaBancaria: `${idContaBancaria}`
+        }
+    });
+  }
 
   exportar(dataInicio: any,
            dataFim: any,

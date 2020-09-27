@@ -12,4 +12,5 @@ export class Conciliacao {
 	centroCusto: string;
 	grupoContas: string;
 	valor: number;
+	semDocumento: boolean;
 }

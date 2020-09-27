@@ -74,7 +74,7 @@
                 EXPORTAR
             </button>
 
-            <button mat-raised-button fxFlex="150px" (click)="consultar()" 
+            <button mat-raised-button fxFlex="150px" (click)="carregar()" 
                     [disabled]="formulario.invalid">
                 CONSULTAR
             </button>
@@ -92,7 +92,7 @@
     <table [fxHide]="!mostrarTabela" 
             matSort matSortDisableClear mat-table [dataSource]="dataSource">
             
-        <!-- Checkbox Column -->
+        <!-- Checkbox Column 
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef style="width: 4%">
                 <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -107,6 +107,7 @@
                 </mat-checkbox>
             </td>
         </ng-container>
+        -->
 
         <ng-container matColumnDef="tipo">
             <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 2%"> Tipo </th>
