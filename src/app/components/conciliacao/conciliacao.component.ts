@@ -40,7 +40,7 @@ export class ConciliacaoComponent implements OnInit {
 
   filtro = new Filter();
   
-  displayedColumns: string[] = ['tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
+  displayedColumns: string[] = ['codigo', 'tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
   dataSource: MatTableDataSource<Conciliacao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
