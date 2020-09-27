@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { MatBadgeModule} from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
@@ -69,6 +70,7 @@ const modulos = [
     , MatTabsModule
     , NgxCurrencyModule
     , ComboPesquisavelModule
+    , MatBadgeModule
 ]
 
 @NgModule({

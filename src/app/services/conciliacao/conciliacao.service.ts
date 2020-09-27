@@ -4,6 +4,10 @@ import { Conciliacao } from 'src/app/core/conciliacao';
 import { Rotas } from 'src/app/core/rotas';
 import { BaseService } from '../base/base.service';
 
+const httpOptions = {
+  'responseType'  : 'arraybuffer' as 'json'
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +17,10 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
     super(http, Rotas.CONCILIACAO);
   }
 
+
+  gerarArquivo(lista: Conciliacao[]) {
+    return this.http.post(Rotas.CONCILIACAO + "gerar-arquivo", lista, httpOptions);
+  }
 
   getFilter(dataInicio: any,
             dataFim: any,

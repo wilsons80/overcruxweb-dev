@@ -14,7 +14,7 @@ import { ConciliacaoService } from 'src/app/services/conciliacao/conciliacao.ser
 import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
-
+import { FileUtils } from 'src/app/utils/file-utils';
 
 class Filter {
   contaBancaria: ContasBancaria;
@@ -57,6 +57,7 @@ export class ConciliacaoComponent implements OnInit {
     private toastService: ToastService,
     private dataUtilService: DataUtilService,
     private router: Router,
+    private fileUtils: FileUtils,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
   ) { 
@@ -135,20 +136,22 @@ export class ConciliacaoComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-
-        console.log('Dados conciliaçoes:', this.dataSource.data);
-        
         if(this.conciliacoes && this.conciliacoes.length > 0) {
-          this.consultar();
-          this.toastService.showSucesso('Dados exportados com sucesso!');
+          this.conciliacaoService.gerarArquivo(this.conciliacoes).subscribe((dados: any) => {
+            this.fileUtils.downloadFile(dados);
+
+            this.consultar();
+            this.toastService.showSucesso('Dados exportados com sucesso!');
+          }, (error) => {
+            console.log(error);            
+          })
         }
       } else {
         dialogRef.close();
       }
     });
   }
-
-
+  
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -163,5 +166,14 @@ export class ConciliacaoComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
+
+  showConciliacaoDivergencia() {
+    console.log('showConciliacaoDivergencia');
+    
+  }
+
+  onInput(event) {
+    this.dataUtilService.onMascaraDataInput(event);
+  }
 
 }

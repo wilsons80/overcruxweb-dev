@@ -23,5 +23,18 @@ export class FileUtils {
         return this.domSanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64,` + base64String);
     }
 
+
+    /**
+     * Recebe um byte[] e faz o download do arquivo em excel
+     * @param dados 
+     */
+    downloadFile(dados) {
+        const blob = new Blob([dados], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = "conciliacao.xlsx";
+        anchor.href = url;
+        anchor.click();
+    }
 }
 

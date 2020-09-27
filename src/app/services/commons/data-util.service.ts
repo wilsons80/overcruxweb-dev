@@ -99,5 +99,32 @@ export class DataUtilService {
     return false;
   }
 
-  
+
+  /**
+   * Como usar
+   * 
+   * (input)="onInput($event)"
+   * @param event 
+   */
+  onMascaraDataInput(event) {
+    const value: string = event.target.value.replace(/\D/g, '');
+    if (value.length <= 2) {
+      event.target.value = value;
+    } else if (value.length <= 4) {
+      event.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    } else {
+      event.target.value = value.substring(0, 2) + '/' + value.substring(2, 4) + '/' + value.substring(4, 8);
+    }
+  }
+
+   /**
+   * Como usar
+   * 
+   * (input)="onInput($event)"
+   * @param event 
+   */
+  validaCep(cep) {
+    const regex = /^\d{2}((?!000000).)*$/;
+    return regex.test(cep);
+  }
 }
