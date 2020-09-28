@@ -40,7 +40,7 @@ export class ConciliacaoComponent implements OnInit {
 
   filtro = new Filter();
   
-  displayedColumns: string[] = ['codigo', 'tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
+  displayedColumns: string[] = ['select','codigo', 'tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
   dataSource: MatTableDataSource<Conciliacao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
@@ -94,6 +94,8 @@ export class ConciliacaoComponent implements OnInit {
       this.conciliacoes = conciliacoes;
       this.dataSource.data = conciliacoes ? conciliacoes : [];
       this.verificaMostrarTabela(conciliacoes);
+
+      this.masterToggle();
     })
   }
 
@@ -134,6 +136,11 @@ export class ConciliacaoComponent implements OnInit {
 
 
   exportar() {
+    if(this.selection.selected && this.selection.selected.length === 0) {
+      this.toastService.showAlerta('Selecione os movimentos que deseja enviar para conciliação.');
+      return;
+    }
+
     this.chamaCaixaDialogoExportar();
   }
 
@@ -148,16 +155,16 @@ export class ConciliacaoComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
-        if(this.conciliacoes && this.conciliacoes.length > 0) {
-          const fornecedoresSemDocumento=  this.conciliacoes.filter(c => !c.fornecedor && !c.semDocumento);
+        if(this.selection.selected && this.selection.selected.length > 0) {
+          const fornecedoresSemDocumento=  this.selection.selected.filter(c => !c.fornecedor && !c.semDocumento);
           if(fornecedoresSemDocumento) {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {
-            this.conciliacaoService.gerarArquivo(this.conciliacoes).subscribe((dados: any) => {
+            this.conciliacaoService.gerarArquivo(this.selection.selected).subscribe((dados: any) => {
               this.fileUtils.downloadFile(dados);
   
               this.buscar();
-              this.toastService.showSucesso('Dados exportados com sucesso!');
+              this.toastService.showSucesso('Conciliação bancária exportada com sucesso!');
             }, (error) => {
               console.log(error);            
             })
