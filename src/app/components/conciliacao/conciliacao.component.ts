@@ -15,6 +15,7 @@ import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-b
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { FileUtils } from 'src/app/utils/file-utils';
+import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 
 class Filter {
   contaBancaria: ContasBancaria;
@@ -60,6 +61,7 @@ export class ConciliacaoComponent implements OnInit {
     private fileUtils: FileUtils,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private loadingPopupService: LoadingPopupService,
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -160,12 +162,18 @@ export class ConciliacaoComponent implements OnInit {
           if(fornecedoresSemDocumento.length > 0) {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {
-            this.conciliacaoService.gerarArquivo(this.selection.selected).subscribe((dados: any) => {
+
+            this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo para conciliação bancária, aguarde...');
+            this.conciliacaoService.gerarArquivo(this.selection.selected)
+            .subscribe((dados: any) => {
               this.fileUtils.downloadFile(dados);
   
               this.buscar();
               this.toastService.showSucesso('Conciliação bancária exportada com sucesso!');
-            }, (error) => {
+              this.loadingPopupService.closeDialog();
+            }, 
+            (error) => {
+              this.loadingPopupService.closeDialog();
               console.log(error);            
             })
           }
