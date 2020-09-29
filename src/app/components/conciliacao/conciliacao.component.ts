@@ -157,7 +157,7 @@ export class ConciliacaoComponent implements OnInit {
       if (confirma) {
         if(this.selection.selected && this.selection.selected.length > 0) {
           const fornecedoresSemDocumento=  this.selection.selected.filter(c => !c.fornecedor && !c.semDocumento);
-          if(fornecedoresSemDocumento) {
+          if(fornecedoresSemDocumento.length > 0) {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {
             this.conciliacaoService.gerarArquivo(this.selection.selected).subscribe((dados: any) => {
