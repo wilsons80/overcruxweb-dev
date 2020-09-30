@@ -119,6 +119,7 @@ import { TransferenciaValoresModule } from './components/transferencia-valores/t
 import { TableCellModule } from './components/common/table-cell/table-cell.module';
 import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/combo-pesquisavel.module';
 import { ConciliacaoModule } from './components/conciliacao/conciliacao.module';
+import { ProvisionamentoModule } from './components/provisionamento/provisionamento.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -230,7 +231,8 @@ registerLocaleData(localePt, 'pt-BR');
     TransferenciaValoresModule,
     TableCellModule,
     ComboPesquisavelModule,
-    ConciliacaoModule
+    ConciliacaoModule,
+    ProvisionamentoModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

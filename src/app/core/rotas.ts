@@ -71,4 +71,5 @@ export enum Rotas {
     EXTRATO                         = 'api/extrato/',
     TRIBUTOS                        = 'api/tributos/',
     CONCILIACAO                     = 'api/conciliacao/',
+    PROVISAO                        = 'api/provisao/',
 }

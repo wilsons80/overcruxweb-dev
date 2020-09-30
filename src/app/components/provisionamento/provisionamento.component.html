@@ -1,0 +1,166 @@
+<mat-toolbar class="subtitulo">Provisionamento
+    <button *ngIf="false" fxLayoutAlign="end center" matTooltip="Provisões com registros divergentes" mat-icon-button (click)="showProvisaoDivergencia()">
+        <mat-icon fxLayoutAlign="end end" matBadge="5" matBadgeColor="warn" >notifications_none</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="painel-principal" style="padding: 10px;">
+    <form #formulario="ngForm">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+            <mat-form-field fxFlex= "120px" >
+                <input matInput name= "dataInicio"
+                        [matDatepicker]="dataInicio" 
+                        placeholder="Data início" 
+                        required
+                        [(ngModel)]="filtro.dataInicio"
+                        (input)="onInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicio></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field fxFlex= "120px" >
+                <input matInput name= "dataFim"
+                        [matDatepicker]="dataFim" 
+                        [min]="filtro.dataInicio"
+                        required
+                        placeholder="Data fim" 
+                        [(ngModel)]="filtro.dataFim"
+                        (input)="onInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                <mat-datepicker #dataFim></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" style="font-size: 10px;">
+            <fieldset sy fxFlex="100%" fxLayoutGap="20px">
+                <legend>Situação</legend>
+                <label>G = GERADO</label>
+                <label style="color: #00cc00; font-weight: bold">E = ENVIADO</label>
+                <label style="color: #ff9900; font-weight: bold">A = ALTERADO</label>
+                <label style="color: #ff3333; font-weight: bold">D = DELETADO</label>
+            </fieldset>
+        </div>
+
+        <div dir="rtl" class="botoes" fxLayoutGap="20px" 
+                style="padding-top: 20px; padding-bottom: 20px;"
+                fxFlexFill>
+
+            <button mat-raised-button fxFlex="150px" (click)="exportar()" 
+                    [disabled]="formulario.invalid || provisoes.length === 0">
+                EXPORTAR
+            </button>
+
+            <button mat-raised-button fxFlex="150px" (click)="carregar()" 
+                    [disabled]="formulario.invalid">
+                CONSULTAR
+            </button>
+
+            <button mat-raised-button fxFlex="150px" style="padding-right: 20px" 
+                    (click)="limpar()">
+                LIMPAR
+            </button>
+        </div>
+    </form>
+
+    <div [hidden]="!mostrarTabela" style="margin-top: 20px;">
+        <mat-paginator #paginator [pageSizeOptions]="[50, 100, 150, 200, 300]" showFirstLastButtons></mat-paginator>
+    </div>
+    <table [fxHide]="!mostrarTabela" 
+            matSort matSortDisableClear mat-table [dataSource]="dataSource">
+            
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="width: 4%">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+        
+        
+        <ng-container matColumnDef="codigo">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 2%"> Código </th>
+            <td mat-cell *matCellDef="let element"> {{element.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipo">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 2%"> Tipo </th>
+            <td mat-cell *matCellDef="let element"> {{element.tipo }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="situacao" >
+            <th mat-header-cell mat-sort-header  *matHeaderCellDef style="text-align: center; width: 3%"> Situação </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"
+               [ngStyle]="{'background-color': element.situacao === 'E' ? '#00cc00' : (element.situacao === 'A' ? '#ff9900' : (element.situacao === 'D' ? ' #ff3333' : '') ) }"> {{element.situacao }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; width: 5%"> Documento </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.numeroDocumento }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataProvisao">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 6%"> Data </th>
+            <td mat-cell *matCellDef="let element"> {{element.data | dataSimples }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="banco">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 15%"> Banco </th>
+            <td mat-cell *matCellDef="let element"> {{element.banco}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="categoria">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 8%"> Categoria</th>
+            <td mat-cell *matCellDef="let element"> {{element.categoria}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fornecedor">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 10%">Fornecedor</th>
+            <td mat-cell *matCellDef="let element">{{element.fornecedor}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="complemento">
+            <th mat-header-cell *matHeaderCellDef style="width: 20%"> Complemento </th>
+            <td mat-cell *matCellDef="let element"> {{ element.complemento }} </td>
+        </ng-container>            
+
+        <ng-container matColumnDef="centroCusto">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 15%;"> Centro Custo </th>
+            <td mat-cell *matCellDef="let element"> {{ element.centroCusto }} </td>
+        </ng-container>            
+
+        <ng-container matColumnDef="grupoContas">
+            <th mat-header-cell *matHeaderCellDef style="width: 6%"> Grupo Contas </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{ element.grupoContas }} </td>
+        </ng-container>            
+
+        <ng-container matColumnDef="valor">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 6%"> Valor </th>
+            <td mat-cell *matCellDef="let element"> {{ element.valor | currency: 'BRL' }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+    </table>
+    <div [hidden]="!mostrarTabela">
+        <mat-paginator (page)="handlePageBottom($event)" 
+                        [pageSize]="paginator.pageSize"
+                        [pageIndex]="paginator.pageIndex" 
+                        [length]="paginator.length"
+                        [pageSizeOptions]="paginator.pageSizeOptions">
+        </mat-paginator>
+    </div>
+    
+    <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px"
+            [fxHide]="mostrarTabela" >
+        {{msg}}
+    </div>
+
+</div>

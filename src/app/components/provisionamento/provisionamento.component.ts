@@ -8,41 +8,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Conciliacao } from 'src/app/core/conciliacao';
-import { ContasBancaria } from 'src/app/core/contas-bancaria';
+import { Provisao } from 'src/app/core/provisao';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { ConciliacaoService } from 'src/app/services/conciliacao/conciliacao.service';
-import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
-import { ToastService } from 'src/app/services/toast/toast.service';
-import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
-import { FileUtils } from 'src/app/utils/file-utils';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
+import { ProvisaoService } from 'src/app/services/provisao/provisao.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { FileUtils } from 'src/app/utils/file-utils';
+import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+
 
 class Filter {
-  contaBancaria: ContasBancaria;
   dataInicio: Date;
   dataFim: Date;
 }
 
-
 @Component({
-  selector: 'conciliacao',
-  templateUrl: './conciliacao.component.html',
-  styleUrls: ['./conciliacao.component.css']
+  selector: 'provisionamento',
+  templateUrl: './provisionamento.component.html',
+  styleUrls: ['./provisionamento.component.css']
 })
-export class ConciliacaoComponent implements OnInit {
- 
+export class ProvisionamentoComponent implements OnInit {
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  selection = new SelectionModel<Conciliacao>(true, []);
+  selection = new SelectionModel<Provisao>(true, []);
   
-  conciliacoes: Conciliacao[];
-  contasBancarias: ContasBancaria[];
-
+  provisoes: Provisao[];
   filtro = new Filter();
   
-  displayedColumns: string[] = ['select','codigo', 'tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
-  dataSource: MatTableDataSource<Conciliacao> = new MatTableDataSource();
+  displayedColumns: string[] = ['select','codigo', 'tipo', 'situacao', 'documento', 'dataProvisao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
+  dataSource: MatTableDataSource<Provisao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
 
@@ -53,8 +49,7 @@ export class ConciliacaoComponent implements OnInit {
   mostrarBotaoAtualizar = true;
 
   constructor(
-    private conciliacaoService: ConciliacaoService,
-    private contasBancariaService: ContasBancariaService,
+    private provisaoService: ProvisaoService,
     private toastService: ToastService,
     private dataUtilService: DataUtilService,
     private router: Router,
@@ -77,11 +72,6 @@ export class ConciliacaoComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.contasBancariaService.getAllComboByInstituicaoLogada()
-    .subscribe((contasBancarias: ContasBancaria[]) => {
-      this.contasBancarias = contasBancarias;
-    });
-
     this.limpar();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -89,13 +79,12 @@ export class ConciliacaoComponent implements OnInit {
   }
 
   carregar() {
-    this.conciliacaoService.carregar(this.filtro.dataInicio, 
-                                     this.filtro.dataFim, 
-                                     this.filtro.contaBancaria.id)
-    .subscribe((conciliacoes: Conciliacao[]) => {
-      this.conciliacoes = conciliacoes;
-      this.dataSource.data = conciliacoes ? conciliacoes : [];
-      this.verificaMostrarTabela(conciliacoes);
+    this.provisaoService.carregar(this.filtro.dataInicio, 
+                                  this.filtro.dataFim)
+    .subscribe((provisoes: Provisao[]) => {
+      this.provisoes = provisoes;
+      this.dataSource.data = provisoes ? provisoes : [];
+      this.verificaMostrarTabela(provisoes);
 
       this.masterToggle();
     })
@@ -105,20 +94,19 @@ export class ConciliacaoComponent implements OnInit {
   buscar() {
     this.selection.clear();
     
-    this.conciliacaoService.getFilter(this.filtro.dataInicio, 
-                                      this.filtro.dataFim, 
-                                      this.filtro.contaBancaria.id)
-    .subscribe((conciliacoes: Conciliacao[]) => {
-      this.conciliacoes = conciliacoes;
-      this.dataSource.data = conciliacoes ? conciliacoes : [];
-      this.verificaMostrarTabela(conciliacoes);
+    this.provisaoService.getFilter(this.filtro.dataInicio, 
+                                   this.filtro.dataFim)
+    .subscribe((provisoes: Provisao[]) => {
+      this.provisoes = provisoes;
+      this.dataSource.data = provisoes ? provisoes : [];
+      this.verificaMostrarTabela(provisoes);
     })
   }
 
   verificaMostrarTabela(lista: Conciliacao[]) {
     if (!lista || lista.length == 0) {
       this.mostrarTabela = false;
-      this.msg = "Nenhuma conciliação bancária encontrada."
+      this.msg = "Nenhuma provisão encontrada."
     } else {
       this.mostrarTabela = true;
     }
@@ -134,15 +122,14 @@ export class ConciliacaoComponent implements OnInit {
     this.mostrarTabela = false;
     this.dataSource.data = [];
     this.filtro = new Filter();
-    this.filtro.contaBancaria  = new ContasBancaria();
-    this.conciliacoes = [];
+    this.provisoes = [];
     this.selection.clear();
   }
 
 
   exportar() {
     if(this.selection.selected && this.selection.selected.length === 0) {
-      this.toastService.showAlerta('Selecione os movimentos que deseja enviar para conciliação.');
+      this.toastService.showAlerta('Selecione um registro que deseja enviar para provisão.');
       return;
     }
 
@@ -166,13 +153,13 @@ export class ConciliacaoComponent implements OnInit {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {
 
-            this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo para conciliação bancária, aguarde...');
-            this.conciliacaoService.gerarArquivo(this.selection.selected)
+            this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo de provisão, aguarde...');
+            this.provisaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
               this.fileUtils.downloadFile(dados);
   
               this.buscar();
-              this.toastService.showSucesso('Conciliação bancária exportada com sucesso!');
+              this.toastService.showSucesso('Provisão exportada com sucesso!');
               this.loadingPopupService.closeDialog();
             }, 
             (error) => {
@@ -202,8 +189,8 @@ export class ConciliacaoComponent implements OnInit {
   }
 
 
-  showConciliacaoDivergencia() {
-    console.log('showConciliacaoDivergencia');
+  showProvisaoDivergencia() {
+    console.log('showProvisaoDivergencia');
     
   }
 
