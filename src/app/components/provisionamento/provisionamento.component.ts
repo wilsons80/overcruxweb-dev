@@ -37,7 +37,7 @@ export class ProvisionamentoComponent implements OnInit {
   provisoes: Provisao[];
   filtro = new Filter();
   
-  displayedColumns: string[] = ['select','codigo', 'tipo', 'situacao', 'documento', 'dataProvisao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
+  displayedColumns: string[] = ['select', 'situacao', 'documento', 'dataProvisao', 'valor',  'complemento', 'categoria', 'centroCusto', 'grupoContas', 'descricaoFornecedor', 'nomeFornecedor'];
   dataSource: MatTableDataSource<Provisao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
@@ -103,7 +103,7 @@ export class ProvisionamentoComponent implements OnInit {
     })
   }
 
-  verificaMostrarTabela(lista: Conciliacao[]) {
+  verificaMostrarTabela(lista: Provisao[]) {
     if (!lista || lista.length == 0) {
       this.mostrarTabela = false;
       this.msg = "Nenhuma provisão encontrada."
@@ -148,7 +148,7 @@ export class ProvisionamentoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
         if(this.selection.selected && this.selection.selected.length > 0) {
-          const fornecedoresSemDocumento=  this.selection.selected.filter(c => !c.fornecedor && !c.semDocumento);
+          const fornecedoresSemDocumento=  this.selection.selected.filter(c => !c.descricaoFornecedor && !c.semDocumento);
           if(fornecedoresSemDocumento.length > 0) {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {

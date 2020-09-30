@@ -1,16 +1,14 @@
 export class Provisao {
-	id :number;
-	seq :number;
-	tipo: string;
+	id: number;
 	situacao: string;
 	numeroDocumento: string;
 	data: Date;
-	banco: string;
-	categoria: string;
-	fornecedor: string;
+	valor: number;
 	complemento: string;
+	categoria: string;
 	centroCusto: string;
 	grupoContas: string;
-	valor: number;
+	descricaoFornecedor: string;
+	nomeFornecedor: string;
 	semDocumento: boolean;
 }
