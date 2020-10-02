@@ -187,13 +187,12 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.valorItensSuperiorValorMovimento = false;
 
     if(this.movimentacoes.itensMovimentacoes && this.movimentacoes.itensMovimentacoes.length > 0) {
-      const valorItens = this.movimentacoes.itensMovimentacoes.map(v => v.valorTotalItem).reduce( (valor, total) => total += valor) 
-      if(valorItens !== this.movimentacoes.valorMovimentacao) {
+      const valorTotal = this.movimentacoes.itensMovimentacoes.map(v => v.valorTotalItem).reduce( (valor, total) => total += valor) 
+      if(Number(valorTotal.toFixed(2)) != Number(this.movimentacoes.valorMovimentacao.toFixed(2))) {
         this.valorItensSuperiorValorMovimento = true;
       }
-      
       this.onItensInvalidos.emit(this.valorItensSuperiorValorMovimento);
-      return valorItens;
+      return Number(valorTotal.toFixed(2));
     }
 
     this.onItensInvalidos.emit(this.valorItensSuperiorValorMovimento);

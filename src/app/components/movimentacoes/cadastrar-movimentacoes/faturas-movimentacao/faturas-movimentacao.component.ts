@@ -175,12 +175,12 @@ export class FaturasMovimentacaoComponent implements OnInit {
   getValorTotal() {
     this.valoresSuperiorValorMovimento = false;
     if(this.movimentacoes.faturas && this.movimentacoes.faturas.length > 0) {
-      const valorItens = this.movimentacoes.faturas.map(v => v.valor).reduce( (valor, total) => total += valor) 
-      if(valorItens !== this.movimentacoes.valorMovimentacao) {
+      const valorTotal = this.movimentacoes.faturas.map(v => v.valor).reduce( (valor, total) => total += valor) 
+      if(Number(valorTotal.toFixed(2)) != Number(this.movimentacoes.valorMovimentacao.toFixed(2))) {
         this.valoresSuperiorValorMovimento = true;
       }
       this.onValorTotalFaturaInvalidos.emit(this.valoresSuperiorValorMovimento);
-      return valorItens;
+      return Number(valorTotal.toFixed(2));
     }
     this.onValorTotalFaturaInvalidos.emit(this.valoresSuperiorValorMovimento);
     return 0;

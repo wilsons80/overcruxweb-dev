@@ -210,11 +210,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   getValorTotal() {
     this.valoresSuperiorValorMovimento = false;
     if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
-      const valorItens = this.movimentacoes.pagamentosFatura.map(v => v.valorPagamento).reduce( (valor, total) => total += valor) 
-      if(valorItens !== this.movimentacoes.valorMovimentacao) {
+      const valorTotal = this.movimentacoes.pagamentosFatura.map(v => v.valorPagamento).reduce( (valor, total) => total += valor) 
+      if(Number(valorTotal.toFixed(2)) != Number(this.movimentacoes.valorMovimentacao.toFixed(2))) {
         this.valoresSuperiorValorMovimento = true;
-      }
-      return valorItens;
+      }      
+      return Number(valorTotal.toFixed(2));
     }
     return 0;
   }
