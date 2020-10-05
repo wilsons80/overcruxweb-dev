@@ -136,6 +136,10 @@ export class ProvisionamentoComponent implements OnInit {
     this.chamaCaixaDialogoExportar();
   }
 
+  isRegistroDivergente(c: Provisao): boolean {
+    return !c.descricaoFornecedor && !c.semDocumento;
+  }
+
   chamaCaixaDialogoExportar() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -148,7 +152,7 @@ export class ProvisionamentoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
         if(this.selection.selected && this.selection.selected.length > 0) {
-          const fornecedoresSemDocumento=  this.selection.selected.filter(c => !c.descricaoFornecedor && !c.semDocumento);
+          const fornecedoresSemDocumento=  this.selection.selected.filter(c => this.isRegistroDivergente(c));
           if(fornecedoresSemDocumento.length > 0) {
             this.toastService.showAlerta('Não é possível exportar, pois existem fornecedores sem documentos.')
           } else {

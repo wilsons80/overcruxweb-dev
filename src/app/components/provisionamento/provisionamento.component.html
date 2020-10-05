@@ -131,7 +131,10 @@
 
         <ng-container matColumnDef="descricaoFornecedor">
             <th mat-header-cell mat-sort-header *matHeaderCellDef style="width: 10%">Fornecedor</th>
-            <td mat-cell *matCellDef="let element">{{element.descricaoFornecedor}}</td>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="!isRegistroDivergente(element)">{{element.descricaoFornecedor}}</span>
+                <mat-icon title="Para o envio do provisionamento é necessário informar um CNPJ/CNF para fornecedor/credor" style="color: red;font-weight: 600;" *ngIf="isRegistroDivergente(element)">error_outline</mat-icon>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="nomeFornecedor">
