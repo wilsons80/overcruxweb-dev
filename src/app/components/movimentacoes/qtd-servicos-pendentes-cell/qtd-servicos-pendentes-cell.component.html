@@ -1,0 +1,11 @@
+<div class="icone-container" *ngIf="qtdServicosPendentes > 0">
+  <mat-icon
+      style="min-width: 28px;"
+      [matBadge]="qtdServicosPendentes"
+      matBadgeColor="warn"
+      matBadgePosition="above after"
+      matBadgeSize="small"
+      [matTooltip]="toolTip">
+      miscellaneous_services
+  </mat-icon>  
+</div>

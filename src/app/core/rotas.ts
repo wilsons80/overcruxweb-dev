@@ -72,4 +72,5 @@ export enum Rotas {
     TRIBUTOS                        = 'api/tributos/',
     CONCILIACAO                     = 'api/conciliacao/',
     PROVISAO                        = 'api/provisao/',
+    RATEIOS_PROGRAMA_PROJETO        = 'api/rateiospp/',
 }

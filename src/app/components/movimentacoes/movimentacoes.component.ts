@@ -15,6 +15,8 @@ import { Programa } from 'src/app/core/programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
+import { RateiosProgramaProjetoService } from 'src/app/services/rateios-programa-projeto/rateios-programa-projeto.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 class Filter {
@@ -33,7 +35,13 @@ class Filter {
 @Component({
   selector: 'movimentacoes',
   templateUrl: './movimentacoes.component.html',
-  styleUrls: ['./movimentacoes.component.css']
+  styleUrls: ['./movimentacoes.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])]
 })
 export class MovimentacoesComponent implements OnInit {
 
@@ -51,7 +59,7 @@ export class MovimentacoesComponent implements OnInit {
 
   filtro = new Filter();
 
-  displayedColumns: string[] = ['programaprojeto', 'empresa', 'dataDocumento', 'valorUltimoPagamento', 'valorMovimentacao',  'dataMovimento', 'nrDocumento', 'acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'empresa', 'dataDocumento', 'valorUltimoPagamento', 'valorMovimentacao',  'dataMovimento', 'nrDocumento', 'icones','acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
@@ -64,6 +72,7 @@ export class MovimentacoesComponent implements OnInit {
     private empresaService: EmpresaService,
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
+    
   ) { }
 
   ngOnInit() {

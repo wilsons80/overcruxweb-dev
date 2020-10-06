@@ -1,0 +1,17 @@
+.lista-de-servicos {
+    padding: 1rem 0;
+}
+  
+.lista-de-servicos tr.mat-header-row.ng-star-inserted {
+    padding: 5px 0 5px 18px;
+    background: rgba(0, 0, 0, .05);
+}
+  
+.lista-de-servicos tr.mat-header-row {
+    height: 48px;
+}
+  
+.lista-de-servicos th.mat-header-cell {
+    color: rgba(0, 0, 0, .8);
+}
+  

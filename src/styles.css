@@ -156,3 +156,10 @@ tr:not(th):active {
   background-color: #961818 !important;
 }
 
+
+
+
+qtd-servicos-pendentes-cell .mat-icon svg {
+  color: #546E7A;
+  transform: scale(.9);
+}

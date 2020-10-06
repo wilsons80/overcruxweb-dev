@@ -5,3 +5,13 @@ td {
     font-size: 12px;
     font-weight: 600;
 }
+
+
+tr.expand-detail-row {
+    height: 0;
+}
+  
+.expand-element-row td {
+    border-bottom-width: 0;
+}
+  

@@ -1,0 +1,13 @@
+.mat-badge-content {
+  font-weight: normal !important;
+  font-size: 10px !important;
+  z-index: 1;
+}
+
+.mat-icon {
+  cursor: pointer;
+}
+
+.icone-container {
+  position: relative;
+}

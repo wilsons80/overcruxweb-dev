@@ -17,6 +17,8 @@ import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesqui
 import { FormularioReembolsoComponent } from './cadastrar-movimentacoes/formulario-reembolso/formulario-reembolso.component';
 import { FormularioRateioPagamentoComponent } from './cadastrar-movimentacoes/formulario-rateio-pagamento/formulario-rateio-pagamento.component';
 import { FormularioTributoComponent } from './cadastrar-movimentacoes/formulario-tributo/formulario-tributo.component';
+import { TableRateiosProgramaProjetoComponent } from './table-rateios-programa-projeto/table-rateios-programa-projeto.component';
+import { QtdServicosPendentesComponent } from './qtd-servicos-pendentes-cell/qtd-servicos-pendentes-cell.component';
 
 
 @NgModule({
@@ -25,7 +27,14 @@ import { FormularioTributoComponent } from './cadastrar-movimentacoes/formulario
                  DadosMovimentacaoComponent, 
                  ItensMovimentacaoComponent, 
                  FaturasMovimentacaoComponent, 
-                 PagamentosMovimentacaoComponent, FormularioRateioComponent, FormularioRateioUnidadeComponent, FormularioReembolsoComponent, FormularioRateioPagamentoComponent, FormularioTributoComponent],
+                 PagamentosMovimentacaoComponent, 
+                 FormularioRateioComponent, 
+                 FormularioRateioUnidadeComponent, 
+                 FormularioReembolsoComponent, 
+                 FormularioRateioPagamentoComponent, 
+                 FormularioTributoComponent, 
+                 TableRateiosProgramaProjetoComponent,
+                 QtdServicosPendentesComponent],
   imports: [
     CommonModule,
     MovimentacoesRoutingModule,
