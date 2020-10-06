@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
-import { Conciliacao } from 'src/app/core/conciliacao';
 import { Provisao } from 'src/app/core/provisao';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
@@ -160,7 +159,7 @@ export class ProvisionamentoComponent implements OnInit {
             this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo de provisão, aguarde...');
             this.provisaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
-              this.fileUtils.downloadFile(dados);
+              this.fileUtils.downloadFile(dados, "provisao.xlsx");
   
               this.buscar();
               this.toastService.showSucesso('Provisão exportada com sucesso!');

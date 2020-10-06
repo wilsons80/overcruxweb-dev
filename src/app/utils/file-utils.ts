@@ -28,11 +28,11 @@ export class FileUtils {
      * Recebe um byte[] e faz o download do arquivo em excel
      * @param dados 
      */
-    downloadFile(dados) {
+    downloadFile(dados, nomeArquivo) {
         const blob = new Blob([dados], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url= window.URL.createObjectURL(blob);
         var anchor = document.createElement("a");
-        anchor.download = "conciliacao.xlsx";
+        anchor.download = nomeArquivo;
         anchor.href = url;
         anchor.click();
     }

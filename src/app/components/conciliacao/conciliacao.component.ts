@@ -174,7 +174,7 @@ export class ConciliacaoComponent implements OnInit {
             this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo para conciliação bancária, aguarde...');
             this.conciliacaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
-              this.fileUtils.downloadFile(dados);
+              this.fileUtils.downloadFile(dados, "conciliacao.xlsx");
   
               this.buscar();
               this.toastService.showSucesso('Conciliação bancária exportada com sucesso!');
