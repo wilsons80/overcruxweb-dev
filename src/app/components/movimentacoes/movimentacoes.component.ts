@@ -48,6 +48,8 @@ export class MovimentacoesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
     
 
+  expandedElement: any;
+  
   listaMovimentacoes: Movimentacoes[];
   mostrarTabela: boolean = false;
   movimentacoes: Movimentacoes = new Movimentacoes();
