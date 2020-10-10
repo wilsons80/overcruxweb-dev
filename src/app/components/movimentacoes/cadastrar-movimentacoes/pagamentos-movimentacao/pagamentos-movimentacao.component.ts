@@ -335,7 +335,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
     const dadosFatura = this.getDadosFatura(idFatura);
 
-    if(!dadosFatura.tributoMovimentacao){
+    if(!dadosFatura.tributoMovimentacao || !dadosFatura.tributoMovimentacao.id){
       dadosFatura.tributoMovimentacao = new TributoMovimentacao();
       dadosFatura.tributoMovimentacao.tributo = new Tributos();
     }

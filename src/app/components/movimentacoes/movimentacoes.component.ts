@@ -15,27 +15,21 @@ import { Programa } from 'src/app/core/programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
-import { RateiosProgramaProjetoService } from 'src/app/services/rateios-programa-projeto/rateios-programa-projeto.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
+import { CnpjPipe } from 'src/app/pipes/cnpj.pipe';
+import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 
 
-class Filter {
-  empresa: Empresa;
-  programa: Programa;
-  projeto: Projeto;
-  valor: number;
-  dataInicioDoc: Date;
-  dataFimDoc: Date;
-  dataVencimento: Date;
-  dataInicioMov: Date;
-  dataFimMov: Date;
-  numeroDocumento: string
-}
+
 
 @Component({
   selector: 'movimentacoes',
   templateUrl: './movimentacoes.component.html',
   styleUrls: ['./movimentacoes.component.css'],
+  providers: [CnpjPipe, CpfPipe],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
@@ -59,9 +53,12 @@ export class MovimentacoesComponent implements OnInit {
   projetos:Projeto[];
   programas:Programa[];
 
-  filtro = new Filter();
+  filtro: FilterMovimentacoes;
 
-  displayedColumns: string[] = ['programaprojeto', 'empresa', 'dataDocumento', 'valorUltimoPagamento', 'valorMovimentacao',  'dataMovimento', 'nrDocumento', 'icones','acoes'];
+  displayedColumns: string[] = ['programaprojeto', 'fornecedorcredor', 'cnpjcpf', 
+                                'recibo', 'dataDocumento',  'valor', 'nrtransacao', 
+                                'dataUltimoPagamento', 'categorias', 'dataproximasfaturas',
+                                'icones','acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
   perfilAcesso: Acesso;
@@ -74,8 +71,13 @@ export class MovimentacoesComponent implements OnInit {
     private empresaService: EmpresaService,
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
-    
-  ) { }
+    private dataUtilService: DataUtilService,   
+    private toastService: ToastService,
+    private cnpjPipe: CnpjPipe,
+    private cpfPipe: CpfPipe 
+  ) { 
+    this.filtro = this.movimentacoesService.filtro;
+  }
 
   ngOnInit() {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
@@ -92,9 +94,8 @@ export class MovimentacoesComponent implements OnInit {
       this.projetos = projetos;
     })
 
-    this.limpar();
     this.dataSource.paginator = this.paginator;
-    
+   
     this.getAllOrigem();
   }
 
@@ -109,7 +110,7 @@ export class MovimentacoesComponent implements OnInit {
     this.mostrarTabela = false;
     this.movimentacoes = new Movimentacoes()
     this.dataSource.data = [];
-    this.filtro = new Filter();
+    this.filtro = (this.movimentacoesService.filtro = new FilterMovimentacoes());
     this.filtro.empresa  = new Empresa();
     this.filtro.projeto  = new Projeto();
     this.filtro.programa = new Programa();
@@ -155,8 +156,8 @@ export class MovimentacoesComponent implements OnInit {
         this.movimentacoesService.excluir(movimentacoes.id).subscribe(() => {
           this.movimentacoes.id = null;
           this.consultar();
+          this.toastService.showSucesso('Movimento excluído com sucesso.');
         })
-
       } else {
         dialogRef.close();
       }
@@ -189,6 +190,8 @@ export class MovimentacoesComponent implements OnInit {
                                               this.filtro.dataVencimento,
                                               this.filtro.dataInicioMov,
                                               this.filtro.dataFimMov,
+                                              this.filtro.dataInicioPag,
+                                              this.filtro.dataFimPag,                                              
                                               this.filtro.numeroDocumento
                                               )
     .subscribe((listaMovimentacoes: Movimentacoes[]) => {
@@ -208,7 +211,7 @@ export class MovimentacoesComponent implements OnInit {
   }
 
 
-  getUltimoPagamento(movimento: Movimentacoes): number {
+  getUltimoPagamento(movimento: Movimentacoes) {
     let pagamentos  = movimento.pagamentosFatura;
 
     // Ordenação de array (decrescente)
@@ -218,8 +221,35 @@ export class MovimentacoesComponent implements OnInit {
       return 0;
     });
 
-
     const ultimoPagamento = pagamentos[0];
-    return ultimoPagamento ? ultimoPagamento.valorPagamento : 0;
+    return ultimoPagamento;
+  }
+
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
+
+
+  getFornecedorCredor(movimentacao: Movimentacoes): string {
+    if(movimentacao.empresa && movimentacao.empresa.nomeRazaoSocial) {
+      return movimentacao.empresa.nomeRazaoSocial.toUpperCase();
+    }
+
+    if(movimentacao.fornecedorColaborador && movimentacao.fornecedorColaborador.nome) {
+      return movimentacao.fornecedorColaborador.nome.toUpperCase();
+    }
+    return '';
+  }
+
+  getCnpfCpf(movimentacao: Movimentacoes): string {
+    if(movimentacao.empresa && movimentacao.empresa.cnpj) {
+      return this.cnpjPipe.transform(movimentacao.empresa.cnpj);
+    }
+
+    if(movimentacao.fornecedorColaborador && movimentacao.fornecedorColaborador.cpf) {
+      return this.cpfPipe.transform(movimentacao.fornecedorColaborador.cpf);
+    }
+    return '';
   }
 }
