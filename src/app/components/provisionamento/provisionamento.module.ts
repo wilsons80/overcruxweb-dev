@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProvisionamentoRoutingModule } from './provisionamento-routing.module';
 import { ProvisionamentoComponent } from './provisionamento.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
+import { MovimentosBancariosInconsistestesModule } from '../common/movimentos-bancarios-inconsistentes/movimentos-bancarios-inconsistestes.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { MaterialCommonModule } from 'src/app/material-modules/material-common.m
   imports: [
     CommonModule,
     ProvisionamentoRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    MovimentosBancariosInconsistestesModule
   ]
 })
 export class ProvisionamentoModule { }

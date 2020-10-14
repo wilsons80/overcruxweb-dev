@@ -1,6 +1,10 @@
 <mat-toolbar class="subtitulo">Provisionamento
-    <button *ngIf="false" fxLayoutAlign="end center" matTooltip="Provisões com registros divergentes" mat-icon-button (click)="showProvisaoDivergencia()">
-        <mat-icon fxLayoutAlign="end end" matBadge="5" matBadgeColor="warn" >notifications_none</mat-icon>
+    <button *ngIf="inconsistentes.length > 0" fxLayoutAlign="end center" 
+             matTooltip="Provisões com registros divergentes" 
+             mat-icon-button (click)="showProvisaoDivergencia()">
+        <mat-icon fxLayoutAlign="end end" matBadge={{inconsistentes.length}} matBadgeColor="warn">
+            notifications_none
+        </mat-icon>
     </button>
 </mat-toolbar>
 

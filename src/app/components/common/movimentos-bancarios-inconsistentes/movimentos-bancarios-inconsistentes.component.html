@@ -1,0 +1,29 @@
+<div style="height: 400px;">
+    <mat-toolbar color="primary">{{titulo}}</mat-toolbar>
+    <div fxLayout="row" 
+         fxLayoutGap="20px" 
+         style="font-size: 11px;"
+         fxFlexFill>
+    
+        <mat-list>
+            <span mat-subheader style="font-weight: bold; padding-left: 45%;font-size: 17px;">
+                Data
+            </span>          
+            <mat-list-item *ngFor="let reg of dados">
+               <p mat-line style="text-align: center;"> {{reg | dataSimples}} </p>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    
+    <br><br>
+    <div fxLayout="row">
+        <div fxFlex="100%" fxLayoutAlign="center center">
+            <button mat-raised-button 
+                    style="width: 240px; background-color: rgb(241,241,241);"
+                    (click)="cancelar()"  
+                    matTooltip="Fechar">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>

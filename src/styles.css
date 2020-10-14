@@ -163,3 +163,10 @@ qtd-servicos-pendentes-cell .mat-icon svg {
   color: #546E7A;
   transform: scale(.9);
 }
+
+
+.alturaDialogMovimentosInconsistentes mat-dialog-container {
+  height: 600px;
+  overflow: hidden;
+
+}

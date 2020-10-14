@@ -22,6 +22,10 @@ export class ProvisaoService extends BaseService<Provisao> {
     return this.http.post(Rotas.PROVISAO + "gerar-arquivo", lista, httpOptions);
   }
 
+  getAllInconsistentes() {
+    return this.http.get(Rotas.PROVISAO + 'inconsistentes');
+  }
+  
   getFilter(dataInicio: any,
             dataFim: any) {
 

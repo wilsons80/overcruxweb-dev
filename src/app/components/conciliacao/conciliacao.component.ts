@@ -16,6 +16,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { FileUtils } from 'src/app/utils/file-utils';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
+import { MovimentosBancariosInconsistentesComponent } from '../common/movimentos-bancarios-inconsistentes/movimentos-bancarios-inconsistentes.component';
 
 class Filter {
   contaBancaria: ContasBancaria;
@@ -52,6 +53,9 @@ export class ConciliacaoComponent implements OnInit {
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
+  inconsistentes: Conciliacao[] = [];
+
+
   constructor(
     private conciliacaoService: ConciliacaoService,
     private contasBancariaService: ContasBancariaService,
@@ -85,6 +89,11 @@ export class ConciliacaoComponent implements OnInit {
     this.limpar();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.conciliacaoService.getAllInconsistentes()
+    .subscribe((inconsistentes: Conciliacao[]) => {
+      this.inconsistentes = inconsistentes;
+    });
   
   }
 
@@ -208,8 +217,14 @@ export class ConciliacaoComponent implements OnInit {
 
 
   showConciliacaoDivergencia() {
-    console.log('showConciliacaoDivergencia');
-    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dados: this.inconsistentes.map(i => i.data),
+      titulo: 'Conciliações Inconsistentes'
+    };
+    dialogConfig.panelClass = 'alturaDialogMovimentosInconsistentes';
+
+    this.dialog.open(MovimentosBancariosInconsistentesComponent, dialogConfig);     
   }
 
   onInput(event) {

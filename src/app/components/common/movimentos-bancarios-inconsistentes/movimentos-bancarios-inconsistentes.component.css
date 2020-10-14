@@ -1,0 +1,10 @@
+mat-list {
+    flex-grow: 1;
+    border: 3px solid green;
+    overflow: auto;
+}
+
+mat-list-base mat-subheader {
+    padding-left: 42%;
+    font-size: 16px;
+}

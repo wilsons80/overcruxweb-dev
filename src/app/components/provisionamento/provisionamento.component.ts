@@ -14,6 +14,7 @@ import { ProvisaoService } from 'src/app/services/provisao/provisao.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FileUtils } from 'src/app/utils/file-utils';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { MovimentosBancariosInconsistentesComponent } from '../common/movimentos-bancarios-inconsistentes/movimentos-bancarios-inconsistentes.component';
 
 
 class Filter {
@@ -47,6 +48,8 @@ export class ProvisionamentoComponent implements OnInit {
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
+  inconsistentes: Provisao[] = [];
+
   constructor(
     private provisaoService: ProvisaoService,
     private toastService: ToastService,
@@ -74,6 +77,11 @@ export class ProvisionamentoComponent implements OnInit {
     this.limpar();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.provisaoService.getAllInconsistentes()
+    .subscribe((inconsistentes: Provisao[]) => {
+      this.inconsistentes = inconsistentes;
+    });
   
   }
 
@@ -193,8 +201,14 @@ export class ProvisionamentoComponent implements OnInit {
 
 
   showProvisaoDivergencia() {
-    console.log('showProvisaoDivergencia');
-    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dados: this.inconsistentes.map(i => i.data),
+      titulo: 'Provisionamentos Inconsistentes'
+    };
+    dialogConfig.panelClass = 'alturaDialogMovimentosInconsistentes';
+
+    this.dialog.open(MovimentosBancariosInconsistentesComponent, dialogConfig);    
   }
 
   onInput(event) {

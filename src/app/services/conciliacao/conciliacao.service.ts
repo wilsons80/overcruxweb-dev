@@ -22,6 +22,10 @@ export class ConciliacaoService extends BaseService<Conciliacao> {
     return this.http.post(Rotas.CONCILIACAO + "gerar-arquivo", lista, httpOptions);
   }
 
+  getAllInconsistentes() {
+    return this.http.get(Rotas.CONCILIACAO + 'inconsistentes');
+  }
+
   getFilter(dataInicio: any,
             dataFim: any,
             idContaBancaria: any) {
