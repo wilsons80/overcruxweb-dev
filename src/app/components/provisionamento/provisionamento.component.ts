@@ -78,11 +78,15 @@ export class ProvisionamentoComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
+    this.carregarMovimentosInconsistentes();
+  
+  }
+
+  private carregarMovimentosInconsistentes(){
     this.provisaoService.getAllInconsistentes()
     .subscribe((inconsistentes: Provisao[]) => {
       this.inconsistentes = inconsistentes;
     });
-  
   }
 
   carregar() {
@@ -94,6 +98,7 @@ export class ProvisionamentoComponent implements OnInit {
       this.verificaMostrarTabela(provisoes);
 
       this.masterToggle();
+      this.carregarMovimentosInconsistentes();
     })
   }
 

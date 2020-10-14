@@ -90,11 +90,15 @@ export class ConciliacaoComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
+    this.carregarMovimentosInconsistentes();
+  
+  }
+
+  private carregarMovimentosInconsistentes(){
     this.conciliacaoService.getAllInconsistentes()
     .subscribe((inconsistentes: Conciliacao[]) => {
       this.inconsistentes = inconsistentes;
     });
-  
   }
 
   carregar() {
@@ -107,6 +111,7 @@ export class ConciliacaoComponent implements OnInit {
       this.verificaMostrarTabela(conciliacoes);
 
       this.masterToggle();
+      this.carregarMovimentosInconsistentes();
     })
   }
 
