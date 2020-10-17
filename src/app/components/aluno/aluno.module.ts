@@ -1,3 +1,4 @@
+import { ComboPesquisavelModule } from './../common/combo-pesquisavel/combo-pesquisavel.module';
 import { CadastarAlunoComponent } from './cadastar-aluno/cadastar-aluno.component';
 import { AlunoComponent } from './aluno.component';
 import { NgModule } from '@angular/core';
@@ -19,7 +20,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AlunoRoutingModule,
     PessoaFisicaModule,
     MaterialCommonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ComboPesquisavelModule
+
   ]
 })
 export class AlunoModule { }

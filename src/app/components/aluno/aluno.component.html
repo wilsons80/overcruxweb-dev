@@ -4,6 +4,7 @@
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
+<!--
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <mat-icon>search</mat-icon>
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
@@ -15,6 +16,20 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+-->
+
+            <div ngModelGroup="comboBeneficiario" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="40px">
+                <combo-pesquisavel #comboEmpresa 
+                                nome="beneficiario" 
+                                [itens]="alunos" 
+                                itemDescricao="nome"
+                                itemId="id"
+                                [showDisplayId]="false" 
+                                [obrigatorio]="false"
+                                placeholder="Informe o beneficiário..."
+                                [(valor)]="aluno">
+                </combo-pesquisavel>
             </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>

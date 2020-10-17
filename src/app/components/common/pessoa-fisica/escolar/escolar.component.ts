@@ -19,6 +19,13 @@ export class EscolarComponent implements OnInit {
     {tipo: 'Privada', flag: 'R'}
   ];
 
+  
+  turno: any[] = [
+    {tipo: 'Matutino', flag: 'M'},
+    {tipo: 'Vespertino', flag: 'V'},
+    {tipo: 'Noturno', flag: 'N'}
+  ];
+
   constructor(private condicaoMoradiaService: CondicoesMoradiaService) { }
 
   ngOnInit() {
