@@ -33,4 +33,6 @@ export class Aluno {
 
 	vulnerabilidades: VulnerabilidadesAluno[];
 	encaminhamentos: EncaminhamentoAluno[];
+
+	nome?: string;
 }

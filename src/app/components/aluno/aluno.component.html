@@ -19,17 +19,19 @@
             </div>
 -->
 
-            <div ngModelGroup="comboBeneficiario" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="40px">
-                <combo-pesquisavel #comboEmpresa 
-                                nome="beneficiario" 
-                                [itens]="alunos" 
-                                itemDescricao="nome"
-                                itemId="id"
-                                [showDisplayId]="false" 
-                                [obrigatorio]="false"
-                                placeholder="Informe o beneficiário..."
-                                [(valor)]="aluno">
-                </combo-pesquisavel>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <div ngModelGroup="comboBeneficiario" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="40px">
+                    <combo-pesquisavel #comboBeneficiario 
+                                       nome="beneficiario" 
+                                       [itens]="alunos" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Informe o beneficiário..."
+                                       [(valor)]="aluno">
+                    </combo-pesquisavel>
+                </div>
             </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>

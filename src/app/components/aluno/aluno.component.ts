@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from 'src/app/core/acesso';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 
 @Component({
   selector: 'app-aluno',
@@ -20,6 +21,7 @@ export class AlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
  
+  itens: PessoaFisica[];
   alunos: Aluno[];
   aluno: Aluno = new Aluno();
 
@@ -52,7 +54,7 @@ export class AlunoComponent implements OnInit {
   }
 
   consultar() {
-    if (this.aluno.id) {
+    if (this.aluno && this.aluno.id) {
       this.alunoService.getById(this.aluno.id).subscribe((aluno: Aluno) => {
         if(!aluno){
           this.mostrarTabela = false
@@ -99,6 +101,12 @@ export class AlunoComponent implements OnInit {
   getAll() {
     this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
       this.alunos = alunos;
+
+      this.alunos.forEach(a => {
+        a.nome = a.pessoaFisica.nome;
+      })
+
+      this.itens = this.alunos.map(a => a.pessoaFisica);
       this.dataSource.data = alunos ? alunos : [];
       this.verificaMostrarTabela(alunos);
     });
