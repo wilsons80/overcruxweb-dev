@@ -21,7 +21,6 @@ export class AlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
  
-  itens: PessoaFisica[];
   alunos: Aluno[];
   aluno: Aluno = new Aluno();
 
@@ -106,7 +105,6 @@ export class AlunoComponent implements OnInit {
         a.nome = a.pessoaFisica.nome;
       })
 
-      this.itens = this.alunos.map(a => a.pessoaFisica);
       this.dataSource.data = alunos ? alunos : [];
       this.verificaMostrarTabela(alunos);
     });
