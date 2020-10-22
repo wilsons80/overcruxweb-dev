@@ -105,6 +105,15 @@ export class AlunoComponent implements OnInit {
         a.nome = a.pessoaFisica.nome;
       })
 
+      this.alunos.forEach(a => {
+        a.nomeMae = a.pessoaFisica.nomeMae;
+      })
+
+      this.alunos.forEach(a => {
+        a.cpf = a.pessoaFisica.cpf;
+      })
+
+      
       this.dataSource.data = alunos ? alunos : [];
       this.verificaMostrarTabela(alunos);
     });

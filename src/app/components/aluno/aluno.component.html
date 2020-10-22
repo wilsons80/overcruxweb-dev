@@ -20,7 +20,7 @@
 -->
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <div ngModelGroup="comboBeneficiario" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="40px">
+                <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboBeneficiario 
                                        nome="beneficiario" 
                                        [itens]="alunos" 
@@ -28,10 +28,37 @@
                                        itemId="id"
                                        [showDisplayId]="false" 
                                        [obrigatorio]="false"
-                                       placeholder="Informe o beneficiário..."
+                                       placeholder="Nome do beneficiário"
                                        [(valor)]="aluno">
                     </combo-pesquisavel>
                 </div>
+
+                <div ngModelGroup="comboMaeBeneficiario" fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="40px">
+                    <combo-pesquisavel #comboMaeBeneficiario 
+                                       nome="maeBeneficiario" 
+                                       [itens]="alunos" 
+                                       itemDescricao="nomeMae"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Mãe do beneficiário"
+                                       [(valor)]="aluno">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboCpf" fxFlex="15%" fxLayoutGap="20px" fxFlexOffset="40px">
+                    <combo-pesquisavel #comboMaeBeneficiario 
+                                       nome="cpf" 
+                                       [itens]="alunos" 
+                                       itemDescricao="cpf"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="CPF"
+                                       [(valor)]="aluno">
+                    </combo-pesquisavel>
+                </div>
+
             </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
