@@ -4,5 +4,5 @@ import { PessoaFisica } from './pessoa-fisica';
 export class FilterAlunos{
 	aluno: Aluno;
 	maeAluno: PessoaFisica;
-	cpfAluno: Aluno;
+	cpfAluno: PessoaFisica;
 }

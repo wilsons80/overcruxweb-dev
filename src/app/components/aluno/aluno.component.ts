@@ -13,6 +13,8 @@ import { Acesso } from 'src/app/core/acesso';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import * as _ from 'lodash';
+import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
 
 @Component({
   selector: 'app-aluno',
@@ -26,7 +28,7 @@ export class AlunoComponent implements OnInit {
  
   comboAluno: Aluno[];
   comboMae: PessoaFisica[];
-  comboCpf: Aluno[];
+  comboCpf: PessoaFisica[];
 
 
   alunos: Aluno[];
@@ -45,7 +47,8 @@ export class AlunoComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute:ActivatedRoute,
-    private cpfPipe: CpfPipe 
+    private cpfPipe: CpfPipe ,
+    private funcoesUteisService: FuncoesUteisService
   ) { 
     this.filtro = this.alunoService.filtro;
   }
@@ -71,7 +74,7 @@ export class AlunoComponent implements OnInit {
     if (this.filtro.aluno.id || this.filtro.maeAluno.id || this.filtro.cpfAluno.id) {
       this.alunoService.getFilter(this.filtro.aluno.id,  
                                   this.filtro.maeAluno.nomeMae, 
-                                  this.filtro.cpfAluno.pessoaFisica.cpf)
+                                  this.filtro.cpfAluno.cpf)
       .subscribe((alunos: Aluno[]) => {
         this.verificaMostrarTabela(alunos);
       });
@@ -128,66 +131,62 @@ export class AlunoComponent implements OnInit {
   carregarCombos(){
     this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
       this.comboAluno = alunos;
-      this.comboMae = alunos.map(a => a.pessoaFisica);
-      this.comboCpf = alunos;
+      this.comboMae   = alunos.map(a => a.pessoaFisica);
+      this.comboCpf   = alunos.map(a => a.pessoaFisica);
+
+      this.preencherCPF();
+      this.preencherNomeAluno();
+      this.preencherNomeMae();
 
 
-      //===================================================================
-      this.comboAluno.forEach(a => {
-        a.nome    = a.pessoaFisica.nome;
-      })
+      this.comboAluno.forEach(a => a.nome = a.pessoaFisica.nome);
       this.comboAluno.sort((a,b) => {
         if (a.nome > b.nome) {return 1;}
         if (a.nome < b.nome) {return -1;}
         return 0;
       });
-      //===================================================================
 
       
-      //===================================================================
       this.comboMae = this.comboMae.filter(a => !!a.nomeMae);
       this.comboMae.sort((a,b) => {
         if (a.nomeMae > b.nomeMae) {return 1;}
         if (a.nomeMae < b.nomeMae) {return -1;}
         return 0;
       });
-      
-      var uniqueComboMae = [];
-      var distinctComboMae = [];
-      for( let i = 0; i < this.comboMae.length; i++ ){
-        if( !uniqueComboMae[this.comboMae[i].nomeMae]){
-          distinctComboMae.push(this.comboMae[i]);
-          uniqueComboMae[this.comboMae[i].nomeMae] = 1;
-        }
-      }
-      this.comboMae = distinctComboMae;
-      //===================================================================
+      this.comboMae = this.funcoesUteisService.arrayDistinct(this.comboMae, 'nomeMae');
 
 
-      //===================================================================
       this.comboCpf.forEach(a => {
-        a.cpf     = this.cpfPipe.transform(a.pessoaFisica.cpf || '00000000000');
+        a.cpf = a.cpf || '00000000000';
+        a.cpf = this.cpfPipe.transform(a.cpf);
       })
       this.comboCpf.sort((a,b) => {
         if (a.cpf > b.cpf) {return 1;}
         if (a.cpf < b.cpf) {return -1;}
         return 0;
       });
-
-      var uniqueComboCpf = [];
-      var distinctComboCpf = [];
-      for( let i = 0; i < this.comboCpf.length; i++ ){
-        if( !uniqueComboCpf[this.comboCpf[i].cpf]){
-          distinctComboCpf.push(this.comboCpf[i]);
-          uniqueComboCpf[this.comboCpf[i].cpf] = 1;
-        }
-      }
-      this.comboCpf = distinctComboCpf;
-      //===================================================================
-
-
+      this.comboCpf = this.funcoesUteisService.arrayDistinct(this.comboCpf, 'cpf');
     });
   }
 
+
+
+  preencherCPF(){
+    if (this.alunoService.filtro.cpfAluno.id) {
+      this.filtro.cpfAluno = _.find(this.comboCpf, { id: this.alunoService.filtro.cpfAluno.id });
+    }
+  }
+
+  preencherNomeAluno(){
+    if (this.alunoService.filtro.aluno.id) {
+      this.filtro.aluno = _.find(this.comboAluno, { id: this.alunoService.filtro.aluno.id });
+    }
+  }
+
+  preencherNomeMae(){
+    if (this.alunoService.filtro.maeAluno.id) {
+      this.filtro.maeAluno = _.find(this.comboMae, { id: this.alunoService.filtro.maeAluno.id });
+    }
+  }
 
 }

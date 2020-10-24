@@ -51,8 +51,7 @@ export class AlunoService extends BaseService<Aluno> {
     }
 
     if(!this.filtro.cpfAluno) {
-      this.filtro.cpfAluno  = new Aluno();
-      this.filtro.cpfAluno.pessoaFisica = new PessoaFisica();
+      this.filtro.cpfAluno = new PessoaFisica();
     }
   }
 

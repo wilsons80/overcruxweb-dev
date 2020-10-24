@@ -21,7 +21,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
 import { CnpjPipe } from 'src/app/pipes/cnpj.pipe';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
-
+import * as _ from 'lodash';
 
 
 
@@ -84,18 +84,20 @@ export class MovimentacoesComponent implements OnInit {
 
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
+      this.preencherComboEmpresa();
     })
 
     this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
       this.programas = programas;
+      this.preencherComboPrograma();
     })
 
     this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
       this.projetos = projetos;
+      this.preencherComboProjeto();
     })
 
-    this.dataSource.paginator = this.paginator;
-   
+    this.dataSource.paginator = this.paginator;   
     this.getAllOrigem();
   }
 
@@ -252,4 +254,25 @@ export class MovimentacoesComponent implements OnInit {
     }
     return '';
   }
+
+
+
+  preencherComboEmpresa(){
+    if (this.movimentacoesService.filtro.empresa.id) {
+      this.filtro.empresa = _.find(this.empresas, { id: this.movimentacoesService.filtro.empresa.id});
+    }
+  }
+
+  preencherComboPrograma(){
+    if (this.movimentacoesService.filtro.programa.id) {
+      this.filtro.programa = _.find(this.programas, { id: this.movimentacoesService.filtro.programa.id});
+    }
+  }
+
+  preencherComboProjeto(){
+    if (this.movimentacoesService.filtro.projeto.id) {
+      this.filtro.projeto = _.find(this.projetos, { id: this.movimentacoesService.filtro.projeto.id});
+    }
+  }
+
 }
