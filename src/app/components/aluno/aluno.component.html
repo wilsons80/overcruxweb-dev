@@ -9,7 +9,7 @@
                 <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboBeneficiario 
                                        nome="beneficiario" 
-                                       [itens]="alunosCombo" 
+                                       [itens]="comboAluno" 
                                        itemDescricao="nome"
                                        itemId="id"
                                        [showDisplayId]="false" 
@@ -22,7 +22,7 @@
                 <div ngModelGroup="comboMaeBeneficiario" fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboMaeBeneficiario 
                                        nome="maeBeneficiario" 
-                                       [itens]="alunosCombo" 
+                                       [itens]="comboMae" 
                                        itemDescricao="nomeMae"
                                        itemId="id"
                                        [showDisplayId]="false" 
@@ -32,10 +32,10 @@
                     </combo-pesquisavel>
                 </div>
 
-                <div ngModelGroup="comboCpf" fxFlex="15%" fxLayoutGap="20px" fxFlexOffset="40px">
-                    <combo-pesquisavel #comboMaeBeneficiario 
+                <div ngModelGroup="comboCpfBeneficiario" fxFlex="15%" fxLayoutGap="20px" fxFlexOffset="40px">
+                    <combo-pesquisavel #comboCpfBeneficiario 
                                        nome="cpf" 
-                                       [itens]="alunosCombo" 
+                                       [itens]="comboCpf" 
                                        itemDescricao="cpf"
                                        itemId="id"
                                        [showDisplayId]="false" 

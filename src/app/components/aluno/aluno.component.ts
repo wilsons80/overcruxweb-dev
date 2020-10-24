@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { Acesso } from 'src/app/core/acesso';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 
 @Component({
   selector: 'app-aluno',
@@ -23,7 +24,11 @@ export class AlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
  
-  alunosCombo: Aluno[];
+  comboAluno: Aluno[];
+  comboMae: PessoaFisica[];
+  comboCpf: Aluno[];
+
+
   alunos: Aluno[];
   filtro: FilterAlunos;
 
@@ -62,9 +67,10 @@ export class AlunoComponent implements OnInit {
   }
 
   consultar() {   
+    this.alunoService.initFiltro();
     if (this.filtro.aluno.id || this.filtro.maeAluno.id || this.filtro.cpfAluno.id) {
       this.alunoService.getFilter(this.filtro.aluno.id,  
-                                  this.filtro.maeAluno.pessoaFisica.id, 
+                                  this.filtro.maeAluno.nomeMae, 
                                   this.filtro.cpfAluno.pessoaFisica.cpf)
       .subscribe((alunos: Aluno[]) => {
         this.verificaMostrarTabela(alunos);
@@ -105,28 +111,54 @@ export class AlunoComponent implements OnInit {
   getAll() {
     this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
       this.alunos = alunos;
-      this.dataSource.data = alunos ? alunos : [];
       this.verificaMostrarTabela(alunos);
     });
   }
 
   verificaMostrarTabela(alunos: Aluno[]) {
-    if (!alunos ||alunos.length === 0) {
+    if (!alunos || alunos.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhum aluno encontrado.';
     } else {
       this.mostrarTabela = true;
     }
+    this.dataSource.data = alunos ? alunos : [];
   }
 
   carregarCombos(){
     this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunosCombo = alunos;
-      this.alunosCombo.forEach(a => {
+      this.comboAluno = alunos;
+      this.comboMae = alunos.map(a => a.pessoaFisica);
+      this.comboCpf = alunos;
+
+
+      this.comboAluno.forEach(a => {
         a.nome    = a.pessoaFisica.nome;
-        a.nomeMae = a.pessoaFisica.nomeMae;
+      })
+
+
+      this.comboMae = this.comboMae.filter(a => !!a.nomeMae);
+      this.comboMae.sort((a,b) => {
+        if (a.nomeMae > b.nomeMae) {return 1;}
+        if (a.nomeMae < b.nomeMae) {return -1;}
+        return 0;
+      });
+
+      
+      var unique = [];
+      var distinct = [];
+      for( let i = 0; i < this.comboMae.length; i++ ){
+        if( !unique[this.comboMae[i].nomeMae]){
+          distinct.push(this.comboMae[i]);
+          unique[this.comboMae[i].nomeMae] = 1;
+        }
+      }
+      this.comboMae = distinct;
+
+      this.comboCpf.forEach(a => {
         a.cpf     = this.cpfPipe.transform(a.pessoaFisica.cpf || '00000000000');
       })
+
     });
   }
 

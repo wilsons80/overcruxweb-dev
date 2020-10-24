@@ -4,6 +4,7 @@ import { Aluno } from 'src/app/core/aluno';
 import { BaseService } from '../base/base.service';
 import { Rotas } from 'src/app/core/rotas';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 
 @Injectable({
   providedIn: 'root'
@@ -24,17 +25,17 @@ export class AlunoService extends BaseService<Aluno> {
   
 
   getFilter(idAluno: string|number,
-            idPessoaFisicaMae: string|number,
+            nomePessoaFisicaMae: string|number,
             cpfPessoaFisicaAluno: string|number ) {
 
     idAluno              = idAluno || '';
-    idPessoaFisicaMae    = idPessoaFisicaMae || '';
+    nomePessoaFisicaMae  = nomePessoaFisicaMae || '';
     cpfPessoaFisicaAluno = cpfPessoaFisicaAluno || '';
 
 
     return this.http.get(Rotas.ALUNO + 'filter', { params: {
         idAluno: `${idAluno}` ,
-        idPessoaFisicaMae: `${idPessoaFisicaMae}` ,
+        nomePessoaFisicaMae: `${nomePessoaFisicaMae}` ,
         cpfPessoaFisicaAluno: `${cpfPessoaFisicaAluno}`
         }
     });
@@ -46,11 +47,12 @@ export class AlunoService extends BaseService<Aluno> {
     }
 
     if(!this.filtro.maeAluno) {
-      this.filtro.maeAluno = new Aluno();
+      this.filtro.maeAluno = new PessoaFisica();
     }
 
     if(!this.filtro.cpfAluno) {
       this.filtro.cpfAluno  = new Aluno();
+      this.filtro.cpfAluno.pessoaFisica = new PessoaFisica();
     }
   }
 
