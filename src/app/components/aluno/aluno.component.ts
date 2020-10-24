@@ -132,32 +132,59 @@ export class AlunoComponent implements OnInit {
       this.comboCpf = alunos;
 
 
+      //===================================================================
       this.comboAluno.forEach(a => {
         a.nome    = a.pessoaFisica.nome;
       })
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+      //===================================================================
 
-
+      
+      //===================================================================
       this.comboMae = this.comboMae.filter(a => !!a.nomeMae);
       this.comboMae.sort((a,b) => {
         if (a.nomeMae > b.nomeMae) {return 1;}
         if (a.nomeMae < b.nomeMae) {return -1;}
         return 0;
       });
-
       
-      var unique = [];
-      var distinct = [];
+      var uniqueComboMae = [];
+      var distinctComboMae = [];
       for( let i = 0; i < this.comboMae.length; i++ ){
-        if( !unique[this.comboMae[i].nomeMae]){
-          distinct.push(this.comboMae[i]);
-          unique[this.comboMae[i].nomeMae] = 1;
+        if( !uniqueComboMae[this.comboMae[i].nomeMae]){
+          distinctComboMae.push(this.comboMae[i]);
+          uniqueComboMae[this.comboMae[i].nomeMae] = 1;
         }
       }
-      this.comboMae = distinct;
+      this.comboMae = distinctComboMae;
+      //===================================================================
 
+
+      //===================================================================
       this.comboCpf.forEach(a => {
         a.cpf     = this.cpfPipe.transform(a.pessoaFisica.cpf || '00000000000');
       })
+      this.comboCpf.sort((a,b) => {
+        if (a.cpf > b.cpf) {return 1;}
+        if (a.cpf < b.cpf) {return -1;}
+        return 0;
+      });
+
+      var uniqueComboCpf = [];
+      var distinctComboCpf = [];
+      for( let i = 0; i < this.comboCpf.length; i++ ){
+        if( !uniqueComboCpf[this.comboCpf[i].cpf]){
+          distinctComboCpf.push(this.comboCpf[i]);
+          uniqueComboCpf[this.comboCpf[i].cpf] = 1;
+        }
+      }
+      this.comboCpf = distinctComboCpf;
+      //===================================================================
+
 
     });
   }
