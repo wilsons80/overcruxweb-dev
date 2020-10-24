@@ -4,58 +4,44 @@
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
-<!--
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <mat-icon>search</mat-icon>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-label>Selecione um beneficiário</mat-label>
-                    <mat-select [(ngModel)]="aluno" name="aluno">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of alunos" [value]="d">
-                            {{ d.matriculaAluno }} - {{ d.pessoaFisica.nome }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
--->
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboBeneficiario 
                                        nome="beneficiario" 
-                                       [itens]="alunos" 
+                                       [itens]="alunosCombo" 
                                        itemDescricao="nome"
                                        itemId="id"
                                        [showDisplayId]="false" 
                                        [obrigatorio]="false"
                                        placeholder="Nome do beneficiário"
-                                       [(valor)]="aluno">
+                                       [(valor)]="filtro.aluno">
                     </combo-pesquisavel>
                 </div>
 
                 <div ngModelGroup="comboMaeBeneficiario" fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboMaeBeneficiario 
                                        nome="maeBeneficiario" 
-                                       [itens]="alunos" 
+                                       [itens]="alunosCombo" 
                                        itemDescricao="nomeMae"
                                        itemId="id"
                                        [showDisplayId]="false" 
                                        [obrigatorio]="false"
                                        placeholder="Mãe do beneficiário"
-                                       [(valor)]="aluno">
+                                       [(valor)]="filtro.maeAluno">
                     </combo-pesquisavel>
                 </div>
 
                 <div ngModelGroup="comboCpf" fxFlex="15%" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboMaeBeneficiario 
                                        nome="cpf" 
-                                       [itens]="alunos" 
+                                       [itens]="alunosCombo" 
                                        itemDescricao="cpf"
                                        itemId="id"
                                        [showDisplayId]="false" 
                                        [obrigatorio]="false"
-                                       placeholder="CPF"
-                                       [(valor)]="aluno">
+                                       placeholder="CPF do beneficiário"
+                                       [(valor)]="filtro.cpfAluno">
                     </combo-pesquisavel>
                 </div>
 

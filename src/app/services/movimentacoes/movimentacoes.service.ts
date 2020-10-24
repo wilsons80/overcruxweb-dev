@@ -3,14 +3,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../base/base.service';
 import { HttpClient } from '@angular/common/http';
 import { Rotas } from 'src/app/core/rotas';
-import { DataUtilService } from '../commons/data-util.service';
-import { Empresa } from 'src/app/core/empresa';
-import { Programa } from 'src/app/core/programa';
-import { Projeto } from 'src/app/core/projeto';
 import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
-
-
-
 
 @Injectable({
   providedIn: 'root'

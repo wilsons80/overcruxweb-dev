@@ -101,7 +101,7 @@ export class DataUtilService {
 
 
   /**
-   * Como usar
+   * Como usar mascara para campos com data no formato dd/MM/yyyy
    * 
    * (input)="onInput($event)"
    * @param event 

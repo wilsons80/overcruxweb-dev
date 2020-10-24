@@ -35,8 +35,6 @@ export class Aluno {
 	encaminhamentos: EncaminhamentoAluno[];
 
 	nome?: string;
-
 	nomeMae?: string;
-
 	cpf?: string;
 }
