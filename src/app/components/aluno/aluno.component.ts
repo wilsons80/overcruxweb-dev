@@ -145,16 +145,6 @@ export class AlunoComponent implements OnInit {
       this.comboMae   = pessoas;
       this.comboCpf   = pessoas;
 
-      for (var _i = 0; _i < 15000; _i++) {
-        let c = new ComboPessoaFisica();
-        c.id = _i;
-        c.nome = 'nome ' + _i;
-        c.nomeMae = 'mae ' + _i;
-        c.cpf = '00000' + _i;
-        this.comboMae.push(c);
-        this.comboCpf.push(c);
-      }
-
       this.preencherCPF();
       this.preencherNomeMae();
 
@@ -186,14 +176,6 @@ export class AlunoComponent implements OnInit {
 
     this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
       this.comboAluno = alunos;
-
-      for (var _i = 0; _i < 15000; _i++) {
-        let c = new ComboAluno();
-        c.id = _i;
-        c.nome = 'nome ' + _i;
-        this.comboAluno.push(c)
-      }
-
       this.preencherNomeAluno();
 
 
