@@ -12,12 +12,12 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { Acesso } from 'src/app/core/acesso';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
-import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import * as _ from 'lodash';
 import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
 import { ComboAluno } from 'src/app/core/combo-aluno';
 import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
 import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-aluno',
@@ -51,7 +51,8 @@ export class AlunoComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute:ActivatedRoute,
     private cpfPipe: CpfPipe ,
-    private funcoesUteisService: FuncoesUteisService
+    private funcoesUteisService: FuncoesUteisService,
+    private toastService: ToastService
   ) { 
     this.filtro = this.alunoService.filtro;
   }
@@ -61,7 +62,7 @@ export class AlunoComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
 
     this.carregarCombos(); 
-    this.consultar();   
+    this.carregar();   
   }
 
 
@@ -72,7 +73,7 @@ export class AlunoComponent implements OnInit {
     this.alunoService.initFiltro();
   }
 
-  consultar() {   
+  carregar() {
     this.alunoService.initFiltro();
     if (this.filtro.aluno.id || this.filtro.maeAluno.id || this.filtro.cpfAluno.id) {
       this.alunoService.getFilter(this.filtro.aluno.id,  
@@ -82,6 +83,15 @@ export class AlunoComponent implements OnInit {
         this.verificaMostrarTabela(alunos);
       });
     } 
+  }
+
+  consultar() { 
+    if (!this.filtro.aluno.id && !this.filtro.maeAluno.id && !this.filtro.cpfAluno.id) {
+      this.toastService.showAlerta('Informe pelo menos um critério de pesquisa.');
+      return;
+    }else{
+      this.carregar();
+    }
   }
 
   atualizar(aluno: Aluno) {
@@ -135,6 +145,16 @@ export class AlunoComponent implements OnInit {
       this.comboMae   = pessoas;
       this.comboCpf   = pessoas;
 
+      for (var _i = 0; _i < 15000; _i++) {
+        let c = new ComboPessoaFisica();
+        c.id = _i;
+        c.nome = 'nome ' + _i;
+        c.nomeMae = 'mae ' + _i;
+        c.cpf = '00000' + _i;
+        this.comboMae.push(c);
+        this.comboCpf.push(c);
+      }
+
       this.preencherCPF();
       this.preencherNomeMae();
 
@@ -166,6 +186,14 @@ export class AlunoComponent implements OnInit {
 
     this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
       this.comboAluno = alunos;
+
+      for (var _i = 0; _i < 15000; _i++) {
+        let c = new ComboAluno();
+        c.id = _i;
+        c.nome = 'nome ' + _i;
+        this.comboAluno.push(c)
+      }
+
       this.preencherNomeAluno();
 
 

@@ -21,8 +21,10 @@
                                [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
     </mat-option>
 
-    <mat-option></mat-option>
-    <mat-option *ngFor="let item of itensFilter | async" [value]="item" matTooltip="{{ itemToString(item) }}">
-        {{ itemToString(item).toUpperCase() }}
-    </mat-option>
+    <cdk-virtual-scroll-viewport itemSize="50" [style.height.px]=5*28>
+        <mat-option></mat-option>
+        <mat-option *cdkVirtualFor="let item of itensFilter | async" [value]="item" matTooltip="{{ itemToString(item) }}">
+            {{ itemToString(item).toUpperCase() }}
+        </mat-option>
+    </cdk-virtual-scroll-viewport>
 </mat-select>

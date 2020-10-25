@@ -1,3 +1,4 @@
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +22,8 @@ import { ComboPesquisavelComponent } from './combo-pesquisavel.component';
     MatTooltipModule,
     ReactiveFormsModule,
     NgxMatSelectSearchModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ScrollingModule
   ],
 
   declarations: [
