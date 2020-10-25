@@ -15,6 +15,9 @@ import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import * as _ from 'lodash';
 import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
+import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 
 @Component({
   selector: 'app-aluno',
@@ -26,11 +29,10 @@ export class AlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
  
-  comboAluno: Aluno[];
-  comboMae: PessoaFisica[];
-  comboCpf: PessoaFisica[];
-
-
+  comboAluno: ComboAluno[];
+  comboMae: ComboPessoaFisica[];
+  comboCpf: ComboPessoaFisica[];
+  
   alunos: Aluno[];
   filtro: FilterAlunos;
 
@@ -44,6 +46,7 @@ export class AlunoComponent implements OnInit {
 
   constructor(
     private alunoService: AlunoService,
+    private pessoaFisicaService: PessoaFisicaService,
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute:ActivatedRoute,
@@ -57,8 +60,8 @@ export class AlunoComponent implements OnInit {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.dataSource.paginator = this.paginator;
 
-    this.carregarCombos();    
-    this.consultar();
+    this.carregarCombos(); 
+    this.consultar();   
   }
 
 
@@ -78,9 +81,7 @@ export class AlunoComponent implements OnInit {
       .subscribe((alunos: Aluno[]) => {
         this.verificaMostrarTabela(alunos);
       });
-    } else {
-      this.getAll();
-    }
+    } 
   }
 
   atualizar(aluno: Aluno) {
@@ -129,24 +130,16 @@ export class AlunoComponent implements OnInit {
   }
 
   carregarCombos(){
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.comboAluno = alunos;
-      this.comboMae   = alunos.map(a => a.pessoaFisica);
-      this.comboCpf   = alunos.map(a => a.pessoaFisica);
+
+    this.pessoaFisicaService.getAllPessoasByCombo().subscribe((pessoas: ComboPessoaFisica[]) => {
+      this.comboMae   = pessoas;
+      this.comboCpf   = pessoas;
 
       this.preencherCPF();
-      this.preencherNomeAluno();
       this.preencherNomeMae();
 
 
-      this.comboAluno.forEach(a => a.nome = a.pessoaFisica.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      });
-
-      
+      //====================================================================================
       this.comboMae = this.comboMae.filter(a => !!a.nomeMae);
       this.comboMae.sort((a,b) => {
         if (a.nomeMae > b.nomeMae) {return 1;}
@@ -156,6 +149,7 @@ export class AlunoComponent implements OnInit {
       this.comboMae = this.funcoesUteisService.arrayDistinct(this.comboMae, 'nomeMae');
 
 
+      //====================================================================================
       this.comboCpf.forEach(a => {
         a.cpf = a.cpf || '00000000000';
         a.cpf = this.cpfPipe.transform(a.cpf);
@@ -166,6 +160,23 @@ export class AlunoComponent implements OnInit {
         return 0;
       });
       this.comboCpf = this.funcoesUteisService.arrayDistinct(this.comboCpf, 'cpf');
+
+
+    })
+
+    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.comboAluno = alunos;
+      this.preencherNomeAluno();
+
+
+      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+
+      
     });
   }
 

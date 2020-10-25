@@ -1,8 +1,8 @@
-import { Aluno } from './aluno'
-import { PessoaFisica } from './pessoa-fisica';
+import { ComboAluno } from './combo-aluno';
+import { ComboPessoaFisica } from './combo-pessoa-fisica';
 
 export class FilterAlunos{
-	aluno: Aluno;
-	maeAluno: PessoaFisica;
-	cpfAluno: PessoaFisica;
+	aluno: ComboAluno;
+	maeAluno: ComboPessoaFisica;
+	cpfAluno: ComboPessoaFisica;
 }

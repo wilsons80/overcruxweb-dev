@@ -12,6 +12,9 @@ export class PessoaFisicaService extends BaseService<PessoaFisica> {
     super(http, Rotas.PESSOA_FISICA);
   }
 
+  getAllPessoasByCombo() {
+    return this.http.get(`${Rotas.PESSOA_FISICA}dados/resumidos`);
+  }
 
   getAllColaboradoresFornecedores() {
     return this.http.get(`${Rotas.PESSOA_FISICA}fornecedor_colaborador`);

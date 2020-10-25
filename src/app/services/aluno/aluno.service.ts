@@ -4,7 +4,8 @@ import { Aluno } from 'src/app/core/aluno';
 import { BaseService } from '../base/base.service';
 import { Rotas } from 'src/app/core/rotas';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
-import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,13 @@ export class AlunoService extends BaseService<Aluno> {
     this.initFiltro();
   }
 
+  getAllAlunosByCombo() {
+    return this.http.get(`${Rotas.ALUNO}dados/resumidos`);
+  }
+
   getAlunosByNome(nome: string) {
     return this.http.get(`${Rotas.ALUNO}nome/${nome}`);
   }
-
-  
 
   getFilter(idAluno: string|number,
             nomePessoaFisicaMae: string|number,
@@ -43,15 +46,15 @@ export class AlunoService extends BaseService<Aluno> {
 
   initFiltro() {
     if(!this.filtro.aluno) {
-      this.filtro.aluno  = new Aluno();
+      this.filtro.aluno  = new ComboAluno();
     }
 
     if(!this.filtro.maeAluno) {
-      this.filtro.maeAluno = new PessoaFisica();
+      this.filtro.maeAluno = new ComboPessoaFisica();
     }
 
     if(!this.filtro.cpfAluno) {
-      this.filtro.cpfAluno = new PessoaFisica();
+      this.filtro.cpfAluno = new ComboPessoaFisica();
     }
   }
 
