@@ -170,14 +170,12 @@ export class AlunoComponent implements OnInit {
         return 0;
       });
       this.comboCpf = this.funcoesUteisService.arrayDistinct(this.comboCpf, 'cpf');
-
-
     })
 
+    
     this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
       this.comboAluno = alunos;
       this.preencherNomeAluno();
-
 
       this.comboAluno.forEach(a => a.nome = a.nome);
       this.comboAluno.sort((a,b) => {

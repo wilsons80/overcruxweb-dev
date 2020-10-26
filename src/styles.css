@@ -170,3 +170,7 @@ qtd-servicos-pendentes-cell .mat-icon svg {
   overflow: hidden;
 
 }
+
+cdk-virtual-scroll-viewport {
+  height: 190px !important;
+}
