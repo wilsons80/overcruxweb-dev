@@ -4,16 +4,19 @@
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <mat-icon>search</mat-icon>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-label>Selecione um familiar</mat-label>
-                    <mat-select [(ngModel)]="familiar" name="familiar">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of familiares" [value]="d">
-                            {{ d.pessoasFisica.nome }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+
+                <div ngModelGroup="comboFamiliar" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="40px">
+                    <combo-pesquisavel #comboFamiliar 
+                                       nome="familiar" 
+                                       [itens]="familiares" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Informe o nome do familiar"
+                                       [(valor)]="familiar">
+                    </combo-pesquisavel>
+                </div>
             </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>

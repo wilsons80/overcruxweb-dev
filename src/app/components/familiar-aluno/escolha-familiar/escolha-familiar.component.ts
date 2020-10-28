@@ -13,6 +13,8 @@ import { FamiliarAlunoService } from 'src/app/services/familiar-aluno/familiar-a
 import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { startWith, map } from 'rxjs/operators';
+import * as _ from 'lodash';
+import { ComboAluno } from 'src/app/core/combo-aluno';
 
 @Component({
   selector: 'app-escolha-familiar',
@@ -27,11 +29,12 @@ export class EscolhaFamiliarComponent implements OnInit {
   // Variáveis referente aos dados do aluno
   autoComplete = new FormControl();
 
-  aluno: Aluno = new Aluno();
-  alunos$: Observable<any[]>;
-  alunos: Aluno[] = [];
 
-  alunoSelecionado = false;
+  alunos$: Observable<any[]>;
+  aluno: ComboAluno = new ComboAluno();
+  comboAluno: ComboAluno[] = [];
+
+  alunoSelecionado: Aluno;
 
   mostrarTabelaAluno = false;
   msg: string;
@@ -54,9 +57,27 @@ export class EscolhaFamiliarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.aluno.pessoaFisica = new PessoaFisica();
+    this.carregarComboAluno();
+  }
 
-    this.activate();
+  carregarComboAluno() {
+    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.comboAluno = alunos;
+      this.preencherNomeAluno();
+
+      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });      
+    });
+  }
+
+  preencherNomeAluno(){
+    if (this.alunoService.filtro.aluno.id) {
+      this.aluno = _.find(this.comboAluno, { id: this.aluno.id });
+    }
   }
 
 
@@ -65,10 +86,8 @@ export class EscolhaFamiliarComponent implements OnInit {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   consultarAlunosPorNome() {
-    this.getAlunosByNome(this.aluno.pessoaFisica.nome);
-  }
+    const nomeAluno = this.aluno.nome;
 
-  private getAlunosByNome(nomeAluno: string) {
     if (nomeAluno === '' || nomeAluno === undefined) {
       this.toastService.showAlerta('Informe pelo menos um nome para busca.');
     } else {
@@ -77,7 +96,9 @@ export class EscolhaFamiliarComponent implements OnInit {
         this.verificaMostrarTabela(alunos);
       });
     }
+    
   }
+
 
   verificaMostrarTabela(alunos: Aluno[]) {
     if (!alunos || alunos.length === 0) {
@@ -88,45 +109,17 @@ export class EscolhaFamiliarComponent implements OnInit {
     }
   }
 
-
-
-  activate(): any {
-    this.alunoService.getAll().subscribe( (valor: Aluno[]) => {
-      this.alunos = valor;
-      this.autoComplete.setValue('');
-    });
-
-    this.alunos$ = this.autoComplete.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => value ? this.filtrar(value) : this.alunos.slice())
-      );
-  }
-
-  filtrar(searchText: any) {
-    const descricao = searchText.pessoaFisica != null ? searchText.pessoaFisica.nome : searchText;
-    return this.alunos.filter(state => state.pessoaFisica.nome.toLowerCase().includes(descricao.toLowerCase()));
-  }
-
-  vincular(aluno: Aluno) {
-    this.aluno = aluno;
-  }
-
-  displayFn(valor: any): string {
-    return valor != null ? (valor.pessoaFisica !== undefined ? valor.pessoaFisica.nome : valor) : valor;
-  }
-
-  selecionar(event: any) {
-    this.aluno = this.autoComplete.value;
-    this.alunoSelecionado = true;
-  }
-
   limparSelecao() {
-    this.autoComplete.setValue(' ');
+    this.aluno = new ComboAluno();
+    this.alunoSelecionado = null;
+  }
 
-    this.aluno = new Aluno();
-    this.aluno.pessoaFisica = new PessoaFisica();
-    this.alunoSelecionado = false;
+  onValorChange(event: any) {
+    this.aluno = event;
+
+    this.alunoService.getById(this.aluno.id).subscribe((alunoSelecionado: Aluno) => {
+      this.alunoSelecionado = alunoSelecionado;
+    })
   }
 
   goCadastrar() {

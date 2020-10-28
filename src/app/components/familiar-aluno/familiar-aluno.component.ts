@@ -103,6 +103,14 @@ export class FamiliarAlunoComponent implements OnInit {
   getAll() {
     this.familiarService.getAll().subscribe((familiares: Familiares[]) => {
       this.familiares = familiares;
+
+      this.familiares.forEach(a => a.nome = a.pessoasFisica.nome);
+      this.familiares.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      }); 
+
       this.dataSource.data = familiares ? familiares : [];
       this.verificaMostrarTabela(familiares);
     });

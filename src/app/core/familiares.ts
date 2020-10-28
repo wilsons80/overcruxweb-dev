@@ -20,4 +20,6 @@ export class Familiares {
 
     responsaveis: ResponsaveisAluno[];
     vulnerabilidades: VulnerabilidadesFamiliar[];
+
+    nome?:string;
 }

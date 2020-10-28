@@ -19,6 +19,7 @@ import { ListaResponsaveisComponent } from './responsavel/lista-responsaveis/lis
 import { VulnerabilidadeComponent } from './vulnerabilidade/vulnerabilidade.component';
 import { CadastrarVulnerabilidadeComponent } from './vulnerabilidade/cadastrar-vulnerabilidade/cadastrar-vulnerabilidade.component';
 import { ListarVulnerabilidadeComponent } from './vulnerabilidade/listar-vulnerabilidade/listar-vulnerabilidade.component';
+import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesquisavel.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ListarVulnerabilidadeComponent } from './vulnerabilidade/listar-vulnera
     PessoaFisicaModule,
     NgxCurrencyModule,
     DadosAlunoModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ComboPesquisavelModule
   ]
 })
 export class FamiliarAlunoModule { }

@@ -1,49 +1,50 @@
 <mat-toolbar class="subtitulo">Escolha o aluno para o familiar</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
-    <div class="painel-consultar">
+    <form #formConsultar="ngForm">
 
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-            <mat-icon>search</mat-icon>
-            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                <mat-form-field fxFlex="45%" fxFlexOffset="20px">
-
-                    <input matInput
-                            required
-                            placeholder="Informe o nome do aluno"
-                            [formControl]="autoComplete"
-                            [matAutocomplete]="auto">
-
-                    <mat-autocomplete #auto="matAutocomplete"
-                                        (optionSelected)="selecionar($event.option)"
-                                        [displayWith]="displayFn">
-                        <mat-option *ngFor="let valor of alunos$ | async" [value]="valor">
-                            {{valor.pessoaFisica.nome}}
-                        </mat-option>
-                    </mat-autocomplete>
-
-                </mat-form-field>
-
-                <button mat-raised-button
-                        color="primary"
-                        (click)="limparSelecao()"
-                        placeholder="Limpar seleção"
-                        style="margin-top: 15px !important; height: 33px;">
-                    LIMPAR
-                </button>
+        <div class="painel-consultar">
+    
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-icon>search</mat-icon>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    
+                    <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" fxFlexOffset="40px">
+                        <combo-pesquisavel #comboBeneficiario 
+                                           nome="beneficiario" 
+                                           [itens]="comboAluno" 
+                                           itemDescricao="nome"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           [obrigatorio]="false"
+                                           placeholder="Informe o nome do beneficiário"
+                                           [(valor)]="aluno"
+                                           (valorChange)="onValorChange($event)">
+                        </combo-pesquisavel>
+                    </div>
+    
+   
+                    <button mat-raised-button
+                            color="primary"
+                            (click)="limparSelecao()"
+                            placeholder="Limpar seleção"
+                            style="margin-top: 15px !important; height: 33px;">
+                        LIMPAR
+                    </button>
+                </div>
             </div>
+    
+            <div *ngIf="alunoSelecionado && alunoSelecionado.id">
+                <dados-aluno [aluno]="alunoSelecionado"></dados-aluno>
+            </div>
+    
         </div>
-
-        <div *ngIf="alunoSelecionado">
-            <dados-aluno [aluno]="aluno"></dados-aluno>
-        </div>
-
-    </div>
+    </form>
 </div>
 
 <!-- ESCOLHA DO FAMILIA DO ALUNO -->
-<div *ngIf="alunoSelecionado" style="padding: 10px;">
+<div *ngIf="alunoSelecionado && alunoSelecionado.id" style="padding: 10px;">
 
-    <familiares [aluno]="aluno"></familiares>
+    <familiares [aluno]="alunoSelecionado"></familiares>
 
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-right: 40px">
         <div>
