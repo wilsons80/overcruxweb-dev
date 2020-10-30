@@ -12,4 +12,10 @@ export class AlunoTrabalhandoService extends BaseService<AlunoTrabalhando> {
   constructor(http: HttpClient) {
     super(http, Rotas.ALUNO_TRABALHANDO);
   }
+
+
+  getAllByCombo() {
+    return this.http.get(`${Rotas.ALUNO_TRABALHANDO}dados/resumidos`);
+  }
+
 }

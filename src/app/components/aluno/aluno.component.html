@@ -6,17 +6,14 @@
         <form #formConsultar="ngForm">
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" fxFlexOffset="40px">
-                    <combo-pesquisavel #comboBeneficiario 
-                                       nome="beneficiario" 
-                                       [itens]="comboAluno" 
-                                       itemDescricao="nome"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       [obrigatorio]="false"
-                                       placeholder="Nome do beneficiário"
-                                       [(valor)]="filtro.aluno">
-                    </combo-pesquisavel>
+
+                <div ngModelGroup="comboBeneficiario" fxFlex="35" fxLayoutGap="20px" >
+                    <combo-beneficiario [dados]="comboAluno" 
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.aluno"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
                 </div>
 
                 <div ngModelGroup="comboMaeBeneficiario" fxFlex="35%" fxLayoutGap="20px" fxFlexOffset="40px">

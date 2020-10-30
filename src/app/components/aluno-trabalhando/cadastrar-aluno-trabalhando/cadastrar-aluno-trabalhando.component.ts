@@ -9,6 +9,9 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from 'src/app/core/empresa';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -18,16 +21,22 @@ import { Empresa } from 'src/app/core/empresa';
 })
 export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
+  filtro: FilterAlunos;
+  comboAluno: ComboAluno[];
+
   alunos: Aluno[];
   alunoTrabalhando: AlunoTrabalhando = new AlunoTrabalhando();
 
   empresas: Empresa[];
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
   isAtualizar: boolean = false;
+
 
   constructor(
     private alunoService: AlunoService,
@@ -37,14 +46,20 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
     private toastService: ToastService,
     private router: Router
   ) {
+    this.carregarPerfil = new CarregarPerfil();
   }
 
 
   ngOnInit() {
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
+
+
     this.alunoTrabalhando.aluno = new Aluno();
     this.alunoTrabalhando.empresa = new Empresa();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -54,9 +69,8 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
+    this.carregarCombos();
+
 
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => {
       this.empresas = empresas;
@@ -90,6 +104,9 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
   limpar() {
     this.alunoTrabalhando = new AlunoTrabalhando();
+
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
   }
 
   cancelar() {
@@ -106,7 +123,32 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
   }
 
   mostrarDadosAluno(idAluno:number) {
-    this.alunoTrabalhando.aluno = _.find(this.alunos, (a: Aluno) => a.id === idAluno);
+    this.alunoService.getById(idAluno).subscribe((aluno: Aluno) => {
+      this.alunoTrabalhando.aluno = aluno;
+    })
+  }
+
+
+  onValorChange(event: any) {
+    this.filtro.aluno = event;
+    if(this.filtro.aluno){
+      this.mostrarDadosAluno(this.filtro.aluno.id);
+    } else {
+      this.alunoTrabalhando.aluno = null;
+    }
+  }
+
+
+  private carregarCombos() {
+    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.comboAluno = alunos;
+      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    });
   }
 
 }

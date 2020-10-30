@@ -63,7 +63,6 @@ export enum Modulos{
     , PEDAGOGICO                            = 'PEDAGOGICO'
     , CONFIGURACOES                         = 'CONFIGURACOES'
     , PLANO_DESENVOLVIMENTO_INDIVIDUAL      = 'PLANO_DESENVOLVIMENTO_INDIVIDUAL'
-    //, FUNCAO                                = 'FUNCAO'
     , COMPETENCIA                           = 'COMPETENCIA'
     , ATRIBUTO_AVALIACAO_DESEMPENHO         = 'ATRIBUTO_AVALIACAO_DESEMPENHO'
     , CBO                                   = 'CBO'
@@ -109,4 +108,8 @@ export enum Modulos{
     , TRANSFERENCIA_VALORES                 = 'TRANSFERENCIA_VALORES'
     , CONCILIACAO_BANCARIA                  = 'CONCILIACAO_BANCARIA'
     , PROVISAO                              = 'PROVISAO'
+
+    , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
+
+
 }

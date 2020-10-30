@@ -22,6 +22,7 @@ import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
 import { CnpjPipe } from 'src/app/pipes/cnpj.pipe';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 
@@ -61,7 +62,8 @@ export class MovimentacoesComponent implements OnInit {
                                 'icones','acoes'];
   dataSource: MatTableDataSource<Movimentacoes> = new MatTableDataSource();
   
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   constructor(
     private movimentacoesService: MovimentacoesService,
@@ -77,10 +79,11 @@ export class MovimentacoesComponent implements OnInit {
     private cpfPipe: CpfPipe 
   ) { 
     this.filtro = this.movimentacoesService.filtro;
+    this.carregarPerfil = new CarregarPerfil();
   }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;

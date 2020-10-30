@@ -4,24 +4,17 @@
     <form #formCadastro="ngForm">
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-            <!-- Beneficiário -->
+            
             <div fxLayout="column" fxFlex="60%">
                 <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
-                <mat-form-field style="margin: 0 20px 20px 20px">
-                    <mat-label>Beneficiário:</mat-label>
-                    <mat-select [(ngModel)]="alunoTrabalhando.aluno.id" 
-                                name="aluno" 
-                                required
-                                (selectionChange)="mostrarDadosAluno($event.value)">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let i of alunos" [value]="i.id">
-                            {{i.pessoaFisica.nome}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhuma beneficiário cadastrado</mat-hint>
-                </mat-form-field>
-
+                <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
+                    <combo-beneficiario [dados]="comboAluno" 
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="true" 
+                                        [selecionado]="filtro.aluno"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
             </div>
             
             <div fxLayout="column" fxFlex="35%">

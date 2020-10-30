@@ -120,6 +120,7 @@ import { TableCellModule } from './components/common/table-cell/table-cell.modul
 import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/combo-pesquisavel.module';
 import { ConciliacaoModule } from './components/conciliacao/conciliacao.module';
 import { ProvisionamentoModule } from './components/provisionamento/provisionamento.module';
+import { ExportarDadosAlunoModule } from './components/relatorios/exportar-dados-aluno/exportar-dados-aluno.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -232,7 +233,8 @@ registerLocaleData(localePt, 'pt-BR');
     TableCellModule,
     ComboPesquisavelModule,
     ConciliacaoModule,
-    ProvisionamentoModule
+    ProvisionamentoModule,
+    ExportarDadosAlunoModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

@@ -4,6 +4,15 @@
         <form #formConsultar="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
 
+                <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" >
+                    <combo-beneficiario [dados]="comboAlunoTrabalhando" 
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.alunoTrabalhando"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
+
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
                     <mat-icon matPrefix>search</mat-icon>
                     <mat-label>Selecione um beneficiário</mat-label>

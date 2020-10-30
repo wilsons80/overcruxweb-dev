@@ -11,18 +11,20 @@ import { VulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/vulnerabi
 import { CadastrarVulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/cadastrar-vulnerabilidade-aluno/cadastrar-vulnerabilidade-aluno.component';
 import { ListarVulnerabilidadeAlunoComponent } from './vulnerabilidade-aluno/listar-vulnerabilidade-aluno/listar-vulnerabilidade-aluno.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
 
 
 @NgModule({
-  declarations: [AlunoComponent, CadastarAlunoComponent, VulnerabilidadeAlunoComponent, CadastrarVulnerabilidadeAlunoComponent, ListarVulnerabilidadeAlunoComponent],
+  declarations: [AlunoComponent, CadastarAlunoComponent, VulnerabilidadeAlunoComponent, 
+                 CadastrarVulnerabilidadeAlunoComponent, ListarVulnerabilidadeAlunoComponent],
   imports: [
     CommonModule,
     AlunoRoutingModule,
     PessoaFisicaModule,
     MaterialCommonModule,
     MatExpansionModule,
-    ComboPesquisavelModule
-
+    ComboPesquisavelModule,
+    ComboBeneficiarioModule
   ]
 })
 export class AlunoModule { }

@@ -10,6 +10,14 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { AlunoTrabalhandoService } from 'src/app/services/aluno-trabalhando/aluno-trabalhando.service';
+import { ComboAlunoTrabalhando } from 'src/app/core/combo-aluno-trabalhando';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+
+
+export class Filter{
+	alunoTrabalhando: ComboAlunoTrabalhando;
+}
+
 
 @Component({
   selector: 'app-aluno-trabalhando',
@@ -20,11 +28,17 @@ export class AlunoTrabalhandoComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  comboAlunoTrabalhando: ComboAlunoTrabalhando[];
+
+  filtro:Filter = new Filter();
+
   alunosTrabalhando: AlunoTrabalhando[];
   mostrarTabela: boolean = false;
   alunoTrabalhando: AlunoTrabalhando = new AlunoTrabalhando();
   msg: string;
-  perfilAcesso: Acesso;
+  
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   displayedColumns: string[] = ['aluno', 'dataInicioAlunoTrabalhando', 'nomeEmpreendimento', 'acoes'];
   dataSource: MatTableDataSource<AlunoTrabalhando> = new MatTableDataSource();
@@ -34,11 +48,14 @@ export class AlunoTrabalhandoComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
+    this.carregarCombos();
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
@@ -49,6 +66,7 @@ export class AlunoTrabalhandoComponent implements OnInit {
     this.mostrarTabela = false;
     this.alunoTrabalhando = new AlunoTrabalhando()
     this.dataSource.data = [];
+    this.filtro = new Filter();
   }
 
   consultar() {
@@ -108,6 +126,9 @@ export class AlunoTrabalhandoComponent implements OnInit {
     })
   }
 
+
+
+
   verificaMostrarTabela(alunoTrabalhandos: AlunoTrabalhando[]) {
     if (!alunoTrabalhandos || alunoTrabalhandos.length == 0) {
       this.mostrarTabela = false;
@@ -117,4 +138,21 @@ export class AlunoTrabalhandoComponent implements OnInit {
     }
   }
 
+
+  private carregarCombos() {
+    this.alunoTrabalhandoService.getAllByCombo().subscribe((alunoTrabalhandos: ComboAlunoTrabalhando[]) => {
+      this.comboAlunoTrabalhando = alunoTrabalhandos;
+
+      this.comboAlunoTrabalhando.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    })
+  }
+
+  onValorChange(event: any) {
+      this.filtro.alunoTrabalhando = event;
+  }
+  
 }

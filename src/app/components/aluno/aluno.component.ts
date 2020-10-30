@@ -18,6 +18,7 @@ import { ComboAluno } from 'src/app/core/combo-aluno';
 import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
 import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-aluno',
@@ -42,7 +43,8 @@ export class AlunoComponent implements OnInit {
   displayedColumns: string[] = ['matricula', 'nome', 'turno', 'serie', 'dataEntrada', 'dataDesligamento', 'acoes'];
   dataSource: MatTableDataSource<Aluno> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   constructor(
     private alunoService: AlunoService,
@@ -55,10 +57,12 @@ export class AlunoComponent implements OnInit {
     private toastService: ToastService
   ) { 
     this.filtro = this.alunoService.filtro;
+    this.carregarPerfil = new CarregarPerfil();
   }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+    
     this.dataSource.paginator = this.paginator;
 
     this.carregarCombos(); 
@@ -122,12 +126,6 @@ export class AlunoComponent implements OnInit {
     });
   }
 
-  getAll() {
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-      this.verificaMostrarTabela(alunos);
-    });
-  }
 
   verificaMostrarTabela(alunos: Aluno[]) {
     if (!alunos || alunos.length === 0) {
@@ -174,19 +172,17 @@ export class AlunoComponent implements OnInit {
 
     
     this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-      this.comboAluno = alunos;
-      this.preencherNomeAluno();
+        this.comboAluno = alunos;
+        this.preencherNomeAluno();
 
-      this.comboAluno.forEach(a => a.nome = a.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
+        this.comboAluno.forEach(a => a.nome = a.nome);
+        this.comboAluno.sort((a,b) => {
+          if (a.nome > b.nome) {return 1;}
+          if (a.nome < b.nome) {return -1;}
+          return 0;
+        });
       });
-
-      
-    });
-  }
+    }
 
 
 
@@ -208,4 +204,8 @@ export class AlunoComponent implements OnInit {
     }
   }
 
+
+  onValorChange(event: any) {
+    this.filtro.aluno = event;
+  }
 }

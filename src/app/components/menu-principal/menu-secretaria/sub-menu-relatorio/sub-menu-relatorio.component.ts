@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { animacaoMenu } from 'src/app/animations';
-import { MenuPrincipalService } from 'src/app/services/menuPrincipal/menu-principal.service';
-import { ControleMenuService } from 'src/app/services/controle-menu/controle-menu.service';
 import { Modulos } from 'src/app/core/modulos';
+import { ControleMenuService } from 'src/app/services/controle-menu/controle-menu.service';
+import { MenuPrincipalService } from 'src/app/services/menuPrincipal/menu-principal.service';
+
 
 @Component({
-  selector: 'tb-referencia-secretaria',
-  templateUrl: './tb-referencia-secretaria.component.html',
-  styleUrls: ['./tb-referencia-secretaria.component.css'],
+  selector: 'sub-menu-relatorio',
+  templateUrl: './sub-menu-relatorio.component.html',
+  styleUrls: ['./sub-menu-relatorio.component.css'],
   animations: [
     animacaoMenu
   ]
 })
-export class TbReferenciaSecretariaComponent implements OnInit {
+export class SubMenuRelatorioComponent implements OnInit {
 
   currentState = "hidden"
   isMostrarSubMenu: boolean = false;
@@ -44,4 +45,5 @@ export class TbReferenciaSecretariaComponent implements OnInit {
   verificaAcesso(modulo: Modulos) {
     return this.controleMenuService.verificaAcessoModulo(modulo);
   }
+
 }

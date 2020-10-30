@@ -1,0 +1,25 @@
+<a mat-list-item (click)="toggle()" style="width: fit-content;">
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" [ngClass]="{'expandido': menuPrincipalService.expandido}"
+        class="submenu">
+        <div fxLayout="row" fxLayoutAlign="start stretch" matTooltip="Relatórios">
+            <mat-icon>content_paste</mat-icon>
+            <span *ngIf="menuPrincipalService.expandido" class="nav-caption">Relatórios</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start stretch">
+            <mat-icon *ngIf="menuPrincipalService.expandido" style="padding-top: 2px">{{getIcone()}}</mat-icon>
+        </div>
+    </div>
+</a>
+
+<mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
+
+    <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
+
+        <!-- EXPORTAR_DADOS_ALUNO -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().EXPORTAR_DADOS_ALUNO)" icone="play_for_work" titulo="Exportar dados aluno" rota="exportardadosaluno" toolTip="Exportar dados aluno"></sub-menu>
+        </div>
+
+    </div>
+
+</mat-nav-list>

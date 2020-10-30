@@ -1,0 +1,271 @@
+<mat-toolbar class="subtitulo">Exportação de dados do Beneficiário/Familiar</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formulario="ngForm">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <div ngModelGroup="comboCpfBeneficiario" fxFlex="20%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboCpfBeneficiario 
+                                       nome="cpf" 
+                                       [itens]="comboCpf" 
+                                       itemDescricao="cpf"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="CPF do beneficiário"
+                                       [(valor)]="filtro.cpfBeneficiario">
+                    </combo-pesquisavel>
+                </div> 
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <div ngModelGroup="comboBeneficiario" fxFlex="34" fxLayoutGap="20px">
+                    <combo-beneficiario [dados]="comboAluno" 
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.beneficiario"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
+                
+
+                <div ngModelGroup="comboMaeBeneficiario" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboMaeBeneficiario 
+                                       nome="maeBeneficiario" 
+                                       [itens]="comboMae" 
+                                       itemDescricao="nomeMae"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Mãe do beneficiário"
+                                       [(valor)]="filtro.maeAluno">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboPaiBeneficiario" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboPaiBeneficiario 
+                                       nome="paiBeneficiario" 
+                                       [itens]="comboPai" 
+                                       itemDescricao="nomePai"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Pai do beneficiário"
+                                       [(valor)]="filtro.paiAluno">
+                    </combo-pesquisavel>
+                </div>
+            </div>
+
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>   
+
+                <div ngModelGroup="comboPrograma" fxFlex="34%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboPrograma 
+                                       nome="programa" 
+                                       [itens]="comboProgramas" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Programa"
+                                       [obrigatorio]="false"
+                                       [(valor)]="filtro.programa">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboProjeto" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboProjeto 
+                                       nome="projeto" 
+                                       [itens]="comboProjetos" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Projeto"
+                                       [obrigatorio]="false"
+                                       [(valor)]="filtro.projeto">
+                    </combo-pesquisavel>
+                </div>
+
+                <div ngModelGroup="comboUnidade" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboUnidade 
+                                       nome="unidade" 
+                                       [itens]="comboUnidades" 
+                                       itemDescricao="nomeUnidade"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Unidade"
+                                       [obrigatorio]="false"
+                                       [(valor)]="filtro.unidade">
+                    </combo-pesquisavel>
+                </div>
+
+            </div>
+
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-form-field fxFlex= "200px" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <input matInput name= "dataInicio"
+                            [matDatepicker]="dataInicio" 
+                            placeholder="Data início instituicao" 
+                            [(ngModel)]="filtro.dataInicioInstituicao"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicio></mat-datepicker>
+                </mat-form-field>
+            
+                <mat-form-field fxFlex= "200px" >
+                    <input matInput name="dataFim"
+                            [matDatepicker]="dataFim" 
+                            placeholder="Data fim instituicao" 
+                            [(ngModel)]="filtro.dataFimInstituicao"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFim></mat-datepicker>
+                </mat-form-field>
+            </div>  
+            
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                <button mat-raised-button fxFlex="20%" (click)="consultar()" [disabled]="formulario.invalid">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+            </div>
+        </form>
+
+        
+
+        <div [hidden]="!mostrarTabela" style="margin-top: 20px;">
+            <mat-paginator #paginator [pageSizeOptions]="[30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
+        </div>
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table 
+               matSort matSortDisableClear multiTemplateDataRows 
+               [dataSource]="dataSource">
+
+            <ng-container matColumnDef="programaprojeto">
+                <th mat-header-cell *matHeaderCellDef style="width: 20%"> Projeto/Programa </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <projeto-programa-cell [rateios]="element.rateios"></projeto-programa-cell>                 
+                </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="fornecedorcredor">
+                <th mat-header-cell *matHeaderCellDef style="width: 15%">Fornecedor/Credor</th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{getFornecedorCredor(element)}}                    
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cnpjcpf">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> CNPF/CPF </th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{getCnpfCpf(element)}}                    
+                </td>
+            </ng-container>      
+            
+            <ng-container matColumnDef="recibo">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> N.F / Recibo </th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{element.nrDocumento}}                    
+                </td>
+            </ng-container>             
+
+            <ng-container matColumnDef="dataDocumento">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> Data Documento </th>
+                <td mat-cell *matCellDef="let element"> {{ element.dataDocumento | dataSimples }} </td>
+            </ng-container>
+           
+            <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef> Valor </th>
+                <td mat-cell *matCellDef="let element"> {{ element.valorMovimentacao | currency: 'BRL' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nrtransacao">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%"> Nº Transação</th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+                    {{ getUltimoPagamento(element)?.numeroDocPagamento }} 
+                </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="dataUltimoPagamento">
+                <th mat-header-cell *matHeaderCellDef style="width: 8%">Último Pag.</th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{getUltimoPagamento(element)?.dataPagamento | dataSimples  }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="categorias">
+                <th mat-header-cell *matHeaderCellDef style="width: 12%"> Categorias </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <categorias-cell [movimento]="element"></categorias-cell>               
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dataproximasfaturas">
+                <th mat-header-cell *matHeaderCellDef> Próximas faturas </th>
+                <td mat-cell *matCellDef="let element"> 
+                    <proximas-fatura-cell [movimento]="element"></proximas-fatura-cell>
+                </td>
+            </ng-container>            
+
+            <!-- Coluna: Ícones -->
+            <ng-container matColumnDef="icones">
+                <th mat-header-cell *matHeaderCellDef style="width: 3%"> &nbsp; </th>
+                <td mat-cell *matCellDef="let elm">
+                    <div fxLayout="row wrap">
+                        <qtd-servicos-pendentes-cell (click)="expandedElement === elm ? expandedElement = null : expandedElement = elm" 
+                                                     [qtdServicosPendentes]="elm.rateios.length" >
+                        </qtd-servicos-pendentes-cell>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" style="background-color: aliceblue;">
+                    <div [@detailExpand]="element == expandedElement && element?.rateios.length > 0 ? 'expanded' : 'collapsed'">
+                        <table-rateios-programa-projeto *ngIf="element === expandedElement" 
+                                                        [idMovimentacao]="element.id">
+                        </table-rateios-programa-projeto>
+                    </div>
+                </td>
+            </ng-container>            
+
+            <ng-container matColumnDef="acoes" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef style="width: 5%"> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.deleta"  mat-button (click)="deletar(element)" style="min-width: auto; padding: 0px">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizar(element)" style="min-width: auto; padding: 0px">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+                class="expand-element-row"
+                [class.example-expanded-row]="expandedElement === element"></tr>
+            
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="expand-detail-row"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator (page)="handlePageBottom($event)" 
+                           [pageSize]="paginator.pageSize"
+                           [pageIndex]="paginator.pageIndex" 
+                           [length]="paginator.length"
+                           [pageSizeOptions]="paginator.pageSizeOptions">
+            </mat-paginator>
+        </div>
+        
+        <ng-template #tabelaSemDados >
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+    </div>
+</div>
