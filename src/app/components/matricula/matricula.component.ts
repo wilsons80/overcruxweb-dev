@@ -18,6 +18,8 @@ import * as _ from 'lodash';
 import { TurmasService } from 'src/app/services/turmas/turmas.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
 
 @Component({
   selector: 'matricula',
@@ -28,11 +30,11 @@ export class MatriculaComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  filtro: FilterAlunos = new FilterAlunos();
+  comboAluno: ComboAluno[];
+
   matriculas: AlunosTurma[];
   matricula: AlunosTurma = new AlunosTurma();
-
-  alunos: Aluno[];
-  aluno: Aluno;
 
   atividades: Atividade[];
   atividade: Atividade;
@@ -66,10 +68,6 @@ export class MatriculaComponent implements OnInit {
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.dataSource.paginator = this.paginator;
 
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
-
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {
       this.atividades = atividades.filter(atividade => atividade.idTurma);
     });
@@ -78,30 +76,29 @@ export class MatriculaComponent implements OnInit {
       this.turmas = turmas;
     });
 
-    this.consultar();
+    this.carregarCombos();
   }
 
 
   limpar() {
     this.mostrarTabela = false;
 
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
+
     this.turma = new Turmas();
-    this.aluno = new Aluno();
     this.atividade = new Atividade();
     this.dataSource.data = [];
   }
 
   consultar() {
-    if (this.turma.id || this.atividade.id || this.aluno.id) {
-      this.matriculasService.getFilter(this.turma.id, this.aluno.id, this.atividade.id)
+    if ( this.turma?.id || this.atividade?.id || this.filtro.aluno.id) {
+      this.matriculasService.getFilter(this.turma?.id, this.filtro.aluno.id, this.atividade?.id)
       .subscribe((matriculas: AlunosTurma[]) => {
         this.carregar(matriculas);
       });
     } else {
-      this.matriculasService.getAll()
-      .subscribe((matriculas: AlunosTurma[]) => {
-        this.carregar(matriculas);
-      });
+      this.toastService.showAlerta('Selecione pelo menos um critério de pesquisa.');
     }
   }
 
@@ -153,6 +150,28 @@ export class MatriculaComponent implements OnInit {
       this.msg = 'Nenhuma matricula cadastrada.';
     } else {
       this.mostrarTabela = true;
+    }
+  }
+
+
+  private carregarCombos() {
+    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.comboAluno = alunos;
+
+      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    });
+  }
+
+  onValorChange(registro: any) {
+    if(registro) {
+      this.filtro.aluno = registro;
+    } else {
+      this.filtro.aluno = new ComboAluno();
     }
   }
 

@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { AlunoTrabalhandoService } from 'src/app/services/aluno-trabalhando/aluno-trabalhando.service';
 import { ComboAlunoTrabalhando } from 'src/app/core/combo-aluno-trabalhando';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 
 export class Filter{
@@ -34,7 +35,6 @@ export class AlunoTrabalhandoComponent implements OnInit {
 
   alunosTrabalhando: AlunoTrabalhando[];
   mostrarTabela: boolean = false;
-  alunoTrabalhando: AlunoTrabalhando = new AlunoTrabalhando();
   msg: string;
   
   perfilAcesso: Acesso = new Acesso();
@@ -47,43 +47,44 @@ export class AlunoTrabalhandoComponent implements OnInit {
     private alunoTrabalhandoService: AlunoTrabalhandoService,
     private router: Router,
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
-
-    this.carregarCombos();
-
     this.dataSource.paginator = this.paginator;
-    this.getAll();
+
+    this.filtro = new Filter();
+    this.filtro.alunoTrabalhando = new ComboAlunoTrabalhando();
+    
+    this.carregarCombos();
   }
 
 
   limpar() {
     this.mostrarTabela = false;
-    this.alunoTrabalhando = new AlunoTrabalhando()
     this.dataSource.data = [];
     this.filtro = new Filter();
+    this.filtro.alunoTrabalhando = new ComboAlunoTrabalhando();
   }
 
   consultar() {
-    if (this.alunoTrabalhando.id) {
-      this.alunoTrabalhandoService.getById(this.alunoTrabalhando.id).subscribe((alunoTrabalhando: AlunoTrabalhando) => {
-        if (!AlunoTrabalhando) {
-          this.mostrarTabela = false
-          this.msg = "Nenhum registro para a pesquisa selecionada"
-        } else {
+    if (this.filtro.alunoTrabalhando && this.filtro.alunoTrabalhando.id) {
+      this.alunoTrabalhandoService.getById(this.filtro.alunoTrabalhando.id)
+      .subscribe((alunoTrabalhando: AlunoTrabalhando) => {
+        if(alunoTrabalhando){
           this.dataSource.data = [alunoTrabalhando];
           this.mostrarTabela = true;
+        } else {
+          this.verificaMostrarTabela(this.dataSource.data)
         }
       })
     } else {
-      this.getAll();
+      this.toastService.showAlerta('Selecione um beneficiário para realizar a pesquisa.');
     }
-
   }
 
 
@@ -107,32 +108,20 @@ export class AlunoTrabalhandoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
         this.alunoTrabalhandoService.excluir(alunoTrabalhando.id).subscribe(() => {
-          this.alunoTrabalhando.id = null;
+          this.filtro.alunoTrabalhando.id = null;
           this.consultar();
         })
-
       } else {
         dialogRef.close();
       }
-    }
-    );
+    });
   }
-
-  getAll() {
-    this.alunoTrabalhandoService.getAll().subscribe((alunoTrabalhandos: AlunoTrabalhando[]) => {
-      this.alunosTrabalhando = alunoTrabalhandos;
-      this.dataSource.data = alunoTrabalhandos ? alunoTrabalhandos : [];
-      this.verificaMostrarTabela(alunoTrabalhandos);
-    })
-  }
-
-
 
 
   verificaMostrarTabela(alunoTrabalhandos: AlunoTrabalhando[]) {
     if (!alunoTrabalhandos || alunoTrabalhandos.length == 0) {
       this.mostrarTabela = false;
-      this.msg = "Nenhum aluno trabalhando cadastrado."
+      this.msg = "Nenhum registro cadastrado."
     } else {
       this.mostrarTabela = true;
     }
@@ -151,8 +140,12 @@ export class AlunoTrabalhandoComponent implements OnInit {
     })
   }
 
-  onValorChange(event: any) {
-      this.filtro.alunoTrabalhando = event;
+  onValorChange(registro: any) {
+    if(registro) {
+      this.filtro.alunoTrabalhando.id = registro.id;
+    } else {
+      this.filtro.alunoTrabalhando = null;
+    }
   }
   
 }

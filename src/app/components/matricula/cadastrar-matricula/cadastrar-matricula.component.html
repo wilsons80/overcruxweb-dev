@@ -2,7 +2,7 @@
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
 
-        <div *ngIf="matricula.aluno.id" style="padding-top: 20px;">
+        <div *ngIf="matricula.aluno && matricula.aluno.id" style="padding-top: 20px;">
             <dados-aluno [aluno]="matricula.aluno"></dados-aluno>
         </div>        
 
@@ -11,18 +11,14 @@
             <!-- ALUNO-->
             <div fxLayout="column" fxFlex="45%">
                 <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
-                <mat-form-field style="margin: 0 20px 20px 20px">
-                    <mat-label>Beneficiários:</mat-label>
-                    <mat-select [(ngModel)]="matricula.aluno.id" name="aluno"
-                                (selectionChange)="mostrarDadosAluno($event.value)" 
-                                required>
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let i of alunos" [value]="i.id">
-                            {{i.pessoaFisica.nome}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum beneficiário cadastrado</mat-hint>
-                </mat-form-field>
+                <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
+                    <combo-beneficiario [dados]="comboAluno" 
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="true" 
+                                        [selecionado]="filtro.aluno"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
             </div>
 
             <!-- TURMA -->

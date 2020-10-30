@@ -18,6 +18,8 @@ import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dial
 import { tap } from 'rxjs/operators';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
 
 
 @Component({
@@ -27,10 +29,12 @@ import { AutenticadorService } from 'src/app/services/autenticador/autenticador.
 })
 export class CadastrarMatriculaComponent implements OnInit {
 
+  filtro: FilterAlunos;
+  comboAluno: ComboAluno[];
+  
   conflitos = [];
 
   matricula: AlunosTurma = new AlunosTurma();
-  alunos: Aluno[];
   aluno: Aluno = new Aluno();
 
   turmas: Turmas[];
@@ -71,12 +75,10 @@ export class CadastrarMatriculaComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    this.carregarCombos();
+
     this.turmasService.getAll().subscribe((turmas: Turmas[]) => {
       this.turmas = turmas;
-    });
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
     });
 
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
@@ -262,6 +264,9 @@ export class CadastrarMatriculaComponent implements OnInit {
     this.aluno = new Aluno();
     this.turma = new Turmas();
     this.localMatricula = null;
+
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
   }
 
   cancelar() {
@@ -269,7 +274,9 @@ export class CadastrarMatriculaComponent implements OnInit {
   }
   
   mostrarDadosAluno(idAluno) {
-    this.matricula.aluno = _.cloneDeep(_.find(this.alunos, (a: Aluno) => a.id === idAluno));
+    this.alunoService.getById(idAluno).subscribe((aluno: Aluno) => {
+      this.matricula.aluno = aluno;
+    })
   }
 
   carregarDadosTurma() {
@@ -360,6 +367,28 @@ export class CadastrarMatriculaComponent implements OnInit {
     
     return this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString() + ' até ' +
            this.dataUtilService.getDataTruncata(atividade.dataDesvinculacao).toLocaleDateString()
+  }
+
+
+  onValorChange(event: any) {
+    this.filtro.aluno = event;
+    if(this.filtro.aluno){
+      this.mostrarDadosAluno(this.filtro.aluno.id);
+    } else {
+      this.matricula.aluno = null;
+    }
+  }
+
+  private carregarCombos() {
+    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.comboAluno = alunos;
+      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    });
   }
 
 }

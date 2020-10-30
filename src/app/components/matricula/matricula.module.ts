@@ -9,6 +9,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DadosOficinaComponent } from './dados-oficina/dados-oficina.component';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DadosOficinaComponent } from './dados-oficina/dados-oficina.component';
     MaterialCommonModule,
     DadosAlunoModule,
     NgxCurrencyModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ComboBeneficiarioModule
   ]
 })
 export class MatriculaModule { }
