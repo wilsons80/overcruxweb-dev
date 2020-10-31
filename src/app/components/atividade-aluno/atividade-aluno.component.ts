@@ -15,6 +15,10 @@ import { Atividade } from 'src/app/core/atividade';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import * as _ from 'lodash';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 
@@ -27,17 +31,19 @@ export class AtividadeAlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+
+  filtro: FilterAlunos = new FilterAlunos();
+
   atividadesAlunos: AtividadeAluno[];
   atividadeAluno: AtividadeAluno = new AtividadeAluno();
 
-  alunos: Aluno[];
-  aluno: Aluno;
 
   atividades: Atividade[];
   atividade: Atividade;
 
   msg: string;
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   mostrarTabela = false;
 
@@ -48,51 +54,42 @@ export class AtividadeAlunoComponent implements OnInit {
     private atividadeAlunoService: AtividadeAlunoService,
     private atividadeService: AtividadeService,
     private alunoService: AlunoService,
-
+    private toastService: ToastService,
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
 
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {
       this.atividades = atividades;
     });
-
-    this.consultar();
   }
 
 
   limpar() {
     this.mostrarTabela = false;
-    this.aluno = new Aluno()  ;
     this.atividade = new Atividade();
     this.dataSource.data = [];
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
   }
 
   consultar() {
-    if (this.atividade.id || this.aluno.id) {
-      this.atividadeAlunoService.getFilter(this.atividade.id, this.aluno.id)
-      .subscribe((atividadeAluno: AtividadeAluno[]) => {
-        if (_.isEmpty(atividadeAluno)) {
-          this.mostrarTabela = false;
-          this.msg = 'Nenhum registro para a pesquisa selecionada';
-        } else {
-          this.dataSource.data = atividadeAluno;
-          this.mostrarTabela = true;
-        }
-      });
-    } else {
-      this.atividadeAlunoService.getAll()
+    if(!this.atividade.id && !this.filtro.aluno.id) {
+      this.toastService.showAlerta('Informa pelo menos um parâmetro de pesquisa.');
+      return;
+    }
+
+    if (this.atividade.id || this.filtro.aluno.id) {
+      this.atividadeAlunoService.getFilter(this.atividade.id, this.filtro.aluno.id)
       .subscribe((atividadeAluno: AtividadeAluno[]) => {
         if (_.isEmpty(atividadeAluno)) {
           this.mostrarTabela = false;
@@ -135,14 +132,7 @@ export class AtividadeAlunoComponent implements OnInit {
     );
   }
 
-
-  verificaMostrarTabela(atividadesAlunos: AtividadeAluno[]) {
-    if (!atividadesAlunos || atividadesAlunos.length === 0) {
-      this.mostrarTabela = false;
-      this.msg = 'Nenhuma Atividade Aluno cadastrada.';
-    } else {
-      this.mostrarTabela = true;
-    }
+  onValorChange(event: any) {
+    this.filtro.aluno = event;
   }
-
 }

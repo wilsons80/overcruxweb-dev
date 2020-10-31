@@ -26,24 +26,19 @@
                 <!-- ALUNO-->
                 <div fxLayout="column" fxFlex="45%">
                     <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
-                    <mat-form-field style="margin: 0 20px 20px 20px">
-                        <mat-label>Beneficiários:</mat-label>
-                        <mat-select [(ngModel)]="atividadeAluno.aluno.id" name="aluno"
-                            (selectionChange)="mostrarDadosAluno($event.value)" required>
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let i of alunos" [value]="i.id">
-                                {{i.pessoaFisica.nome}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint *ngIf="alunos?.length === 0" align="start">Nenhum beneficiário cadastrado</mat-hint>
-                    </mat-form-field>
+                    <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
+                        <combo-beneficiario [showDisplayId]="false" 
+                                            [obrigatorio]="true" 
+                                            [selecionado]="filtro.aluno"
+                                            (valorChange)="onValorChange($event)">
+                        </combo-beneficiario>
+                    </div>
                 </div>
 
                 <!-- TURMAS -->
                 <div fxLayout="column" fxFlex="45%" *ngIf="isTurma()">
                     <mat-toolbar class="titulopartes">Turma</mat-toolbar>
                     <mat-form-field style="margin: 0 20px 20px 20px">
-                        <mat-label>Turmas:</mat-label>
                         <mat-select [(ngModel)]="atividadeAluno.atividade.idTurma" name="turma"
                             (selectionChange)="carregarOficinas()" required>
                             <mat-option></mat-option>
@@ -59,7 +54,6 @@
                 <div fxLayout="column" fxFlex="45%">
                     <mat-toolbar class="titulopartes">Oficina</mat-toolbar>
                     <mat-form-field style="margin: 0 20px 20px 20px">
-                        <mat-label>Oficinas:</mat-label>
                         <mat-select [(ngModel)]="atividadeAluno.atividade.id" name="atividade"
                             (selectionChange)="mostrarDadosAtividade($event.value)" required>
                             <mat-option></mat-option>

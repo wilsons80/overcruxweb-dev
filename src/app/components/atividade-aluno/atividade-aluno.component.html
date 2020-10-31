@@ -3,26 +3,17 @@
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
 
-
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <div ngModelGroup="comboBeneficiario" fxFlex="50" fxLayoutGap="20px">
+                    <combo-beneficiario [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.aluno"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
 
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione um beneficiário</mat-label>
-                    <mat-select fxFlexOffset="20px" [(ngModel)]="aluno.id" name="aluno">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of alunos" [value]="d.id">
-                            {{d.pessoaFisica.nome}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione uma oficina</mat-label>
+                <mat-form-field fxFlex="50" fxFlexOffset="20px">
+                    <mat-label>Selecione uma oficina</mat-label>
                     <mat-select fxFlexOffset="20px" [(ngModel)]="atividade.id" name="atividade">
                         <mat-option></mat-option>
                         <mat-option *ngFor="let d of atividades" [value]="d.id">
@@ -32,9 +23,7 @@
                 </mat-form-field>
             </div>
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
-
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                 <button mat-raised-button fxFlex="20%" (click)="consultar()">
                     CONSULTAR
                 </button>
@@ -42,7 +31,6 @@
                 <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
                     LIMPAR
                 </button>
-
             </div>
         </form>
 

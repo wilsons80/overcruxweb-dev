@@ -7,6 +7,7 @@ import { AtividadeAlunoRoutingModule } from './atividade-aluno-routing.module';
 import { CadastrarAtividadeAlunoComponent } from './cadastrar-atividade-aluno/cadastrar-atividade-aluno.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
     MaterialCommonModule,
     DadosAlunoModule,
     DadosAtividadeModule,
-    
+    ComboBeneficiarioModule
   ]
 })
 export class AtividadeAlunoModule { }

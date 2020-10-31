@@ -168,15 +168,7 @@
                 </fieldset> 
             </div>
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
-<!--                <div>
-                    <button matTooltip="Adicionar nova movimentação" mat-fab color="primary" [routerLink]="['/movimentacoes/cadastrar']"
-                        routerLinkActive="router-link-active">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </div>
-            -->
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                 <button mat-raised-button fxFlex="20%" (click)="consultar()" [disabled]="formulario.invalid">
                     CONSULTAR
                 </button>
@@ -184,7 +176,6 @@
                 <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
                     LIMPAR
                 </button>
-
             </div>
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
                 fxFlexFill>

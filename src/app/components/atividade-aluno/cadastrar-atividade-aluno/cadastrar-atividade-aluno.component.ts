@@ -13,6 +13,8 @@ import { TurmasService } from 'src/app/services/turmas/turmas.service';
 import { Turmas } from 'src/app/core/turmas';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
 
 @Component({
   selector: 'app-cadastrar-atividade-aluno',
@@ -21,10 +23,11 @@ import { AutenticadorService } from 'src/app/services/autenticador/autenticador.
 })
 export class CadastrarAtividadeAlunoComponent implements OnInit {
 
+  filtro: FilterAlunos = new FilterAlunos();
   conflitos = [];
 
   atividadeAluno: AtividadeAluno = new AtividadeAluno();
-  alunos: Aluno[];
+  
   atividades: Atividade[];
   atividadesSemTurma: Atividade[];
   turmas: Turmas[];
@@ -64,10 +67,6 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
-
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {
       this.atividadesSemTurma = atividades.filter(a => !a.idTurma);
       this.carregarOficinas();
@@ -79,14 +78,12 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     });
 
 
-    let idAtividadeAluno: number;
-    idAtividadeAluno = this.activatedRoute.snapshot.queryParams.idAtividadeAluno ?
-      this.activatedRoute.snapshot.queryParams.idAtividadeAluno : null;
-
+    const idAtividadeAluno = this.activatedRoute.snapshot.queryParams.idAtividadeAluno ? this.activatedRoute.snapshot.queryParams.idAtividadeAluno : null;
     if (idAtividadeAluno) {
       this.isAtualizar = true;
       this.atividadeAlunoService.getById(idAtividadeAluno).subscribe((atividadeAluno: AtividadeAluno) => {
         this.atividadeAluno = atividadeAluno;
+        this.filtro.aluno.id = this.atividadeAluno.aluno.id;
 
         if (this.atividadeAluno.atividade.idTurma) {
           this.tipoOficina = 'T';
@@ -214,6 +211,9 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     this.atividadeAluno.aluno = new Aluno();
     this.atividadeAluno.atividade = new Atividade();
     this.tipoOficina = null;
+
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
   }
 
   cancelar() {
@@ -246,7 +246,9 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
 
 
   mostrarDadosAluno(idAluno) {
-    this.atividadeAluno.aluno = _.cloneDeep(_.find(this.alunos, (a: Aluno) => a.id === idAluno));
+    this.alunoService.getById(idAluno).subscribe((aluno: Aluno) => {
+      this.atividadeAluno.aluno = aluno;  
+    });
   }
 
   mostrarDadosAtividade(idAtividade) {
@@ -303,4 +305,13 @@ export class CadastrarAtividadeAlunoComponent implements OnInit {
     return this.dataUtilService.getDataTruncata(atividade.dataInicioAtividade).toLocaleDateString() + ' até ' +
            this.dataUtilService.getDataTruncata(atividade.dataDesvinculacao).toLocaleDateString()
   }
+
+
+  onValorChange(registro: any) {
+    this.filtro.aluno = registro;
+    if(registro) {
+      this.mostrarDadosAluno(registro.id);
+    }
+  }
+
 }
