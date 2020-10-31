@@ -101,7 +101,7 @@ export class MovimentacoesComponent implements OnInit {
     })
 
     this.dataSource.paginator = this.paginator;   
-    this.getAllOrigem();
+    this.initFiltro();
   }
 
 
@@ -123,20 +123,31 @@ export class MovimentacoesComponent implements OnInit {
   }
 
   consultar() {
-    if (this.movimentacoes.id) {
-      this.movimentacoesService.getById(this.movimentacoes.id).subscribe((movimentacoes: Movimentacoes) => {
-        if (!movimentacoes) {
-          this.mostrarTabela = false
-          this.msg = "Nenhum registro para a pesquisa selecionada"
-        } else {
-          this.dataSource.data = [movimentacoes];
-          this.mostrarTabela = true;
-        }
-      })
-    } else {
-      this.getAllOrigem();
+
+    if(this.isFiltroVazio()) {
+      this.toastService.showAlerta('Informe pelo menos um parâmetro de pesquisa.');
+      return;
     }
 
+    this.getAllOrigem();
+  }
+
+  private isFiltroVazio(): boolean {
+    if(!this.filtro.empresa.id &&
+       !this.filtro.programa.id &&
+       !this.filtro.projeto.id &&
+       !this.filtro.valor &&
+       !this.filtro.dataInicioDoc &&
+       !this.filtro.dataFimDoc &&
+       !this.filtro.dataVencimento &&
+       !this.filtro.dataInicioMov &&
+       !this.filtro.dataFimMov &&
+       !this.filtro.dataInicioPag &&
+       !this.filtro.dataFimPag &&                                         
+       !this.filtro.numeroDocumento) {
+      return true;
+    }
+    return false;
   }
 
   atualizar(movimentacoes: Movimentacoes) {
