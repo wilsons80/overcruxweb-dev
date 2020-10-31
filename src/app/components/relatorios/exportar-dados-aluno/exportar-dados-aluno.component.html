@@ -135,7 +135,7 @@
         </form>
 
         
-
+<!--
         <div [hidden]="!mostrarTabela" style="margin-top: 20px;">
             <mat-paginator #paginator [pageSizeOptions]="[30, 60, 90, 150]" showFirstLastButtons></mat-paginator>
         </div>
@@ -208,8 +208,7 @@
                     <proximas-fatura-cell [movimento]="element"></proximas-fatura-cell>
                 </td>
             </ng-container>            
-
-            <!-- Coluna: Ícones -->
+            
             <ng-container matColumnDef="icones">
                 <th mat-header-cell *matHeaderCellDef style="width: 3%"> &nbsp; </th>
                 <td mat-cell *matCellDef="let elm">
@@ -221,7 +220,6 @@
                 </td>
             </ng-container>
 
-            <!-- Expanded Content Column - The detail row is made up of this one column -->
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length" style="background-color: aliceblue;">
                     <div [@detailExpand]="element == expandedElement && element?.rateios.length > 0 ? 'expanded' : 'collapsed'">
@@ -265,6 +263,7 @@
                 {{msg}}
             </div>
         </ng-template>
+    -->
 
     </div>
 </div>
