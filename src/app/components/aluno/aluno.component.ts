@@ -30,7 +30,6 @@ export class AlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
  
-  comboAluno: ComboAluno[];
   comboMae: ComboPessoaFisica[];
   comboCpf: ComboPessoaFisica[];
   
@@ -170,19 +169,7 @@ export class AlunoComponent implements OnInit {
       this.comboCpf = this.funcoesUteisService.arrayDistinct(this.comboCpf, 'cpf');
     })
 
-    
-    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-        this.comboAluno = alunos;
-        this.preencherNomeAluno();
-
-        this.comboAluno.forEach(a => a.nome = a.nome);
-        this.comboAluno.sort((a,b) => {
-          if (a.nome > b.nome) {return 1;}
-          if (a.nome < b.nome) {return -1;}
-          return 0;
-        });
-      });
-    }
+  }
 
 
 
@@ -192,11 +179,6 @@ export class AlunoComponent implements OnInit {
     }
   }
 
-  preencherNomeAluno(){
-    if (this.alunoService.filtro.aluno.id) {
-      this.filtro.aluno = _.find(this.comboAluno, { id: this.alunoService.filtro.aluno.id });
-    }
-  }
 
   preencherNomeMae(){
     if (this.alunoService.filtro.maeAluno.id) {

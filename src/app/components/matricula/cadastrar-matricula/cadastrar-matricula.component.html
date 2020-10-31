@@ -12,8 +12,7 @@
             <div fxLayout="column" fxFlex="45%">
                 <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
                 <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
-                    <combo-beneficiario [dados]="comboAluno" 
-                                        [showDisplayId]="false" 
+                    <combo-beneficiario [showDisplayId]="false" 
                                         [obrigatorio]="true" 
                                         [selecionado]="filtro.aluno"
                                         (valorChange)="onValorChange($event)">
@@ -21,11 +20,10 @@
                 </div>
             </div>
 
-            <!-- TURMA -->
+            
             <div fxLayout="column" fxFlex="45%">
                 <mat-toolbar class="titulopartes">Turma</mat-toolbar>
                 <mat-form-field style="margin: 0 20px 20px 20px">
-                    <mat-label>Turmas:</mat-label>
                     <mat-select [(ngModel)]="matricula.turma.id" name="turma" 
                                 (selectionChange)="carregarDadosTurma()"
                                 required>

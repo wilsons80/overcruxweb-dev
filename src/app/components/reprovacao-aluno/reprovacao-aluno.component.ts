@@ -42,78 +42,7 @@ export class ReprovacaoAlunoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
-    this.dataSource.paginator = this.paginator;
-    this.getAll();
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
   }
-
-  limpar() {
-    this.aluno = new Aluno();
-    this.aluno.pessoaFisica = new PessoaFisica();
-
-    this.mostrarTabela = false;
-    this.dataSource.data = [];
-  }
-
-  consultar() {
-    this.reprovacaoAlunoService.getAll().subscribe((reprovacoesAluno: ReprovacaoAluno[]) => {
-      if (!reprovacoesAluno) {
-        this.mostrarTabela = false;
-        this.msg = 'Nenhum registro para a pesquisa selecionada';
-      } else {
-        this.dataSource.data = reprovacoesAluno ? reprovacoesAluno : [];
-        this.mostrarTabela = true;
-      }
-    });
-  }
-
-
-  atualizar(reprovacaoAluno: ReprovacaoAluno) {
-    this.router.navigate(['/reprovacaoaluno/cadastrar'], { queryParams: { id: reprovacaoAluno.id } });
-  }
-
-  deletar(reprovacaoAluno: ReprovacaoAluno) {
-    this.chamaCaixaDialogo(reprovacaoAluno);
-  }
-
-  chamaCaixaDialogo(reprovacaoAluno: ReprovacaoAluno) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      pergunta: `Certeza que deseja excluir a reprovação do aluno ?`,
-      textoConfirma: 'SIM',
-      textoCancela: 'NÃO'
-    };
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(confirma => {
-      if (confirma) {
-        this.reprovacaoAlunoService.excluir(reprovacaoAluno.id).subscribe(() => {
-          this.consultar();
-        });
-      } else {
-        dialogRef.close();
-      }
-    });
-  }
-
-  getAll() {
-    this.reprovacaoAlunoService.getAll().subscribe((reprovacoesAluno: ReprovacaoAluno[]) => {
-      this.dataSource.data = reprovacoesAluno ? reprovacoesAluno : [];
-      this.verificaMostrarTabela(reprovacoesAluno);
-    });
-  }
-
-  verificaMostrarTabela(reprovacoesAluno: ReprovacaoAluno[]) {
-    if (!reprovacoesAluno || reprovacoesAluno.length === 0) {
-      this.mostrarTabela = false;
-      this.msg = 'Nenhuma reprovação de aluno cadastrada.';
-    } else {
-      this.mostrarTabela = true;
-    }
-  }
+  
 }
 

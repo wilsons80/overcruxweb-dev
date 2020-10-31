@@ -6,6 +6,7 @@ import { AtendimentoRoutingModule } from './atendimento-routing.module';
 import { CadastrarAtendimentoComponent } from './cadastrar-atendimento/cadastrar-atendimento.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
     CommonModule,
     AtendimentoRoutingModule,
     MaterialCommonModule,
-    DadosAlunoModule
+    DadosAlunoModule,
+    ComboBeneficiarioModule
   ]
 })
 export class AtendimentoModule { }

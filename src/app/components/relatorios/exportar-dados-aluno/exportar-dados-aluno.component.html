@@ -20,8 +20,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <div ngModelGroup="comboBeneficiario" fxFlex="34" fxLayoutGap="20px">
-                    <combo-beneficiario [dados]="comboAluno" 
-                                        [showDisplayId]="false" 
+                    <combo-beneficiario [showDisplayId]="false" 
                                         [obrigatorio]="false" 
                                         [selecionado]="filtro.beneficiario"
                                         (valorChange)="onValorChange($event)">

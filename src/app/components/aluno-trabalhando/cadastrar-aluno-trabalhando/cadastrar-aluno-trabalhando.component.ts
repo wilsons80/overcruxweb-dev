@@ -22,7 +22,7 @@ import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 export class CadastrarAlunoTrabalhandoComponent implements OnInit {
 
   filtro: FilterAlunos;
-  comboAluno: ComboAluno[];
+  
 
   alunos: Aluno[];
   alunoTrabalhando: AlunoTrabalhando = new AlunoTrabalhando();
@@ -69,20 +69,16 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.carregarCombos();
-
-
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => {
       this.empresas = empresas;
     });
 
-
-    let idAlunoTrabalhando: number;
-    idAlunoTrabalhando = this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando ? this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando : null;
+    const idAlunoTrabalhando = this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando ? this.activatedRoute.snapshot.queryParams.idAlunoTrabalhando : null;
     if (idAlunoTrabalhando) {
       this.isAtualizar = true;
       this.alunoTrabalhandoService.getById(idAlunoTrabalhando).subscribe((alunoTrabalhando: AlunoTrabalhando) => {
-        this.alunoTrabalhando = alunoTrabalhando
+        this.alunoTrabalhando = alunoTrabalhando;
+        this.filtro.aluno.id = this.alunoTrabalhando.aluno.id;
       });
     }
 
@@ -139,16 +135,5 @@ export class CadastrarAlunoTrabalhandoComponent implements OnInit {
   }
 
 
-  private carregarCombos() {
-    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-      this.comboAluno = alunos;
-      this.comboAluno.forEach(a => a.nome = a.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      });
-    });
-  }
 
 }

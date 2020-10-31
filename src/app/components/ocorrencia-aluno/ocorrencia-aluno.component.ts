@@ -13,6 +13,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { OcorrenciaAlunoService } from 'src/app/services/ocorrencia-aluno/ocorrencia-aluno.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'ocorrencia-aluno',
@@ -26,17 +31,16 @@ export class OcorrenciaAlunoComponent implements OnInit {
   tiposOcorrenciasAluno: TipoOcorrenciaAluno[];
   tipoOcorrenciaAluno: TipoOcorrenciaAluno = new TipoOcorrenciaAluno();
 
-  alunos: Aluno[];
-  aluno: Aluno = new Aluno();
-
+  filtro: FilterAlunos;
+  
   mostrarTabela = false;
   msg: string;
-
 
   displayedColumns: string[] = ['nomeAluno', 'tipoOcorrencia', 'dataOcorrencia', 'dataCiencia', 'acoes'];
   dataSource: MatTableDataSource<OcorrenciaAluno> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
 
   constructor(
@@ -46,22 +50,20 @@ export class OcorrenciaAlunoComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.limpar();
+
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
 
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
 
     this.tipoOcorrenciaAlunoService.getAll().subscribe( (tipos: TipoOcorrenciaAluno[]) => {
       this.tiposOcorrenciasAluno = tipos;
     });
-
 
     this.consultar();
   }
@@ -73,12 +75,13 @@ export class OcorrenciaAlunoComponent implements OnInit {
     this.msg = '';
 
     this.tipoOcorrenciaAluno = new TipoOcorrenciaAluno();
-    this.aluno = new Aluno();
+    this.filtro = new FilterAlunos();
+    this.filtro.aluno = new ComboAluno();
   }
 
   consultar() {
-    if (this.tipoOcorrenciaAluno.id || this.aluno.id) {
-      this.ocorrenciaAlunoService.getFilter(this.tipoOcorrenciaAluno.id, this.aluno.id)
+    if (this.tipoOcorrenciaAluno.id || this.filtro.aluno.id) {
+      this.ocorrenciaAlunoService.getFilter(this.tipoOcorrenciaAluno.id, this.filtro.aluno.id)
       .subscribe((ocorrenciasAluno: OcorrenciaAluno[]) => {
 
         if (!ocorrenciasAluno) {
@@ -139,5 +142,9 @@ export class OcorrenciaAlunoComponent implements OnInit {
     );
   }
 
+  
+  onValorChange(event: any) {
+    this.filtro.aluno = event;
+  }
 
 }

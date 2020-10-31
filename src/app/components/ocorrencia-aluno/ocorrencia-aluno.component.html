@@ -4,34 +4,30 @@
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione um beneficiário</mat-label>
-                    <mat-select fxFlexOffset="20px" [(ngModel)]="aluno" name="aluno">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of alunos" [value]="d">
-                            {{d.pessoaFisica.nome}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+                <div ngModelGroup="comboBeneficiario" fxFlex="50" fxLayoutGap="20px">
+                    <combo-beneficiario [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.aluno"
+                                        (valorChange)="onValorChange($event)">
+                    </combo-beneficiario>
+                </div>
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione um tipo de ocorrência</mat-label>
-                    <mat-select fxFlexOffset="20px" [(ngModel)]="tipoOcorrenciaAluno" name="tipoOcorrenciaAluno">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of tiposOcorrenciasAluno" [value]="d">
-                            {{d.tipoOcorrencia}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <div ngModelGroup="comboTipoOcorrenciaAluno" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #comboTipoOcorrenciaAluno 
+                                       nome="tipoOcorrenciaAluno" 
+                                       [itens]="tiposOcorrenciasAluno" 
+                                       itemDescricao="tipoOcorrencia"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       placeholder="Tipo de ocorrência"
+                                       [obrigatorio]="false"
+                                       [(valor)]="tipoOcorrenciaAluno">
+                    </combo-pesquisavel>
+                </div>
             </div>
 
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
 
                 <button mat-raised-button fxFlex="20%" (click)="consultar()" [disabled]="formConsultar.invalid">
                     CONSULTAR

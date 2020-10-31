@@ -6,6 +6,7 @@ import { CadastrarAlunoTrabalhandoComponent } from './cadastrar-aluno-trabalhand
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
 import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
+import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesquisavel.module';
 
 
 
@@ -16,7 +17,8 @@ import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-bene
     AlunoTrabalhandoRoutingModule,
     MaterialCommonModule,
     DadosAlunoModule,
-    ComboBeneficiarioModule
+    ComboBeneficiarioModule,
+    ComboPesquisavelModule
   ]
 })
 export class AlunoTrabalhandoModule { }

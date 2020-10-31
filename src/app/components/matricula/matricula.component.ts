@@ -31,7 +31,6 @@ export class MatriculaComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   filtro: FilterAlunos = new FilterAlunos();
-  comboAluno: ComboAluno[];
 
   matriculas: AlunosTurma[];
   matricula: AlunosTurma = new AlunosTurma();
@@ -76,7 +75,6 @@ export class MatriculaComponent implements OnInit {
       this.turmas = turmas;
     });
 
-    this.carregarCombos();
   }
 
 
@@ -153,19 +151,6 @@ export class MatriculaComponent implements OnInit {
     }
   }
 
-
-  private carregarCombos() {
-    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-      this.comboAluno = alunos;
-
-      this.comboAluno.forEach(a => a.nome = a.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      });
-    });
-  }
 
   onValorChange(registro: any) {
     if(registro) {

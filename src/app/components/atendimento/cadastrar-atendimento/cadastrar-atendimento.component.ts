@@ -11,6 +11,9 @@ import { Aluno } from './../../../core/aluno';
 import { Solucoes } from './../../../core/solucoes';
 import { SolucaoService } from '../../../services/solucao/solucao.service';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { FilterAlunos } from 'src/app/core/filter-alunos';
+import { ComboAluno } from 'src/app/core/combo-aluno';
 
 @Component({
   selector: 'app-cadastrar-atendimento',
@@ -18,6 +21,8 @@ import * as _ from 'lodash';
   styleUrls: ['./cadastrar-atendimento.component.css']
 })
 export class CadastrarAtendimentoComponent implements OnInit {
+  
+  alunoCombo: ComboAluno;
 
   diagnosticos: Diagnostico[];
   solucoes: Solucoes[];
@@ -25,7 +30,9 @@ export class CadastrarAtendimentoComponent implements OnInit {
   atendimento: Atendimento = new Atendimento();
 
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+  
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -40,16 +47,18 @@ export class CadastrarAtendimentoComponent implements OnInit {
     private toastService: ToastService,
     private router: Router
   ) {
+    this.carregarPerfil = new CarregarPerfil();
   }
 
 
   ngOnInit() {
 
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.atendimento.aluno = new Aluno();
     this.atendimento.diagnostico = new Diagnostico();
     this.atendimento.solucoes = new Solucoes();
-
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.alunoCombo = new ComboAluno();
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -58,6 +67,8 @@ export class CadastrarAtendimentoComponent implements OnInit {
     if (!this.perfilAcesso.altera) {
       this.mostrarBotaoAtualizar = false;
     }
+
+
     this.solucaoAtendimentoService.getAll().subscribe((solucoes: Solucoes[]) => {
       this.solucoes = solucoes;
     })
@@ -66,20 +77,17 @@ export class CadastrarAtendimentoComponent implements OnInit {
       this.diagnosticos = diagnosticos;
     })
 
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    })
-
-    let idAtendimento: number;
-    idAtendimento = this.activatedRoute.snapshot.queryParams.idAtendimento ? this.activatedRoute.snapshot.queryParams.idAtendimento : null;
+    const idAtendimento = this.activatedRoute.snapshot.queryParams.idAtendimento ? this.activatedRoute.snapshot.queryParams.idAtendimento : null;
     if (idAtendimento) {
       this.isAtualizar = true;
       this.atendimentoService.getById(idAtendimento).subscribe((atendimento: Atendimento) => {
-        this.atendimento = atendimento
+        this.atendimento = atendimento;
+        this.alunoCombo.id = this.atendimento.aluno.id;
       });
     }
-
   }
+
+
   mostrarBotaoLimpar() {
     if (this.isAtualizar) return false;
     if (!this.mostrarBotaoAtualizar) return false;
@@ -97,6 +105,7 @@ export class CadastrarAtendimentoComponent implements OnInit {
 
   limpar() {
     this.atendimento = new Atendimento();
+    this.alunoCombo = new ComboAluno();
   }
 
   cancelar() {
@@ -109,11 +118,24 @@ export class CadastrarAtendimentoComponent implements OnInit {
       this.router.navigate(['atendimento']);
       this.toastService.showSucesso("Atendimento atualizado com sucesso");
     });
-
   }
 
   mostrarDadosAluno(idAluno:number) {
-    this.atendimento.aluno = _.find(this.alunos, (a: Aluno) => a.id === idAluno);
+    this.alunoService.getById(idAluno).subscribe((aluno: Aluno) => {
+      this.atendimento.aluno = aluno;  
+    })
   }
+
+
+  onValorChange(registro: any) {
+    this.atendimento.aluno.id = registro.id;
+
+    if(this.atendimento.aluno){
+      this.mostrarDadosAluno(this.atendimento.aluno.id);
+    } else {
+      this.atendimento.aluno = null;
+    }
+  }
+
 
 }

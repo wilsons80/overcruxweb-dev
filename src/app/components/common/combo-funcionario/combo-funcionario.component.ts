@@ -1,18 +1,18 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
-import { ComboAluno } from 'src/app/core/combo-aluno';
-import { AlunoService } from 'src/app/services/aluno/aluno.service';
+import { ComboFuncionario } from 'src/app/core/combo-funcionario';
+import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import * as _ from 'lodash';
 
 
 @Component({
-  selector: 'combo-beneficiario',
-  templateUrl: './combo-beneficiario.component.html',
-  styleUrls: ['./combo-beneficiario.component.css'],
+  selector: 'combo-funcionario',
+  templateUrl: './combo-funcionario.component.html',
+  styleUrls: ['./combo-funcionario.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm },
-                  { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }],  
+                  { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }],   
 })
-export class ComboBeneficiarioComponent implements OnInit {
+export class ComboFuncionarioComponent implements OnInit {
 
   @Input() showDisplayId;
   @Input() obrigatorio;
@@ -24,16 +24,16 @@ export class ComboBeneficiarioComponent implements OnInit {
   dados = [];
   data: any = {};
 
-  constructor(private alunoService: AlunoService) { 
+  constructor(private funcionarioService: FuncionarioService) { 
   }
-
+  
   ngOnInit(): void {
     this.data = Date.now();
-    
+        
     setTimeout(() => {
-      this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
+      this.funcionarioService.getAllByCombo().subscribe((alunos: ComboFuncionario[]) => {
         this.dados = alunos;
-        this.preencherComboBeneficiario();
+        this.preencherCombo();
         
         this.dados.forEach(a => a.nome = a.nome);
         this.dados.sort((a,b) => {
@@ -42,11 +42,11 @@ export class ComboBeneficiarioComponent implements OnInit {
           return 0;
         });
       });
-    }, 0)
+    }, 0);
 
   }
 
-  private preencherComboBeneficiario(){
+  private preencherCombo(){
     if (this.selecionado && this.selecionado.id) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
@@ -54,7 +54,6 @@ export class ComboBeneficiarioComponent implements OnInit {
   
   onValorChange(registro: any) {
     this.valorChange.emit(registro);
-    this.preencherComboBeneficiario();
+    this.preencherCombo();
   }
-
 }

@@ -43,7 +43,6 @@ export class ExportarDadosAlunoComponent implements OnInit {
   
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  comboAluno: ComboAluno[];
   comboCpf: ComboPessoaFisica[];
   comboMae: ComboPessoaFisica[];
   comboPai: ComboPessoaFisica[];
@@ -91,17 +90,6 @@ export class ExportarDadosAlunoComponent implements OnInit {
   }
 
   private carregarCombos(){
-    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-      this.comboAluno = alunos;
-      this.comboAluno.forEach(a => a.nome = a.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      });
-    });
-
-
     this.programaService.getAllCombo().subscribe((programas: Programa[]) => {
       this.comboProgramas = programas;
     });

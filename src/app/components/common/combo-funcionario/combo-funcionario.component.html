@@ -1,13 +1,13 @@
-<div ngModelGroup="comboBeneficiario-{{data}}" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="20px">
-    <combo-pesquisavel #comboBeneficiario 
-                       nome="beneficiario-{{data}}" 
+<div ngModelGroup="comboFuncionario-{{data}}" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="20px">
+    <combo-pesquisavel #comboFuncionario 
+                       nome="funcionario-{{data}}" 
                        [itens]="dados" 
                        itemDescricao="nome"
                        itemId="id"
                        [showDisplayId]="showDisplayId" 
                        [obrigatorio]="obrigatorio"
                        [desabilitado]="desabilitado"
-                       placeholder="Nome do beneficiário"
+                       placeholder="Nome do funcinário"
                        [(valor)]="selecionado"
                        (valorChange)="onValorChange($event)">
     </combo-pesquisavel>

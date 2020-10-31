@@ -13,6 +13,11 @@ export class FuncionarioService extends BaseService<Funcionario> {
     super(http, Rotas.FUNCIONARIOS);
   }
 
+
+  getAllByCombo() {
+    return this.http.get(`${Rotas.FUNCIONARIOS}dados/resumidos`);
+  }
+
   getByPessoaFisica(idPessoaFisica: number) {
     return this.http.get(Rotas.FUNCIONARIOS + 'pessoafisica/' + idPessoaFisica);
   }

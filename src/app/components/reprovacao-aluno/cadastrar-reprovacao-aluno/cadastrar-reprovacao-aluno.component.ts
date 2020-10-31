@@ -37,72 +37,8 @@ export class CadastrarReprovacaoAlunoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.limpar();
-
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
-
-    if (!this.perfilAcesso.insere) {
-      this.mostrarBotaoCadastrar = false;
-    }
-
-    if (!this.perfilAcesso.altera) {
-      this.mostrarBotaoAtualizar = false;
-    }
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.alunos = alunos;
-    });
-
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
-    if (id) {
-      this.isAtualizar = true;
-      this.reprovacaoAlunoService.getById(id).subscribe((reprovacaoAluno: ReprovacaoAluno) => {
-        this.reprovacaoAluno = reprovacaoAluno;
-      });
-    }
   }
 
-
-  mostrarBotaoLimpar() {
-    if (this.isAtualizar) { return false; }
-    if (!this.mostrarBotaoAtualizar) { return false; }
-    if (!this.mostrarBotaoCadastrar) { return false; }
-
-    return true;
-  }
-
-
-  cadastrar() {
-    this.reprovacaoAlunoService.cadastrar(this.reprovacaoAluno).subscribe(() => {
-      this.location.back();
-      this.toastService.showSucesso('Reprovação do aluno cadastrada com sucesso');
-    });
-  }
-
-
-  limpar() {
-    this.reprovacaoAluno = new ReprovacaoAluno();
-    this.reprovacaoAluno.aluno = new Aluno();
-
-    this.alunoSelecionado = null;
-  }
-
-  cancelar() {
-    this.location.back();
-  }
-
-
-  atualizar() {
-    this.reprovacaoAlunoService.alterar(this.reprovacaoAluno).subscribe(() => {
-      this.location.back();
-      this.toastService.showSucesso('Reprovação do aluno atualizada com sucesso');
-    });
-  }
-
-  mostrarDadosAluno(idAluno) {
-    this.reprovacaoAluno.aluno = _.find(this.alunos, (a: Aluno) => a.id === idAluno);
-  }
 
 }
 

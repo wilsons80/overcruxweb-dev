@@ -7,6 +7,8 @@ import { CadastrarOcorrenciaAlunoComponent } from './cadastrar-ocorrencia-aluno/
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosFuncionarioModule } from '../common/dados-funcionario/dados-funcionario.module';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
+import { ComboFuncionarioModule } from '../common/combo-funcionario/combo-funcionario.module';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
     OcorrenciaAlunoRoutingModule,
     MaterialCommonModule,
     DadosFuncionarioModule,
-    DadosAlunoModule
+    DadosAlunoModule,
+    ComboBeneficiarioModule,
+    ComboFuncionarioModule
   ]
 })
 export class OcorrenciaAlunoModule { }

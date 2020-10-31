@@ -12,6 +12,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { OcorrenciaAlunoService } from 'src/app/services/ocorrencia-aluno/ocorrencia-aluno.service';
 import * as _ from 'lodash';
+import { ComboAluno } from 'src/app/core/combo-aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { ComboFuncionario } from 'src/app/core/combo-funcionario';
+
+
+export class Filter{
+	aluno: ComboAluno;
+	funcionario: ComboFuncionario;
+}
+
 
 @Component({
   selector: 'cadastrar-ocorrencia-aluno',
@@ -20,13 +30,16 @@ import * as _ from 'lodash';
 })
 export class CadastrarOcorrenciaAlunoComponent implements OnInit {
 
-  listaDeAlunos: Aluno[];
+  filtro: Filter;
+  
   listaDeTipoOcorrencia: TipoOcorrenciaAluno[];
-  listaDeFuncionarios: Funcionario[];
+  
 
   ocorrenciaAluno: OcorrenciaAluno = new OcorrenciaAluno();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+  
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -39,16 +52,19 @@ export class CadastrarOcorrenciaAlunoComponent implements OnInit {
               private alunoService: AlunoService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private toastService: ToastService) { }
+              private toastService: ToastService) { 
+    this.carregarPerfil = new CarregarPerfil();                
+  }
 
 
   ngOnInit() {
+    this.limpar();
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.ocorrenciaAluno.aluno = new Aluno();
     this.ocorrenciaAluno.funcionario = new Funcionario();
     this.ocorrenciaAluno.tipoOcorrenciaAluno = new TipoOcorrenciaAluno();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -59,26 +75,22 @@ export class CadastrarOcorrenciaAlunoComponent implements OnInit {
     }
 
 
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;
       this.ocorrenciaService.getById(id).subscribe((ocorrenciaAluno: OcorrenciaAluno) => {
         this.ocorrenciaAluno = ocorrenciaAluno;
+        this.filtro.aluno.id       = this.ocorrenciaAluno.aluno.id;
+        this.filtro.funcionario.id = this.ocorrenciaAluno.funcionario.id;
       });
-    }
-
-    this.alunoService.getAll().subscribe((alunos: Aluno[]) => {
-      this.listaDeAlunos = alunos;
-    });
+    } 
+    
 
     this.tipoOcorrenciaService.getAll().subscribe( (tipos: TipoOcorrenciaAluno[]) => {
       this.listaDeTipoOcorrencia = tipos;
     });
 
-    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
-      this.listaDeFuncionarios = funcionarios;
-    });
+
   }
 
 
@@ -106,6 +118,9 @@ export class CadastrarOcorrenciaAlunoComponent implements OnInit {
 
   limpar() {
     this.ocorrenciaAluno = new OcorrenciaAluno();
+    this.filtro = new Filter();
+    this.filtro.aluno = new ComboAluno();
+    this.filtro.funcionario = new ComboFuncionario();
   }
 
   cancelar() {
@@ -127,11 +142,15 @@ export class CadastrarOcorrenciaAlunoComponent implements OnInit {
   }
 
   mostrarDadosFuncionario(idFuncionario: number) {
-    this.ocorrenciaAluno.funcionario = _.cloneDeep(_.find(this.listaDeFuncionarios, (f: Funcionario) => f.id === idFuncionario));
+    this.funcionarioService.getById(idFuncionario).subscribe((funcionario: Funcionario) => {
+      this.ocorrenciaAluno.funcionario = funcionario;
+    })
   }
 
   mostrarDadosAluno(idAluno: number) {
-    this.ocorrenciaAluno.aluno = _.cloneDeep(_.find(this.listaDeAlunos, (f: Aluno) => f.id === idAluno));
+    this.alunoService.getById(idAluno).subscribe((aluno: Aluno) => {
+      this.ocorrenciaAluno.aluno = aluno;
+    });
   }
 
   isDataCienciaValida() {
@@ -142,4 +161,22 @@ export class CadastrarOcorrenciaAlunoComponent implements OnInit {
     }
     return true;
   }
+
+
+
+  onValorChangeAluno(registro: any) {
+    this.filtro.aluno = registro;
+    if(registro) {
+      this.mostrarDadosAluno(registro.id);
+    }
+  }
+
+  onValorChangeFuncionario(registro: any) {
+    this.filtro.aluno = registro;
+    if(registro) {
+      this.mostrarDadosFuncionario(registro.id);
+    }
+  }
+
+
 }

@@ -14,11 +14,11 @@
             >
     <mat-option>
         <ngx-mat-select-search ngModel #itemSearch
-                               [placeholderLabel]="placeHolderPesquise"
-                               clearSearchInput="true"
-                               noEntriesFoundLabel="Nenhum elemento encontrado."
-                               (input)="filtrarItens(itemSearch.value)"
-                               [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
+                                [placeholderLabel]="placeHolderPesquise"
+                                clearSearchInput="true"
+                                noEntriesFoundLabel="Nenhum elemento encontrado."
+                                (input)="filtrarItens(itemSearch.value)"
+                                [ngModelOptions]="{standalone: true}"></ngx-mat-select-search>
     </mat-option>
 
     <cdk-virtual-scroll-viewport itemSize="50" [style.height.px]=5*28>

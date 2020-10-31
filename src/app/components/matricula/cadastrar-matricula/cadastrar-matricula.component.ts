@@ -30,7 +30,6 @@ import { ComboAluno } from 'src/app/core/combo-aluno';
 export class CadastrarMatriculaComponent implements OnInit {
 
   filtro: FilterAlunos;
-  comboAluno: ComboAluno[];
   
   conflitos = [];
 
@@ -75,8 +74,6 @@ export class CadastrarMatriculaComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.carregarCombos();
-
     this.turmasService.getAll().subscribe((turmas: Turmas[]) => {
       this.turmas = turmas;
     });
@@ -86,6 +83,7 @@ export class CadastrarMatriculaComponent implements OnInit {
       this.isAtualizar = true;
       this.matriculasService.getById(id).subscribe((matricula: AlunosTurma) => {
         this.matricula = matricula;
+        this.filtro.aluno.id = this.matricula.aluno.id;
 
         this.matricula.oficinas.sort((a,b) => {
           if (a.dataInicioAtividade > b.dataInicioAtividade) {return 1;}
@@ -378,17 +376,6 @@ export class CadastrarMatriculaComponent implements OnInit {
       this.matricula.aluno = null;
     }
   }
-
-  private carregarCombos() {
-    this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
-      this.comboAluno = alunos;
-      this.comboAluno.forEach(a => a.nome = a.nome);
-      this.comboAluno.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      });
-    });
-  }
+  
 
 }

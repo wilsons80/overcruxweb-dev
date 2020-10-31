@@ -3,22 +3,22 @@
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-
-                <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" >
-                    <combo-beneficiario [dados]="comboAlunoTrabalhando" 
-                                        [showDisplayId]="false" 
-                                        [obrigatorio]="false" 
-                                        [selecionado]="filtro.alunoTrabalhando"
-                                        (valorChange)="onValorChange($event)">
-                    </combo-beneficiario>
+                <div ngModelGroup="cboAlunoTrabalhando" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <combo-pesquisavel #cboAlunoTrabalhando 
+                                       nome="alunoTrabalhando" 
+                                       [itens]="comboAlunoTrabalhando" 
+                                       itemDescricao="nome"
+                                       itemId="id"
+                                       [showDisplayId]="false" 
+                                       [obrigatorio]="false"
+                                       placeholder="Informe o beneficiário"
+                                       [(valor)]="filtro.alunoTrabalhando">
+                    </combo-pesquisavel>
                 </div>
-               
             </div>
 
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
-
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                 <button mat-raised-button fxFlex="20%" (click)="consultar()">
                     CONSULTAR
                 </button>
@@ -26,7 +26,6 @@
                 <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
                     LIMPAR
                 </button>
-
             </div>
         </form>
 

@@ -8,8 +8,7 @@
             <div fxLayout="column" fxFlex="60%">
                 <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
                 <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
-                    <combo-beneficiario [dados]="comboAluno" 
-                                        [showDisplayId]="false" 
+                    <combo-beneficiario [showDisplayId]="false" 
                                         [obrigatorio]="true" 
                                         [selecionado]="filtro.aluno"
                                         (valorChange)="onValorChange($event)">

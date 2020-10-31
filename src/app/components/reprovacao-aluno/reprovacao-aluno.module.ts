@@ -6,6 +6,7 @@ import { ReprovacaoAlunoComponent } from './reprovacao-aluno.component';
 import { CadastrarReprovacaoAlunoComponent } from './cadastrar-reprovacao-aluno/cadastrar-reprovacao-aluno.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
+import { ComboBeneficiarioModule } from '../common/combo-beneficiario/combo-beneficiario.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { DadosAlunoModule } from '../common/dados-aluno/dados-aluno.module';
     CommonModule,
     ReprovacaoAlunoRoutingModule,
     DadosAlunoModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    ComboBeneficiarioModule
   ]
 })
 export class ReprovacaoAlunoModule { }
