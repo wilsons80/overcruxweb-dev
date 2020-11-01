@@ -1,32 +1,18 @@
-<mat-form-field fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px">
-    <mat-label>Programa</mat-label>
-    <mat-select [(ngModel)]="rateio.programa.id"
-                name="programa_{{pinPrograma}}"
-                #campoPrograma
-                [required]="!rateio.projeto.id"
-                (selectionChange)="validarDuplicado()">
-        <mat-option></mat-option>
-        <mat-option *ngFor="let i of programas" [value]=i.id>
-            {{i.nome}}
-        </mat-option>
-    </mat-select>
-    <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
-</mat-form-field>
+<div ngModelGroup="cbPrograma" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+    <combo-programa [showDisplayId]="false" #campoPrograma
+                    [obrigatorio]="!rateio.projeto.id" 
+                    [selecionado]="filtro.programa"
+                    (valorChange)="onValorChangePrograma($event)">
+    </combo-programa>
+</div>
 
-<mat-form-field fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px">
-    <mat-label>Projeto</mat-label>
-    <mat-select [(ngModel)]=rateio.projeto.id 
-                [required]="!rateio.programa.id"
-                #campoProjeto
-                name="projeto_{{pinProjeto}}"
-                (selectionChange)="validarDuplicado()">
-        <mat-option></mat-option>
-        <mat-option *ngFor="let i of projetos" [value]=i.id>
-            {{i.nome}}
-        </mat-option>
-    </mat-select>
-    <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
-</mat-form-field>  
+<div ngModelGroup="cbProjeto" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+    <combo-projeto [showDisplayId]="false" #campoProjeto
+                   [obrigatorio]="!rateio.programa.id" 
+                   [selecionado]="filtro.projeto"
+                   (valorChange)="onValorChangeProjeto($event)">
+    </combo-projeto>
+</div>
 
 
 <mat-form-field fxFlex fxFlexOffset="20px">

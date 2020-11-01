@@ -18,29 +18,19 @@
                 </div>
 
                 <div ngModelGroup="comboPrograma" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <combo-pesquisavel #comboPrograma 
-                                       nome="programa" 
-                                       [itens]="programas" 
-                                       itemDescricao="nome"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       placeholder="Informe o programa..."
-                                       [obrigatorio]="false"
-                                       [(valor)]="filtro.programa">
-                    </combo-pesquisavel>
+                    <combo-programa [showDisplayId]="false" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtro.programa"
+                                        (valorChange)="onValorChangePrograma($event)">
+                    </combo-programa>
                 </div>
 
                 <div ngModelGroup="comboProjeto" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <combo-pesquisavel #comboProjeto 
-                                       nome="projeto" 
-                                       [itens]="projetos" 
-                                       itemDescricao="nome"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       placeholder="Informe o projeto..."
-                                       [obrigatorio]="false"
-                                       [(valor)]="filtro.projeto">
-                    </combo-pesquisavel>
+                    <combo-projeto [showDisplayId]="false" 
+                                   [obrigatorio]="false" 
+                                   [selecionado]="filtro.projeto"
+                                   (valorChange)="onValorChangeProjeto($event)">
+                    </combo-projeto>
                 </div>
             </div>
 
@@ -317,15 +307,5 @@
                 {{msg}}
             </div>
         </ng-template>
-
-<!--        <div fxLayout="row"  *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px"
-            style="padding-top: 50px">
-            <div>
-                <button matTooltip="Adicionar nova movimentação" mat-fab color="primary" [routerLink]="['/movimentacoes/cadastrar']"
-                    routerLinkActive="router-link-active">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-        </div> -->
     </div>
 </div>

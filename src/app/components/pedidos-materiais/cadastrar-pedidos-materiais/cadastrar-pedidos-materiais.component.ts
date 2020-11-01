@@ -10,6 +10,9 @@ import { Departamento } from 'src/app/core/departamento';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
 import { Funcionario } from 'src/app/core/funcionario';
+import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
+import { ComboPrograma } from 'src/app/core/combo-programa';
 
 @Component({
   selector: 'cadastrar-pedidos-materiais',
@@ -21,7 +24,7 @@ export class CadastrarPedidosMateriaisComponent implements OnInit {
   pedidosMateriais: PedidosMateriais;
 
   isAtualizar: boolean = false;
-
+  filtro: FilterMovimentacoes;
   
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
@@ -36,13 +39,21 @@ export class CadastrarPedidosMateriaisComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
    
-    let id: number;
-    id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
+    const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
-      this.isAtualizar = true;
-      
+      this.isAtualizar = true;      
       this.pedidosMateriaisService.getById(id).subscribe((pedidosMateriais: PedidosMateriais) => {
-        this.pedidosMateriais = pedidosMateriais
+        this.pedidosMateriais = pedidosMateriais;
+
+        if(!this.pedidosMateriais.programa) {
+          this.pedidosMateriais.programa = new Programa();
+        }
+        if(!this.pedidosMateriais.projeto) {
+          this.pedidosMateriais.projeto = new Projeto();
+        }
+
+        this.filtro.programa.id = this.pedidosMateriais.programa.id;
+        this.filtro.projeto.id  = this.pedidosMateriais.projeto.id;
       });
     }
 
@@ -85,6 +96,11 @@ export class CadastrarPedidosMateriaisComponent implements OnInit {
     this.pedidosMateriais.funcionarioPedido = new Funcionario();
     this.pedidosMateriais.funcionarioRecPed = new Funcionario();
     this.pedidosMateriais.itensPedidosMateriais = [];
+
+    this.filtro = new FilterMovimentacoes();
+    this.filtro.projeto = new ComboProjeto();
+    this.filtro.programa = new ComboPrograma();
+
   }
 
   mostrarBotaoLimpar() {

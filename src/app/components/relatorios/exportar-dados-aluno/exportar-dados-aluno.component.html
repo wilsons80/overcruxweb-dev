@@ -27,7 +27,6 @@
                     </combo-beneficiario>
                 </div>
                 
-
                 <div ngModelGroup="comboMaeBeneficiario" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
                     <combo-pesquisavel #comboMaeBeneficiario 
                                        nome="maeBeneficiario" 
@@ -56,47 +55,37 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>   
-
-                <div ngModelGroup="comboPrograma" fxFlex="34%" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <combo-pesquisavel #comboPrograma 
-                                       nome="programa" 
-                                       [itens]="comboProgramas" 
-                                       itemDescricao="nome"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       placeholder="Programa"
-                                       [obrigatorio]="false"
-                                       [(valor)]="filtro.programa">
-                    </combo-pesquisavel>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>   
+                <div ngModelGroup="cbPrograma" fxFlex="34" fxLayoutGap="20px">
+                    <combo-programa [showDisplayId]="false" #campoPrograma
+                                    [obrigatorio]="false" 
+                                    [selecionado]="filtro.programa"
+                                    (valorChange)="onValorChangePrograma($event)">
+                    </combo-programa>
                 </div>
+                
+                <div ngModelGroup="cbProjeto" fxFlex="33%" >
+                    <combo-projeto [showDisplayId]="false" #campoProjeto
+                                   [obrigatorio]="false" 
+                                   [selecionado]="filtro.projeto"
+                                   (valorChange)="onValorChangeProjeto($event)">
+                    </combo-projeto>
+                </div> 
 
-                <div ngModelGroup="comboProjeto" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <combo-pesquisavel #comboProjeto 
-                                       nome="projeto" 
-                                       [itens]="comboProjetos" 
-                                       itemDescricao="nome"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       placeholder="Projeto"
-                                       [obrigatorio]="false"
-                                       [(valor)]="filtro.projeto">
-                    </combo-pesquisavel>
+                <div ngModelGroup="cbUnidade" fxFlex="33%" fxFlexOffset="20px">
+                    <div ngModelGroup="comboProjeto-" fxFlex="100">
+                        <combo-pesquisavel #comboUnidade 
+                                            nome="unidade" 
+                                            [itens]="comboUnidades" 
+                                            itemDescricao="nomeUnidade"
+                                            itemId="id"
+                                            [showDisplayId]="false" 
+                                            placeholder="Unidade"
+                                            [obrigatorio]="false"
+                                            [(valor)]="filtro.unidade">
+                        </combo-pesquisavel>
+                    </div>
                 </div>
-
-                <div ngModelGroup="comboUnidade" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <combo-pesquisavel #comboUnidade 
-                                       nome="unidade" 
-                                       [itens]="comboUnidades" 
-                                       itemDescricao="nomeUnidade"
-                                       itemId="id"
-                                       [showDisplayId]="false" 
-                                       placeholder="Unidade"
-                                       [obrigatorio]="false"
-                                       [(valor)]="filtro.unidade">
-                    </combo-pesquisavel>
-                </div>
-
             </div>
 
 

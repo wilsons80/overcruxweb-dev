@@ -6,6 +6,8 @@ import { ExportarDadosAlunoComponent } from './exportar-dados-aluno.component';
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { ComboPesquisavelModule } from '../../common/combo-pesquisavel/combo-pesquisavel.module';
 import { ComboBeneficiarioModule } from '../../common/combo-beneficiario/combo-beneficiario.module';
+import { ComboProgramaModule } from '../../common/combo-programa/combo-programa.module';
+import { ComboProjetoModule } from '../../common/combo-projeto/combo-projeto.module';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { ComboBeneficiarioModule } from '../../common/combo-beneficiario/combo-b
     ExportarDadosAlunoRoutingModule,
     MaterialCommonModule,
     ComboPesquisavelModule,
-    ComboBeneficiarioModule
+    ComboBeneficiarioModule,
+    ComboProgramaModule,
+    ComboProjetoModule
   ]
 })
 export class ExportarDadosAlunoModule { }

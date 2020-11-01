@@ -27,4 +27,14 @@ export class FuncoesUteisService {
   }
 
 
+  ordernarArray(array:any[], nomeCampoOrdenacao:string): any[]{
+    array = array.filter(a => !!a[nomeCampoOrdenacao]);
+    array.sort((a,b) => {
+      if (a[nomeCampoOrdenacao] > b[nomeCampoOrdenacao]) {return 1;}
+      if (a[nomeCampoOrdenacao] < b[nomeCampoOrdenacao]) {return -1;}
+      return 0;
+    });
+    return array;
+  }
+
 }

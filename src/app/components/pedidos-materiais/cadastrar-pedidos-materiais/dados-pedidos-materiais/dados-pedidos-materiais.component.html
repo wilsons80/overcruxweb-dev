@@ -105,31 +105,24 @@
 
     <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
-        <!-- #PROGRAMA -->
-        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-            <mat-label>Programa:</mat-label>
-            <mat-select [(ngModel)]=pedidosMateriais.programa.id name="programa">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let i of programas" [value]=i.id>
-                    {{i.nome}}
-                </mat-option>
-            </mat-select>
-            <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa
-                cadastrado</mat-hint>
-        </mat-form-field>
+        <div ngModelGroup="cbPrograma" fxFlex="50%" fxLayoutGap="20px" style="margin-top: 15px;">
+            <mat-toolbar class="titulopartes">Programa</mat-toolbar>
+            <combo-programa [showDisplayId]="false" #campoPrograma
+                            [obrigatorio]="false" 
+                            [selecionado]="filtro.programa"
+                            (valorChange)="onValorChangePrograma($event)">
+            </combo-programa>
+        </div>
+        
+        <div ngModelGroup="cbProjeto" fxFlex="50%" fxLayoutGap="20px" style="margin-top: 15px;">
+            <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+            <combo-projeto [showDisplayId]="false" #campoProjeto
+                           [obrigatorio]="false" 
+                           [selecionado]="filtro.projeto"
+                           (valorChange)="onValorChangeProjeto($event)">
+            </combo-projeto>
+        </div>        
 
-        <!-- #PROJETO -->
-        <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-            <mat-label>Projeto:</mat-label>
-            <mat-select [(ngModel)]=pedidosMateriais.projeto.id name="projeto">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let i of projetos" [value]=i.id>
-                    {{i.nome}}
-                </mat-option>
-            </mat-select>
-            <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum projeto
-                cadastrado</mat-hint>
-        </mat-form-field>
     </div>
 
 </div>

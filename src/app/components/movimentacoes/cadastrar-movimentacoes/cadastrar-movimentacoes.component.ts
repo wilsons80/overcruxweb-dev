@@ -43,9 +43,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isValorTotalFaturaInvalido = false;
   isPagamentoInvalido        = false;
 
-
-  programas: Programa[] = [];
-  projetos: Projeto[] = [];
   tributos: Tributos[];
 
   perfilAcesso: Acesso = new Acesso();
@@ -90,14 +87,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.tributos = tributos;
     })
     
-    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
-      this.programas = programas;
-    })
-
-    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
-      this.projetos = projetos;
-    })
-
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
       this.isAtualizar = true;

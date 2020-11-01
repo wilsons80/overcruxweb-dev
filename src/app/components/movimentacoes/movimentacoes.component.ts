@@ -23,6 +23,8 @@ import { CnpjPipe } from 'src/app/pipes/cnpj.pipe';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import * as _ from 'lodash';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
+import { ComboPrograma } from 'src/app/core/combo-programa';
 
 
 
@@ -51,8 +53,6 @@ export class MovimentacoesComponent implements OnInit {
   msg: string;
 
   empresas:Empresa[];
-  projetos:Projeto[];
-  programas:Programa[];
 
   filtro: FilterMovimentacoes;
 
@@ -90,18 +90,13 @@ export class MovimentacoesComponent implements OnInit {
       this.preencherComboEmpresa();
     })
 
-    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
-      this.programas = programas;
-      this.preencherComboPrograma();
-    })
-
-    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
-      this.projetos = projetos;
-      this.preencherComboProjeto();
-    })
 
     this.dataSource.paginator = this.paginator;   
     this.initFiltro();
+
+    if(!this.isFiltroVazio()) {
+      this.getAllOrigem();
+    }
   }
 
 
@@ -117,8 +112,8 @@ export class MovimentacoesComponent implements OnInit {
     this.dataSource.data = [];
     this.filtro = (this.movimentacoesService.filtro = new FilterMovimentacoes());
     this.filtro.empresa  = new Empresa();
-    this.filtro.projeto  = new Projeto();
-    this.filtro.programa = new Programa();
+    this.filtro.projeto  = new ComboProjeto();
+    this.filtro.programa = new ComboPrograma();
     this.filtro.valor    = 0;
   }
 
@@ -277,16 +272,13 @@ export class MovimentacoesComponent implements OnInit {
     }
   }
 
-  preencherComboPrograma(){
-    if (this.movimentacoesService.filtro.programa.id) {
-      this.filtro.programa = _.find(this.programas, { id: this.movimentacoesService.filtro.programa.id});
-    }
+
+  onValorChangePrograma(event: any) {
+    this.filtro.programa = event;
   }
 
-  preencherComboProjeto(){
-    if (this.movimentacoesService.filtro.projeto.id) {
-      this.filtro.projeto = _.find(this.projetos, { id: this.movimentacoesService.filtro.projeto.id});
-    }
+  onValorChangeProjeto(event: any) {
+    this.filtro.projeto = event;
   }
 
 }

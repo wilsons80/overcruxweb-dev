@@ -12,6 +12,9 @@ import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { ControlContainer, NgForm } from '@angular/forms';
+import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
+import { ComboPrograma } from 'src/app/core/combo-programa';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
 
 @Component({
   selector: 'dados-movimentacoes-materiais',
@@ -26,31 +29,30 @@ export class DadosMovimentacoesMateriaisComponent implements OnInit {
   tiposMovimentacao: TipoMovimentacao = new TipoMovimentacao();
 
   empresas:Empresa[];
-  projetos:Projeto[];
-  programas:Programa[];
   departamentos:Departamento[];
   unidades: Unidade[];
 
+  filtro: FilterMovimentacoes;
+  
   constructor(
     private empresaService:EmpresaService,
     private programaService:ProgramaService,
     private projetoService:ProjetoService,
     private departamentoService:DepartamentoService,
     private unidadeService:UnidadeService,
-  ) { }
+  ) { 
+    this.filtro = new FilterMovimentacoes();
+    this.filtro.programa = new ComboPrograma();
+    this.filtro.projeto  = new ComboProjeto();
+  }
 
   ngOnInit() {
 
+    this.filtro.programa.id = this.movimentacoes.programa.id;
+    this.filtro.projeto.id  = this.movimentacoes.projeto.id;
+
     this.empresaService.getAllCombo().subscribe((empresas:Empresa[]) => {
       this.empresas = empresas;
-    })
-
-    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
-      this.programas = programas;
-    })
-
-    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
-      this.projetos = projetos;
     })
 
     this.departamentoService.getAllCombo().subscribe((departamentos:Departamento[]) => {
@@ -61,5 +63,24 @@ export class DadosMovimentacoesMateriaisComponent implements OnInit {
       this.unidades = unidades;
     })
 
+  }
+
+
+  onValorChangePrograma(registro: any) {
+    this.filtro.programa = registro;
+    if(registro){
+      this.movimentacoes.programa.id = this.filtro.programa.id;
+    }else{
+      this.movimentacoes.programa = null;
+    }
+  }
+
+  onValorChangeProjeto(registro: any) {
+    this.filtro.projeto = registro;
+    if(registro){
+      this.movimentacoes.projeto.id = this.filtro.projeto.id;
+    }else{
+      this.movimentacoes.projeto = null;
+    }
   }
 }

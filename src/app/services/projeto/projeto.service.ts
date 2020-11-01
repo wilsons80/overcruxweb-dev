@@ -29,7 +29,7 @@ export class ProjetoService extends BaseService<Projeto> {
   }
 
   getAllCombo() {
-    return this.http.get(`${Rotas.PROJETOS}combo`);
+    return this.http.get(`${Rotas.PROJETOS}dados/combo`);
   }
 
 

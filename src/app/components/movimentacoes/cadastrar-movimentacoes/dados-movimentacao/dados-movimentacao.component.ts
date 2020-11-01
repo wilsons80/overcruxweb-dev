@@ -40,8 +40,6 @@ export class DadosMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
   @Input() projetos:Projeto[];
-  @Input() programas:Programa[];
-  @Input() tributos: Tributos[];
 
   empresas:Empresa[];
 

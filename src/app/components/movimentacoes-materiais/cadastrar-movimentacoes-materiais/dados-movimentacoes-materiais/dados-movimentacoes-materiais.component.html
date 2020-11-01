@@ -49,53 +49,44 @@
                 <mat-label>Descrição:</mat-label>
                 <textarea [(ngModel)]=movimentacoes.descricaoMovimentacaoMaterial matInput #message name="descricao" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                     cdkAutosizeMinRows="3" maxlength="200">
-         </textarea>
+                </textarea>
                 <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
             </mat-form-field>
         </div>
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px; padding-bottom:20px" fxFlexFill>
 
+            <div ngModelGroup="comboPrograma" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-toolbar class="titulopartes">Programa</mat-toolbar>
+                <combo-programa [showDisplayId]="false" 
+                                [obrigatorio]="false" 
+                                [selecionado]="filtro.programa"
+                                (valorChange)="onValorChangePrograma($event)">
+                </combo-programa>
+            </div>
 
-            <!-- #PROGRAMA -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Programa:</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.programa.id name="programa">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of programas" [value]=i.id>
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa
-                    cadastrado</mat-hint>
-            </mat-form-field>
-
-
-            <!-- #PROJETO -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Projeto:</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.projeto.id name="projeto">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of projetos" [value]=i.id>
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto
-                    cadastrado</mat-hint>
-            </mat-form-field>
+            <div ngModelGroup="comboProjeto" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+                <combo-projeto [showDisplayId]="false" 
+                               [obrigatorio]="false" 
+                               [selecionado]="filtro.projeto"
+                               (valorChange)="onValorChangeProjeto($event)">
+                </combo-projeto>
+            </div>
 
             <!-- #EMPRESA -->
-            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Empresa:</mat-label>
-                <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of empresas" [value]=i.id>
-                        {{i.nomeRazaoSocial}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa
-                    cadastrada</mat-hint>
-            </mat-form-field>
+            <div ngModelGroup="comboEmpresa" fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
+                <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <mat-select [(ngModel)]=movimentacoes.empresa.id name="empresa">
+                        <mat-option></mat-option>
+                        <mat-option *ngFor="let i of empresas" [value]=i.id>
+                            {{i.nomeRazaoSocial}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="empresas?.length === 0" align="start">Nenhuma empresa cadastrada</mat-hint>
+                </mat-form-field>
+            </div>
 
         </div>
 

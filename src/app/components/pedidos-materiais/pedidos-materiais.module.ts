@@ -7,6 +7,8 @@ import { PedidosMateriaisComponent } from './pedidos-materiais.component';
 import { CadastrarPedidosMateriaisComponent } from './cadastrar-pedidos-materiais/cadastrar-pedidos-materiais.component';
 import { DadosPedidosMateriaisComponent } from './cadastrar-pedidos-materiais/dados-pedidos-materiais/dados-pedidos-materiais.component';
 import { ItensPedidosMateriaisComponent } from './cadastrar-pedidos-materiais/itens-pedidos-materiais/itens-pedidos-materiais.component';
+import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module';
+import { ComboProgramaModule } from '../common/combo-programa/combo-programa.module';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { ItensPedidosMateriaisComponent } from './cadastrar-pedidos-materiais/it
   imports: [
     CommonModule,
     PedidosMateriaisRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    ComboProjetoModule,
+    ComboProgramaModule
   ]
 })
 export class PedidosMateriaisModule { }

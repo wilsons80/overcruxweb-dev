@@ -30,7 +30,7 @@ export class PedidosMateriaisComponent implements OnInit {
 	dataInicioPeriodo:Date;
 	dataPedido:Date;
 
-  displayedColumns: string[] = ['id','descricaoPedido', 'dataPedido' ,'dataInicioPeriodo', 'dataFimPeriodo', 'acoes'];
+  displayedColumns: string[] = ['descricaoPedido', 'dataPedido' ,'dataInicioPeriodo', 'dataFimPeriodo', 'acoes'];
   dataSource: MatTableDataSource<PedidosMateriais> = new MatTableDataSource();
   
    perfilAcesso: Acesso;

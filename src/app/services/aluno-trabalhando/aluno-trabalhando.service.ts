@@ -15,7 +15,7 @@ export class AlunoTrabalhandoService extends BaseService<AlunoTrabalhando> {
 
 
   getAllByCombo() {
-    return this.http.get(`${Rotas.ALUNO_TRABALHANDO}dados/resumidos`);
+    return this.http.get(`${Rotas.ALUNO_TRABALHANDO}dados/combo`);
   }
 
 }

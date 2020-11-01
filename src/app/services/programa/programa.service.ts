@@ -17,11 +17,9 @@ export class ProgramaService extends BaseService<Programa> {
   getAllProgramasIntituicaoLogada() {
     return this.http.get(`${Rotas.PROGRAMAS}instituicao/logada`);
   }
-  getAllProgramasIntituicaoLogadaCombo() {
-    return this.http.get(`${Rotas.PROGRAMAS}instituicao/logada/combo`);
-  }
+
   getAllCombo() {
-    return this.http.get(`${Rotas.PROGRAMAS}combo`);
+    return this.http.get(`${Rotas.PROGRAMAS}dados/combo`);
   }
 
 }

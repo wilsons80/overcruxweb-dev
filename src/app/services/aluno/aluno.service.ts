@@ -20,7 +20,7 @@ export class AlunoService extends BaseService<Aluno> {
   }
 
   getAllAlunosByCombo() {
-    return this.http.get(`${Rotas.ALUNO}dados/resumidos`);
+    return this.http.get(`${Rotas.ALUNO}dados/combo`);
   }
 
   getAlunosByNome(nome: string) {

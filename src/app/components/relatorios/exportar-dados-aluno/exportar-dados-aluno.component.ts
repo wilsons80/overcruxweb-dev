@@ -18,6 +18,9 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { ComboProjetoModule } from '../../common/combo-projeto/combo-projeto.module';
+import { ComboPrograma } from 'src/app/core/combo-programa';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
 
 
 export class FilterExportacao{
@@ -28,8 +31,8 @@ export class FilterExportacao{
   responsavel: ComboPessoaFisica;
   dataInicioInstituicao: Date;
   dataFimInstituicao: Date;
-  programa: Programa;
-  projeto: Projeto;
+  programa: ComboPrograma;
+  projeto: ComboProjeto;
   unidade: Unidade;
 }
 
@@ -47,8 +50,6 @@ export class ExportarDadosAlunoComponent implements OnInit {
   comboMae: ComboPessoaFisica[];
   comboPai: ComboPessoaFisica[];
   comboResponsaveis: ComboPessoaFisica[];
-  comboProgramas: Programa[];
-  comboProjetos: Projeto[];
   comboUnidades: Unidade[];
 
   perfilAcesso: Acesso = new Acesso();
@@ -80,79 +81,69 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
 
   consultar() {
-
   }
 
-
+  limpar() {
+    this.filtro = new FilterExportacao();
+  }
   
   onValorChange(event: any) {
     this.filtro.beneficiario = event;
   }
 
+
+
+  
   private carregarCombos(){
-    this.programaService.getAllCombo().subscribe((programas: Programa[]) => {
-      this.comboProgramas = programas;
-    });
-
-    this.projetoService.getAllCombo().subscribe((projetos: Projeto[]) => {
-      this.comboProjetos = projetos;
-    });
-
-
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: Unidade[]) => {
       this.comboUnidades = unidades;
     });
-
 
     this.pessoaFisicaService.getAllPessoasByCombo().subscribe((pessoas: ComboPessoaFisica[]) => {
       this.comboMae   = pessoas;
       this.comboPai   = pessoas;
       this.comboCpf   = pessoas;
-
-      //====================================================================================
-      this.comboMae = this.comboMae.filter(a => !!a.nomeMae);
-      this.comboMae.sort((a,b) => {
-        if (a.nomeMae > b.nomeMae) {return 1;}
-        if (a.nomeMae < b.nomeMae) {return -1;}
-        return 0;
-      });
-      this.comboMae = this.funcoesUteisService.arrayDistinct(this.comboMae, 'nomeMae');
-
-
-      //====================================================================================
-      this.comboPai = this.comboPai.filter(a => !!a.nomePai);
-      this.comboPai.sort((a,b) => {
-        if (a.nomePai > b.nomePai) {return 1;}
-        if (a.nomePai < b.nomePai) {return -1;}
-        return 0;
-      });
-      this.comboPai = this.funcoesUteisService.arrayDistinct(this.comboPai, 'nomePai');
-
-
-      //====================================================================================
-      this.comboCpf.forEach(a => {
-        a.cpf = a.cpf || '00000000000';
-        a.cpf = this.cpfPipe.transform(a.cpf);
-      })
-      this.comboCpf.sort((a,b) => {
-        if (a.cpf > b.cpf) {return 1;}
-        if (a.cpf < b.cpf) {return -1;}
-        return 0;
-      });
-      this.comboCpf = this.funcoesUteisService.arrayDistinct(this.comboCpf, 'cpf');
-    })
-
+      
+      this.comboMae = this.ordenarComboMaeDistinct(this.comboMae);
+      this.comboPai = this.ordenarComboPaiDistinct(this.comboPai);
+      this.comboCpf = this.ordenarComboCpfDistinct(this.comboCpf);
+    });
   }
 
-
-  limpar() {
-    this.filtro = new FilterExportacao();
+  private ordenarComboCpfDistinct(comboCpf: any): any[] {
+    comboCpf.forEach(a => {
+      a.cpf = a.cpf || '00000000000';
+      a.cpf = this.cpfPipe.transform(a.cpf);
+    });
+    comboCpf = this.funcoesUteisService.ordernarArray(comboCpf, 'cpf');
+    comboCpf = this.funcoesUteisService.arrayDistinct(comboCpf, 'cpf');
+    return comboCpf;
   }
 
+  private ordenarComboMaeDistinct(comboMae: any): any[] {
+    comboMae = comboMae.filter(a => !!a.nomeMae);
+    comboMae = this.funcoesUteisService.ordernarArray(comboMae, 'nomeMae');
+    comboMae = this.funcoesUteisService.arrayDistinct(comboMae, 'nomeMae');
+    return comboMae;
+  }
 
+  private ordenarComboPaiDistinct(comboPai: any): any[] {
+    comboPai = this.comboPai.filter(a => !!a.nomePai);
+    comboPai = this.funcoesUteisService.ordernarArray(comboPai, 'nomePai');
+    comboPai = this.funcoesUteisService.arrayDistinct(comboPai, 'nomePai');
+    return comboPai;
+  }
   
   onMascaraDataInput(event) {
     return this.dataUtilService.onMascaraDataInput(event);
+  }
+
+  onValorChangePrograma(registro: any) {
+    this.filtro.programa = registro;
+  }
+
+  onValorChangeProjeto(registro: any) {
+    this.filtro.projeto = registro;
   }
 
 }

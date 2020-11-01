@@ -15,7 +15,7 @@ export class FuncionarioService extends BaseService<Funcionario> {
 
 
   getAllByCombo() {
-    return this.http.get(`${Rotas.FUNCIONARIOS}dados/resumidos`);
+    return this.http.get(`${Rotas.FUNCIONARIOS}dados/combo`);
   }
 
   getByPessoaFisica(idPessoaFisica: number) {

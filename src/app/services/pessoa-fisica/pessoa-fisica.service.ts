@@ -13,7 +13,7 @@ export class PessoaFisicaService extends BaseService<PessoaFisica> {
   }
 
   getAllPessoasByCombo() {
-    return this.http.get(`${Rotas.PESSOA_FISICA}dados/resumidos`);
+    return this.http.get(`${Rotas.PESSOA_FISICA}dados/combo`);
   }
 
   getAllColaboradoresFornecedores() {

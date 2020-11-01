@@ -1,0 +1,15 @@
+<div ngModelGroup="comboProjeto-{{data}}" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="20px">
+    <combo-pesquisavel #comboProjeto 
+                       nome="projeto-{{data}}" 
+                       [itens]="dados" 
+                       itemDescricao="nome"
+                       itemId="id"
+                       [showDisplayId]="showDisplayId" 
+                       [obrigatorio]="obrigatorio"
+                       [desabilitado]="desabilitado"
+                       placeholder="Nome do projeto"
+                       [(valor)]="selecionado"
+                       (valorChange)="onValorChange($event)">
+    </combo-pesquisavel>
+</div>
+

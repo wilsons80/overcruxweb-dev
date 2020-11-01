@@ -11,6 +11,9 @@ import { Projeto } from 'src/app/core/projeto';
 import { Departamento } from 'src/app/core/departamento';
 import { Unidade } from 'src/app/core/unidade';
 import { Funcionario } from 'src/app/core/funcionario';
+import { FilterMovimentacoes } from 'src/app/core/filter-movimentacoes';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
+import { ComboPrograma } from 'src/app/core/combo-programa';
 
 @Component({
   selector: 'dados-pedidos-materiais',
@@ -20,12 +23,14 @@ import { Funcionario } from 'src/app/core/funcionario';
 })
 export class DadosPedidosMateriaisComponent implements OnInit {
 
-  @Input() pedidosMateriais:PedidosMateriais
-  programas: Programa[];
-  projetos: Projeto[];
+  @Input() pedidosMateriais:PedidosMateriais;
+  @Input() filtro:FilterMovimentacoes;
+
   departamentos: Departamento[];
   unidades: Unidade[];
   funcionarios: Funcionario[];
+
+
 
   constructor(
     private programaService:ProgramaService,
@@ -36,14 +41,6 @@ export class DadosPedidosMateriaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.programaService.getAllCombo().subscribe((programas:Programa[]) => {
-      this.programas = programas;
-    })
-
-    this.projetoService.getAllCombo().subscribe((projetos:Projeto[]) => {
-      this.projetos = projetos;
-    })
 
     this.departamentoService.getAllCombo().subscribe((departamentos:Departamento[]) => {
       this.departamentos = departamentos;
@@ -57,6 +54,28 @@ export class DadosPedidosMateriaisComponent implements OnInit {
       this.funcionarios = funcionarios;
     })
 
+  }
+
+
+  onValorChangePrograma(registro: any) {
+    this.filtro.programa = registro;
+    
+    if(registro) {
+      this.pedidosMateriais.programa.id = registro.id;
+    }else{  
+      this.pedidosMateriais.programa = new Programa();
+    }
+
+  }
+
+  onValorChangeProjeto(registro: any) {
+    this.filtro.projeto = registro;
+    
+    if(registro) {
+      this.pedidosMateriais.projeto.id = registro.id;
+    }else{
+      this.pedidosMateriais.projeto = new Projeto();
+    }
   }
 
 }

@@ -19,6 +19,8 @@ import { FormularioRateioPagamentoComponent } from './cadastrar-movimentacoes/fo
 import { FormularioTributoComponent } from './cadastrar-movimentacoes/formulario-tributo/formulario-tributo.component';
 import { TableRateiosProgramaProjetoComponent } from './table-rateios-programa-projeto/table-rateios-programa-projeto.component';
 import { QtdServicosPendentesComponent } from './qtd-servicos-pendentes-cell/qtd-servicos-pendentes-cell.component';
+import { ComboProgramaModule } from '../common/combo-programa/combo-programa.module';
+import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { QtdServicosPendentesComponent } from './qtd-servicos-pendentes-cell/qtd
     MaterialCommonModule,
     NgxCurrencyModule,
     TableCellModule,
-    ComboPesquisavelModule
+    ComboPesquisavelModule,
+    ComboProgramaModule,
+    ComboProjetoModule,
   ]
 })
 export class MovimentacoesModule { }
