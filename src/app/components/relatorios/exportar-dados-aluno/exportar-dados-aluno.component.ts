@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { Aluno } from 'src/app/core/aluno';
@@ -166,7 +166,11 @@ export class ExportarDadosAlunoComponent implements OnInit {
     }
   }
 
-
+  public handlePageBottom(event: PageEvent) {
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.page.emit(event);
+  }
 
   exportar() {
     if(this.selection.selected && this.selection.selected.length === 0) {

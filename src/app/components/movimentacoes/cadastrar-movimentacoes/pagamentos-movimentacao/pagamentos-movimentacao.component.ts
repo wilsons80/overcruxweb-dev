@@ -1,4 +1,3 @@
-import { FaturaService } from './../../../../services/fatura/fatura.service';
 import { ContasBancariaService } from './../../../../services/contas-bancaria/contas-bancaria.service';
 import { Component, OnInit, ViewChild, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -15,8 +14,6 @@ import { Movimentacoes } from 'src/app/core/movimentacoes';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
 import { RateiosPagamentos } from 'src/app/core/rateios-pagamentos';
-import { Programa } from 'src/app/core/programa';
-import { Projeto } from 'src/app/core/projeto';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
@@ -33,8 +30,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @Input() idMovimentacao: number;
   @Input() perfilAcesso: Acesso;
   @Input() contasBancariasReembolso;
-  @Input() programas: Programa[];
-  @Input() projetos: Projeto[];
+
 
   @Output() onPagamentoInvalido = new EventEmitter();
 

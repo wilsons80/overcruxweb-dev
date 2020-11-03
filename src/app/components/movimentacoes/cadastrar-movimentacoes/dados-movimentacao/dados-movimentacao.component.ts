@@ -1,13 +1,11 @@
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { UnidadeService } from './../../../../services/unidade/unidade.service';
 import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
-import { ProgramaService } from './../../../../services/programa/programa.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from './../../../../core/empresa';
 import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
-import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { Departamento } from 'src/app/core/departamento';
 import { Unidade } from 'src/app/core/unidade';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
@@ -20,12 +18,9 @@ import { Acesso } from 'src/app/core/acesso';
 import { RateiosMovimentacoesUnidades } from 'src/app/core/rateios-movimentacoes-unidades';
 import { DoadoresService } from 'src/app/services/doadores/doadores.service';
 import { Doadores } from 'src/app/core/doadores';
-import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { TributoMovimentacao } from 'src/app/core/tributo-movimentacao';
 import { Tributos } from 'src/app/core/tributos';
-import { TributosService } from 'src/app/services/tributos/tributos.service';
 import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
-import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { FornecedorColaborador } from 'src/app/core/fornecedor-colaborador';
 
 
@@ -39,7 +34,7 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   @Input() movimentacoes:Movimentacoes;
   @Input() perfilAcesso: Acesso;
-  @Input() projetos:Projeto[];
+  @Input() tributos: Tributos[];
 
   empresas:Empresa[];
 

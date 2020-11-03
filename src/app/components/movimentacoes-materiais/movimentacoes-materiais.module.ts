@@ -7,6 +7,8 @@ import { MovimentacoesMateriaisComponent } from './movimentacoes-materiais.compo
 import { MaterialCommonModule } from 'src/app/material-modules/material-common.module';
 import { DadosMovimentacoesMateriaisComponent } from './cadastrar-movimentacoes-materiais/dados-movimentacoes-materiais/dados-movimentacoes-materiais.component';
 import { ItensMovimentacoesMateriaisComponent } from './cadastrar-movimentacoes-materiais/itens-movimentacoes-materiais/itens-movimentacoes-materiais.component';
+import { ComboProgramaModule } from '../common/combo-programa/combo-programa.module';
+import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { ItensMovimentacoesMateriaisComponent } from './cadastrar-movimentacoes-
   imports: [
     CommonModule,
     MovimentacoesMateriaisRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    ComboProgramaModule,
+    ComboProjetoModule
   ]
 })
 export class MovimentacoesMateriaisModule { }

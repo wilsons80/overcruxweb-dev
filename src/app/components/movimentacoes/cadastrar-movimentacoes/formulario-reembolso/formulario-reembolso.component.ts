@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Acesso } from 'src/app/core/acesso';
+import { ComboPrograma } from 'src/app/core/combo-programa';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { PagamentosFatura } from 'src/app/core/pagamentos-fatura';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
 import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
@@ -21,20 +25,30 @@ export class FormularioReembolsoComponent implements OnInit {
   @Input() perfilAcesso: Acesso;
   @Input() pagamentosFatura: PagamentosFatura;
   @Input() contasBancarias: ContasBancaria[];
-  @Input() programas: Programa[];
-  @Input() projetos: Projeto[];
   @Output() onContaReembolsoValida = new EventEmitter()
-    
+  
+  programas: ComboPrograma[];
+  projetos: ComboProjeto[];
+
   pinContaBancaria  = Date.now();
   pinCheckReembolso = Date.now();
   pinDataReembolso  = Date.now();
   pinValorReembolso = Date.now();
   pinDescricao      = Date.now();
 
-  constructor(private toastService: ToastService) { 
-  }
+  constructor(private toastService: ToastService,
+              private projetoService: ProjetoService,
+              private programaService: ProgramaService) { 
+}
 
   ngOnInit(): void {
+    this.programaService.getAllCombo().subscribe((programas: ComboPrograma[]) => {
+      this.programas = programas;
+    });
+
+    this.projetoService.getAllCombo().subscribe((projetos: ComboProjeto[]) => {
+      this.projetos = projetos;
+    }); 
   }
 
   deletar() {

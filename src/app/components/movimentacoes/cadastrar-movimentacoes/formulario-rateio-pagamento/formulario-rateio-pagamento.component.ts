@@ -9,6 +9,11 @@ import { Projeto } from 'src/app/core/projeto';
 import { RateiosPagamentos } from 'src/app/core/rateios-pagamentos';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { ComboPrograma } from 'src/app/core/combo-programa';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
+import { ComboProjetoModule } from 'src/app/components/common/combo-projeto/combo-projeto.module';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 
 @Component({
   selector: 'formulario-rateio-pagamento',
@@ -22,27 +27,36 @@ export class FormularioRateioPagamentoComponent implements OnInit {
   @Input() rateio: RateiosPagamentos;
   @Input() perfilAcesso: Acesso;
   @Input() pagamentosFatura: PagamentosFatura;
-  @Input() programas: Programa[];
-  @Input() projetos: Projeto[];
   @Input() contasBancarias: ContasCentrosCusto[];
   @Output() onContaRateioValida = new EventEmitter()
-
+  
+  programas: ComboPrograma[];
+  projetos: ComboProjeto[];
   
   pinContaBancaria  = Date.now();
   pinCheck          = Date.now();
   pinValor          = Date.now();
   pinDescricao      = Date.now();
 
-  constructor(private toastService: ToastService) { 
+  constructor(private toastService: ToastService,
+              private projetoService: ProjetoService,
+              private programaService: ProgramaService) { 
   }
 
   ngOnInit(): void {
+    this.programaService.getAllCombo().subscribe((programas: ComboPrograma[]) => {
+      this.programas = programas;
+    });
+
+    this.projetoService.getAllCombo().subscribe((projetos: ComboProjeto[]) => {
+      this.projetos = projetos;
+    });   
   }
+
 
   deletar() {
     this.pagamentosFatura.rateioPagamento.splice(this.index, 1);
   }
-
 
 
   validarContaBancaria() {
