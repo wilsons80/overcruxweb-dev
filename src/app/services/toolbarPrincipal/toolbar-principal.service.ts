@@ -42,4 +42,8 @@ export class ToolbarPrincipalService {
     this.nomeUsuario = null;
   }
 
+  setLoadingCompleto(isCompleto: boolean) {
+    this.loadingCompleto = isCompleto;
+  }
+
 }

@@ -8,6 +8,7 @@ import { ComboPesquisavelModule } from '../../common/combo-pesquisavel/combo-pes
 import { ComboBeneficiarioModule } from '../../common/combo-beneficiario/combo-beneficiario.module';
 import { ComboProgramaModule } from '../../common/combo-programa/combo-programa.module';
 import { ComboProjetoModule } from '../../common/combo-projeto/combo-projeto.module';
+import { LoadingPopupModule } from 'src/app/services/loadingPopup/loading-popup.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ComboProjetoModule } from '../../common/combo-projeto/combo-projeto.mod
     ComboPesquisavelModule,
     ComboBeneficiarioModule,
     ComboProgramaModule,
-    ComboProjetoModule
+    ComboProjetoModule,
+    LoadingPopupModule
   ]
 })
 export class ExportarDadosAlunoModule { }

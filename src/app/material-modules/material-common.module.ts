@@ -35,6 +35,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ComboPesquisavelModule } from '../components/common/combo-pesquisavel/combo-pesquisavel.module';
+import { LoadingPopupModule } from '../components/common/loading-popup/loading-popup.module';
 
 
 const modulos = [
@@ -71,6 +72,7 @@ const modulos = [
     , NgxCurrencyModule
     , ComboPesquisavelModule
     , MatBadgeModule
+    , LoadingPopupModule
 ]
 
 @NgModule({

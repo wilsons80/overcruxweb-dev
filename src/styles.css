@@ -41,6 +41,15 @@ mat-toolbar.mat-toolbar.mat-toolbar-single-row.titulopartes{
 }
 
 
+.spinner {
+  line-height: 1.2rem;
+  background: url(./assets/icones/spinner_290.gif) no-repeat 0 0;
+  padding-left: 38px;
+  display: inline-block;
+  padding-top: 6px;
+  min-height: 32px;
+}
+
 
 /* BOTOES DA APP */
 button.mat-raised-button.mat-button-base{

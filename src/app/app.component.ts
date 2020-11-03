@@ -37,15 +37,11 @@ export class AppComponent {
     private autenticadorService: AutenticadorService,
   ) {
 
-    const subs = loadingIndicatorService.onLoadingChanged
-      .subscribe(loading => {
-        if (loading) {
-          loadingPopupService.mostrarDialog();
-        }
-        if (!loading) {
-          loadingPopupService.closeDialog();
-        }
-      });
+    loadingIndicatorService
+      .onLoadingChanged
+      .subscribe(isLoading =>
+        setTimeout(() => this.toolbarPrincipalService.setLoadingCompleto(!isLoading), 0)
+      );
 
 
   }

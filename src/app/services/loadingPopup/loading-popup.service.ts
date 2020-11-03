@@ -1,7 +1,9 @@
-import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { LoadingPopupComponent } from 'src/app/components/common/loading-popup/loading-popup.component';
+import { LoadingPopupComponent } from './loading-popup.component';
+import { finalize, throttleTime } from 'rxjs/operators';
+import { Observable, asyncScheduler } from 'rxjs';
+import { LoadingIndicatorService } from '../loadingIndicator/loading-indicator.service';
 
 const dialogConfig = new MatDialogConfig();
 
@@ -10,36 +12,31 @@ const dialogConfig = new MatDialogConfig();
 })
 export class LoadingPopupService {
 
-  dialogRef: MatDialogRef<any,any>;
+  dialogRef: MatDialogRef<any, any>;
 
-  constructor(
-    public dialog: MatDialog,
-    private toolbarPrincipalService:ToolbarPrincipalService
-    ) {
+  constructor(public dialog: MatDialog,
+    private loadingIndicatorService: LoadingIndicatorService,
+  ) {
   }
 
-  
   mostrarMensagemDialog(texto: string): void {
-    if (this.dialogRef !== undefined && this.dialogRef.componentInstance !== null){
+    if (this.dialogRef !== undefined && this.dialogRef.componentInstance !== null) {
       this.changeMassageDialog(texto);
     } else {
       this.openDialog(texto);
     }
   }
 
-  private changeMassageDialog(texto: string): void {
-    this.dialogRef.componentInstance.mensagem = texto;
-  }
-
-  mostrarDialog(): void {
-    this.toolbarPrincipalService.loadingCompleto = false;
-  }
-  
   closeDialog() {
-    this.toolbarPrincipalService.loadingCompleto = true;
     if (this.dialogRef) {
       this.dialogRef.close();
     }
+  }
+
+  /** Abre e fecha o popup ao final da requisição */
+  aguardeObservable(observable$): Observable<any> {
+    this.mostrarMensagemDialog('Aguarde...');
+    return observable$.pipe(finalize(() => this.closeDialog()));
   }
 
   private openDialog(texto: string): void {
@@ -51,5 +48,29 @@ export class LoadingPopupService {
     this.dialogRef = this.dialog.open(LoadingPopupComponent, dialogConfig);
   }
 
+  private changeMassageDialog(texto: string): void {
+    this.dialogRef.componentInstance.mensagem = texto;
+  }
+
+  /** Abre e fecha o loading quando não houver mais requisições http */
+  mostrarMsgEnquantoHouverRequisicoes(texto: string): void {
+    const subs = this.loadingIndicatorService.onLoadingChanged
+      .pipe(
+        throttleTime(400, asyncScheduler, {
+          leading: false,
+          trailing: true
+        })
+      ).subscribe(
+        loading => {
+          if (!loading) {
+            this.closeDialog();
+            subs.unsubscribe();
+          }
+        },
+        () => subs.unsubscribe()
+      );
+
+    this.mostrarMensagemDialog(texto);
+  }
 
 }
