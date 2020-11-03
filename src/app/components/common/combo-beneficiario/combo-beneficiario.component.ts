@@ -3,6 +3,7 @@ import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { ComboAluno } from 'src/app/core/combo-aluno';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import * as _ from 'lodash';
+import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ComboBeneficiarioComponent implements OnInit {
   dados = [];
   data: any = {};
 
-  constructor(private alunoService: AlunoService) { 
+  constructor(private alunoService: AlunoService,
+              private funcoesUteisService: FuncoesUteisService) { 
   }
 
   ngOnInit(): void {
@@ -34,13 +36,7 @@ export class ComboBeneficiarioComponent implements OnInit {
       this.alunoService.getAllAlunosByCombo().subscribe((alunos: ComboAluno[]) => {
         this.dados = alunos;
         this.preencherComboBeneficiario();
-        
-        this.dados.forEach(a => a.nome = a.nome);
-        this.dados.sort((a,b) => {
-          if (a.nome > b.nome) {return 1;}
-          if (a.nome < b.nome) {return -1;}
-          return 0;
-        });
+        this.dados = this.funcoesUteisService.ordernarArray(this.dados, 'nome');
       });
     }, 0)
 
