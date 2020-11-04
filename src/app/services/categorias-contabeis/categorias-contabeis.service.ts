@@ -12,5 +12,9 @@ export class CategoriasContabeisService extends BaseService<CategoriasContabeis>
   constructor(http: HttpClient) {
     super(http, Rotas.PLANOS_CONTAS_CONTABEIS);
   }
+  
+  getAllCombo() {
+    return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'superior');
+  }
 
 }
