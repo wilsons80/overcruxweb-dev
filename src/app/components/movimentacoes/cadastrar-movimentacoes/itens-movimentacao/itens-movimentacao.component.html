@@ -12,7 +12,7 @@
     
                 <!-- CATEGORIAS -->
                 <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                    <mat-label>Categoria Contábil:</mat-label>
+                    <mat-label>Rubrica:</mat-label>
                     <mat-select name="categoria" 
                                 [(ngModel)]=itensMovimentacoes.categoria.id 
                                 (selectionChange)="carregarContaContabil()"
@@ -155,7 +155,7 @@
                 style="margin-top: 20px">
 
                 <ng-container matColumnDef="categoriaContabil">
-                    <th mat-header-cell *matHeaderCellDef> Categoria Contábil </th>
+                    <th mat-header-cell *matHeaderCellDef> Rubrica </th>
                     <td mat-cell *matCellDef="let element"> {{element.categoria?.nome}} </td>
                 </ng-container>
 

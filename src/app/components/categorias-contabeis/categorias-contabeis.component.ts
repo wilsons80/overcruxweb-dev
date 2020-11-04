@@ -115,7 +115,7 @@ export class CategoriasContabeisComponent implements OnInit {
   verificaMostrarTabela(listaCategoriasContabeis: CategoriasContabeis[]) {
     if (!listaCategoriasContabeis || listaCategoriasContabeis.length == 0) {
       this.mostrarTabela = false;
-      this.msg = "Nenhuma categoria contábil cadastrada."
+      this.msg = "Nenhuma Rubrica cadastrada."
     } else {
       this.mostrarTabela = true;
     }
