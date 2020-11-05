@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriasContabeisComponent } from './categorias-contabeis.component';
 import { CadastrarCategoriasContabeisComponent } from './cadastrar-categorias-contabeis/cadastrar-categorias-contabeis.component';
+import { ComboPesquisavelModule } from '../common/combo-pesquisavel/combo-pesquisavel.module';
 
 
 
@@ -12,7 +13,8 @@ import { CadastrarCategoriasContabeisComponent } from './cadastrar-categorias-co
   imports: [
     CommonModule,
     CategoriasContabeisRoutingModule,
-    MaterialCommonModule
+    MaterialCommonModule,
+    ComboPesquisavelModule
   ]
 })
 export class CategoriasContabeisModule { }
