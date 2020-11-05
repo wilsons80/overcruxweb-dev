@@ -8,5 +8,6 @@ export class CategoriasContabeis{
 	descricaoCategoria: string;
 	codigoCategoriaContabil: string;
 	instituicao: Instituicao;
+	sintetica:boolean;
 }
 

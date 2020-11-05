@@ -45,6 +45,13 @@
                        placeholder="Código do Plano de Contas">
                 <mat-hint align="end">{{codigoCategoriaContabil.value.length}} / 10</mat-hint>
             </mat-form-field>
+            
+            <div style="margin-top: 25px;">
+                <mat-checkbox name="sintetico" fxFlexOffset="40px"
+                    [(ngModel)]="categoriasContabeis.sintetica">Sintético 
+                </mat-checkbox>
+            </div>
+
         </div>
 
 
