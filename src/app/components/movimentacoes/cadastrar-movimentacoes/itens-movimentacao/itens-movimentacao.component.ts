@@ -15,6 +15,7 @@ import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
 import { PedidosMateriaisService } from './../../../../services/pedidosMateriais/pedidos-materiais.service';
+import { PlanosContas } from 'src/app/core/planosContas';
 
 @Component({
   selector: 'itens-movimentacao',
@@ -43,6 +44,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   isAtualizar = false;
   materiais: Material[];
   categorias: CategoriasContabeis[];
+  planosContas: PlanosContas[];
   pedidosMateriais: PedidosMateriais[];
 
   valorItensSuperiorValorMovimento = false;
@@ -60,8 +62,12 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.materiais = materiais;
     })
 
-    this.categoriasContabeisService.getAllCombo().subscribe((categorias: CategoriasContabeis[]) => {
+    this.categoriasContabeisService.getAll().subscribe((categorias: CategoriasContabeis[]) => {
       this.categorias = categorias;
+    })
+    
+    this.categoriasContabeisService.getAllView(false).subscribe((planosContas: PlanosContas[]) => {
+      this.planosContas = planosContas;
     })
 
     this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais: PedidosMateriais[]) => {

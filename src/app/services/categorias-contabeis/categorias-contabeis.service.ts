@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Rotas } from 'src/app/core/rotas';
 import { BaseService } from '../base/base.service';
@@ -13,8 +13,10 @@ export class CategoriasContabeisService extends BaseService<CategoriasContabeis>
     super(http, Rotas.PLANOS_CONTAS_CONTABEIS);
   }
   
-  getAllCombo() {
-    return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'superior');
+  getAllView(hasSintetica:boolean) {
+    let params = new HttpParams().set("hasSintetica",`${hasSintetica}`);
+
+    return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'view',{params: params});
   }
 
 }

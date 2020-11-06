@@ -117,7 +117,7 @@ export class CategoriasContabeisComponent implements OnInit {
   }
  
   getAllCombo() {
-    this.categoriasContabeisService.getAllCombo().subscribe((retorno: PlanosContas[]) => {
+    this.categoriasContabeisService.getAllView(true).subscribe((retorno: PlanosContas[]) => {
       this.listaPlanosContas = retorno;
     })
   }
