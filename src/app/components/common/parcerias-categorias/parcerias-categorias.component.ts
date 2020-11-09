@@ -1,3 +1,4 @@
+import { AditivoParceriaCategoria } from './../../../core/aditivo-parceria-categoria';
 import { Component, OnInit, Input, ViewChild, SimpleChanges, OnDestroy } from '@angular/core';
 import { ParceriasCategorias } from 'src/app/core/parcerias-categorias';
 import { MatPaginator } from '@angular/material/paginator';
@@ -35,10 +36,10 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
 
   isAtualizar = false;
 
-
   parceriasCategorias:ParceriasCategorias;
   categoriasContabeis: CategoriasContabeis[];
   sub: Subscription;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,9 +67,12 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
 
   }
 
+  
+
   initObjetos() {
     this.parceriasCategorias = new ParceriasCategorias();
     this.parceriasCategorias.categoriasContabeis = new CategoriasContabeis();
+    this.parceriasCategorias.aditivosParceriasCategorias = [];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -136,6 +140,15 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
     this.parceriasCategorias = parceriasCategorias;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+  }
+
+  adicionarAditivo(parceriasCategorias:ParceriasCategorias){
+    parceriasCategorias.aditivosParceriasCategorias.push(new AditivoParceriaCategoria());
+  }
+
+  deletarAditivo(parceriasCategorias:ParceriasCategorias, aditivo:AditivoParceriaCategoria){
+    let index = parceriasCategorias.aditivosParceriasCategorias.indexOf(aditivo);
+    parceriasCategorias.aditivosParceriasCategorias.splice(index,1);
   }
 
   ngOnDestroy(): void {

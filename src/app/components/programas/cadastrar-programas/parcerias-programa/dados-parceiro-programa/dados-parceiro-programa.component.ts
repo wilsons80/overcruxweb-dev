@@ -3,6 +3,7 @@ import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from 'src/app/core/empresa';
 import { ParceriasPrograma } from 'src/app/core/parcerias-programa';
 import {ControlContainer, NgForm} from '@angular/forms';
+import { AditivoParceriaPrograma } from 'src/app/core/aditivo-parceria-programa';
 
 @Component({
   selector: 'dados-parceiro-programa',
@@ -16,16 +17,25 @@ export class DadosParceiroProgramaComponent implements OnInit {
   empresas: Empresa[];
 
   constructor(
+
     private empresaService:EmpresaService
   ) {
     
-    
-
   }
 
   ngOnInit() {
 
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => this.empresas = empresas);
   }
+
+  adicionarAditivo(parceriasCategorias:ParceriasPrograma){
+    parceriasCategorias.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
+  }
+
+  deletarAditivo(parceriasCategorias:ParceriasPrograma, aditivo:AditivoParceriaPrograma){
+    let index = parceriasCategorias.aditivosParceriasProgramas.indexOf(aditivo);
+    parceriasCategorias.aditivosParceriasProgramas.splice(index,1);
+  }
+
 
 }

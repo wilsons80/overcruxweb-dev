@@ -10,6 +10,7 @@ import { Empresa } from 'src/app/core/empresa';
 import { ParceriasPrograma } from 'src/app/core/parcerias-programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { AditivoParceriaPrograma } from 'src/app/core/aditivo-parceria-programa';
 
 @Component({
   selector: 'parcerias-programa',
@@ -62,7 +63,8 @@ export class ParceriasProgramaComponent implements OnInit {
     this.parceriasPrograma = new ParceriasPrograma();
     this.parceriasPrograma.empresa = new Empresa();
     this.parceriasPrograma.materiaisPrograma = [];
-    this.parceriasPrograma.parceriasCategorias = []
+    this.parceriasPrograma.parceriasCategorias = [];
+    this.parceriasPrograma.aditivosParceriasProgramas = [];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -140,6 +142,15 @@ export class ParceriasProgramaComponent implements OnInit {
     this.parceriasPrograma = parceiro;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+  }
+
+  adicionarAditivo(parceriasPrograma:ParceriasPrograma){
+    parceriasPrograma.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
+  }
+
+  deletarAditivo(parceriasCategorias:ParceriasPrograma, aditivo:AditivoParceriaPrograma){
+    let index = parceriasCategorias.aditivosParceriasProgramas.indexOf(aditivo);
+    parceriasCategorias.aditivosParceriasProgramas.splice(index,1);
   }
 
 
