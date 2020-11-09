@@ -24,17 +24,16 @@ export class DadosParceiroProgramaComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => this.empresas = empresas);
   }
 
-  adicionarAditivo(parceriasCategorias:ParceriasPrograma){
-    parceriasCategorias.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
+  adicionarAditivo(parceriasPrograma:ParceriasPrograma){
+    parceriasPrograma.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
   }
 
-  deletarAditivo(parceriasCategorias:ParceriasPrograma, aditivo:AditivoParceriaPrograma){
-    let index = parceriasCategorias.aditivosParceriasProgramas.indexOf(aditivo);
-    parceriasCategorias.aditivosParceriasProgramas.splice(index,1);
+  deletarAditivo(parceriasPrograma:ParceriasPrograma, aditivo:AditivoParceriaPrograma){
+    let index = parceriasPrograma.aditivosParceriasProgramas.indexOf(aditivo);
+    parceriasPrograma.aditivosParceriasProgramas.splice(index,1);
   }
 
 
