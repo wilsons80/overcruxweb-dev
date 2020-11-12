@@ -35,6 +35,9 @@ export class FormularioReembolsoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(!this.reembolso.contaDestino){
+      this.reembolso.contaDestino = new ContasBancaria();
+    }
   }
 
   deletar() {

@@ -1,3 +1,4 @@
+import { ContasCentrosCusto } from 'src/app/core/contas-centros-custo';
 import { TipoEmpresa } from 'src/app/core/tipo-empresa';
 import { Empresa } from './empresa';
 import { Projeto } from './projeto';
@@ -17,5 +18,6 @@ export class ParceriasProjeto {
     materiaisProjeto:MateriaisProjeto[]
     parceriasCategorias:ParceriasCategorias[];
     aditivosParceriasProjeto:AditivoParceriaProjeto[]
+    contasCentrosCusto:ContasCentrosCusto[];
 
 }

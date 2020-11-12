@@ -7,10 +7,20 @@
             </mat-expansion-panel-header>
 
             <mat-tab-group>
+               
+                <!-- PARCEIROS -->
                 <mat-tab label="Parceiro"> 
                         <dados-parceiro-programa [parceriasPrograma]=parceriasPrograma></dados-parceiro-programa>     
                 </mat-tab>
 
+                 <!-- CENTROS DE CUSTO -->
+                 <mat-tab label="Centros de Custos"> 
+                    <contas-centros-custo
+                    [listaContasCentrosCusto] = parceriasPrograma.contasCentrosCusto
+            ></contas-centros-custo>    
+                </mat-tab>
+
+                 <!-- MATERIAIS -->
                 <mat-tab label="Materiais"> 
                         <materiais-programa 
                            [listaMateriaisPrograma]=parceriasPrograma.materiaisPrograma
@@ -18,6 +28,7 @@
                            ></materiais-programa>
                 </mat-tab>
                 
+                <!-- CATEGORIAS -->
                 <mat-tab label="Categorias"> 
                         <parcerias-categorias [listaParceriasCategorias]= parceriasPrograma.parceriasCategorias></parcerias-categorias>
                 </mat-tab>

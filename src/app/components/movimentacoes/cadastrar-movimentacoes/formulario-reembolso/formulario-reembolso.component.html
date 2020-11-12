@@ -7,7 +7,7 @@
                     required
                     name="contasReembolso_{{pinContaBancaria}}">
             <mat-option></mat-option>
-            <mat-option *ngFor="let i of contasBancarias" [value]=i.contasBancaria.id>
+            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
                 {{getNomeProjetoPrograma(i)}}
             </mat-option>
         </mat-select>
@@ -22,7 +22,9 @@
                [min]="pagamentosFatura.dataPagamento"
                [required]="reembolso.contaBancaria.id"
                [matDatepicker]="dataReembolso"
-               placeholder="Data do reembolso">
+               placeholder="Data do reembolso"
+               
+               >
         <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
         <mat-datepicker #dataReembolso></mat-datepicker>
         <mat-error *ngIf="campoDataReembolso.value">A data deve ser maior ou igual a data do pagamento</mat-error>
@@ -58,6 +60,22 @@
         </button>                                
     </div>    
  
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px">
+    <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+        <mat-label>Conta de destino do reembolso</mat-label>
+        <mat-select [(ngModel)]=reembolso.contaDestino.id
+                    (selectionChange)="validarContaReembolso()" 
+                    required
+                    name="contasDestino_{{pinContaBancaria}}">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
+                {{getNomeProjetoPrograma(i)}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+    </mat-form-field>
 </div>
 
 <div fxLayout="row" fxLayoutGap="50px">

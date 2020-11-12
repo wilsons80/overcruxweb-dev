@@ -62,6 +62,7 @@ export class ParceriasProjetoComponent implements OnInit {
     this.parceriasProjeto.materiaisProjeto = [];
     this.parceriasProjeto.parceriasCategorias = [];
     this.parceriasProjeto.aditivosParceriasProjeto = [];
+    this.parceriasProjeto.contasCentrosCusto = [];
   }
 
   ngOnChanges(changes: SimpleChanges): void {

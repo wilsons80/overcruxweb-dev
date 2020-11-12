@@ -94,22 +94,6 @@
                         </form>
                 </mat-step>
 
-                <!------------------  Centros de Custo ------------------------>
-                <mat-step [stepControl]="formCadastroMateriais">
-                        <form #formCadastroMateriais="ngForm" matStepperIcon="phone">
-                                <ng-template matStepLabel>CENTROS DE CUSTO</ng-template>
-                                <contas-centros-custo
-                                        [listaContasCentrosCusto] = programa.contasCentrosCusto
-                                ></contas-centros-custo>
-                                <div dir="rtl" fxLayoutGap="20px"
-                                        style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
-                                        <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
-                                                <mat-icon>chevron_left</mat-icon>
-                                        </button>
-                                </div>
-                        </form>
-                </mat-step>
-
         </mat-horizontal-stepper>
 
 
