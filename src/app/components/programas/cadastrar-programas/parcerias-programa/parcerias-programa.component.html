@@ -34,6 +34,7 @@
                 </mat-tab>
             </mat-tab-group>
 
+            <span *ngIf="isSomaDasCategoriasDiferenteDaSomaDosParceiros()"  style="color: orangered; padding-left: 10px;"><b>ATENÇÃO:</b> A soma das categorias e seus aditivos é diferente da soma do parceiro e seus aditivos.</span>
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
                 style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
 
@@ -41,12 +42,12 @@
                     Limpar
                 </button>
 
-                <button *ngIf="!isAtualizar"  mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid fxFlex="20%"
+                <button *ngIf="!isAtualizar"  mat-raised-button name="botaoAdicionar" [disabled]="formulario.invalid || isSomaDasCategoriasDiferenteDaSomaDosParceiros()" fxFlex="20%"
                     color="primary" (click)="adicionar()">
                     Adicionar
                 </button>
               
-                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]=formulario.invalid fxFlex="20%"
+                <button *ngIf="isAtualizar" mat-raised-button name="botaoAdicionar" [disabled]="formulario.invalid || isSomaDasCategoriasDiferenteDaSomaDosParceiros()" fxFlex="20%"
                     color="primary" (click)="atualizar()">
                     Atualizar
                 </button>

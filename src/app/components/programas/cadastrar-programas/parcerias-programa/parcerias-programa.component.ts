@@ -44,7 +44,7 @@ export class ParceriasProgramaComponent implements OnInit {
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
     private empresaService: EmpresaService,
-    private novoObjetoService:NovoObjetoService
+    private novoObjetoService: NovoObjetoService
   ) {
 
   }
@@ -66,7 +66,7 @@ export class ParceriasProgramaComponent implements OnInit {
     this.parceriasPrograma.parceriasCategorias = [];
     this.parceriasPrograma.aditivosParceriasProgramas = [];
     this.parceriasPrograma.contasCentrosCusto = [];
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -146,14 +146,36 @@ export class ParceriasProgramaComponent implements OnInit {
     this.isAtualizar = true;
   }
 
-  adicionarAditivo(parceriasPrograma:ParceriasPrograma){
+  adicionarAditivo(parceriasPrograma: ParceriasPrograma) {
     parceriasPrograma.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
   }
 
-  deletarAditivo(parceriasCategorias:ParceriasPrograma, aditivo:AditivoParceriaPrograma){
+  deletarAditivo(parceriasCategorias: ParceriasPrograma, aditivo: AditivoParceriaPrograma) {
     let index = parceriasCategorias.aditivosParceriasProgramas.indexOf(aditivo);
-    parceriasCategorias.aditivosParceriasProgramas.splice(index,1);
+    parceriasCategorias.aditivosParceriasProgramas.splice(index, 1);
   }
 
+  isSomaDasCategoriasDiferenteDaSomaDosParceiros() {
+    if(!this.parceriasPrograma.valorParceria 
+      || _.isEmpty(this.parceriasPrograma.parceriasCategorias)
+      ){
+        return false;
+    }
+
+    this.parceriasPrograma.valorParceria;
+    const total = this.parceriasPrograma.aditivosParceriasProgramas
+                        .map(adt => adt.valorAditivo)
+                        .reduce((total, numero) => total + numero, 0);
+    const somaParceiroMaisAditivo = this.parceriasPrograma.valorParceria + total;
+
+    let somaTodasCategorias = 0;
+    this.parceriasPrograma.parceriasCategorias.forEach(pc => {
+      const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo).reduce((total, numero) => total + numero, 0);
+      const somaCategoriasMaisAditivos = pc.valorParceriaCategoria + total;
+      somaTodasCategorias += somaCategoriasMaisAditivos;
+    });
+
+    return somaParceiroMaisAditivo != somaTodasCategorias;
+  }
 
 }
