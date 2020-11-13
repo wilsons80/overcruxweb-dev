@@ -142,6 +142,7 @@ export class ItensMovimentacaoComponent implements OnInit {
   initObjetos() {
     this.itensMovimentacoes = new ItensMovimentacoes();
     this.itensMovimentacoes.categoria = new CategoriasContabeis();
+    this.itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
     this.itensMovimentacoes.material = new Material();
     this.itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
     this.itensMovimentacoes.quantidadeMaterial = 0;
