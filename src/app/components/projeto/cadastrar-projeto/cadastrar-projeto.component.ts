@@ -88,7 +88,6 @@ export class CadastrarProjetoComponent implements OnInit {
 
   cadastrar() {
     this.projetoService.cadastrar(this.projeto).subscribe(() => {
-      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto cadastrado com sucesso");
     });
   }
@@ -103,7 +102,6 @@ export class CadastrarProjetoComponent implements OnInit {
 
   atualizar() {
     this.projetoService.alterar(this.projeto).subscribe(() => {
-      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto atualizado com sucesso");
     });
 
