@@ -21,7 +21,7 @@
             <!-- PEDIDOS -->
             <mat-form-field fxFlex="30%">
                 <mat-label>Pedido:</mat-label>
-                <mat-select [(ngModel)]="cotacoesMaterial.pedidosMaterial.id" name="pedido" required>
+                <mat-select [(ngModel)]="cotacoesMaterial.pedidosMaterial.id" name="pedido">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let i of pedidos" [value]=i.id>
                         {{i.descricaoPedido}}
