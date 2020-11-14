@@ -8,4 +8,6 @@ export class MateriaisProjeto{
 	dataInicio:Date;
 	material:Material;
 	valorMaterial:number;
+	quantidadeMaterial:number;
+
 }

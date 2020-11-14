@@ -86,7 +86,6 @@ export class CadastrarProgramasComponent implements OnInit {
 
   cadastrar() {
     this.programaService.cadastrar(this.programa).subscribe(() => {
-      this.router.navigate(['programas']);
       this.toastService.showSucesso("Programa cadastrado com sucesso");
     });
   }
@@ -102,7 +101,6 @@ export class CadastrarProgramasComponent implements OnInit {
 
   atualizar() {
     this.programaService.alterar(this.programa).subscribe(() => {
-      this.router.navigate(['programas']);
       this.toastService.showSucesso("Programa atualizado com sucesso");
     });
 
