@@ -49,6 +49,9 @@ export class FormularioReembolsoComponent implements OnInit {
     this.projetoService.getAllCombo().subscribe((projetos: ComboProjeto[]) => {
       this.projetos = projetos;
     }); 
+    if(!this.reembolso.contaDestino){
+      this.reembolso.contaDestino = new ContasBancaria();
+    }
   }
 
   deletar() {

@@ -1,20 +1,15 @@
-import { ContasBancariaService } from './../../../services/contas-bancaria/contas-bancaria.service';
-import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
-import { ContasCentrosCusto } from 'src/app/core/contas-centros-custo';
-
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-
-import { Funcoes } from 'src/app/core/funcoes';
-import { Funcionario } from 'src/app/core/funcionario';
-import { FuncoesInstituicao } from 'src/app/core/funcoes-instituicao';
-import { Acesso } from 'src/app/core/acesso';
-import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
-import { FuncoesService } from 'src/app/services/funcoes/funcoes.service';
 import * as _ from 'lodash';
+import { Acesso } from 'src/app/core/acesso';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
+import { ContasCentrosCusto } from 'src/app/core/contas-centros-custo';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { ContasBancariaService } from './../../../services/contas-bancaria/contas-bancaria.service';
+
+
+
 
 @Component({
   selector: 'contas-centros-custo',
@@ -33,7 +28,7 @@ export class ContasCentrosCustoComponent implements OnInit {
   listaContasBancarias: ContasBancaria[]
 
 
-  displayedColumns: string[] = ['banco','agencia','conta', 'acoes'];
+  displayedColumns: string[] = ['banco', 'agencia', 'conta', 'acoes'];
   dataSource: MatTableDataSource<ContasCentrosCusto> = new MatTableDataSource();
 
   contasCentrosCusto: ContasCentrosCusto;
@@ -47,7 +42,7 @@ export class ContasCentrosCustoComponent implements OnInit {
   constructor(
 
     private contasBancariaService: ContasBancariaService,
-    private toastService:ToastService
+    private toastService: ToastService
 
   ) { }
 
@@ -61,7 +56,7 @@ export class ContasCentrosCustoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes["listaContasCentrosCusto"] && changes["listaContasCentrosCusto"].currentValue){
+    if (changes["listaContasCentrosCusto"] && changes["listaContasCentrosCusto"].currentValue) {
       this.carregarLista();
     }
   }
@@ -73,7 +68,7 @@ export class ContasCentrosCustoComponent implements OnInit {
     }
     const contasCentrosCustoSelecionada = new ContasCentrosCusto();
     Object.assign(contasCentrosCustoSelecionada, this.contasCentrosCusto);
-    
+
     this.getObjetosCompletosParaLista(contasCentrosCustoSelecionada);
 
     this.listaContasCentrosCusto.push(contasCentrosCustoSelecionada);
@@ -84,11 +79,11 @@ export class ContasCentrosCustoComponent implements OnInit {
   isJaAdicionada(): boolean {
     const unidadeAdicionada = this.listaContasCentrosCusto.find((ccc: ContasCentrosCusto) => ccc.contasBancaria.id === this.contasCentrosCusto.contasBancaria.id);
     return !!unidadeAdicionada;
-    
+
   }
 
-  getObjetosCompletosParaLista(contasCentrosCusto:ContasCentrosCusto) {
-    contasCentrosCusto.contasBancaria = _.find(this.listaContasBancarias, (c:ContasBancaria) => c.id == contasCentrosCusto.contasBancaria.id);
+  getObjetosCompletosParaLista(contasCentrosCusto: ContasCentrosCusto) {
+    contasCentrosCusto.contasBancaria = _.find(this.listaContasBancarias, (c: ContasBancaria) => c.id == contasCentrosCusto.contasBancaria.id);
   }
 
   novo() {
