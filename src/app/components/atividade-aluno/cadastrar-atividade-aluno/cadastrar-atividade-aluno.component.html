@@ -23,18 +23,6 @@
         <div *ngIf="tipoOficina">
             <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                <!-- ALUNO-->
-                <div fxLayout="column" fxFlex="45%">
-                    <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
-                    <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
-                        <combo-beneficiario [showDisplayId]="false" 
-                                            [obrigatorio]="true" 
-                                            [selecionado]="filtro.aluno"
-                                            (valorChange)="onValorChange($event)">
-                        </combo-beneficiario>
-                    </div>
-                </div>
-
                 <!-- TURMAS -->
                 <div fxLayout="column" fxFlex="45%" *ngIf="isTurma()">
                     <mat-toolbar class="titulopartes">Turma</mat-toolbar>
@@ -50,10 +38,34 @@
                     </mat-form-field>
                 </div>
 
+                <!-- BENEFICIARIO-->
+                <div fxLayout="column" fxFlex="45%">
+                    <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
+                    <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
+                        <combo-beneficiario [showDisplayId]="false" 
+                                            [obrigatorio]="true" 
+                                            [selecionado]="filtro.aluno"
+                                            (valorChange)="onValorChange($event)">
+                        </combo-beneficiario>
+                    </div>
+                </div>
+
                 <!-- ATIVIDADE-->
                 <div fxLayout="column" fxFlex="45%">
-                    <mat-toolbar class="titulopartes">Oficina</mat-toolbar>
-                    <mat-form-field style="margin: 0 20px 20px 20px">
+                    <mat-toolbar class="titulopartes">Data</mat-toolbar>
+                    <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
+                        <input style="margin-left: 20px" matInput name="dataInicioAtividade"
+                            [matDatepicker]="dataInicioAtividade" placeholder="Data Início:"
+                            [(ngModel)]="atividadeAluno.dataInicioAtividade" required>
+                        <mat-datepicker-toggle matSuffix [for]="dataInicioAtividade"></mat-datepicker-toggle>
+                        <mat-datepicker #dataInicioAtividade></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <mat-toolbar class="titulopartes">Oficina</mat-toolbar>
+            <div fxLayout="row">
+                <mat-form-field fxFlex="95%" style="margin: 0 20px 20px 20px">
                         <mat-select [(ngModel)]="atividadeAluno.atividade.id" name="atividade"
                             (selectionChange)="mostrarDadosAtividade($event.value)" required>
                             <mat-option></mat-option>
@@ -63,20 +75,14 @@
                         </mat-select>
                         <mat-hint *ngIf="atividades?.length === 0" align="start">Nenhuma oficina cadastrada</mat-hint>
                     </mat-form-field>
-                </div>
+
             </div>
+
 
             <!-- OUTRAS INFORMACOES-->
             <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
             <div fxLayout="row">
-                <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
-                    <input style="margin-left: 20px" matInput name="dataInicioAtividade"
-                        [matDatepicker]="dataInicioAtividade" placeholder="Data Início:"
-                        [(ngModel)]="atividadeAluno.dataInicioAtividade" required>
-                    <mat-datepicker-toggle matSuffix [for]="dataInicioAtividade"></mat-datepicker-toggle>
-                    <mat-datepicker #dataInicioAtividade></mat-datepicker>
-                </mat-form-field>
-
+              
                 <mat-form-field style="margin: 0 0 0 20px" fxFlex="15%">
                     <input style="margin-left: 20px" 
                            matInput name="dataDesvinculacao"
@@ -87,11 +93,12 @@
                     <mat-datepicker #dataDesvinculacao></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field style="margin: 0 0 0 20px" fxFlex="70%">
-                    <mat-label>Descrição desligamento:</mat-label>
-                    <input #descricao matInput name="descricao" [(ngModel)]="atividadeAluno.descDesligamento"
-                        maxlength="200">
-                    <mat-hint align="start">{{descricao.value.length}} / 200</mat-hint>
+                <mat-form-field style="margin-left: 20px" fxFlex="80%" appearance="outline">
+                    <mat-label>Descrição:</mat-label>
+                    <textarea matInput #message name="descricao"  cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" [(ngModel)]="atividadeAluno.descDesligamento" maxlength="200" required>
+                         </textarea>
+                    <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
                 </mat-form-field>
 
             </div>
