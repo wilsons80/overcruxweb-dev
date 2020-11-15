@@ -1,4 +1,4 @@
-<mat-toolbar class="titulopartes">Escolha a oficina que deseja copiar</mat-toolbar>
+<mat-toolbar class="titulopartes">Escolha o plano de atividades que deseja copiar</mat-toolbar>
  <div style="width: 500px;">
     <div fxLayout="row" 
          fxLayoutGap="50px" 
@@ -24,14 +24,14 @@
          fxFlexFill>
    
         <mat-form-field fxFlexOffset="20px" fxFlex="100%">
-            <mat-label>Oficina</mat-label>
+            <mat-label>Plano de Atividades</mat-label>
             <mat-select [(ngModel)]="oficinaSelecionada" name="oficina" 
                         [disabled]="!turmaSelecionada.id" >
                 <mat-option *ngFor="let u of oficinas" [value]="u">
                     {{u.descricao}}
                 </mat-option>
             </mat-select>
-            <mat-hint *ngIf="oficinas?.length === 0" align="start">Nenhuma oficina cadastrada</mat-hint>
+            <mat-hint *ngIf="oficinas?.length === 0" align="start">Nenhum plano de atividades cadastrado</mat-hint>
         </mat-form-field>
         
     </div> 
@@ -51,7 +51,7 @@
         <button mat-button (click)="copiarOficina()"  
                 color="primary"
                 matTooltip="Importar dados">
-            Importar oficina
+            Importar plano de atividades
         </button>
     </div>
     

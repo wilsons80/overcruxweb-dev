@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Matrícula do beneficiário na oficina</mat-toolbar>
+<mat-toolbar class="subtitulo">Matrícula do beneficiário no plano de atividades</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
@@ -13,7 +13,7 @@
                                  name="tipoOficina" 
                                  (change)="carregarOficinas()">
                     <mat-radio-button value="T" style="padding-left: 30px;">Turma</mat-radio-button>
-                    <mat-radio-button value="O" style="padding-left: 30px;">Oficina</mat-radio-button>
+                    <mat-radio-button value="O" style="padding-left: 30px;">Plano de Atividades</mat-radio-button>
                 </mat-radio-group>
             </div>
 
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <mat-toolbar class="titulopartes">Oficina</mat-toolbar>
+            <mat-toolbar class="titulopartes">Plano de Atividades</mat-toolbar>
             <div fxLayout="row">
                 <mat-form-field fxFlex="95%" style="margin: 0 20px 20px 20px">
                         <mat-select [(ngModel)]="atividadeAluno.atividade.id" name="atividade"
@@ -73,7 +73,7 @@
                                 {{i.descricao}}
                             </mat-option>
                         </mat-select>
-                        <mat-hint *ngIf="atividades?.length === 0" align="start">Nenhuma oficina cadastrada</mat-hint>
+                        <mat-hint *ngIf="atividades?.length === 0" align="start">Nenhum plano de atividades cadastrado</mat-hint>
                     </mat-form-field>
 
             </div>

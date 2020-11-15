@@ -59,9 +59,9 @@
 
     <!-- NOME DA OFICINA -->
     <div fxLayout="column" fxFlex="33%">
-        <mat-toolbar class="titulopartes">Nome da oficina</mat-toolbar>
+        <mat-toolbar class="titulopartes">Nome do Plano de Atividades</mat-toolbar>
         <mat-form-field>
-            <input #descricao matInput maxlength="200" name="descricao" placeholder="Nome da oficina:"
+            <input #descricao matInput maxlength="200" name="descricao" placeholder="Nome do Plano de Atividades:"
                 [(ngModel)]="atividade.descricao" required>
             <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
         </mat-form-field>

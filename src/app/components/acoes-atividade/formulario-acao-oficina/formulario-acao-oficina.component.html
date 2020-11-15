@@ -17,9 +17,9 @@
         </div>
     
         <div id="row_dados" fxLayout="column" fxFlex="55%">
-            <mat-toolbar class="titulopartes">Oficina</mat-toolbar>
+            <mat-toolbar class="titulopartes">Plano de Atividades</mat-toolbar>
                 <mat-form-field style="margin-right: 20px;margin-left: 10px"  fxFlex= "95%" >
-                    <mat-label>Oficinas</mat-label>
+                    <mat-label>Plano de Atividades</mat-label>
                     <mat-select [(ngModel)]="acao.oficina.id"
                                 (selectionChange)="mostrarDadosAtividade($event.value)"
                                 name="atividade" required>
@@ -28,7 +28,7 @@
                             {{u.descricao}}
                         </mat-option>
                     </mat-select>
-                    <mat-hint *ngIf="atividades?.length === 0"  align="start">Nenhuma oficina cadastrada</mat-hint>
+                    <mat-hint *ngIf="atividades?.length === 0"  align="start">Nenhum plano de atividades cadastrado</mat-hint>
             </mat-form-field>
         </div>
     

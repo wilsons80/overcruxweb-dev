@@ -1,7 +1,7 @@
 <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
     <ng-container matColumnDef="descricao">
-        <th mat-header-cell *matHeaderCellDef> Oficina </th>
+        <th mat-header-cell *matHeaderCellDef> Plano de Atividades </th>
         <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
     </ng-container>
 
@@ -58,7 +58,7 @@
 
 <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 30px">
     <div>
-        <button matTooltip="Adicionar nova oficina" mat-fab color="primary" (click)="novo()">
+        <button matTooltip="Adicionar novo Plano de Atividades" mat-fab color="primary" (click)="novo()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
