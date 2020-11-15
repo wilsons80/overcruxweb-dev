@@ -12,16 +12,11 @@ export class Atividade {
     descricaoLocalExecucao: string;
     dataFim: Date;
     dataInicio: Date;
-    dataPrevisaoInicio: Date;
-    dataPrevisaoTermino: Date;
     horaFim: number;
     horaInicio: number;
-    numeroAulas: number;
     cargaHoraria: number;
     maximoParticipantes: number;
-    periodoAtividade: number;
     domingo: string;
-    horarioFixo: string;
     localExecucao: string;
     quarta: string;
     quinta: string;
@@ -29,10 +24,8 @@ export class Atividade {
     segunda: string;
     sexta: string;
     terca: string;
-    observacoes: string;
     valorCustoAtividade: number;
 
-    planosAcao: PlanosAcao;
     projeto: Projeto;
     programa: Programa;
     unidade: Unidade;

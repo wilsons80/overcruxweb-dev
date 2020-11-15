@@ -78,7 +78,6 @@ export class CadastrarOficinaComponent implements OnInit {
 
   limpar() {
     this.oficina = new Atividade();
-    this.oficina.planosAcao = new PlanosAcao();
     this.oficina.projeto = new Projeto();
     this.oficina.programa = new Programa();
     this.oficina.unidade = new Unidade();

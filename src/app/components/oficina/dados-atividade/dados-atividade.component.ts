@@ -84,9 +84,4 @@ export class DadosAtividadeComponent implements OnInit {
     this.atividade.projeto = _.cloneDeep(_.find(this.projetos, (a: Projeto) => a.id === idProjeto));
   }
 
-  carregarPlanoAcao(idPlanoAcao: number) {
-    if(!idPlanoAcao) return;
-    this.atividade.planosAcao = _.cloneDeep(_.find(this.listaPlanosAcao, (a: PlanosAcao) => a.id === idPlanoAcao));
-  }
-
 }
