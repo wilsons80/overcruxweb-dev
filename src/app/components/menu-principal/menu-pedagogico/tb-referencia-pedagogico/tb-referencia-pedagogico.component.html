@@ -27,10 +27,16 @@
             titulo="Tipos de Avaliações" rota="avaliacaoatividade" toolTip="Tipos de Avaliações"></sub-menu>
         </div>
 
-            <!-- TIPO_OCORRENCIA_ALUNO -->
+        <!-- TIPO_OCORRENCIA_ALUNO -->
         <div style="padding-left: 15px">
             <sub-menu *ngIf="verificaAcesso(getModulos().TIPO_OCORRENCIA_ALUNO)" icone="block" titulo="Tipos de ocorrências"
             rota="tipoocorrenciaaluno" toolTip="Tipos de ocorrências"></sub-menu>
+        </div>
+        
+        <!-- TIPOS_ATIVIDADES -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_ATIVIDADES)" icone="list" titulo="Tipos de atividades"
+            rota="tiposatividades" toolTip="Tipos de atividades"></sub-menu>
         </div>
 
 
