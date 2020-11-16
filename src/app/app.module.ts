@@ -1,3 +1,4 @@
+import { TiposAtividadesModule } from './components/tipos-atividades/tipos-atividades.module';
 import { AuthGuard } from './guards/auth.guard';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { registerLocaleData } from '@angular/common';
@@ -234,7 +235,8 @@ registerLocaleData(localePt, 'pt-BR');
     ComboPesquisavelModule,
     ConciliacaoModule,
     ProvisionamentoModule,
-    ExportarDadosAlunoModule
+    ExportarDadosAlunoModule,
+    TiposAtividadesModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,
