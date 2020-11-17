@@ -46,4 +46,8 @@ export class ToolbarPrincipalService {
     this.loadingCompleto = isCompleto;
   }
 
+  getUnidadeLogada(){
+    return this.unidadeSelecionada;
+  }
+
 }

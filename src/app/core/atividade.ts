@@ -5,6 +5,7 @@ import { PlanosAcao } from './planos-acao';
 import { Projeto } from './projeto';
 import { Unidade } from './unidade';
 import { MateriaisAtividade } from './materiais-atividade';
+import { TiposAtividades } from './tipos-atividades';
 
 export class Atividade {
     id: number;
@@ -25,6 +26,7 @@ export class Atividade {
     sexta: string;
     terca: string;
     valorCustoAtividade: number;
+    observacoes:string;
 
     projeto: Projeto;
     programa: Programa;
@@ -34,6 +36,8 @@ export class Atividade {
 
     colaboradoresAtividade: ColaboradoresAtividade[];
     materiaisAtividade: MateriaisAtividade[];
+
+    tiposAtividades:TiposAtividades;
 
     usuarioAlteracao: number;
 }

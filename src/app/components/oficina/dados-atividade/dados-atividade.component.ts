@@ -12,6 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Modulos } from 'src/app/core/modulos';
 import { Programa } from 'src/app/core/programa';
 import * as _ from 'lodash';
+import { TiposAtividadesService } from 'src/app/services/tipos-atividades/tipos-atividades.service';
+import { TiposAtividades } from 'src/app/core/tipos-atividades';
+import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
 
 @Component({
   selector: 'dados-atividade',
@@ -23,7 +26,6 @@ export class DadosAtividadeComponent implements OnInit {
 
   @Input() atividade: Atividade;
 
-  listaPlanosAcao: PlanosAcao[];
   projetos: Projeto[];
   programas: Programa[];
   unidades: Unidade[];
@@ -39,9 +41,11 @@ export class DadosAtividadeComponent implements OnInit {
   ];
 
   mostrarCampos = false;
+  tiposAtividades: TiposAtividades[];
 
   constructor(
-    private planosAcaoService: PlanosAcaoService,
+    private toolbarPrincipalService: ToolbarPrincipalService,
+    private tiposAtividadesService: TiposAtividadesService,
     private projetoService: ProjetoService,
     private programaService: ProgramaService,
     private unidadeService: UnidadeService,
@@ -53,17 +57,23 @@ export class DadosAtividadeComponent implements OnInit {
 
     this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
+      if(!this.atividade.unidade.idUnidade){
+        this.atividade.unidade = _.find(this.unidades, (u: Unidade) => u.idUnidade === this.toolbarPrincipalService.getUnidadeLogada().id);
+      }
+
     });
 
     if ( this.activatedRoute.snapshot.data.modulo === Modulos.OFICINA) {
       this.mostrarCampos = true;
 
-      this.planosAcaoService.getAll().subscribe((planosAcao: PlanosAcao[]) => {
-        this.listaPlanosAcao = planosAcao;
-      });
 
       this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
         this.projetos = projetos;
+
+      });
+      
+      this.tiposAtividadesService.getAll().subscribe((tiposAtividades: TiposAtividades[]) => {
+        this.tiposAtividades = tiposAtividades;
 
       });
 

@@ -72,17 +72,17 @@
         <mat-toolbar class="titulopartes">Período de Execução</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
             <mat-form-field style="margin-left: 20px" fxFlex="40%">
-                <input matInput name="dataInicio" [matDatepicker]="dataInicio" placeholder="Data de Início:"
+                <input matInput name="dataInicioExecucao" [matDatepicker]="dataInicioExecucao" placeholder="Data de Início:"
                     [(ngModel)]="atividade.dataInicio">
-                <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                <mat-datepicker #dataInicio></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="dataInicioExecucao"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicioExecucao></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field fxFlex="40%">
-                <input matInput name="dataFim" [matDatepicker]="dataFim" placeholder="Data Fim"
+                <input matInput name="dataFimExecucao" [matDatepicker]="dataFimExecucao" placeholder="Data Fim"
                     [(ngModel)]="atividade.dataFim">
-                <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
-                <mat-datepicker #dataFim></mat-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="dataFimExecucao"></mat-datepicker-toggle>
+                <mat-datepicker #dataFimExecucao></mat-datepicker>
             </mat-form-field>
         </div>
     </div>
@@ -114,7 +114,7 @@
     <mat-form-field class="topo" fxFlex="45%" appearance="outline">
         <mat-label>Objetivo Geral:</mat-label>
         <textarea matInput #message name="objetivoGeral" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.descricao" required>
+            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.observacoes">
              </textarea>
         <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
     </mat-form-field>
@@ -122,7 +122,7 @@
     <mat-form-field class="topo" style="margin-left: 20px" fxFlex="45%" appearance="outline">
         <mat-label>Metodologia:</mat-label>
         <textarea matInput #message name="metodologia" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.descricaoLocalExecucao" required>
+            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.descricaoLocalExecucao">
              </textarea>
         <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
     </mat-form-field>
@@ -134,19 +134,16 @@
 <!-- QUARTA LINHA -->
 <mat-toolbar class="titulopartes">Horários</mat-toolbar>
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-        <input matInput name="dataInicio" [matDatepicker]="dataInicio" placeholder="Data de Início:"
-            [(ngModel)]="atividade.dataInicio">
-        <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-        <mat-datepicker #dataInicio></mat-datepicker>
+    <mat-form-field>
+        <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
+            placeholder="Hora Início:" [(ngModel)]="atividade.horaInicio">
     </mat-form-field>
 
-    <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-        <input matInput name="dataFim" [matDatepicker]="dataFim" placeholder="Data Fim" [(ngModel)]="atividade.dataFim">
-        <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
-        <mat-datepicker #dataFim></mat-datepicker>
+    <mat-form-field>
+        <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim"
+            placeholder="Hora Fim:" [(ngModel)]="atividade.horaFim">
     </mat-form-field>
-
+    
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="topo"
         fxFlexFill>
         <mat-slide-toggle name="segunda" [(ngModel)]="atividade.segunda">SEG</mat-slide-toggle>
@@ -162,17 +159,12 @@
 
 
 
-
-
-
 <!-- DADOS BÁSICOS -->
 <mat-toolbar class="titulopartes">Dados Básicos</mat-toolbar>
 <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-    <!-- LOCAL EXECUÇÃO-->
-    <div fxFlex="80%">
-        <div fxLayout="row">
-            <mat-form-field fxFlexOffset="20px">
+            <!-- LOCAL EXECUÇÃO-->
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
                 <mat-label>Local de Execução:</mat-label>
                 <mat-select [(ngModel)]="atividade.localExecucao" name="localExecucao">
                     <mat-option *ngFor="let u of localExecucao" [value]="u.id">
@@ -180,8 +172,15 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
-    </div>
+           
+            <mat-form-field fxFlex="50%">
+                <mat-label>Tipo de Atividade:</mat-label>
+                <mat-select [(ngModel)]="atividade.tiposAtividades" name="tiposAtividades">
+                    <mat-option *ngFor="let u of tiposAtividades" [value]="u.id">
+                        {{u.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
 
 
