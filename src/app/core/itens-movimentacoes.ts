@@ -9,6 +9,7 @@ export class ItensMovimentacoes{
     id:number;
 	descricaoItemMovimentacao:string;
 	categoria:CategoriasContabeis;
+	categoriaAdicional:CategoriasContabeis;
 	departamento:Departamento;
 	material:Material;
 	movimentacao:Movimentacoes;

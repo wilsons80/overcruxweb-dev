@@ -1,3 +1,4 @@
+import { PlanosContas } from './../../core/planosContas';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog} from '@angular/material/dialog';
@@ -34,6 +35,8 @@ export class CategoriasContabeisComponent implements OnInit {
   perfilAcesso: Acesso;
 
   tiposDespesas: TipoDespesa = new TipoDespesa();
+  listaPlanosContas: any;
+  selecionado:PlanosContas = new PlanosContas();
 
   constructor(
     private categoriasContabeisService: CategoriasContabeisService,
@@ -56,8 +59,8 @@ export class CategoriasContabeisComponent implements OnInit {
   }
 
   consultar() {
-    if (this.categoriasContabeis.id) {
-      this.categoriasContabeisService.getById(this.categoriasContabeis.id).subscribe((categoriasContabeis: CategoriasContabeis) => {
+    if (this.selecionado.idCategoria) {
+      this.categoriasContabeisService.getById(this.selecionado.idCategoria).subscribe((categoriasContabeis: CategoriasContabeis) => {
         if (!categoriasContabeis) {
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -110,12 +113,19 @@ export class CategoriasContabeisComponent implements OnInit {
       this.dataSource.data = listaCategoriasContabeis ? listaCategoriasContabeis : [];
       this.verificaMostrarTabela(listaCategoriasContabeis);
     })
+    this.getAllCombo();
+  }
+ 
+  getAllCombo() {
+    this.categoriasContabeisService.getAllView(true).subscribe((retorno: PlanosContas[]) => {
+      this.listaPlanosContas = retorno;
+    })
   }
 
   verificaMostrarTabela(listaCategoriasContabeis: CategoriasContabeis[]) {
     if (!listaCategoriasContabeis || listaCategoriasContabeis.length == 0) {
       this.mostrarTabela = false;
-      this.msg = "Nenhuma categoria contábil cadastrada."
+      this.msg = "Nenhuma Rubrica cadastrada."
     } else {
       this.mostrarTabela = true;
     }

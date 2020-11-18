@@ -1,3 +1,4 @@
+import { PlanosContas } from './../../../core/planosContas';
 import { CategoriasContabeis } from './../../../core/categorias-contabeis';
 import { Component, OnInit } from '@angular/core';
 import { Acesso } from 'src/app/core/acesso';
@@ -16,7 +17,7 @@ import { TipoDespesa } from 'src/app/core/tipo-despesa';
 })
 export class CadastrarCategoriasContabeisComponent implements OnInit {
 
-  listaCategoriasContabeis: CategoriasContabeis[];
+  listaCategoriasContabeis: PlanosContas[];
   categoriasContabeis: CategoriasContabeis;
 
   isAtualizar = false;
@@ -49,8 +50,8 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.categoriasContabeisService.getAll().subscribe((listaCategoriasContabeis: CategoriasContabeis[]) => {
-      this.listaCategoriasContabeis = listaCategoriasContabeis;
+    this.categoriasContabeisService.getAllCombo().subscribe((listaPlanosContas: PlanosContas[]) => {
+      this.listaCategoriasContabeis = listaPlanosContas;
     })
    
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;

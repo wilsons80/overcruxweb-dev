@@ -21,8 +21,8 @@
                 <mat-label>Categoria Superior:</mat-label>
                 <mat-select name="categorias" [(ngModel)]=categoriasContabeis.categoriaSuperior.id>
                     <mat-option></mat-option>
-                    <mat-option *ngFor="let i of listaCategoriasContabeis" [value]=i.id>
-                        {{i.nome}}
+                    <mat-option *ngFor="let i of listaCategoriasContabeis" [value]=i.idCategoria>
+                        {{i.planoConta}}
                     </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="listaCategoriasContabeis?.length === 0" align="start">Nenhuma categoria
@@ -45,6 +45,13 @@
                        placeholder="Código do Plano de Contas">
                 <mat-hint align="end">{{codigoCategoriaContabil.value.length}} / 10</mat-hint>
             </mat-form-field>
+            
+            <div style="margin-top: 25px;">
+                <mat-checkbox name="sintetico" fxFlexOffset="40px"
+                    [(ngModel)]="categoriasContabeis.sintetica">Sintético 
+                </mat-checkbox>
+            </div>
+
         </div>
 
 

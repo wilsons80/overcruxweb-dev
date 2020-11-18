@@ -10,6 +10,7 @@ import { Empresa } from 'src/app/core/empresa';
 import { ParceriasPrograma } from 'src/app/core/parcerias-programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { AditivoParceriaPrograma } from 'src/app/core/aditivo-parceria-programa';
 
 @Component({
   selector: 'parcerias-programa',
@@ -43,7 +44,7 @@ export class ParceriasProgramaComponent implements OnInit {
     private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
     private empresaService: EmpresaService,
-    private novoObjetoService:NovoObjetoService
+    private novoObjetoService: NovoObjetoService
   ) {
 
   }
@@ -62,7 +63,10 @@ export class ParceriasProgramaComponent implements OnInit {
     this.parceriasPrograma = new ParceriasPrograma();
     this.parceriasPrograma.empresa = new Empresa();
     this.parceriasPrograma.materiaisPrograma = [];
-    this.parceriasPrograma.parceriasCategorias = []
+    this.parceriasPrograma.parceriasCategorias = [];
+    this.parceriasPrograma.aditivosParceriasProgramas = [];
+    this.parceriasPrograma.contasCentrosCusto = [];
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -142,5 +146,36 @@ export class ParceriasProgramaComponent implements OnInit {
     this.isAtualizar = true;
   }
 
+  adicionarAditivo(parceriasPrograma: ParceriasPrograma) {
+    parceriasPrograma.aditivosParceriasProgramas.push(new AditivoParceriaPrograma());
+  }
+
+  deletarAditivo(parceriasCategorias: ParceriasPrograma, aditivo: AditivoParceriaPrograma) {
+    let index = parceriasCategorias.aditivosParceriasProgramas.indexOf(aditivo);
+    parceriasCategorias.aditivosParceriasProgramas.splice(index, 1);
+  }
+
+  isSomaDasCategoriasDiferenteDaSomaDosParceiros() {
+    if(!this.parceriasPrograma.valorParceria 
+      || _.isEmpty(this.parceriasPrograma.parceriasCategorias)
+      ){
+        return false;
+    }
+
+    this.parceriasPrograma.valorParceria;
+    const total = this.parceriasPrograma.aditivosParceriasProgramas
+                        .map(adt => adt.valorAditivo)
+                        .reduce((total, numero) => total + numero, 0);
+    const somaParceiroMaisAditivo = this.parceriasPrograma.valorParceria + total;
+
+    let somaTodasCategorias = 0;
+    this.parceriasPrograma.parceriasCategorias.forEach(pc => {
+      const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo).reduce((total, numero) => total + numero, 0);
+      const somaCategoriasMaisAditivos = pc.valorParceriaCategoria + total;
+      somaTodasCategorias += somaCategoriasMaisAditivos;
+    });
+
+    return somaParceiroMaisAditivo != somaTodasCategorias;
+  }
 
 }

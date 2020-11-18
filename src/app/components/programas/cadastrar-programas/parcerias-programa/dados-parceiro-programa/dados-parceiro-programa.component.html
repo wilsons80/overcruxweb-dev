@@ -48,5 +48,42 @@
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
         </div>
+
+
+        <div style="margin-left: 20px;" *ngIf="parceriasPrograma.aditivosParceriasProgramas.length > 0">
+            Aditivos:
+        </div>
+          
+            <div fxLayout="column" *ngIf="parceriasPrograma.aditivosParceriasProgramas.length > 0" fxFlexFill>
+                <div *ngFor="let aditivo of parceriasPrograma.aditivosParceriasProgramas;index as i" fxFlexFill>
+                        <mat-form-field fxFlexOffset="40px" fxFlex="25%">
+                            <input [(ngModel)]="aditivo.dataAditivo" matInput [ngModelOptions]="{standalone: true}"
+                                [matDatepicker]="dataMovimentacao" placeholder="Data do Aditivo" required>
+                            <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #dataMovimentacao></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlexOffset="40px" fxFlex="25%">
+                            <input [(ngModel)]="aditivo.valorAditivo" currencyMask [ngModelOptions]="{standalone: true}"
+                                placeholder="Valor do Aditivo:" matInput maxlength="13"
+                                [options]="{ prefix: '', thousands: '.', decimal: ',' }" required />
+                            <span matPrefix>R$&nbsp;</span>
+                        </mat-form-field>
+
+                        <button mat-button (click)="deletarAditivo(parceriasPrograma,aditivo)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10%; margin-bottom: 10%" fxFlexFill>
+                <button mat-button style="margin-top: 1%;" (click)="adicionarAditivo(parceriasPrograma)">
+                    <mat-icon>addchart</mat-icon>
+                    novo aditivo.
+                </button>
+            </div>
+       
     </fieldset>
 </div>
