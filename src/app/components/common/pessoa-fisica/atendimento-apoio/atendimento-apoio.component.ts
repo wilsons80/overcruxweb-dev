@@ -9,6 +9,7 @@ import { ControlContainer, NgForm } from '@angular/forms';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'atendimento-apoio',
@@ -21,6 +22,7 @@ export class AtendimentoApoioComponent implements OnInit {
   @Input() pessoaFisica: PessoaFisica;
   @Input() atendidoOrgaoRede: string;
   @Input() encaminhamentos: EncaminhamentoAluno[];
+  @Input() origemTelaAluno: boolean = true;
 
   entidadesSociais: EntidadesSociais[];
 
@@ -70,6 +72,8 @@ export class AtendimentoApoioComponent implements OnInit {
   
       this.condicaoMoradiaService.getAll().subscribe((condicoes: CondicoesMoradia[]) => {
           this.condicoesMoradia = condicoes;
+
+          this.carregarCondicaoMoradia();
       });
 
       this.entidadeSocialService.getAll().subscribe((entidadesSociais: EntidadesSociais[]) => {
@@ -78,6 +82,12 @@ export class AtendimentoApoioComponent implements OnInit {
 
   }
 
+
+  carregarCondicaoMoradia() {
+    if (this.pessoaFisica.condicoesMoradia && this.pessoaFisica.condicoesMoradia.id) {
+      this.pessoaFisica.condicoesMoradia = _.cloneDeep(_.find(this.condicoesMoradia,  (f: CondicoesMoradia) => f.id === this.pessoaFisica.condicoesMoradia.id));
+    }
+  }
 
   addEncaminhamento() {
       if (!this.encaminhamentos) {
