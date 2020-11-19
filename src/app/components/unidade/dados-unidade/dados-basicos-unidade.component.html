@@ -1,0 +1,195 @@
+<div fxLayout="row" style="margin-bottom: 20px" class="espaco" fxLayoutAlign="space-between center"
+            fxLayoutGap="20px" fxFlexFill>
+
+            <div id="row_dados" fxFlex="85%" fxFlexFill>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                    <mat-form-field fxFlex="24%" fxFlexOffset="20px">
+                        <input #siglaUnidade matInput maxlength="50" [(ngModel)]="unidade.siglaUnidade"
+                            name="siglaUnidade" placeholder="Sigla:" focus required>
+                        <mat-hint align="end">{{siglaUnidade.value.length}} / 50</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="60%">
+                        <input #nomeUnidade matInput maxlength="100" [(ngModel)]="unidade.nomeUnidade"
+                            name="nomeUnidade" placeholder="Nome da Unidade:" required>
+                        <mat-hint align="end">{{nomeUnidade.value.length}} / 100</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+                    <mat-form-field fxFlexOffset="20px" fxFlex="24%">
+                        <input matInput [(ngModel)]="unidade.cnpj" name="cnpj" placeholder="CNPJ:"
+                            [textMask]="{mask: maskCNJP}" [cnpjValidator]>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="60%">
+                        <input #nomeFantasia matInput maxlength="200" [(ngModel)]="unidade.nomeFantasia"
+                            name="nomeFantasia" placeholder="Nome Fantasia:">
+                        <mat-hint align="end">{{nomeFantasia.value.length}} / 200</mat-hint>
+                    </mat-form-field>
+
+
+                </div>
+
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <mat-form-field fxFlex="24%" fxFlexOffset="20px">
+                        <mat-label>Tipo: </mat-label>
+                        <mat-select name="tipoUnidades" [(ngModel)]="unidade.tipoUnidade">
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let t of tiposUnidade.tipos" [value]="t.tipo">
+                                {{t.descricao}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="60%">
+                        <mat-label>Classificador da situação do Imóvel:</mat-label>
+                        <mat-select [(ngModel)]="unidade.classificacaoSituacaoImovel"
+                            name="classificacaoSituacaoImovel">
+                            <mat-option></mat-option>
+                            <mat-option *ngFor="let s of situacoesImovel" [value]="s.tipo">
+                                {{s.descricao}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div fxFlex="16%">
+                <button name="fotoPerfil" mat-fab class="botao" (click)="uploadFile.click()"
+                    [style.background-image]="getBackground()">
+                    <mat-icon class="nao-foto"></mat-icon>
+                </button>
+                <input #uploadFile type="file" style="display:none;" (change)="fileChangeEvent($event)" />
+            </div>
+        </div>
+
+        <mat-toolbar class="titulopartes">Instituição</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" class="espaco" style="margin-top: 10px; margin-bottom: 20px" fxFlexFill>
+            <mat-form-field fxFlex="95%" fxFlexOffset="20px">
+                <mat-label>Instiuição</mat-label>
+                <mat-select [(ngModel)]="unidade.instituicao.id" 
+                            name="instituicao"
+                            (selectionChange)="carregarInstituicao($event.value)" required>
+                    <mat-option></mat-option>                            
+                    <mat-option *ngFor="let m of instituicoes" [value]="m.id">
+                        {{m.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        
+        <mat-toolbar class="titulopartes">Inscrição</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" class="espaco" style="margin-top: 10px; margin-bottom: 20px" fxFlexFill>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input #numeroInscricaoEstadual type="text" matInput maxlength="20"
+                    [(ngModel)]="unidade.inscricaoEstadual" name="numeroInscricaoEstadual"
+                    placeholder="Número Inscrição Estadual:" />
+                <mat-hint align="end">{{numeroInscricaoEstadual.value.length}} / 20</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input #numeroInscricaoMunicipal type="text" matInput maxlength="20"
+                    [(ngModel)]="unidade.inscricaoMunicipal" name="numeroInscricaoMunicipal"
+                    placeholder="Número Inscrição Municipal:" />
+                <mat-hint align="end">{{numeroInscricaoMunicipal.value.length}} / 20</mat-hint>
+            </mat-form-field>
+
+        </div>
+
+        <cadastro-endereco [dadosEndereco]="unidade">
+        </cadastro-endereco>
+
+        <mat-toolbar class="titulopartes">Contato</mat-toolbar>
+        <div fxLayout="row" class="espaco" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field fxFlexOffset="20px" fxFlex="10%">
+                <input matInput [(ngModel)]="unidade.telefone" name="telefoneFixo" placeholder="Telefone Fixo:"
+                    pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$"
+                    [textMask]="{mask: maskPhone}">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="10%">
+                <input matInput [(ngModel)]="unidade.celular" name="celular" placeholder="Celular:"
+                    [textMask]="{mask: maskPhone}">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="30%">
+                <input #email matInput maxlength="100" email [(ngModel)]="unidade.email" name="email"
+                    placeholder="Email:">
+                <mat-hint align="end">{{email.value.length}} / 100</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #homePage matInput maxlength="200" [(ngModel)]="unidade.homePage" name="homePage"
+                    placeholder="Home Page: ">
+                <mat-hint align="end">{{homePage.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">Descrição</mat-toolbar>
+
+        <div fxLayout="row" class="espaco" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px" appearance="outline">
+                <mat-label>Situação do Imóvel:</mat-label>
+                <textarea matInput #descricaoSituacaoImovel name="resultadoAcao"
+                    [(ngModel)]="unidade.descricaoSituacaoImovel" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="2" maxlength="200">
+                      </textarea>
+                <mat-hint align="end">{{descricaoSituacaoImovel.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%" fxFlexOffset="20px" appearance="outline">
+                <mat-label>Estrutura física:</mat-label>
+                <textarea matInput #descricaoEstruturaFisicaImovel name="resultadoAcao"
+                    [(ngModel)]="unidade.descricaoEstruturaFisicaImovel" cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200">
+                      </textarea>
+                <mat-hint align="end">{{descricaoEstruturaFisicaImovel.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+
+        <mat-toolbar class="titulopartes">Outras Informações</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="20px" class="espaco" style="margin-top: 10px; margin-bottom: 20px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #numeroCnas matInput maxlength="15" [(ngModel)]="unidade.numeroCnas" name="numeroCnas"
+                    placeholder="Número do CNAS: ">
+                <mat-hint align="end">{{numeroCnas.value.length}} / 15</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #numeroCdca matInput maxlength="8" [(ngModel)]="unidade.numeroCdca" name="numeroCdca"
+                    placeholder="Número do CDCA: ">
+                <mat-hint align="end">{{numeroCdca.value.length}} / 8</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput name="dataVigenciaCdca" [matDatepicker]="dataVigenciaCdca"
+                    placeholder="Data de Vigência do CDCA" [(ngModel)]="unidade.dataVigenciaCdca" >
+                <mat-datepicker-toggle matSuffix [for]="dataVigenciaCdca"></mat-datepicker-toggle>
+                <mat-datepicker #dataVigenciaCdca></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="20px" class="espaco" style="margin-top: 10px; margin-bottom: 20px" fxFlexFill>
+
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #numeroCas matInput maxlength="8" [(ngModel)]="unidade.numeroCas" name="numeroCas"
+                    placeholder="Número do CAS: ">
+                <mat-hint align="end">{{numeroCas.value.length}} / 8</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput name="dataVigenciaCas" [matDatepicker]="dataVigenciaCas"
+                    placeholder="Data de Vigência do CAS" [(ngModel)]="unidade.dataVigenciaCas" >
+                <mat-datepicker-toggle matSuffix [for]="dataVigenciaCas"></mat-datepicker-toggle>
+                <mat-datepicker #dataVigenciaCas></mat-datepicker>
+            </mat-form-field>
+
+        </div>

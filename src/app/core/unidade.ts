@@ -1,3 +1,4 @@
+import { EstruturaUnidade } from './estrutura-unidade';
 import { Instituicao } from './instituicao';
 
 export class Unidade {
@@ -37,4 +38,6 @@ export class Unidade {
 	numeroCas:string;
 	dataVigenciaCas:Date;
 	unidadeLogada:boolean;
+
+	estruturasUnidades:EstruturaUnidade[]
 }
