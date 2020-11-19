@@ -14,6 +14,7 @@ import { ProjetoRoutingModule } from './projeto-routing.module';
 import { ProjetoComponent } from './projeto.component';
 import { DadosParceiroComponent } from './cadastrar-projeto/parcerias-projeto/dados-parceiro/dados-parceiro.component';
 import { MateriaisProjetoComponent } from './cadastrar-projeto/parcerias-projeto/materiais-projeto/materiais-projeto.component';
+import { ComboProgramaModule } from '../common/combo-programa/combo-programa.module';
 
 
 
@@ -35,7 +36,8 @@ import { MateriaisProjetoComponent } from './cadastrar-projeto/parcerias-projeto
     UnidadesMultiplasModule,
     NgxCurrencyModule,
     ContasCentrosCustoModule,
-    ParceriasCategoriasModule
+    ParceriasCategoriasModule,
+    ComboProgramaModule
   ]
 })
 export class ProjetoModule { }
