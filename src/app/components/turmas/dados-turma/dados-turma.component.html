@@ -83,7 +83,7 @@
                [matDatepicker]="dataInicioTurma" placeholder="Data de Início"
                required
                [min]="turma.projeto.dataInicio || turma.programa.dataInicio"
-               [(ngModel)]="turma.dataInicioTurma">
+               [(ngModel)]="turma.dataInicioTurma" required>
         <mat-datepicker-toggle matSuffix [for]="dataInicioTurma"></mat-datepicker-toggle>
         <mat-datepicker #dataInicioTurma></mat-datepicker>
 
@@ -99,35 +99,11 @@
                [matDatepicker]="dataFimTurma" 
                placeholder="Data Fim"
                [min]="turma.dataInicioTurma"
-               [(ngModel)]="turma.dataFimTurma">
+               [(ngModel)]="turma.dataFimTurma" required>
         <mat-datepicker-toggle matSuffix [for]="dataFimTurma"></mat-datepicker-toggle>
         <mat-datepicker #dataFimTurma></mat-datepicker>
 
         <mat-error>Inferior a data de início</mat-error>
-    </mat-form-field>
-
-    <!-- HORARIO INICIO -->
-    <mat-form-field fxFlex="15%">
-        <input matInput #horaInicio="ngModel" 
-               mat-hide-icons="calendar" 
-               type="time" name="horaInicio"               
-               placeholder="Hora Início" 
-               [(ngModel)]="turma.horaInicio">
-    </mat-form-field>
-
-    <!-- HORARIO FIM -->
-    <mat-form-field fxFlex="15%">
-        <input matInput #horaFim="ngModel" 
-               mat-hide-icons="calendar" 
-               type="time" name="horaFim" 
-               placeholder="Hora Fim"               
-               [(ngModel)]="turma.horaFim">
-    </mat-form-field>
-
-    <!-- CARGA HORÁRIA -->
-    <mat-form-field fxFlex="15%">
-        <input matInput type="number" name="cargaHoraria" placeholder="Carga horária"
-            [(ngModel)]="turma.numeroCargaHoraria">
     </mat-form-field>
 
     <mat-form-field fxFlex="15%">
@@ -136,28 +112,6 @@
     </mat-form-field>
 
 </div>
-
-
-<!-- DATA PREVISTA -->
-<mat-toolbar style="margin-top: 15px;" class="titulopartes">Data Prevista</mat-toolbar>
-<div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
-
-    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-        <input matInput name="dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio"
-            placeholder="Data de Previsão de Início" [(ngModel)]="turma.dataPrevisaoInicio">
-        <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
-        <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="20%">
-        <input matInput name="dataPrevisaoTermino" [matDatepicker]="dataPrevisaoTermino"
-            placeholder="Data de Previsão de Fim" [(ngModel)]="turma.dataPrevisaoTermino">
-        <mat-datepicker-toggle matSuffix [for]="dataPrevisaoTermino"></mat-datepicker-toggle>
-        <mat-datepicker #dataPrevisaoTermino></mat-datepicker>
-    </mat-form-field>
-
-</div>
-
 
 <!-- OBSERVAÇÕES -->
 <mat-toolbar class="titulopartes">Observações</mat-toolbar>
