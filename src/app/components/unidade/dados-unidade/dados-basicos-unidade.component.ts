@@ -34,9 +34,14 @@ export class DadosBasicosUnidadeComponent implements OnInit {
     private instituicaoService:InstituicaoService) { }
 
   ngOnInit(): void {
-    this.instituicaoService.getAll().subscribe((dados: Instituicao[]) => {
+    this.instituicaoService.getInstituicoesComAcesso().subscribe((dados: Instituicao[]) => {
       this.instituicoes = dados;
+
+      this.unidade.instituicao = dados[0];
+
     });
+
+    
   }
 
   getBackground() {
