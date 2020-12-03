@@ -121,6 +121,7 @@ import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/co
 import { ConciliacaoModule } from './components/conciliacao/conciliacao.module';
 import { ProvisionamentoModule } from './components/provisionamento/provisionamento.module';
 import { ExportarDadosAlunoModule } from './components/relatorios/exportar-dados-aluno/exportar-dados-aluno.module';
+import { RelatoriosBeneficiariosModule } from './components/relatorios/relatorios-beneficiarios/relatorios-beneficiarios.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -234,7 +235,8 @@ registerLocaleData(localePt, 'pt-BR');
     ComboPesquisavelModule,
     ConciliacaoModule,
     ProvisionamentoModule,
-    ExportarDadosAlunoModule
+    ExportarDadosAlunoModule,
+    RelatoriosBeneficiariosModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

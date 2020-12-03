@@ -172,7 +172,7 @@ export class ProvisionamentoComponent implements OnInit {
             this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo de provisão, aguarde...');
             this.provisaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
-              this.fileUtils.downloadFile(dados, "provisao.xlsx");
+              this.fileUtils.downloadFileXLS(dados, "provisao.xlsx");
   
               this.buscar();
               this.toastService.showSucesso('Provisão exportada com sucesso!');

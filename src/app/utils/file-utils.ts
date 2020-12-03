@@ -28,7 +28,7 @@ export class FileUtils {
      * Recebe um byte[] e faz o download do arquivo em excel
      * @param dados 
      */
-    downloadFile(dados, nomeArquivo) {
+    downloadFileXLS(dados, nomeArquivo) {
         const blob = new Blob([dados], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url= window.URL.createObjectURL(blob);
         var anchor = document.createElement("a");
@@ -36,5 +36,25 @@ export class FileUtils {
         anchor.href = url;
         anchor.click();
     }
+
+    /**
+     * Recebe um byte[] e faz o download do arquivo em pdf
+     * @param dados 
+     */
+    downloadFilePDF(dados, nomeArquivo) {
+        const blob = new Blob([dados], { type: 'application/pdf' });
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = nomeArquivo;
+        anchor.href = url;
+        anchor.click();
+    }
+
+    showFilePDF(dados) {
+        const blob = new Blob([dados], { type: 'application/pdf' });
+        const fileURL = window.URL.createObjectURL(blob);
+        window.open(fileURL, '_blank');
+    }
+    
 }
 

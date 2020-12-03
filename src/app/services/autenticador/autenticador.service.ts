@@ -146,11 +146,10 @@ export class AutenticadorService {
     });
   }
 
+  // 10:00:00 => (10:40:00 - 40) and 10:40:00
   refreshToken() {
     this.parametros.getTimeExpiredToken().subscribe((valor: number) => {
-      if (moment().isBetween(this.getExpiration().subtract(valor, 'minutes'), this.getExpiration())) {
         return this.refreshTempoSessao(valor);
-      }
     });
   }
 

@@ -200,7 +200,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
         this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo, aguarde...');
         this.exportacaoDadosAlunoService.gerarArquivo(listaCompletaDadosExportar)
         .subscribe((dados: any) => {
-          this.fileUtils.downloadFile(dados, "exportacao-dados-alunos.xlsx");
+          this.fileUtils.downloadFileXLS(dados, "exportacao-dados-alunos.xlsx");
           this.toastService.showSucesso('Dados exportados com sucesso!');
           this.loadingPopupService.closeDialog();
         }, 

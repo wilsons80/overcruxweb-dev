@@ -20,6 +20,11 @@
             <sub-menu *ngIf="verificaAcesso(getModulos().EXPORTAR_DADOS_ALUNO)" icone="play_for_work" titulo="Exportar dados aluno" rota="exportardadosaluno" toolTip="Exportar dados aluno"></sub-menu>
         </div>
 
+        <!-- FICHA_MATRICULA -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().FICHA_MATRICULA)" icone="play_for_work" titulo="Beneficiários" rota="relbeneficiarios" toolTip="Beneficiários"></sub-menu>
+        </div>        
+
     </div>
 
 </mat-nav-list>
