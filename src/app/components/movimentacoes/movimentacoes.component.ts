@@ -133,9 +133,9 @@ export class MovimentacoesComponent implements OnInit {
   }
 
   private isFiltroVazio(): boolean {
-    if(!this.filtro.empresa.id &&
-       !this.filtro.programa.id &&
-       !this.filtro.projeto.id &&
+    if(!this.filtro.empresa?.id &&
+       !this.filtro.programa?.id &&
+       !this.filtro.projeto?.id &&
        !this.filtro.valor &&
        !this.filtro.dataInicioDoc &&
        !this.filtro.dataFimDoc &&
