@@ -37,6 +37,7 @@
             <mat-form-field fxFlex>
                 <mat-label>Conta bancária:</mat-label>
                 <mat-select [(ngModel)]="filtro.contaBancaria.id"
+                            (selectionChange)="getSaldosContasBancaria()"
                             name="contasBancarias">
                     <mat-option></mat-option>
                     <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
@@ -69,25 +70,43 @@
             </fieldset>
         </div>
 
-        <div dir="rtl" class="botoes" fxLayoutGap="20px" 
-                style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+            <div fxFlex= "50%" >           
+                <label *ngIf="saldoContaBancaria" style="font-weight: bold">Saldo Inicial:
+                    <span [ngStyle]="{'color': saldoContaBancaria.saldoInicial < 0 ? '#fc0606' : '' }">
+                        {{ saldoContaBancaria.saldoInicial | currency: 'BRL'}}
+                    </span> 
+                </label>
 
-            <button mat-raised-button fxFlex="150px" (click)="exportar()" 
-                    [disabled]="formulario.invalid || conciliacoes.length === 0">
-                EXPORTAR
-            </button>
+                <label *ngIf="saldoContaBancaria" style="font-weight: bold; padding-left: 30px;">Saldo Final: 
+                    <span [ngStyle]="{'color': saldoContaBancaria.saldoFinal < 0 ? '#fc0606' : '' }">
+                        {{ saldoContaBancaria.saldoFinal | currency: 'BRL'}}
+                    </span> 
+                </label>
+            </div>
 
-            <button mat-raised-button fxFlex="150px" (click)="carregar()" 
-                    [disabled]="formulario.invalid">
-                CONSULTAR
-            </button>
-
-            <button mat-raised-button fxFlex="150px" style="padding-right: 20px" 
-                    (click)="limpar()">
-                LIMPAR
-            </button>
+            <div fxFlex="50%" dir="rtl" class="botoes" fxLayoutGap="20px" 
+                 style="padding-top: 20px; padding-bottom: 20px;"
+                 fxFlexFill>
+    
+                <button mat-raised-button fxFlex="150px" (click)="exportar()" 
+                        [disabled]="formulario.invalid || conciliacoes.length === 0">
+                    EXPORTAR
+                </button>
+    
+                <button mat-raised-button fxFlex="150px" (click)="carregar()" 
+                        [disabled]="formulario.invalid">
+                    CONSULTAR
+                </button>
+    
+                <button mat-raised-button fxFlex="150px" style="padding-right: 20px" 
+                        (click)="limpar()">
+                    LIMPAR
+                </button>
+            </div>
         </div>
+
+
     </form>
 
     <div [hidden]="!mostrarTabela" style="margin-top: 20px;">

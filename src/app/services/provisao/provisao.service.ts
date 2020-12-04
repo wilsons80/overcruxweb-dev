@@ -27,40 +27,33 @@ export class ProvisaoService extends BaseService<Provisao> {
   }
   
   getFilter(dataInicio: any,
-            dataFim: any) {
+            dataFim: any,
+            nomeProgramaProjeto: string) {
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
+    const p_centroCusto = nomeProgramaProjeto ? nomeProgramaProjeto : '';
 
     return this.http.get(Rotas.PROVISAO + 'filter', { params: {
         dataInicio: `${p_dataInicio}`,
-        dataFim: `${p_dataFim}`
+        dataFim: `${p_dataFim}`,
+        centrocusto: `${p_centroCusto}`
         }
     });
   }
 
   carregar(dataInicio: any,
-           dataFim: any) {
+           dataFim: any,
+           nomeProgramaProjeto: string) {
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
+    const p_centroCusto = nomeProgramaProjeto ? nomeProgramaProjeto : '';
 
     return this.http.get(Rotas.PROVISAO + 'carregar', { params: {
         dataInicio: `${p_dataInicio}`,
-        dataFim: `${p_dataFim}`
-        }
-    });
-  }
-
-  exportar(dataInicio: any,
-           dataFim: any) {
-
-    const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
-    const p_dataFim = dataFim ? dataFim.getTime() : '';
-
-    return this.http.post(Rotas.PROVISAO + 'exportar', { params: {
-        dataInicio: `${p_dataInicio}`,
-        dataFim: `${p_dataFim}`
+        dataFim: `${p_dataFim}`,
+        centrocusto: `${p_centroCusto}`
         }
     });
   }
