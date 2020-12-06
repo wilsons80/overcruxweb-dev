@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { FichaMatriculaService } from 'src/app/services/ficha-matricula/ficha-matricula.service';
+import { RelatorioBeneficiarioService } from 'src/app/services/relatorio-beneficiario/relatorio-beneficiario.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FileUtils } from 'src/app/utils/file-utils';
@@ -27,6 +27,10 @@ import { ListaCompletaDadosExportar } from 'src/app/core/lista-completa-dados-ex
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 import { ExportacaoDadosAlunoService } from 'src/app/services/exportacao-dados-aluno/exportacao-dados-aluno.service';
 
+export interface TipoRelatorioBeneficiario {
+  tipo: string;
+  descricao: string;
+}
 
 export class FilterExportacao{
   beneficiario: ComboAluno;
@@ -49,6 +53,8 @@ export class FilterExportacao{
 })
 export class RelatoriosBeneficiariosComponent implements OnInit {
 
+  MIMETYPE_PDF   = "pdf";
+  MIMETYPE_EXCEL = "xls";
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -72,6 +78,12 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
   filtro: FilterExportacao = new FilterExportacao();
   exportacaoDadosAlunos: ExportacaoDadosAluno[]
 
+  tiposRelatorios: TipoRelatorioBeneficiario[] = [
+    {tipo: 'FM', descricao: 'Ficha Matrícula'},
+    {tipo: 'DE', descricao: 'Declaração'},
+    {tipo: 'PE', descricao: 'Passe Estudantil'}
+  ];
+  tipoRelatorioSelecionado: TipoRelatorioBeneficiario;
 
 
   panelBeneficiarioOpenState = false;
@@ -86,7 +98,7 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private loadingPopupService: LoadingPopupService,
-    private fichaMatriculaService: FichaMatriculaService,
+    private relatorioBeneficiarioService: RelatorioBeneficiarioService,
     private cpfPipe: CpfPipe,
     private funcoesUteisService: FuncoesUteisService,
     private pessoaFisicaService: PessoaFisicaService,
@@ -157,25 +169,22 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     this.paginator.page.emit(event);
   }
 
-
-
-
-  getRelatorio() {
+  getRelatorio(mimetype: string) {
     if(this.selection.selected && this.selection.selected.length === 0) {
       this.toastService.showAlerta('Selecione pelo menos um registro que deseja gerar o relatório.');
       return;
     }
 
-    const tipo = 'pdf';
+    
     this.loadingPopupService.mostrarMensagemDialog('Gerando relatório ..');
 
     const listaIdsPessoaFisica = this.selection.selected.map(d => d.idPessoaFisica);
-    this.fichaMatriculaService.showRelatorio(tipo, listaIdsPessoaFisica).subscribe(
+    this.relatorioBeneficiarioService.showRelatorio(this.tipoRelatorioSelecionado.tipo, mimetype, listaIdsPessoaFisica).subscribe(
       response => {
-        if(tipo === 'pdf') {
+        if(mimetype === this.MIMETYPE_PDF) {
           this.fileUtils.showFilePDF(response);
         } else {
-          this.fileUtils.downloadFileXLS(response, "ficha_matricula.xlsx");
+          this.fileUtils.downloadFileXLS(response, "relatório.xlsx");
         }
       },
       responseError => {
@@ -189,58 +198,14 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
       });
   }
 
-
-  /*
-  exportar() {
-    if(this.selection.selected && this.selection.selected.length === 0) {
-      this.toastService.showAlerta('Selecione pelo menos um registro que deseja gerar o relatório.');
-      return;
-    }
-
-    const listaCompletaDadosExportar = new ListaCompletaDadosExportar();
-    listaCompletaDadosExportar.listaDadosExportacao = this.selection.selected;
-    listaCompletaDadosExportar.exportarDados = this.dadosExportar;
-
-    this.chamaCaixaDialogoExportar(listaCompletaDadosExportar);    
-  }
-
-  chamaCaixaDialogoExportar(listaCompletaDadosExportar: ListaCompletaDadosExportar) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      pergunta: `Certeza que deseja exportar ?`,
-      textoConfirma: 'SIM',
-      textoCancela: 'NÃO'
-    };
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(confirma => {
-      if (confirma) {
-        this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo, aguarde...');
-        this.exportacaoDadosAlunoService.gerarArquivo(listaCompletaDadosExportar)
-        .subscribe((dados: any) => {
-          this.fileUtils.downloadFileXLS(dados, "exportacao-dados-alunos.xlsx");
-          this.toastService.showSucesso('Dados exportados com sucesso!');
-          this.loadingPopupService.closeDialog();
-        }, 
-        (error) => {
-          this.loadingPopupService.closeDialog();
-        })        
-      } else {
-        dialogRef.close();
-      }
-    });
-  }
-  */
-
-
   limpar() {
     this.filtro = new FilterExportacao();
 
     this.filtro.beneficiario = new ComboAluno();
-    this.filtro.cpfAluno     = new  ComboPessoaFisica();
-    this.filtro.maeAluno     = new  ComboPessoaFisica();
+    this.filtro.cpfAluno     = new ComboPessoaFisica();
+    this.filtro.maeAluno     = new ComboPessoaFisica();
     this.filtro.paiAluno     = new ComboPessoaFisica();
-    this.filtro.responsavel  = new  ComboPessoaFisica();
+    this.filtro.responsavel  = new ComboPessoaFisica();
     this.filtro.programa     = new ComboPrograma();
     this.filtro.projeto      = new ComboProjeto();
     this.filtro.unidade      = new Unidade();
@@ -249,6 +214,7 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     this.exportacaoDadosAlunos = [];
     this.dataSource.data = [];
 
+    this.tipoRelatorioSelecionado = null;
   }
   
   onValorChange(event: any) {

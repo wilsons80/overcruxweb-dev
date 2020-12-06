@@ -4,6 +4,20 @@
         <form #formulario="ngForm">
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
+                    <mat-label fxFlexOffset="20px">Selecione o tipo do relatório</mat-label>
+                    <mat-select fxFlexOffset="20px" 
+                                [(ngModel)]="tipoRelatorioSelecionado" 
+                                name="tipoRelatorioSelecionado">
+                        <mat-option></mat-option>
+                        <mat-option *ngFor="let d of tiposRelatorios" [value]="d">
+                            {{d.itemDescricao}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <div ngModelGroup="comboCpfBeneficiario" fxFlex="250px" fxLayoutGap="20px" fxFlexOffset="20px">
                     <combo-pesquisavel #comboCpfBeneficiario 
                                        nome="cpf" 
@@ -75,7 +89,6 @@
                 </div>
             </div>
 
-
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>   
                 <div ngModelGroup="cbPrograma" fxFlex="34" fxLayoutGap="20px">
                     <combo-programa [showDisplayId]="false" #campoPrograma
@@ -111,8 +124,12 @@
 
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
-                <button mat-raised-button fxFlex="150px" (click)="getRelatorio()" style="background-color: green; color: white;" [disabled]="formulario.invalid">
-                    GERAR RELATÓRIO
+                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" style="background-color: green; color: white;" [disabled]="formulario.invalid">
+                    GERAR PDF
+                </button>
+
+                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_EXCEL)" style="background-color: green; color: white;" [disabled]="formulario.invalid">
+                    GERAR EXCEL
                 </button>
 
                 <button mat-raised-button fxFlex="150px" (click)="consultar()" [disabled]="formulario.invalid">
