@@ -5,13 +5,13 @@
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                    <mat-label fxFlexOffset="20px">Selecione o tipo do relatório</mat-label>
-                    <mat-select fxFlexOffset="20px" 
+                    <mat-label>Selecione o tipo do relatório</mat-label>
+                    <mat-select required
                                 [(ngModel)]="tipoRelatorioSelecionado" 
                                 name="tipoRelatorioSelecionado">
                         <mat-option></mat-option>
                         <mat-option *ngFor="let d of tiposRelatorios" [value]="d">
-                            {{d.itemDescricao}}
+                            {{d.descricao.toUpperCase()}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -124,11 +124,11 @@
 
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
-                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" style="background-color: green; color: white;" [disabled]="formulario.invalid">
+                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" [ngStyle]="{'background-color' : formulario.valid ? 'green' : ''}" style="color: white;" [disabled]="formulario.invalid">
                     GERAR PDF
                 </button>
 
-                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_EXCEL)" style="background-color: green; color: white;" [disabled]="formulario.invalid">
+                <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_EXCEL)" [ngStyle]="{'background-color' : formulario.valid ? 'green' : ''}" style="color: white;" [disabled]="formulario.invalid">
                     GERAR EXCEL
                 </button>
 
@@ -211,8 +211,7 @@
                             [length]="paginator.length"
                             [pageSizeOptions]="paginator.pageSizeOptions">
             </mat-paginator>
-        </div>
-        
+        </div>        
         <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px"
                 [fxHide]="mostrarTabela" >
             {{msg}}
