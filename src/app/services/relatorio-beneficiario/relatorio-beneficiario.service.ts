@@ -15,8 +15,8 @@ export class RelatorioBeneficiarioService {
 
   }
 
-  showRelatorio(tipoRelatorio, mimeType, listaIdsPessoaFisica:any[]): any {
-    return this.http.post(`${rootPath}mimetype/${mimeType}/tipo/${tipoRelatorio}`, listaIdsPessoaFisica , {responseType: 'arraybuffer'});
+  showRelatorio(tipoRelatorio, mimetype, listaIdsPessoaFisica:any[]): any {
+    return this.http.post(`${rootPath}mimetype/${mimetype}/tipo/${tipoRelatorio}`, listaIdsPessoaFisica , {responseType: 'arraybuffer'});
   }
 
 }
