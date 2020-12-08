@@ -26,6 +26,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ListaCompletaDadosExportar } from 'src/app/core/lista-completa-dados-exportar';
 import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 import { ExportacaoDadosAlunoService } from 'src/app/services/exportacao-dados-aluno/exportacao-dados-aluno.service';
+import { EditorRicoComponent } from '../../common/editor-rico/editor-rico.component';
 
 export interface TipoRelatorioBeneficiario {
   tipo: string;
@@ -277,7 +278,15 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
   }
 
 
+  showEditorRicoDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      titulo: 'Observação do Beneficiário'
+    };
+    dialogConfig.panelClass = 'alturaDialogEditorRicoBeneficiario';
 
+    this.dialog.open(EditorRicoComponent, dialogConfig);     
+  }
 
 
 

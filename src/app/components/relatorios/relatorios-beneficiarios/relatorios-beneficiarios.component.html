@@ -139,6 +139,12 @@
                 <button mat-raised-button fxFlex="150px" style="padding-right: 20px" (click)="limpar()">
                     LIMPAR
                 </button>
+
+                <button mat-raised-button fxFlex="150px" style="padding-right: 20px" (click)="showEditorRicoDialog()" 
+                        [disabled]="formulario.invalid">
+                    OBSERVAÇÃO
+                </button>
+
             </div>
         </form>
 
