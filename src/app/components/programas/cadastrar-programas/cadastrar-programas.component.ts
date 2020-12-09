@@ -85,6 +85,11 @@ export class CadastrarProgramasComponent implements OnInit {
   }
 
   cadastrar() {
+    if(!this.isValoresAditivosValidos()) {
+      this.toastService.showAlerta('ATENÇÃO: A soma das categorias e seus aditivos é diferente da soma do parceiro e seus aditivos.');
+      return;
+    }
+
     this.programaService.cadastrar(this.programa).subscribe(() => {
       this.router.navigate(['programas']);
       this.toastService.showSucesso("Programa cadastrado com sucesso");
@@ -101,11 +106,48 @@ export class CadastrarProgramasComponent implements OnInit {
 
 
   atualizar() {
+    if(!this.isValoresAditivosValidos()) {
+      this.toastService.showAlerta('ATENÇÃO: A soma das categorias e seus aditivos é diferente da soma do parceiro e seus aditivos.');
+      return;
+    }
+
     this.programaService.alterar(this.programa).subscribe(() => {
       this.router.navigate(['programas']);
       this.toastService.showSucesso("Programa atualizado com sucesso");
     });
 
   }
+
+  isValoresAditivosValidos(): boolean {
+    let valorTotalParceria = null;
+    let valorTotalAditivoParceria = null;
+
+    let valorTotalCategoria = null;
+    let valorTotalAditivoCategoria = null;
+
+    this.programa.parceriasPrograma.forEach(p =>  {
+      valorTotalParceria += p.valorParceria;
+      p.aditivosParceriasProgramas.forEach(a => valorTotalAditivoParceria += a.valorAditivo);
+
+      p.parceriasCategorias.forEach(p => {
+        valorTotalCategoria += p.valorParceriaCategoria;
+        p.aditivosParceriasCategorias.forEach(a => valorTotalAditivoCategoria += a.valorAditivo);
+      });
+    })
+
+    let totalParceria  = null;
+    if(valorTotalAditivoParceria){
+      totalParceria  = Number(valorTotalParceria.toFixed(2))  + Number(valorTotalAditivoParceria.toFixed(2));
+    }
+    
+    let totalCategoria = null;
+    if(valorTotalAditivoCategoria) {
+      totalCategoria = Number(valorTotalCategoria.toFixed(2)) + Number(valorTotalAditivoCategoria.toFixed(2));
+    }
+
+    if(totalCategoria && totalParceria != totalCategoria) {return false;}
+    return true;
+  }
+
 
 }

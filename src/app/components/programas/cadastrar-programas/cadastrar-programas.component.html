@@ -105,7 +105,9 @@
                         fxFlex="20%" color="primary" (click)="cadastrar()"> Cadastrar
                 </button>
 
-                <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formCadastroDadosPrograma.invalid mat-raised-button name="botaoConfirmar"
+                <button *ngIf="isAtualizar && mostrarBotaoAtualizar" 
+                        [disabled]="formCadastroDadosPrograma.invalid" 
+                        mat-raised-button name="botaoConfirmar"
                         fxFlex="20%" color="primary" (click)="atualizar()">
                         Atualizar
                 </button>

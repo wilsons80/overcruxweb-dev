@@ -17,15 +17,12 @@ import { TipoDespesa } from 'src/app/core/tipo-despesa';
 })
 export class CadastrarCategoriasContabeisComponent implements OnInit {
 
-  listaCategoriasContabeis: PlanosContas[];
+  listaPlanosContas: any[];
   categoriasContabeis: CategoriasContabeis;
 
   isAtualizar = false;
-
   tiposDespesas: TipoDespesa = new TipoDespesa();
-
   perfilAcesso: Acesso;
-
 
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
@@ -50,8 +47,14 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    /*
     this.categoriasContabeisService.getAllCombo().subscribe((listaPlanosContas: PlanosContas[]) => {
       this.listaCategoriasContabeis = listaPlanosContas;
+    })
+    */
+
+    this.categoriasContabeisService.getAllView(true).subscribe((retorno: PlanosContas[]) => {
+      this.listaPlanosContas = retorno;
     })
    
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;

@@ -39,8 +39,12 @@
                 <div fxLayout="column" *ngIf="parceriasCategorias.aditivosParceriasCategorias.length > 0" fxFlexFill>
                     <div *ngFor="let aditivo of parceriasCategorias.aditivosParceriasCategorias;index as i" fxFlexFill>
                             <mat-form-field fxFlexOffset="40px" fxFlex="25%">
-                                <input [(ngModel)]="aditivo.dataAditivo" matInput [ngModelOptions]="{standalone: true}"
-                                    [matDatepicker]="dataMovimentacao" placeholder="Data do Aditivo" required>
+                                <input [(ngModel)]="aditivo.dataAditivo" 
+                                       matInput [ngModelOptions]="{standalone: true}"
+                                       [matDatepicker]="dataMovimentacao" 
+                                       placeholder="Data do Aditivo" 
+                                       (input)="onMascaraDataInput($event)"
+                                       required>
                                 <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #dataMovimentacao></mat-datepicker>

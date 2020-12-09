@@ -35,7 +35,7 @@ export class CategoriasContabeisComponent implements OnInit {
   perfilAcesso: Acesso;
 
   tiposDespesas: TipoDespesa = new TipoDespesa();
-  listaPlanosContas: any;
+  listaPlanosContas: any[];
   selecionado:PlanosContas = new PlanosContas();
 
   constructor(
@@ -49,6 +49,7 @@ export class CategoriasContabeisComponent implements OnInit {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.dataSource.paginator = this.paginator;
     this.getAll();
+    this.getAllCombo();
   }
 
 
@@ -113,7 +114,7 @@ export class CategoriasContabeisComponent implements OnInit {
       this.dataSource.data = listaCategoriasContabeis ? listaCategoriasContabeis : [];
       this.verificaMostrarTabela(listaCategoriasContabeis);
     })
-    this.getAllCombo();
+    
   }
  
   getAllCombo() {
@@ -131,5 +132,12 @@ export class CategoriasContabeisComponent implements OnInit {
     }
   }
 
+
+  getHierarquiaPlanoContabil(idCategoria) {
+    if(idCategoria) {
+      const plano:any = this.listaPlanosContas.find(l => l.idCategoria === idCategoria);
+      return plano ? plano.planoConta : '';
+    }
+  }
 
 }

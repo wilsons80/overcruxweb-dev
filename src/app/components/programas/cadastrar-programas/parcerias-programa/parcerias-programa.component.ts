@@ -156,10 +156,8 @@ export class ParceriasProgramaComponent implements OnInit {
   }
 
   isSomaDasCategoriasDiferenteDaSomaDosParceiros() {
-    if(!this.parceriasPrograma.valorParceria 
-      || _.isEmpty(this.parceriasPrograma.parceriasCategorias)
-      ){
-        return false;
+    if(!this.parceriasPrograma.valorParceria || _.isEmpty(this.parceriasPrograma.parceriasCategorias)){
+      return false;
     }
 
     this.parceriasPrograma.valorParceria;
@@ -168,14 +166,21 @@ export class ParceriasProgramaComponent implements OnInit {
                         .reduce((total, numero) => total + numero, 0);
     const somaParceiroMaisAditivo = this.parceriasPrograma.valorParceria + total;
 
-    let somaTodasCategorias = 0;
-    this.parceriasPrograma.parceriasCategorias.forEach(pc => {
-      const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo).reduce((total, numero) => total + numero, 0);
-      const somaCategoriasMaisAditivos = pc.valorParceriaCategoria + total;
-      somaTodasCategorias += somaCategoriasMaisAditivos;
-    });
 
-    return somaParceiroMaisAditivo != somaTodasCategorias;
+    let somaTodasCategorias = null;
+    let somaTodosAtitivosCategorias = null;
+    this.parceriasPrograma.parceriasCategorias.forEach(pc => {
+      const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo)
+                                                  .reduce((total, numero) => total + numero, 0);
+      somaTodasCategorias += pc.valorParceriaCategoria;
+      somaTodosAtitivosCategorias += total;
+    });
+    
+    let totalValoresAditivosCategorias = null;
+    if(somaTodosAtitivosCategorias) {
+      totalValoresAditivosCategorias = somaTodasCategorias + somaTodosAtitivosCategorias;
+    }
+    return somaTodosAtitivosCategorias && Number(somaParceiroMaisAditivo.toFixed(2)) != Number(totalValoresAditivosCategorias.toFixed(2));
   }
 
 }

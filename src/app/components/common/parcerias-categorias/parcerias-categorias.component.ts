@@ -12,6 +12,7 @@ import { CategoriasContabeisService } from 'src/app/services/categorias-contabei
 import * as _ from 'lodash';
 import { NovoObjetoService } from 'src/app/services/novo-objeto/novo-objeto.service';
 import { Subscription } from 'rxjs';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'parcerias-categorias',
@@ -44,7 +45,8 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private categoriasContabeisService:CategoriasContabeisService,
-    private novoObjetoService:NovoObjetoService
+    private novoObjetoService:NovoObjetoService,
+    private dataUtilService: DataUtilService
   ) {
 
   }
@@ -155,4 +157,8 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
+  
 }
