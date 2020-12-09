@@ -167,13 +167,16 @@ export class ParceriasProgramaComponent implements OnInit {
     const somaParceiroMaisAditivo = this.parceriasPrograma.valorParceria + total;
 
 
-    let somaTodasCategorias = null;
+    let somaTodasCategorias         = null;
     let somaTodosAtitivosCategorias = null;
+
     this.parceriasPrograma.parceriasCategorias.forEach(pc => {
-      const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo)
-                                                  .reduce((total, numero) => total + numero, 0);
+      if(pc.aditivosParceriasCategorias.length > 0){
+        const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo)
+                                                    .reduce((total, numero) => total + numero, 0);
+        somaTodosAtitivosCategorias += total;
+      }
       somaTodasCategorias += pc.valorParceriaCategoria;
-      somaTodosAtitivosCategorias += total;
     });
     
     let totalValoresAditivosCategorias = null;
