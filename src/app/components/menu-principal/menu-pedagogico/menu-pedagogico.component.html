@@ -26,16 +26,16 @@
             titulo="Avaliação da Turma" rota="avaliacaoatividade" toolTip="Avaliação da Turma"></sub-menu-->
 
         <!-- OFICINA -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().OFICINA)" icone="pages" titulo="Oficinas" rota="oficinas"
-             toolTip="Oficinas"></sub-menu>            
+        <sub-menu *ngIf="verificaAcesso(getModulos().OFICINA)" icone="pages" titulo="Plano de Atividades" rota="oficinas"
+             toolTip="Plano de Atividades"></sub-menu>            
 
         <!-- ACOES_ATIVIDADE -->
         <sub-menu *ngIf="verificaAcesso(getModulos().ACOES_ATIVIDADE)" icone="event_busy"
-            titulo="Planejamento das Oficinas" rota="acoesoficinas" toolTip="Planejamento das Oficinas"></sub-menu>
+            titulo="Planejamento dos Planos de Atividades" rota="acoesoficinas" toolTip="Planejamento dos Planos de Atividades"></sub-menu>
 
         <!-- MATRICULA NA OFICINA -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().ATIVIDADE_ALUNO)" icone="sports_handball" titulo="Matrícula na Oficina"
-            rota="atividadealuno" toolTip="Matrícula na Oficina"></sub-menu>
+        <sub-menu *ngIf="verificaAcesso(getModulos().ATIVIDADE_ALUNO)" icone="sports_handball" titulo="Matrícula no Plano de Atividades"
+            rota="atividadealuno" toolTip="Matrícula no Plano de Atividades"></sub-menu>
 
         <!-- FREQUENCIA ALUNO-->
         <sub-menu *ngIf="verificaAcesso(getModulos().FREQUENCIA_ALUNO)" icone="check_circle_outline"

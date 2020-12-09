@@ -5,6 +5,7 @@ import { PlanosAcao } from './planos-acao';
 import { Projeto } from './projeto';
 import { Unidade } from './unidade';
 import { MateriaisAtividade } from './materiais-atividade';
+import { TiposAtividades } from './tipos-atividades';
 
 export class Atividade {
     id: number;
@@ -12,16 +13,11 @@ export class Atividade {
     descricaoLocalExecucao: string;
     dataFim: Date;
     dataInicio: Date;
-    dataPrevisaoInicio: Date;
-    dataPrevisaoTermino: Date;
     horaFim: number;
     horaInicio: number;
-    numeroAulas: number;
     cargaHoraria: number;
     maximoParticipantes: number;
-    periodoAtividade: number;
     domingo: string;
-    horarioFixo: string;
     localExecucao: string;
     quarta: string;
     quinta: string;
@@ -29,10 +25,9 @@ export class Atividade {
     segunda: string;
     sexta: string;
     terca: string;
-    observacoes: string;
     valorCustoAtividade: number;
+    observacoes:string;
 
-    planosAcao: PlanosAcao;
     projeto: Projeto;
     programa: Programa;
     unidade: Unidade;
@@ -41,6 +36,8 @@ export class Atividade {
 
     colaboradoresAtividade: ColaboradoresAtividade[];
     materiaisAtividade: MateriaisAtividade[];
+
+    tiposAtividades:TiposAtividades;
 
     usuarioAlteracao: number;
 }

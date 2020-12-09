@@ -10,6 +10,8 @@ import { PlanosAcao } from 'src/app/core/planos-acao';
 import { Projeto } from 'src/app/core/projeto';
 import { Programa } from 'src/app/core/programa';
 import { Unidade } from 'src/app/core/unidade';
+import { TiposAtividades } from 'src/app/core/tipos-atividades';
+import { TiposAtividadesService } from 'src/app/services/tipos-atividades/tipos-atividades.service';
 
 @Component({
   selector: 'cadastrar-oficina',
@@ -26,9 +28,11 @@ export class CadastrarOficinaComponent implements OnInit {
   mostrarBotaoAtualizar = true;
 
   isAtualizar = false;
+  tiposAtividades: TiposAtividades;
 
-  constructor(private toolbarPrincipalService: ToolbarPrincipalService,
+  constructor(
     private atividadeService: AtividadeService,
+    private tiposAtividadesService: TiposAtividadesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService) { }
@@ -47,6 +51,9 @@ export class CadastrarOficinaComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    this.tiposAtividadesService.getAll().subscribe((tiposAtividades: TiposAtividades) => {
+      this.tiposAtividades = tiposAtividades;
+    });
 
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
@@ -78,10 +85,10 @@ export class CadastrarOficinaComponent implements OnInit {
 
   limpar() {
     this.oficina = new Atividade();
-    this.oficina.planosAcao = new PlanosAcao();
     this.oficina.projeto = new Projeto();
     this.oficina.programa = new Programa();
     this.oficina.unidade = new Unidade();
+    this.oficina.tiposAtividades = new TiposAtividades();
   }
 
   cancelar() {

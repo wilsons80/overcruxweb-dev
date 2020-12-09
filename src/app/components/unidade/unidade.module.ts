@@ -7,13 +7,15 @@ import { EscolherUnidadeComponent } from './escolher-unidade/escolher-unidade.co
 import { UnidadeRoutingModule } from './unidade-routing.module';
 import { UnidadeComponent } from './unidade.component';
 import { CadastroEnderecoModule } from '../common/cadastro-endereco/cadastro-endereco.module';
+import { DadosBasicosUnidadeComponent } from './dados-unidade/dados-basicos-unidade.component';
+import { EstruturaUnidadeComponent } from './estrutura-unidade/estrutura-unidade.component';
 
 
 @NgModule({
   declarations: [
     EscolherUnidadeComponent
     , UnidadeComponent
-    , CadastrarUnidadeComponent
+    , CadastrarUnidadeComponent, DadosBasicosUnidadeComponent, EstruturaUnidadeComponent
 
   ],
   imports: [

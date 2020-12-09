@@ -10,6 +10,7 @@ export class MateriaisPrograma {
 	material:Material;
 	programa:Programa;
 	vlMaterial:number;
-    parceriasPrograma:ParceriasPrograma;
+	parceriasPrograma:ParceriasPrograma;
+	quantidadeMaterial:number;
     
 }

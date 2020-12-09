@@ -29,10 +29,10 @@ export class CadastrarProjetoComponent implements OnInit {
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
     private activatedRoute: ActivatedRoute,
-    private router:Router,
+    private router: Router,
     private toastService: ToastService
   ) {
-    
+
   }
 
 
@@ -42,11 +42,11 @@ export class CadastrarProjetoComponent implements OnInit {
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
-    if(!this.perfilAcesso.insere){
+    if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
     }
-    
-    if(!this.perfilAcesso.altera){
+
+    if (!this.perfilAcesso.altera) {
       this.mostrarBotaoAtualizar = false;
     }
 
@@ -78,10 +78,10 @@ export class CadastrarProjetoComponent implements OnInit {
     this.projeto.materiaisProjeto = [];
     this.projeto.contasCentrosCusto = [];
   }
-  mostrarBotaoLimpar(){
-    if(this.isAtualizar) return false;
-    if(!this.mostrarBotaoAtualizar) return false;
-    if(!this.mostrarBotaoCadastrar) return false;
+  mostrarBotaoLimpar() {
+    if (this.isAtualizar) return false;
+    if (!this.mostrarBotaoAtualizar) return false;
+    if (!this.mostrarBotaoCadastrar) return false;
 
     return true;
   }
@@ -92,10 +92,32 @@ export class CadastrarProjetoComponent implements OnInit {
       return;
     }
     
+    if (this.isDataProjetoDiferenteDataPrograma()) {
+      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+      return;
+    }
+
     this.projetoService.cadastrar(this.projeto).subscribe(() => {
-      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto cadastrado com sucesso");
     });
+  }
+
+  isDataProjetoDiferenteDataPrograma() {
+    
+    if (this.projeto.programa) {
+      
+      let dataInicioPrograma: Date = this.projeto.programa.dataInicio ? new Date(this.projeto.programa.dataInicio) : null;
+      let dataFimPrograma: Date = this.projeto.programa.dataFim ? new Date(this.projeto.programa.dataFim) : null;
+      
+      if (dataInicioPrograma) dataInicioPrograma.setHours(0, 0, 0, 0);
+      if (dataFimPrograma) dataFimPrograma.setHours(0, 0, 0, 0);
+      
+      if(dataInicioPrograma && this.projeto.dataInicio && (dataInicioPrograma.getTime() != this.projeto.dataInicio.getTime())) return true;
+      if(dataFimPrograma && this.projeto.dataFim && (dataFimPrograma.getTime() != this.projeto.dataFim.getTime())) return true;
+    }
+
+    
+    return false;
   }
 
   limpar() {
@@ -112,8 +134,12 @@ export class CadastrarProjetoComponent implements OnInit {
       return;
     }
     
+    if (this.isDataProjetoDiferenteDataPrograma()) {
+      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+      return;
+    }
+
     this.projetoService.alterar(this.projeto).subscribe(() => {
-      this.router.navigate(['projetos']);
       this.toastService.showSucesso("Projeto atualizado com sucesso");
     });
 

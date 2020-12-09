@@ -30,32 +30,12 @@ export class CadastrarUnidadeComponent implements OnInit {
   estados: any;
 
   unidade: Unidade;
-  instituicoes: Instituicao[];
   isAtualizar = false;
-
-
-  public maskCep = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-  public maskCNJP = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
-  public maskPhone   = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public maskCelular = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-
 
   unidades: any[];
 
-  tiposUnidade: TipoUnidade = new TipoUnidade();
-
-  // MATRIZ(1, 'M'), FILIAL(2, 'F');
-
-  situacoesImovel: any[] = [
-    { id: '1', tipo: 'P', descricao: 'PRÓPRIO' },
-    { id: '2', tipo: 'C', descricao: 'CONCESSÃO' },
-    { id: '3', tipo: 'L', descricao: 'LICENÇA PRA FUNCIONAMENTO' },
-    { id: '4', tipo: 'O', descricao: 'OUTRO' }
-  ]
-
 
   constructor(
-    private enderecoService: EnderecoService,
     private activatedRoute: ActivatedRoute,
     private unidadeService: UnidadeService,
     private router: Router,
@@ -63,7 +43,6 @@ export class CadastrarUnidadeComponent implements OnInit {
     private arquivoUnidadeService: ArquivoUnidadeService,
     private fileUtils: FileUtils,
     private toolbarPrincipalService: ToolbarPrincipalService,
-    private instituicaoService: InstituicaoService
   ) { }
 
   ngOnInit() {
@@ -93,17 +72,11 @@ export class CadastrarUnidadeComponent implements OnInit {
       });
     }
 
-    this.enderecoService.getAllEstados().subscribe(estados => {
-      this.estados = estados;
-    });
-
-    this.instituicaoService.getAll().subscribe((dados: Instituicao[]) => {
-      this.instituicoes = dados;
-    });
   }
   inicializarObjetos() {
     this.unidade = new Unidade();
     this.unidade.instituicao = new Instituicao();
+    this.unidade.estruturasUnidades = [];
   }
 
   cancelar() {
@@ -159,28 +132,6 @@ export class CadastrarUnidadeComponent implements OnInit {
     this.unidade.cnpj = this.unidade.cnpj ? this.retiraMascara(this.unidade.cnpj.toString()) : null;
   }
 
-  fileChangeEvent(event: any): void {
-    this.unidade.foto = event.target.files[0];
-    this.unidade.isFotoChanged = true;
-    this.readThis(event.target);
-  }
-
-  getBackground() {
-    if (this.unidade && this.unidade.urlFoto) {
-      return `url(${this.unidade.urlFoto})`
-    }
-  }
-
-  readThis(inputValue: any): void {
-    var file: File = inputValue.files[0];
-    var myReader: FileReader = new FileReader();
-
-    myReader.onloadend = (e) => {
-      this.unidade.urlFoto = myReader.result;
-    }
-    myReader.readAsDataURL(file);
-  }
-
   retiraMascara(objeto) {
     return objeto.replace(/\D/g, '');
   }
@@ -193,9 +144,5 @@ export class CadastrarUnidadeComponent implements OnInit {
 
     return true;
   }
-
-
-  carregarInstituicao(idInstituicao: number) {
-    this.unidade.instituicao = _.cloneDeep(_.find(this.instituicoes, (d: Instituicao) => d.id === idInstituicao));
-  }
+  
 }

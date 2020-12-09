@@ -1,250 +1,45 @@
- <!-- DESCRICAO -->
- <mat-toolbar class="titulopartes">Descrição</mat-toolbar>
- <div fxLayout="row" style="margin-bottom: 20px">
-     <mat-form-field fxFlex="45%" fxFlexOffset="20px">
-         <input #descricao matInput maxlength="200" name="descricao" placeholder="Descrição da Atividade:"
-             [(ngModel)]="atividade.descricao" required>
-         <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
-     </mat-form-field>
+<!-- PRIMEIRA LINHA -->
+<div fxLayout="row" fxLayoutGap="30px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill *ngIf="mostrarCampos">
 
-     <mat-form-field fxFlex="46%" fxFlexOffset="20px">
-         <input #descricaoLocalExecucao matInput maxlength="200" name="descricaoLocalExecucao"
-             placeholder="Descrição da Local da Execução:" [(ngModel)]="atividade.descricaoLocalExecucao">
-         <mat-hint align="end">{{descricaoLocalExecucao.value.length}} / 200</mat-hint>
-     </mat-form-field>
- </div>
+    <!-- UNIDADE -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+        <mat-form-field>
+            <mat-label>Unidade:</mat-label>
+            <mat-select [(ngModel)]="atividade.unidade.idUnidade" name="unidade" required>
+                <mat-option></mat-option>
+                <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
+                    {{u.nomeUnidade}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrada</mat-hint>
+        </mat-form-field>
+    </div>
 
- <!-- UNIDADE -->
- <mat-toolbar class="titulopartes">Unidade</mat-toolbar>
- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-     <mat-form-field fxFlexOffset="20px" fxFlex="45%">
-         <mat-label>Unidade:</mat-label>
-         <mat-select [(ngModel)]="atividade.unidade.idUnidade" name="unidade" required>
-            <mat-option></mat-option>
-             <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
-                 {{u.nomeUnidade}}
-             </mat-option>
-         </mat-select>
-         <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrada</mat-hint>
-     </mat-form-field>
- </div>
+    <!-- PROJETO -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+        <mat-form-field>
+            <mat-label>Projetos:</mat-label>
+            <mat-select [(ngModel)]="atividade.projeto.id" name="projeto" [required]="!atividade.programa.id"
+                (selectionChange)="carregarProjeto($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let u of projetos" [value]="u.id">
+                    {{u.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
+        </mat-form-field>
+    </div>
 
-
- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-     <!-- DATA -->
-     <div id="coluna1" fxFlex="30%">
-         <mat-toolbar class="titulopartes">Data</mat-toolbar>
-         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataInicio" [matDatepicker]="dataInicio" placeholder="Data de Início:"
-                     [(ngModel)]="atividade.dataInicio">
-                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                 <mat-datepicker #dataInicio></mat-datepicker>
-             </mat-form-field>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataFim" [matDatepicker]="dataFim" placeholder="Data Fim"
-                     [(ngModel)]="atividade.dataFim">
-                 <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
-                 <mat-datepicker #dataFim></mat-datepicker>
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- DATA PREVISTA -->
-     <div id="coluna2" fxFlex="50%">
-         <mat-toolbar class="titulopartes">Data Prevista</mat-toolbar>
-         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataPrevisaoInicio" [matDatepicker]="dataPrevisaoInicio"
-                     placeholder="Data de Previsão de Início:" [(ngModel)]="atividade.dataPrevisaoInicio"
-                     required>
-                 <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
-                 <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
-             </mat-form-field>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataPrevisaoTermino" [matDatepicker]="dataPrevisaoTermino"
-                     placeholder="Data de Previsão de Fim:" [(ngModel)]="atividade.dataPrevisaoTermino">
-                 <mat-datepicker-toggle matSuffix [for]="dataPrevisaoTermino"></mat-datepicker-toggle>
-                 <mat-datepicker #dataPrevisaoTermino></mat-datepicker>
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- PERÍODO -->
-     <div id="coluna3" fxFlex="20%">
-         <mat-toolbar class="titulopartes">Período</mat-toolbar>
-         <div fxLayout="row" fxFlexFill>
-             <mat-form-field fxFlex="75%" fxFlexOffset="20px">
-                 <input matInput type="number" name="ano" placeholder="Ano:"
-                     [(ngModel)]="atividade.periodoAtividade">
-             </mat-form-field>
-         </div>
-     </div>
- </div>
-
- <!-- DADOS BÁSICOS -->
- <mat-toolbar class="titulopartes">Dados Básicos</mat-toolbar>
- <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px; margin-bottom: 10px"
-     fxFlexFill>
-
-     <!-- LOCAL EXECUÇÃO-->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field fxFlexOffset="20px">
-                 <mat-label>Local de Execução:</mat-label>
-                 <mat-select [(ngModel)]="atividade.localExecucao" name="localExecucao">
-                     <mat-option *ngFor="let u of localExecucao" [value]="u.id">
-                         {{u.descricao}}
-                     </mat-option>
-                 </mat-select>
-             </mat-form-field>
-         </div>
-     </div>
-
-
-     <!-- HORARIO INICIO -->
-     <div fxFlex="15%">
-         <div fxLayout="row" fxFlexFill>
-             <mat-form-field>
-                 <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
-                     placeholder="Hora Início:" [(ngModel)]="atividade.horaInicio">
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- HORARIO FIM -->
-     <div fxFlex="15%">
-         <div fxLayout="row" fxFlexFill>
-             <mat-form-field>
-                 <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim"
-                     placeholder="Hora Fim:" [(ngModel)]="atividade.horaFim">
-             </mat-form-field>
-         </div>
-     </div>
-
-
-     <!-- HORARIO FIXO / LIVRE -->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field fxFlex="70%">
-                 <mat-label>Tipo Horário:</mat-label>
-                 <mat-select [(ngModel)]="atividade.horarioFixo" name="horarioFixo">
-                     <mat-option *ngFor="let u of tipoHorario" [value]="u.id">
-                         {{u.descricao}}
-                     </mat-option>
-                 </mat-select>
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- CARGA HORÁRIA -->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field>
-                 <input matInput type="number" name="cargaHoraria" placeholder="Carga horária:"
-                     [(ngModel)]="atividade.cargaHoraria">
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- NUMERO DE AULAS -->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field>
-                 <input matInput type="number" maxlength="10" name="numeroAulas" placeholder="Número de Aulas:"
-                     [(ngModel)]="atividade.numeroAulas">
-             </mat-form-field>
-         </div>
-     </div>
- </div>
-
- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px"
-     style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field fxFlexOffset="20px" fxFlex="85%">
-                 <input matInput type="number" name="maximoParticipantes" placeholder="Máximo Participantes:"
-                     [(ngModel)]="atividade.maximoParticipantes">
-             </mat-form-field>
-         </div>
-     </div>
-
-     <div fxFlex="75%">
-         <div fxLayout="row" fxLayoutGap="20px">
-             <div fxFlex="50%">
-                 <label>Dias:</label>
-             </div>
-             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"
-                 style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                 <mat-slide-toggle name="segunda" [(ngModel)]="atividade.segunda">SEG</mat-slide-toggle>
-                 <mat-slide-toggle name="terca" [(ngModel)]="atividade.terca">TER</mat-slide-toggle>
-                 <mat-slide-toggle name="quarta" [(ngModel)]="atividade.quarta">QUA</mat-slide-toggle>
-                 <mat-slide-toggle name="quinta" [(ngModel)]="atividade.quinta">QUI</mat-slide-toggle>
-                 <mat-slide-toggle name="sexta" [(ngModel)]="atividade.sexta">SEX</mat-slide-toggle>
-                 <mat-slide-toggle name="sabado" [(ngModel)]="atividade.sabado">SAB</mat-slide-toggle>
-                 <mat-slide-toggle name="domingo" [(ngModel)]="atividade.domingo">DOM</mat-slide-toggle>
-             </div>
-         </div>
-     </div>
-
- </div>
- 
- <div fxLayout="row" 
-      fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" 
-      fxFlexFill
-      *ngIf="mostrarCampos">
-    
-     <!-- PLANO DE ACAO -->
-     <div fxLayout="column" fxFlex="33%">
-         <mat-toolbar class="titulopartes">Plano de Ação</mat-toolbar>
-         <mat-form-field style="margin-left: 20px; margin-bottom: 20px">
-             <mat-label>Planos de Ação:</mat-label>
-             <mat-select [(ngModel)]="atividade.planosAcao.id" 
-                         name="planosAcao"                         
-                         (selectionChange)="carregarPlanoAcao($event.value)">
-                 <mat-option></mat-option>        
-                 <mat-option *ngFor="let u of listaPlanosAcao" [value]="u.id">
-                     {{u.nome}}
-                 </mat-option>
-             </mat-select>
-             <mat-hint *ngIf="listaPlanosAcao?.length === 0" align="start">Nenhum plano de ação cadastrado
-             </mat-hint>
-         </mat-form-field>
-     </div>
-
-     <!-- PROJETO -->
-     <div fxLayout="column" fxFlex="33%">
-         <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
-         <mat-form-field style="margin-left: 20px">
-             <mat-label>Projetos:</mat-label>
-             <mat-select [(ngModel)]="atividade.projeto.id" 
-                         name="projeto"
-                         [required]="!atividade.programa.id"
-                         (selectionChange)="carregarProjeto($event.value)">
-                 <mat-option></mat-option>        
-                 <mat-option *ngFor="let u of projetos" [value]="u.id">
-                     {{u.nome}}
-                 </mat-option>
-             </mat-select>
-             <mat-hint *ngIf="projetos?.length === 0" align="start">Nenhum projeto cadastrado</mat-hint>
-         </mat-form-field>
-     </div>
-
-     <!-- PROGRAMA -->
-     <div fxLayout="column" fxFlex="33%">
+    <!-- PROGRAMA -->
+    <div fxLayout="column" fxFlex="33%">
         <mat-toolbar class="titulopartes">Programa</mat-toolbar>
-        <mat-form-field style="margin-left: 20px">
+        <mat-form-field>
             <mat-label>Programas:</mat-label>
-            <mat-select [(ngModel)]="atividade.programa.id" 
-                        name="programa"
-                        [required]="!atividade.projeto.id"
-                        (selectionChange)="carregarPrograma($event.value)">
-                <mat-option></mat-option>        
+            <mat-select [(ngModel)]="atividade.programa.id" name="programa" [required]="!atividade.projeto.id"
+                (selectionChange)="carregarPrograma($event.value)">
+                <mat-option></mat-option>
                 <mat-option *ngFor="let u of programas" [value]="u.id">
                     {{u.nome}}
                 </mat-option>
@@ -253,16 +48,140 @@
         </mat-form-field>
     </div>
 
- </div>
+</div><!-- FIM PRIMEIRA LINHA -->
 
- <!-- OBSERVAÇÕES -->
- <mat-toolbar class="titulopartes">Observações</mat-toolbar>
- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-     <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
-         <mat-label>Observações:</mat-label>
-         <textarea #observacoes matInput name="observacoes" [(ngModel)]="atividade.observacoes"
-             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
-             maxlength="200"></textarea>
-         <mat-hint align="end">{{observacoes.value.length}} / 200</mat-hint>
-     </mat-form-field>
- </div>
+
+
+
+
+<!-- SEGUNDA LINHA -->
+<div fxLayout="row" fxLayoutGap="30px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <!-- NOME DA OFICINA -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Nome do Plano de Atividades</mat-toolbar>
+        <mat-form-field>
+            <input #descricao matInput maxlength="200" name="descricao" placeholder="Nome do Plano de Atividades:"
+                [(ngModel)]="atividade.descricao" required>
+            <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <!-- PERIODO DE EXECUCAO -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Período de Execução</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+            <mat-form-field style="margin-left: 20px" fxFlex="40%">
+                <input matInput name="dataInicioExecucao" [matDatepicker]="dataInicioExecucao" placeholder="Data de Início:"
+                    [(ngModel)]="atividade.dataInicio">
+                <mat-datepicker-toggle matSuffix [for]="dataInicioExecucao"></mat-datepicker-toggle>
+                <mat-datepicker #dataInicioExecucao></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%">
+                <input matInput name="dataFimExecucao" [matDatepicker]="dataFimExecucao" placeholder="Data Fim"
+                    [(ngModel)]="atividade.dataFim">
+                <mat-datepicker-toggle matSuffix [for]="dataFimExecucao"></mat-datepicker-toggle>
+                <mat-datepicker #dataFimExecucao></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- PERIODO DE EXECUCAO -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Informações</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="25px" fxFlexFill>
+            <mat-form-field fxFlex="40%">
+                <input matInput type="number" name="cargaHoraria" placeholder="Carga horária:"
+                    [(ngModel)]="atividade.cargaHoraria">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="40%">
+                <input matInput type="number" name="maximoParticipantes" placeholder="Máximo Participantes:"
+                    [(ngModel)]="atividade.maximoParticipantes">
+            </mat-form-field>
+        </div>
+    </div>
+</div> <!-- FIM DA SEGUNDA LINHA -->
+
+
+
+<!-- TERCEIRA LINHA -->
+<mat-toolbar class="titulopartes">Descrição</mat-toolbar>
+
+<div fxLayout="row" fxLayoutGap="5%" style="margin-bottom: 20px">
+
+    <mat-form-field class="topo" fxFlex="45%" appearance="outline">
+        <mat-label>Objetivo Geral:</mat-label>
+        <textarea matInput #message name="objetivoGeral" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.observacoes">
+             </textarea>
+        <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="topo" style="margin-left: 20px" fxFlex="45%" appearance="outline">
+        <mat-label>Metodologia:</mat-label>
+        <textarea matInput #message name="metodologia" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3" maxlength="200" [(ngModel)]="atividade.descricaoLocalExecucao">
+             </textarea>
+        <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+    </mat-form-field>
+
+</div><!-- FIM DA TERCEIRA LINHA -->
+
+
+
+<!-- QUARTA LINHA -->
+<mat-toolbar class="titulopartes">Horários</mat-toolbar>
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field>
+        <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
+            placeholder="Hora Início:" [(ngModel)]="atividade.horaInicio">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim"
+            placeholder="Hora Fim:" [(ngModel)]="atividade.horaFim">
+    </mat-form-field>
+    
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="topo"
+        fxFlexFill>
+        <mat-slide-toggle name="segunda" [(ngModel)]="atividade.segunda">SEG</mat-slide-toggle>
+        <mat-slide-toggle name="terca" [(ngModel)]="atividade.terca">TER</mat-slide-toggle>
+        <mat-slide-toggle name="quarta" [(ngModel)]="atividade.quarta">QUA</mat-slide-toggle>
+        <mat-slide-toggle name="quinta" [(ngModel)]="atividade.quinta">QUI</mat-slide-toggle>
+        <mat-slide-toggle name="sexta" [(ngModel)]="atividade.sexta">SEX</mat-slide-toggle>
+        <mat-slide-toggle name="sabado" [(ngModel)]="atividade.sabado">SAB</mat-slide-toggle>
+        <mat-slide-toggle name="domingo" [(ngModel)]="atividade.domingo">DOM</mat-slide-toggle>
+    </div>
+
+</div><!-- FIM QUARTA LINHA -->
+
+
+
+<!-- DADOS BÁSICOS -->
+<mat-toolbar class="titulopartes">Dados Básicos</mat-toolbar>
+<div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- LOCAL EXECUÇÃO-->
+            <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+                <mat-label>Local de Execução:</mat-label>
+                <mat-select [(ngModel)]="atividade.localExecucao" name="localExecucao">
+                    <mat-option *ngFor="let u of localExecucao" [value]="u.id">
+                        {{u.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+           
+            <mat-form-field fxFlex="50%">
+                <mat-label>Tipo de Atividade:</mat-label>
+                <mat-select [(ngModel)]="atividade.tiposAtividades" name="tiposAtividades">
+                    <mat-option *ngFor="let u of tiposAtividades" [value]="u.id">
+                        {{u.descricao}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+</div>

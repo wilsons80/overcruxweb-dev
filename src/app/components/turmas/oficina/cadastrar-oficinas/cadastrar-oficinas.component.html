@@ -5,7 +5,7 @@
     <mat-tab-group>
 
         <!-- DADOS OFICINA -->
-        <mat-tab label="OFICINA">
+        <mat-tab label="PLANO DE ATIVIDADES">
             <div ngModelGroup="grupoCadastroOficina">
                 <dados-atividade [atividade]=oficina></dados-atividade>
             </div>
@@ -34,16 +34,16 @@
 
     <button *ngIf="!isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary"
         (click)="initObjeto()">
-        Limpar Oficina
+        Limpar Plano de Atividades
     </button>
 
     <button *ngIf="!isAtualizar" mat-raised-button name="botaoAdicionar" fxFlex="20%" color="primary"
             (click)="adicionar()">
-        Adicionar Oficina
+        Adicionar Plano de Atividades
     </button>
 
     <button *ngIf="isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="cancelar()">
-        Cancelar Oficina
+        Cancelar Plano de Atividades
     </button>
 
 </div>

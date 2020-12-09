@@ -111,6 +111,8 @@ export enum Modulos{
 
     , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
     , FICHA_MATRICULA                       = 'FICHA_MATRICULA'
+    
+    , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
 
 
 }

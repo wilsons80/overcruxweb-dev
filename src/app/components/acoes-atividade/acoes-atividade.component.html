@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Ações da Oficina</mat-toolbar>
+<mat-toolbar class="subtitulo">Ações do Plano de Atividades</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultar="ngForm">
@@ -33,7 +33,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
                 <mat-icon>search</mat-icon>
                 <mat-form-field fxFlex="50%">
-                    <mat-label>Selecione uma oficina</mat-label>
+                    <mat-label>Selecione um Plano de Atividades</mat-label>
                     <mat-select [(ngModel)]="oficinaSelecionada" name="oficina">
                         <mat-option></mat-option>
                         <mat-option *ngFor="let m of oficinasCombo" [value]="m">
