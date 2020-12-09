@@ -33,6 +33,17 @@
                 <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
                 <mat-datepicker #dataFim></mat-datepicker>
             </mat-form-field>
+
+            <mat-form-field fxFlex>
+                <mat-label>Centro de Custo</mat-label>
+                <mat-select [(ngModel)]="filtro.nomeProgramaProjeto"
+                            name="centroCusto">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of centrosCustos" [value]=i.nomeProgramaProjeto>
+                        {{i.nomeProgramaProjeto}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
         <div fxLayout="row" style="font-size: 10px;">

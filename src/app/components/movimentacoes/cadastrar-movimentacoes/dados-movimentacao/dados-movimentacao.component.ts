@@ -264,6 +264,10 @@ export class DadosMovimentacaoComponent implements OnInit {
     }
   }
 
- 
+  limparContaBancaria() {
+    if(this.movimentacoes.stTipoMovimentacao === 'E') {
+      this.movimentacoes.contaBancaria = new ContasBancaria();
+    }
+  } 
   
 }
