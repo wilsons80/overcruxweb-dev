@@ -19,22 +19,6 @@
      </mat-form-field>
  </div>
 
- <!-- UNIDADE -->
- <mat-toolbar class="titulopartes">Unidade</mat-toolbar>
- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-     <mat-form-field fxFlexOffset="20px" fxFlex="45%">
-         <mat-label>Unidade:</mat-label>
-         <mat-select [(ngModel)]="atividade.unidade.idUnidade" name="unidade" required>
-             <mat-option></mat-option>
-             <mat-option *ngFor="let u of unidades" [value]="u.idUnidade"
-                         (change)="carregarUnidade()">
-                 {{u.nomeUnidade}}
-             </mat-option>
-         </mat-select>
-         <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade cadastrada</mat-hint>
-     </mat-form-field>
- </div>
-
 
  <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
@@ -57,6 +41,7 @@
              <mat-form-field fxFlex="40%" fxFlexOffset="20px">
                  <input matInput 
                         name="dataFim" 
+                        required
                         [matDatepicker]="dataFim" 
                         placeholder="Data Fim"
                         [(ngModel)]="atividade.dataFim">
@@ -66,43 +51,6 @@
          </div>
      </div>
 
-     <!-- DATA PREVISTA -->
-     <div id="coluna2" fxFlex="50%">
-         <mat-toolbar class="titulopartes">Data Prevista</mat-toolbar>
-         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataPrevisaoInicio" 
-                        [matDatepicker]="dataPrevisaoInicio"
-                        placeholder="Data de Previsão de Início" 
-                        [(ngModel)]="atividade.dataPrevisaoInicio"
-                        required>
-                 <mat-datepicker-toggle matSuffix [for]="dataPrevisaoInicio"></mat-datepicker-toggle>
-                 <mat-datepicker #dataPrevisaoInicio></mat-datepicker>
-             </mat-form-field>
-
-             <mat-form-field fxFlex="40%" fxFlexOffset="20px">
-                 <input matInput name="dataPrevisaoTermino" 
-                        [matDatepicker]="dataPrevisaoTermino"
-                        placeholder="Data de Previsão de Fim" 
-                        [(ngModel)]="atividade.dataPrevisaoTermino">
-                 <mat-datepicker-toggle matSuffix [for]="dataPrevisaoTermino"></mat-datepicker-toggle>
-                 <mat-datepicker #dataPrevisaoTermino></mat-datepicker>
-             </mat-form-field>
-         </div>
-     </div>
-
-     <!-- PERÍODO -->
-     <div id="coluna3" fxFlex="20%">
-         <mat-toolbar class="titulopartes">Período</mat-toolbar>
-         <div fxLayout="row" fxFlexFill>
-             <mat-form-field fxFlex="75%" fxFlexOffset="20px">
-                 <input matInput type="number" 
-                        name="ano" placeholder="Ano"
-                        [(ngModel)]="atividade.periodoAtividade">
-             </mat-form-field>
-         </div>
-     </div>
  </div>
 
  <!-- DADOS BÁSICOS -->
