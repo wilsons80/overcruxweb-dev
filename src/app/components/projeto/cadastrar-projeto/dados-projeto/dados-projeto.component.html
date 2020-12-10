@@ -40,7 +40,7 @@
                 <mat-select [(ngModel)]="projeto.idCoordenador" name="funcionarios">
                         <mat-option></mat-option>
                         <mat-option *ngFor="let f of funcionarios" [value]="f.id">
-                                {{f.pessoasFisica.nome}}
+                                {{f.nome}}
                         </mat-option>
                 </mat-select>
                 <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
