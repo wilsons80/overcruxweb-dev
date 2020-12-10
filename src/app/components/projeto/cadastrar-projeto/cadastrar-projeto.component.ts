@@ -8,6 +8,7 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'app-cadastrar-projeto',
@@ -30,6 +31,7 @@ export class CadastrarProjetoComponent implements OnInit {
     private projetoService: ProjetoService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private dataUtilService: DataUtilService,
     private toastService: ToastService
   ) {
 
@@ -102,23 +104,7 @@ export class CadastrarProjetoComponent implements OnInit {
     });
   }
 
-  isDataProjetoDiferenteDataPrograma() {
-    
-    if (this.projeto.programa) {
-      
-      let dataInicioPrograma: Date = this.projeto.programa.dataInicio ? new Date(this.projeto.programa.dataInicio) : null;
-      let dataFimPrograma: Date = this.projeto.programa.dataFim ? new Date(this.projeto.programa.dataFim) : null;
-      
-      if (dataInicioPrograma) dataInicioPrograma.setHours(0, 0, 0, 0);
-      if (dataFimPrograma) dataFimPrograma.setHours(0, 0, 0, 0);
-      
-      if(dataInicioPrograma && this.projeto.dataInicio && (dataInicioPrograma.getTime() != this.projeto.dataInicio.getTime())) return true;
-      if(dataFimPrograma && this.projeto.dataFim && (dataFimPrograma.getTime() != this.projeto.dataFim.getTime())) return true;
-    }
 
-    
-    return false;
-  }
 
   limpar() {
     this.inicializarObjetos();
@@ -178,4 +164,14 @@ export class CadastrarProjetoComponent implements OnInit {
     return true;
   }
 
+  isDataProjetoDiferenteDataPrograma() {    
+    if (this.projeto.programa) {    
+      let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
+      let dataFimPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
+      
+      if(dataInicioPrograma && this.projeto.dataInicio && (dataInicioPrograma.getTime() != this.dataUtilService.getDataTruncata(this.projeto.dataInicio).getTime())) return true;
+      if(dataFimPrograma && this.projeto.dataFim && (dataFimPrograma.getTime() != this.dataUtilService.getDataTruncata(this.projeto.dataFim).getTime())) return true;
+    }    
+    return false;
+  }
 }

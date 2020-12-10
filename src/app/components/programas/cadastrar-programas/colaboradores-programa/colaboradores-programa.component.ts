@@ -188,9 +188,8 @@ export class ColaboradoresProgramaComponent implements OnInit {
   
   getfuncionarios() {
     const idsUnidades:number[] = this.unidades.map((u:Unidade) => u.idUnidade);
-    this.funcionarioService.getPorUnidades(idsUnidades).subscribe((funcionarios:Funcionario[]) => {
-      this.funcionarios = funcionarios;
-      
+    this.funcionarioService.getAllByCombo().subscribe((funcionarios:Funcionario[]) => {
+      this.funcionarios = funcionarios;      
     })
   }
 

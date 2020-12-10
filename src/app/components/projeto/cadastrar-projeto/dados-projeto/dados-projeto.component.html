@@ -56,15 +56,19 @@
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
                         <mat-form-field fxFlex="50%" fxFlexOffset="20px">
-                                <input matInput name="dtImplantacao" [matDatepicker]="dataInicio"
-                                        placeholder="Data de Início:" [(ngModel)]="projeto.dataInicio">
+                                <input matInput name="dtImplantacao" 
+                                       [matDatepicker]="dataInicio"
+                                       placeholder="Data de Início:" 
+                                       [(ngModel)]="projeto.dataInicio">
                                 <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
                                 <mat-datepicker #dataInicio></mat-datepicker>
                         </mat-form-field>
 
                         <mat-form-field fxFlex="50%">
-                                <input matInput name="dtTermino" [matDatepicker]="dataTermino"
-                                        placeholder="Data de Fim:" [(ngModel)]="projeto.dataFim">
+                                <input matInput name="dtTermino" 
+                                       [matDatepicker]="dataTermino"
+                                       placeholder="Data de Fim:" 
+                                       [(ngModel)]="projeto.dataFim">
                                 <mat-datepicker-toggle matSuffix [for]="dataTermino"></mat-datepicker-toggle>
                                 <mat-datepicker #dataTermino></mat-datepicker>
                         </mat-form-field>
