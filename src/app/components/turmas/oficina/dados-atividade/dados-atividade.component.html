@@ -105,21 +105,6 @@
      </div>
 
 
-     <!-- HORARIO FIXO / LIVRE -->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field fxFlex="70%">
-                 <mat-label>Tipo Horário</mat-label>
-                 <mat-select [(ngModel)]="atividade.horarioFixo" name="horarioFixo">
-                    <mat-option></mat-option>
-                     <mat-option *ngFor="let u of tipoHorario" [value]="u.id">
-                         {{u.descricao}}
-                     </mat-option>
-                 </mat-select>
-             </mat-form-field>
-         </div>
-     </div>
-
      <!-- CARGA HORÁRIA -->
      <div fxFlex="15%">
          <div fxLayout="row">
@@ -130,15 +115,6 @@
          </div>
      </div>
 
-     <!-- NUMERO DE AULAS -->
-     <div fxFlex="15%">
-         <div fxLayout="row">
-             <mat-form-field>
-                 <input matInput type="number" maxlength="10" name="numeroAulas" placeholder="Número de Aulas"
-                     [(ngModel)]="atividade.numeroAulas">
-             </mat-form-field>
-         </div>
-     </div>
  </div>
 
  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="50px"
@@ -177,24 +153,8 @@
       fxFlexFill
       *ngIf="mostrarCampos">
     
-     <!-- PLANO DE ACAO -->
-     <div fxLayout="column" fxFlex="33%">
-         <mat-toolbar class="titulopartes">Plano de Ação</mat-toolbar>
-         <mat-form-field style="margin-left: 20px; margin-bottom: 20px">
-             <mat-label>Planos de Ação:</mat-label>
-             <mat-select [(ngModel)]="atividade.planosAcao.id" name="planosAcao">
-                <mat-option></mat-option>
-                 <mat-option *ngFor="let u of listaPlanosAcao" [value]="u.id">
-                     {{u.nome}}
-                 </mat-option>
-             </mat-select>
-             <mat-hint *ngIf="listaPlanosAcao?.length === 0" align="start">Nenhum plano de ação cadastrado
-             </mat-hint>
-         </mat-form-field>
-     </div>
-
      <!-- PROJETO -->
-     <div fxLayout="column" fxFlex="33%">
+     <div fxLayout="column" fxFlex="50%">
          <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
          <mat-form-field style="margin-left: 20px">
              <mat-label>Projetos:</mat-label>
@@ -209,7 +169,7 @@
      </div>
 
      <!-- PROGRAMA -->
-     <div fxLayout="column" fxFlex="33%">
+     <div fxLayout="column" fxFlex="50%">
         <mat-toolbar class="titulopartes">Programa</mat-toolbar>
         <mat-form-field style="margin-left: 20px">
             <mat-label>Programas:</mat-label>
@@ -225,14 +185,4 @@
 
  </div>
 
- <!-- OBSERVAÇÕES -->
- <mat-toolbar class="titulopartes">Observações</mat-toolbar>
- <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-     <mat-form-field fxFlexOffset="20px" fxFlex="95%" appearance="outline">
-         <mat-label>Observações:</mat-label>
-         <textarea #observacoes matInput name="observacoes" [(ngModel)]="atividade.observacoes"
-             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
-             maxlength="200"></textarea>
-         <mat-hint align="end">{{observacoes.value.length}} / 200</mat-hint>
-     </mat-form-field>
- </div>
+

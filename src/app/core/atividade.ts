@@ -24,7 +24,6 @@ export class Atividade {
     sexta: string;
     terca: string;
     valorCustoAtividade: number;
-    observacoes:string;
 
     projeto: Projeto;
     programa: Programa;
