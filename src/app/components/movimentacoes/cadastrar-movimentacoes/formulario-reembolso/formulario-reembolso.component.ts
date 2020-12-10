@@ -11,6 +11,7 @@ import { ReembolsosPagamentos } from 'src/app/core/reembolsos-pagamentos';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'formulario-reembolso',
@@ -42,8 +43,8 @@ export class FormularioReembolsoComponent implements OnInit {
 }
 
   ngOnInit(): void {
-    if(!this.reembolso.contaDestino){
-      this.reembolso.contaDestino = new ContasBancaria();
+    if(!this.reembolso.contaBancariaDestino){
+      this.reembolso.contaBancariaDestino = new ContasBancaria();
     } 
   }
 
@@ -54,6 +55,8 @@ export class FormularioReembolsoComponent implements OnInit {
 
 
   validarContaReembolso() {
+    this.carregarContaBancaria();
+    
     if(this.pagamentosFatura.contaBancaria && this.pagamentosFatura.contaBancaria.id 
        && 
        this.reembolso.contaBancaria && this.reembolso.contaBancaria.id) {
@@ -81,9 +84,10 @@ export class FormularioReembolsoComponent implements OnInit {
 
   getNomeProjetoPrograma(conta: any) {
     let nomeProjetoPrograma = '';
-    let retorno = `${conta.contasBancaria.banco.numero} - ${conta.contasBancaria.banco.nome} | Ag. ${conta.contasBancaria.numeroAgencia} | C. ${conta.contasBancaria.numeroContaBancaria}`;
+    let retorno = `${conta.banco.numero} - ${conta.banco.nome} | Ag. ${conta.numeroAgencia} | C. ${conta.numeroContaBancaria}`;
     
 
+    /*
     if(conta.idProjeto && this.projetos) {
       const projeto = this.projetos.find((p: any) => p.id === conta.idProjeto);
       if (!!projeto) {
@@ -97,6 +101,22 @@ export class FormularioReembolsoComponent implements OnInit {
     }
 
     retorno += ' | ' + nomeProjetoPrograma;
+    */
+
     return retorno;
   }
+
+
+  carregarContaBancariaDestino() {
+    if (this.reembolso.contaBancariaDestino.id) {
+      this.reembolso.contaBancariaDestino = _.cloneDeep(_.find(this.contasBancarias,  (f: ContasBancaria) => f.id === this.reembolso.contaBancariaDestino.id));
+    }
+  }
+
+  carregarContaBancaria() {
+    if (this.reembolso.contaBancaria.id) {
+      this.reembolso.contaBancaria = _.cloneDeep(_.find(this.contasBancarias,  (f: ContasBancaria) => f.id === this.reembolso.contaBancaria.id));
+    }
+  }
+
 }

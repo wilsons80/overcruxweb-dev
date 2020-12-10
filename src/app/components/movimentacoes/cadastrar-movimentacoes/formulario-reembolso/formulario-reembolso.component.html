@@ -65,8 +65,8 @@
 <div fxLayout="row" fxLayoutGap="50px">
     <mat-form-field fxFlex="40%" fxFlexOffset="20px">
         <mat-label>Conta de destino do reembolso</mat-label>
-        <mat-select [(ngModel)]=reembolso.contaDestino.id
-                    (selectionChange)="validarContaReembolso()" 
+        <mat-select [(ngModel)]=reembolso.contaBancariaDestino.id
+                    (selectionChange)="carregarContaBancariaDestino()" 
                     required
                     name="contasDestino_{{pinContaBancaria}}">
             <mat-option></mat-option>

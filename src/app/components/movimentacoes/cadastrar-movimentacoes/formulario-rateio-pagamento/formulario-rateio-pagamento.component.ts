@@ -86,9 +86,10 @@ export class FormularioRateioPagamentoComponent implements OnInit {
 
   getNomeProjetoPrograma(conta: any) {
     let nomeProjetoPrograma = '';
-    let retorno = `${conta.contasBancaria.banco.numero} - ${conta.contasBancaria.banco.nome} | Ag. ${conta.contasBancaria.numeroAgencia} | C. ${conta.contasBancaria.numeroContaBancaria}`;
+    let retorno = `${conta.banco.numero} - ${conta.banco.nome} | Ag. ${conta.numeroAgencia} | C. ${conta.numeroContaBancaria}`;
     
 
+    /*
     if(conta.idProjeto && this.projetos) {
       const projeto = this.projetos.find((p: any) => p.id === conta.idProjeto);
       if (!!projeto) {
@@ -102,6 +103,8 @@ export class FormularioRateioPagamentoComponent implements OnInit {
     }
 
     retorno += ' | ' + nomeProjetoPrograma;
+    */
+   
     return retorno;
   }
 

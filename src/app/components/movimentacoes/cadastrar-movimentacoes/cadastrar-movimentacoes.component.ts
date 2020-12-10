@@ -24,6 +24,7 @@ import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { Tributos } from 'src/app/core/tributos';
 import { TributosService } from 'src/app/services/tributos/tributos.service';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
 
 @Component({
   selector: 'cadastrar-movimentacoes',
@@ -44,11 +45,11 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isPagamentoInvalido        = false;
 
   tributos: Tributos[];
+  contasBancarias: ContasBancaria[];
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  contasBancariasReembolso: ContasCentrosCusto[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,6 +61,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     private autenticadorService: AutenticadorService,
     private programaService: ProgramaService,
     private projetoService: ProjetoService,
+    private contasBancariaService: ContasBancariaService,
     private tributosService: TributosService
   ) {
     this.carregarPerfil = new CarregarPerfil();
@@ -82,6 +84,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
     
+    this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
+      this.contasBancarias = contasBancarias;
+    });
     
     this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
       this.tributos = tributos;
@@ -258,8 +263,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   
   carregarContasBancarios(evento) {
     // ABA DE PAGAMENTOS
-    this.contasBancariasReembolso = [];
-    if(evento.selectedIndex === 3) {    
+    if(evento.selectedIndex === 3) {
+      
+      /*
       if(this.movimentacoes.rateios) {
         this.movimentacoes.rateios.forEach(rateio => {
           const contasPrograma = rateio.programa.contasCentrosCusto ? rateio.programa.contasCentrosCusto : [];
@@ -273,17 +279,24 @@ export class CadastrarMovimentacoesComponent implements OnInit {
           }
         });
       }
+      */
 
       this.isContasReembolsoInvalidas = false;
       if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
         this.movimentacoes.pagamentosFatura.forEach(pag => {
           if(pag.reembolsos && pag.reembolsos.length > 0) {
             pag.reembolsos.forEach(re => {
-              const contas = this.contasBancariasReembolso.map(c => c.contasBancaria).filter(conta => conta.id === re.contaBancaria.id );
+              const contas = this.contasBancarias.filter(conta => conta.id === re.contaBancaria.id );
               if(contas.length === 0) {
                 re.contaBancaria = new ContasBancaria();
                 this.isContasReembolsoInvalidas = true;
-              }          
+              }
+              
+              const contasDestino = this.contasBancarias.filter(conta => conta.id === re.contaBancariaDestino.id );
+              if(contasDestino.length === 0) {
+                re.contaBancariaDestino = new ContasBancaria();
+                this.isContasReembolsoInvalidas = true;
+              } 
             })
           }
         })

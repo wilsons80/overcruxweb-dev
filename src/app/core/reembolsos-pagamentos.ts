@@ -9,5 +9,5 @@ export class ReembolsosPagamentos{
 	statusPercentual: boolean;
 	valor: number;
 	usuarioAlteracao: number;
-	contaDestino:ContasBancaria;
+	contaBancariaDestino:ContasBancaria;
 }
