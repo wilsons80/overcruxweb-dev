@@ -166,11 +166,7 @@ export class CadastrarProjetoComponent implements OnInit {
 
   isDataProjetoDiferenteDataPrograma() {    
     if (this.projeto.programa) {    
-      let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
-      let dataFimPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
-      
-      if(dataInicioPrograma && this.projeto.dataInicio && (dataInicioPrograma.getTime() != this.dataUtilService.getDataTruncata(this.projeto.dataInicio).getTime())) return true;
-      if(dataFimPrograma && this.projeto.dataFim && (dataFimPrograma.getTime() != this.dataUtilService.getDataTruncata(this.projeto.dataFim).getTime())) return true;
+      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, this.projeto.programa.dataInicio, this.projeto.programa.dataFim);
     }    
     return false;
   }
