@@ -15,26 +15,6 @@
             </mat-form-field>
         </div>
 
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <!-- INSTITUICAO -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Instituição:</mat-label>
-                <mat-select name="instituicao" [(ngModel)]="tiposAtividades.instituicao.id">
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of instituicoes" [value]="i.id">
-                        {{i.nome}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="instituicoes?.length === 0" align="start">Nenhuma instituição
-                    cadastrada</mat-hint>
-            </mat-form-field>
-        </div>
-
-
-
-
-
-
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
             fxFlexFill>

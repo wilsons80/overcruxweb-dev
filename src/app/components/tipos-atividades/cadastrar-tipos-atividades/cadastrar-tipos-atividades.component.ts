@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Instituicao } from 'src/app/core/instituicao';
 import { TiposAtividades } from 'src/app/core/tipos-atividades';
 import { TiposAtividadesService } from 'src/app/services/tipos-atividades/tipos-atividades.service';
@@ -14,9 +15,10 @@ import { InstituicaoService } from './../../../services/instituicao/instituicao.
 })
 export class CadastrarTiposAtividadesComponent implements OnInit {
 
-  instituicoes: Instituicao[];
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -24,21 +26,19 @@ export class CadastrarTiposAtividadesComponent implements OnInit {
   tiposAtividades: TiposAtividades;
 
   constructor(
-    private instituicaoService: InstituicaoService,
     private tiposAtividadesService: TiposAtividadesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService
   ) {
-
+    this.carregarPerfil = new CarregarPerfil();
   }
 
 
   ngOnInit() {
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.inicializarObjetos()
-
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
@@ -48,19 +48,12 @@ export class CadastrarTiposAtividadesComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.instituicaoService.getAll().subscribe((instituicoes: Instituicao[]) => {
-      this.instituicoes = instituicoes;
-    })
-
     let idTiposAtividades: number;
     idTiposAtividades = this.activatedRoute.snapshot.queryParams.idTiposAtividades ? this.activatedRoute.snapshot.queryParams.idTiposAtividades : null;
     if (idTiposAtividades) {
       this.isAtualizar = true;
       this.tiposAtividadesService.getById(idTiposAtividades).subscribe((tiposAtividade: TiposAtividades) => {
         this.tiposAtividades = tiposAtividade;
-        if (!this.tiposAtividades.instituicao) {
-          this.tiposAtividades.instituicao = new Instituicao();
-        }
       });
     }
 
