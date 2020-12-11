@@ -13,7 +13,7 @@
                         <mat-select [(ngModel)]="colaboradoresPrograma.funcionario.id" name="unidade" required>
                             <mat-option></mat-option>
                             <mat-option *ngFor="let m of funcionarios" [value]="m.id">
-                                {{m.pessoasFisica.nome}}
+                                {{m.nome}}
                             </mat-option>
                         </mat-select>
                         <mat-hint *ngIf="funcionarios?.length === 0" align="start">Nenhum funcionário cadastrado</mat-hint>
