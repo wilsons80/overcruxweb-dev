@@ -239,6 +239,7 @@ registerLocaleData(localePt, 'pt-BR');
     ProvisionamentoModule,
     ExportarDadosAlunoModule,
     RelatoriosBeneficiariosModule,
+    TiposAtividadesModule,
     CKEditorModule
   ],
   providers: [
