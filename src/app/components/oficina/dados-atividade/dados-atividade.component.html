@@ -3,7 +3,7 @@
 
     <!-- UNIDADE -->
     <div fxLayout="column" fxFlex="33%">
-        <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+        <mat-toolbar class="titulopartes">Unidade</mat-toolbar>
         <mat-form-field>
             <mat-label>Unidade:</mat-label>
             <mat-select [(ngModel)]="atividade.unidade.idUnidade" name="unidade" required>
@@ -16,13 +16,32 @@
         </mat-form-field>
     </div>
 
+    
+    <!-- PROGRAMA -->
+    <div fxLayout="column" fxFlex="33%">
+        <mat-toolbar class="titulopartes">Programa</mat-toolbar>
+        <mat-form-field>
+            <mat-label>Programas:</mat-label>
+            <mat-select [(ngModel)]="atividade.programa.id" name="programa" 
+                        [required]="!atividade.projeto.id"
+                        (selectionChange)="carregarPrograma($event.value)">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let u of programas" [value]="u.id">
+                    {{u.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
+        </mat-form-field>
+    </div>
+
     <!-- PROJETO -->
     <div fxLayout="column" fxFlex="33%">
         <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
         <mat-form-field>
             <mat-label>Projetos:</mat-label>
-            <mat-select [(ngModel)]="atividade.projeto.id" name="projeto" [required]="!atividade.programa.id"
-                (selectionChange)="carregarProjeto($event.value)">
+            <mat-select [(ngModel)]="atividade.projeto.id" name="projeto" 
+                        [required]="!atividade.programa.id"
+                        (selectionChange)="carregarProjeto($event.value)">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let u of projetos" [value]="u.id">
                     {{u.nome}}
@@ -32,21 +51,6 @@
         </mat-form-field>
     </div>
 
-    <!-- PROGRAMA -->
-    <div fxLayout="column" fxFlex="33%">
-        <mat-toolbar class="titulopartes">Programa</mat-toolbar>
-        <mat-form-field>
-            <mat-label>Programas:</mat-label>
-            <mat-select [(ngModel)]="atividade.programa.id" name="programa" [required]="!atividade.projeto.id"
-                (selectionChange)="carregarPrograma($event.value)">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let u of programas" [value]="u.id">
-                    {{u.nome}}
-                </mat-option>
-            </mat-select>
-            <mat-hint *ngIf="programas?.length === 0" align="start">Nenhum programa cadastrado</mat-hint>
-        </mat-form-field>
-    </div>
 
 </div><!-- FIM PRIMEIRA LINHA -->
 

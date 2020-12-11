@@ -72,6 +72,7 @@
                 <mat-label>Instiuição</mat-label>
                 <mat-select [(ngModel)]="unidade.instituicao.id" 
                             name="instituicao"
+                            disabled
                             (selectionChange)="carregarInstituicao($event.value)" required>
                     <mat-option></mat-option>                            
                     <mat-option *ngFor="let m of instituicoes" [value]="m.id">

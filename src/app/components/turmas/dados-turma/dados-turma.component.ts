@@ -36,6 +36,7 @@ export class DadosTurmaComponent implements OnInit {
   turnos: TipoTurno = new TipoTurno();
 
   niveisTurma: NiveisTurmas[];
+  todosProjetos: Projeto[];
   projetos: Projeto[];
   programas: Programa[];
   unidades: Unidade[];
@@ -55,8 +56,8 @@ export class DadosTurmaComponent implements OnInit {
       this.niveisTurma = niveisTurma;
     });
 
-    this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
-      this.projetos = projetos;
+    this.projetoService.getAllCombo().subscribe((projetos: Projeto[]) => {
+      this.todosProjetos = projetos;
     });
 
     this.programaService.getAll().subscribe((programas: Programa[]) => {
@@ -66,11 +67,6 @@ export class DadosTurmaComponent implements OnInit {
     this.unidadeService.getAllUnidadesInstituicaoUsuarioLogado().subscribe((unidades: Unidade[]) => {
       this.unidades = unidades;
     });
-
-   // this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[]) => {
-   //   this.unidades = unidades;
-   // });
-    
 
   }
 
@@ -102,8 +98,14 @@ export class DadosTurmaComponent implements OnInit {
   carregarPrograma(){
     if(this.turma.programa && this.turma.programa.id) {
       this.turma.programa = _.cloneDeep(_.find(this.programas, (c: Programa) => c.id === this.turma.programa.id));
+
+      this.projetoService.getAllPorPrograma(this.turma.programa.id).subscribe((projetos: Projeto[]) => {
+        this.projetos = projetos;
+      });
+
     } else {
       this.turma.programa = new Programa();
+      this.projetos = this.todosProjetos;
     }
   }
 }

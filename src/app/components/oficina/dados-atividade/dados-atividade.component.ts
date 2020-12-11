@@ -26,6 +26,7 @@ export class DadosAtividadeComponent implements OnInit {
 
   @Input() atividade: Atividade;
 
+  todosProjetos: Projeto[];
   projetos: Projeto[];
   programas: Programa[];
   unidades: Unidade[];
@@ -66,15 +67,12 @@ export class DadosAtividadeComponent implements OnInit {
     if ( this.activatedRoute.snapshot.data.modulo === Modulos.OFICINA) {
       this.mostrarCampos = true;
 
-
       this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
-        this.projetos = projetos;
-
+        this.todosProjetos = projetos;
       });
       
       this.tiposAtividadesService.getAll().subscribe((tiposAtividades: TiposAtividades[]) => {
         this.tiposAtividades = tiposAtividades;
-
       });
 
       this.programaService.getAllCombo().subscribe((programas: Programa[]) => {
@@ -85,12 +83,22 @@ export class DadosAtividadeComponent implements OnInit {
   }
 
   carregarPrograma(idPrograma: number) {
-    if(!idPrograma) return;
+    if(!idPrograma) {
+      this.projetos = this.todosProjetos; 
+      return;
+    } 
+
     this.atividade.programa = _.cloneDeep(_.find(this.programas, (a: Programa) => a.id === idPrograma));
+    this.projetoService.getAllPorPrograma(idPrograma).subscribe((projetos: Projeto[]) => {
+      this.projetos = projetos;
+    });
   }
 
   carregarProjeto(idProjeto: number) {
-    if(!idProjeto) return;
+    if(!idProjeto) {
+      this.atividade.projeto = null;
+      return;
+    }
     this.atividade.projeto = _.cloneDeep(_.find(this.projetos, (a: Projeto) => a.id === idProjeto));
   }
 
