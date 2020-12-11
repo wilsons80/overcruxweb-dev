@@ -94,7 +94,7 @@ export class CadastrarProjetoComponent implements OnInit {
       return;
     }
     
-    if (this.isDataProjetoDiferenteDataPrograma()) {
+    if (!this.isDataProjetoEntreDataPrograma()) {
       this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
@@ -120,7 +120,7 @@ export class CadastrarProjetoComponent implements OnInit {
       return;
     }
     
-    if (this.isDataProjetoDiferenteDataPrograma()) {
+    if (!this.isDataProjetoEntreDataPrograma()) {
       this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
@@ -164,10 +164,13 @@ export class CadastrarProjetoComponent implements OnInit {
     return true;
   }
 
-  isDataProjetoDiferenteDataPrograma() {    
+  isDataProjetoEntreDataPrograma(): boolean {    
     if (this.projeto.programa) {    
-      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, this.projeto.programa.dataInicio, this.projeto.programa.dataFim);
-    }    
-    return false;
+      let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
+      let dataFimPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
+      
+      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, dataInicioPrograma, dataFimPrograma);
+    }   
+    return true;
   }
 }
