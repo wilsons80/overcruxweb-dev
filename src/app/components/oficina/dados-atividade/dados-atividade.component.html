@@ -125,19 +125,23 @@
 
 <!-- QUARTA LINHA -->
 <mat-toolbar class="titulopartes">Horários</mat-toolbar>
-<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    <mat-form-field>
+<div fxLayout="row" 
+     fxLayoutGap="50px" 
+     style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+    <mat-form-field fxFlex="15%" fxFlexOffset="20px">
         <input matInput #horaInicio="ngModel" mat-hide-icons="calendar" type="time" name="horaInicio"
             placeholder="Hora Início:" [(ngModel)]="atividade.horaInicio">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field fxFlex="15%">
         <input matInput #horaFim="ngModel" mat-hide-icons="calendar" type="time" name="horaFim"
             placeholder="Hora Fim:" [(ngModel)]="atividade.horaFim">
     </mat-form-field>
     
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="topo"
-        fxFlexFill>
+    <div fxLayout="row" fxFlex="80%" 
+         fxLayoutAlign="start center" fxLayoutGap="10px" class="topo"
+         fxFlexFill>
         <mat-slide-toggle name="segunda" [(ngModel)]="atividade.segunda">SEG</mat-slide-toggle>
         <mat-slide-toggle name="terca" [(ngModel)]="atividade.terca">TER</mat-slide-toggle>
         <mat-slide-toggle name="quarta" [(ngModel)]="atividade.quarta">QUA</mat-slide-toggle>
@@ -153,7 +157,10 @@
 
 <!-- DADOS BÁSICOS -->
 <mat-toolbar class="titulopartes">Dados Básicos</mat-toolbar>
-<div fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+<div fxLayout="row" 
+     fxLayoutAlign="space-between center" 
+     style="margin-top: 10px; margin-bottom: 10px" 
+     fxFlexFill>
 
             <!-- LOCAL EXECUÇÃO-->
             <mat-form-field fxFlex="30%" fxFlexOffset="20px">
@@ -173,7 +180,5 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
-
 
 </div>

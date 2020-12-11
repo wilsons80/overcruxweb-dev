@@ -68,7 +68,7 @@ export class EstoquesComponent implements OnInit {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
 
-    this.programaService.getAllProgramasIntituicaoLogada().subscribe((programas: Programa[]) => {
+    this.programaService.getAllCombo().subscribe((programas: Programa[]) => {
       this.programas = programas;
     });
 
