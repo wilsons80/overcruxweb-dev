@@ -165,7 +165,7 @@ export class CadastrarProjetoComponent implements OnInit {
   }
 
   isDataProjetoEntreDataPrograma(): boolean {    
-    if (this.projeto.programa) {    
+    if (this.projeto.programa && this.projeto.programa.dataInicio) {    
       let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
       let dataFimPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
       

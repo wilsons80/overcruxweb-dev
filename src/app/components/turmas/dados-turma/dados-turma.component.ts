@@ -58,6 +58,7 @@ export class DadosTurmaComponent implements OnInit {
 
     this.projetoService.getAllCombo().subscribe((projetos: Projeto[]) => {
       this.todosProjetos = projetos;
+      this.projetos      = projetos;
     });
 
     this.programaService.getAll().subscribe((programas: Programa[]) => {

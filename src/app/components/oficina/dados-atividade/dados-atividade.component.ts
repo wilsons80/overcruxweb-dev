@@ -69,6 +69,7 @@ export class DadosAtividadeComponent implements OnInit {
 
       this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
         this.todosProjetos = projetos;
+        this.projetos      = projetos;
       });
       
       this.tiposAtividadesService.getAll().subscribe((tiposAtividades: TiposAtividades[]) => {
