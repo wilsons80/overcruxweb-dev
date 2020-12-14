@@ -95,7 +95,7 @@ export class CadastrarProjetoComponent implements OnInit {
     }
     
     if (!this.isDataProjetoEntreDataPrograma()) {
-      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+      this.toastService.showAlerta("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
 
@@ -121,7 +121,7 @@ export class CadastrarProjetoComponent implements OnInit {
     }
     
     if (!this.isDataProjetoEntreDataPrograma()) {
-      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+      this.toastService.showAlerta("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
 

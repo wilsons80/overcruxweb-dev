@@ -82,10 +82,11 @@ export class DataUtilService {
   }
 
   private entreDatas(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
-    if(this.getValorByDate(dataPesquisaInicio).getTime() < this.getValorByDate(dataInicio).getTime()) {
+    if(this.getDataTruncata(dataInicio).getTime() < this.getDataTruncata(dataPesquisaInicio).getTime()) {
       return false;
     }
-    return this.isVigente(dataPesquisaInicio, dataInicio, dataFim) && this.isVigente(dataPesquisaFim, dataInicio, dataFim);
+
+    return this.isVigente(dataInicio, dataPesquisaInicio, dataPesquisaFim) && this.isVigente(dataFim, dataPesquisaInicio, dataPesquisaFim);
   }
 
 
