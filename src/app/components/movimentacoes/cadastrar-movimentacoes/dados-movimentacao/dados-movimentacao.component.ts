@@ -44,8 +44,8 @@ export class DadosMovimentacaoComponent implements OnInit {
   doadores: Doadores[];
 
   tiposMovimentacao = [
-    {id: 'E', descricao: 'DESPESA'},
-    {id: 'S', descricao: 'RECEITA'}
+    {id: 'S', descricao: 'DESPESA'},
+    {id: 'E', descricao: 'RECEITA'}
   ];
 
   valorRateioSuperior = false;

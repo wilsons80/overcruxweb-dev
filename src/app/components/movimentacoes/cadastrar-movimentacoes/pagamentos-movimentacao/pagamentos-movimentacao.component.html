@@ -3,7 +3,7 @@
 
         <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
             <mat-expansion-panel-header>
-                <mat-panel-title>Dados do pagamento</mat-panel-title>
+                <mat-panel-title>Dados</mat-panel-title>
             </mat-expansion-panel-header>
 
             <div>
@@ -78,7 +78,7 @@
                                [max]="maxDataPagamento"
                                [min]="movimentacoes.dataDocumento"
                                [matDatepicker]="dataPagamentoMovimento"
-                               placeholder="Data do pagamento" 
+                               placeholder="Data" 
                                required>
                         <mat-datepicker-toggle matSuffix [for]="dataPagamentoMovimento"></mat-datepicker-toggle>
                         <mat-datepicker #dataPagamentoMovimento></mat-datepicker>
@@ -88,7 +88,7 @@
 
                     <!-- FORMA DE PAGAMENTO -->
                     <mat-form-field fxFlex="250px">
-                        <mat-label>Forma de pagamento:</mat-label>
+                        <mat-label>Forma:</mat-label>
                         <mat-select [(ngModel)]=pagamentosFatura.formaPagamento name="formaPagamento">
                             <mat-option></mat-option>
                             <mat-option *ngFor="let i of formasPagamento.tipos" [value]=i.id>
@@ -124,7 +124,7 @@
 
 
                 <mat-toolbar class="titulopartes">
-                    <span>Rateio de Pagamento de Multas e Juros</span>
+                    <span>Rateio de Multas e Juros</span>
                     <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior && pagamentosFatura.rateioPagamento?.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
                     <span *ngIf="valorRateioSuperior && pagamentosFatura.rateioPagamento?.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está diferente ao valor do pagamento.</span>
                 </mat-toolbar>
@@ -213,7 +213,7 @@
             (closed)="openFormCadastro = true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <span>Lista de Pagamentos ( {{movimentacoes.pagamentosFatura?.length || 0}} ) -</span>
+                    <span>Lista ( {{movimentacoes.pagamentosFatura?.length || 0}} ) -</span>
                     <span style="font-weight: 800; padding-left: 10px;" [style.color]="valoresSuperiorValorMovimento ? 'red' : 'green'">Valor Total: {{getValorTotal() | currency: 'BRL'}}</span>      
                     <span *ngIf="valoresSuperiorValorMovimento" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! A soma dos valores de pagamento está diferente do valor do movimento.</span>
                 </mat-panel-title>

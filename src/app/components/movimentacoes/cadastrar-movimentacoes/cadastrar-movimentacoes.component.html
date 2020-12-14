@@ -66,7 +66,7 @@
         <!------------------ PAGAMENTOS ------------------------>
         <mat-step style="padding-bottom: 20px" [stepControl]="formPagamentos">
             <form #formPagamentos="ngForm">
-                <ng-template matStepLabel>PAGAMENTOS</ng-template>
+                <ng-template matStepLabel>{{getLabelABA()}}</ng-template>
                 <pagamentos-movimentacao [idMovimentacao]="movimentacoes.id"
                                          [movimentacoes]="movimentacoes"
                                          [perfilAcesso]="perfilAcesso"
