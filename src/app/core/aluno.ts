@@ -3,6 +3,8 @@ import { VulnerabilidadesAluno } from './vulnerabilidades-aluno';
 import { Unidade } from './unidade';
 import { PessoaFisica } from './pessoa-fisica';
 import { EncaminhamentoAluno } from './encaminhamento-aluno';
+import { Programa } from './programa';
+import { Projeto } from './projeto';
 
 
 export class Aluno {
@@ -33,6 +35,16 @@ export class Aluno {
 
 	vulnerabilidades: VulnerabilidadesAluno[];
 	encaminhamentos: EncaminhamentoAluno[];
+
+	programa: Programa;
+	projeto: Projeto;
+	
+	observacaoDeclaracaoPasse: string;
+	dataDeclaracaoPasse: Date;
+	observacaoDeclaracaoMatricula: string;
+	dataDeclaracaoMatricula: Date;
+	participaApresentacaoExterna: boolean;
+
 
 	nome?: string;
 	nomeMae?: string;

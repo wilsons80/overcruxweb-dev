@@ -1,3 +1,5 @@
+<mat-toolbar class="subtitulo">{{titulo}}</mat-toolbar>
+
 <div accept-charset="UTF-8" novalidate>
   <div class="form-group has-feedback" 
        [ngClass]="{ 'has-error': myckeditor.invalid && myckeditor.touched }">
@@ -6,23 +8,21 @@
               #myckeditor="ngModel"
               name="myckeditor"
               [config]="ckeConfig" 
-              debounce="500" 
-              (paste)="onPaste($event)"
-              (change)="onChange($event)">
+              debounce="500">
     </ckeditor>
   </div>
 </div>
   
 
-<br><br>
+<br>
 <div fxLayout="row" fxLayoutGap="50px" 
-     style="margin-top: 30px; margin-bottom: 10px" 
+     style="margin-top: 10px; margin-bottom: 10px" 
      fxFlexFill>
     <div fxFlex="100%" fxLayoutAlign="start center">
 
         <button mat-raised-button 
                 style="width: 240px; background-color: rgb(245, 250, 248);"
-                (click)="cancelar()"  
+                (click)="salvar()"  
                 matTooltip="Fechar">
             Salvar
         </button>  

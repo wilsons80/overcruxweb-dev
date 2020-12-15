@@ -2,6 +2,7 @@ import { AfterViewInit, Component, forwardRef, Inject, Input, OnDestroy, OnInit,
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditorPecaDespacho } from 'src/app/core/peca-despacho';
+import { AlunoService } from 'src/app/services/aluno/aluno.service';
 import { EditorRicoService } from 'src/app/services/editor-rico/editor-rico.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -19,7 +20,10 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() editor: EditorPecaDespacho = { conteudo: '' };
   */
  
-  editor: EditorPecaDespacho = new EditorPecaDespacho();
+  @Input() editor: EditorPecaDespacho = new EditorPecaDespacho();
+  titulo: "";
+  idsAlunos: [];
+  tipoRelatorio: "";
 
   name = 'ng2-ckeditor';
   ckeConfig: any;
@@ -27,12 +31,16 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private loadingPopupService: LoadingPopupService,
+    private alunoService: AlunoService,
     private editorRicoService: EditorRicoService,
     private toastService: ToastService,
     private dialogRef: MatDialogRef<EditorRicoComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.editor.conteudo = data.conteudo;
+    this.titulo = data.titulo;
+    this.idsAlunos = data.idsAlunos;
+    this.tipoRelatorio = data.tipoRelatorio;
   }
 
   ngOnInit(): void {
@@ -46,6 +54,17 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
         event.editor.execCommand('justifyblock');
       });
     } catch (e) { }
+
+    if(this.ckeditor.paste) {
+      this.ckeditor.paste.subscribe((event) => {
+        const regexp = /<p()/g;
+        let pastedValue = event.data.dataValue;
+        if (!regexp.test(pastedValue)) {
+          pastedValue = `<p style="text-align: justify">${pastedValue}</p>`;
+        }
+        event.data.dataValue = pastedValue.replace(regexp, '<p style="text-align: justify"');
+      });
+    }
 
     this.attachPlaceholderListener();
   }
@@ -87,47 +106,6 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-
-  
-  onChange($event: any): void {
-  }
-
-  onPaste(event: any): void {
-    const regexp = /<p()/g;
-    let pastedValue = event.data.dataValue;
-    if (!regexp.test(pastedValue)) {
-      pastedValue = `<p style="text-align: justify">${pastedValue}</p>`;
-    }
-    event.data.dataValue = pastedValue.replace(regexp, '<p style="text-align: justify"');
-  }
-
-
-  /*
-  visualizarPdf(): void {
-    this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo PDF..');
-
-    const formData = new FormData();
-    formData.append('conteudo', this.editorRicoService.getConteudo(this.editor));
-
-    this.geradorPdfService.visualizarPdf(formData).subscribe(
-      response => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        const fileURL = window.URL.createObjectURL(blob);
-        window.open(fileURL, '_blank');
-
-      },
-      responseError => {
-        const dataView = new DataView(responseError.error);
-        const decoder = new TextDecoder('utf8');
-        const resp = JSON.parse(decoder.decode(dataView));
-        this.toastService.showAlerta(resp.mensagem);
-
-      }).add(() => {
-        this.loadingPopupService.closeDialog();
-      });
-  }
-  */
-
   ngOnDestroy(): void {
     if(this.ckeditor.paste){
       this.ckeditor.paste.unsubscribe();
@@ -152,6 +130,30 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
     catch (e) { }
   }
 
+
+  salvar() {
+    const dadosObservacaoRelatorio = {
+      listaIdsAlunos:[],
+      textoObservacao: '',
+      tipoRelatorio: ''
+    };
+    dadosObservacaoRelatorio.listaIdsAlunos  = this.idsAlunos;
+    dadosObservacaoRelatorio.textoObservacao = this.editor.conteudo;
+    dadosObservacaoRelatorio.tipoRelatorio   = this.tipoRelatorio;
+
+    this.loadingPopupService.mostrarMensagemDialog('Salvando, aguarde...');
+    this.alunoService.salvarTextoObservacao(dadosObservacaoRelatorio)
+    .subscribe(
+    () => {
+      this.dialogRef.close();
+      this.loadingPopupService.closeDialog();
+      this.toastService.showSucesso('Texto de observação salvo com sucesso !');
+    },
+    (error) => {
+      this.toastService.showAlerta("Não foi possível salvar o texto de observação do beneficiário.");
+      this.loadingPopupService.closeDialog();
+    });
+  }
 
   cancelar() {
     this.dialogRef.close();

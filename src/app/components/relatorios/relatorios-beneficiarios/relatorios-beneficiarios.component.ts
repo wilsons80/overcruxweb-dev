@@ -23,10 +23,10 @@ import { Acesso } from 'src/app/core/acesso';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExportacaoDadosAluno } from 'src/app/core/exportacao-dados-aluno';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ListaCompletaDadosExportar } from 'src/app/core/lista-completa-dados-exportar';
-import { ConfirmDialogComponent } from '../../common/confirm-dialog/confirm-dialog.component';
 import { ExportacaoDadosAlunoService } from 'src/app/services/exportacao-dados-aluno/exportacao-dados-aluno.service';
 import { EditorRicoComponent } from '../../common/editor-rico/editor-rico.component';
+import { AlunoService } from 'src/app/services/aluno/aluno.service';
+import { Aluno } from 'src/app/core/aluno';
 
 export interface TipoRelatorioBeneficiario {
   tipo: string;
@@ -69,7 +69,7 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  displayedColumns: string[] = ['select', 'matricula','beneficiario','nomeMae','nomePai','unidade','dataEntrada', 'dataDesligamento'];
+  displayedColumns: string[] = ['select', 'matricula','beneficiario','nomeMae','nomePai','unidade','dataEntrada', 'dataDesligamento', 'acoes'];
   dataSource: MatTableDataSource<ExportacaoDadosAluno> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
@@ -103,7 +103,8 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     private cpfPipe: CpfPipe,
     private funcoesUteisService: FuncoesUteisService,
     private pessoaFisicaService: PessoaFisicaService,
-    private unidadeService: UnidadeService    
+    private unidadeService: UnidadeService,
+    private beneficiarioService: AlunoService    
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -214,6 +215,7 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     this.selection.clear();
     this.exportacaoDadosAlunos = [];
     this.dataSource.data = [];
+    this.mostrarTabela = false;
 
     this.tipoRelatorioSelecionado = null;
   }
@@ -221,9 +223,6 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
   onValorChange(event: any) {
     this.filtro.beneficiario = event;
   }
-
-
-
 
   private carregarCombos(){
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: Unidade[]) => {
@@ -277,17 +276,58 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
     this.filtro.projeto = registro;
   }
 
-
-  showEditorRicoDialog() {
+  showEditorRicoDialog(registro: ExportacaoDadosAluno) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      titulo: 'Observação do Beneficiário'
+      titulo: '',
+      conteudo: '',
+      idsPessoaFisica: [],
+      tipoRelatorio: this.tipoRelatorioSelecionado.tipo
     };
     dialogConfig.panelClass = 'alturaDialogEditorRicoBeneficiario';
 
-    this.dialog.open(EditorRicoComponent, dialogConfig);     
+    if(registro) {
+      this.loadingPopupService.mostrarMensagemDialog('Carregando, aguarde...');
+      this.beneficiarioService.getById(registro.idAluno)
+      .subscribe((beneficiario: Aluno) => {
+        this.loadingPopupService.closeDialog();
+
+        dialogConfig.data.titulo = 'Beneficiário: ' + beneficiario.pessoaFisica.nome?.toUpperCase();
+        dialogConfig.data.conteudo = this.getObservacaoRelatorio(beneficiario);
+        dialogConfig.data.idsAlunos = [beneficiario.id];
+
+        this.dialog.open(EditorRicoComponent, dialogConfig);
+      },
+      (error) => {
+        this.toastService.showAlerta("Não foi possível carregar o texto de observação do beneficiário.");
+        this.loadingPopupService.closeDialog();
+      });
+
+    } else {
+      dialogConfig.data.titulo = 'Aplica-se a todos os beneficiários selecionados';
+      dialogConfig.data.idsAlunos = this.selection.selected.map(d => d.idAluno);
+      
+      this.dialog.open(EditorRicoComponent, dialogConfig);
+    }
+    
+    
   }
 
 
+  private getObservacaoRelatorio(beneficiario: Aluno):string {
+    if( this.tipoRelatorioSelecionado.tipo === 'PE') {
+      return beneficiario.observacaoDeclaracaoPasse;
+    }
+
+    if( this.tipoRelatorioSelecionado.tipo === 'DE') {
+      return beneficiario.observacaoDeclaracaoMatricula;
+    }
+
+    return "";
+  }
+
+  isPossuiTextoObservacao(): boolean{
+    return this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo !== 'FM';
+  }
 
 }
