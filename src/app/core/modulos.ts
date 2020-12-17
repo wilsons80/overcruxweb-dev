@@ -110,7 +110,7 @@ export enum Modulos{
     , PROVISAO                              = 'PROVISAO'
 
     , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
-    , FICHA_MATRICULA                       = 'FICHA_MATRICULA'
+    , RELATORIO_BENEFICIARIO                = 'RELATORIO_BENEFICIARIO'
     
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
 

@@ -121,6 +121,11 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
 
 
   consultar() {
+    this.selection.clear();
+    this.exportacaoDadosAlunos = [];
+    this.dataSource.data = [];
+
+    this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
     this.exportacaoDadosAlunoService.getFilter(this.filtro.cpfAluno.cpf,
                                                this.filtro.beneficiario.id,
                                                this.filtro.maeAluno.id,
@@ -131,14 +136,20 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
                                                this.filtro.responsavel.id,
                                                this.filtro.dataInicioInstituicao,
                                                this.filtro.dataFimInstituicao)
-      .subscribe((dados: ExportacaoDadosAluno[]) => {
-      this.exportacaoDadosAlunos = dados;
+    .subscribe(
+      (dados: ExportacaoDadosAluno[]) => {
+        this.loadingPopupService.closeDialog();
+        this.exportacaoDadosAlunos = dados;
       
-      this.dataSource.data = dados ? dados : [];
-      this.verificaMostrarTabela(dados);
+        this.dataSource.data = dados ? dados : [];
+        this.verificaMostrarTabela(dados);
 
-      this.masterToggle();
-    })
+        this.masterToggle();
+    },
+    (error) => {
+      this.toastService.showAlerta("Não foi possível recuperar os dados.")
+      this.loadingPopupService.closeDialog();
+    });
   }
 
   

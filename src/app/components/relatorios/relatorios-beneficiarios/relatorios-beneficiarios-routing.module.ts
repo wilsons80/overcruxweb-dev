@@ -7,7 +7,7 @@ import { RelatoriosBeneficiariosComponent } from './relatorios-beneficiarios.com
 
 
 const routes: Routes = [
-  { path: 'relbeneficiarios', component: RelatoriosBeneficiariosComponent,canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.FICHA_MATRICULA} },
+  { path: 'relbeneficiarios', component: RelatoriosBeneficiariosComponent,canActivate: [AuthGuard],resolve: {perfilAcesso:AcessoModuloResolver}, data:{modulo:Modulos.RELATORIO_BENEFICIARIO} },
 ];
 
 @NgModule({
