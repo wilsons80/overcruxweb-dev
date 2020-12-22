@@ -35,7 +35,7 @@
                                        itemDescricao="descricaoPedido"
                                        itemId="id"
                                        label="Pedido Material"
-                                       [obrigatorio]="true"
+                                       [obrigatorio]="false"
                                        placeholder="Escolha..."
                                        [(valor)]="itensMovimentacoes.pedidosMateriais"
                                        style="margin-top: 10px;">
@@ -52,7 +52,7 @@
                                        itemDescricao="planoConta"
                                        itemId="id"
                                        label="Rubrica Adicional"
-                                       [obrigatorio]="true"
+                                       [obrigatorio]="false"
                                        placeholder="Escolha..."
                                        [(valor)]="itensMovimentacoes.categoriaAdicional"
                                        (valorChange)="carregarContaContabilAdicional($event)"
