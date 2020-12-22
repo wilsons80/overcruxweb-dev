@@ -1,4 +1,4 @@
-import { PlanosContas } from './../../core/planosContas';
+import { PlanosContas } from '../../core/planos-contas';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog} from '@angular/material/dialog';
@@ -60,8 +60,8 @@ export class CategoriasContabeisComponent implements OnInit {
   }
 
   consultar() {
-    if (this.selecionado.idCategoria) {
-      this.categoriasContabeisService.getById(this.selecionado.idCategoria).subscribe((categoriasContabeis: CategoriasContabeis) => {
+    if (this.selecionado.id) {
+      this.categoriasContabeisService.getById(this.selecionado.id).subscribe((categoriasContabeis: CategoriasContabeis) => {
         if (!categoriasContabeis) {
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -133,9 +133,9 @@ export class CategoriasContabeisComponent implements OnInit {
   }
 
 
-  getHierarquiaPlanoContabil(idCategoria) {
-    if(idCategoria) {
-      const plano:any = this.listaPlanosContas.find(l => l.idCategoria === idCategoria);
+  getHierarquiaPlanoContabil(id) {
+    if(id) {
+      const plano:any = this.listaPlanosContas.find(l => l.id === id);
       return plano ? plano.planoConta : '';
     }
   }
