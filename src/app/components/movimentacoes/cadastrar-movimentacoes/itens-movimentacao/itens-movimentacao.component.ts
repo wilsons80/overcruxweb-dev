@@ -151,8 +151,14 @@ export class ItensMovimentacaoComponent implements OnInit {
 
 
   getObjetosCompletosParaLista(itensMovimentacoes: ItensMovimentacoes) {
-    itensMovimentacoes.material         = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
-    itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
+
+    if(itensMovimentacoes.material && itensMovimentacoes.material.id) {
+      itensMovimentacoes.material         = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
+    }
+
+    if(itensMovimentacoes.pedidosMateriais && itensMovimentacoes.pedidosMateriais.id) {
+      itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
+    }
     //itensMovimentacoes.categoria        = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
   }
 
