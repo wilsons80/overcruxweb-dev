@@ -79,7 +79,6 @@ export enum Modulos{
     , CONTROLE_PPRA_PCMSO                   = 'CONTROLE_PPRA_PCMSO'
     , AVALIACAO_SOCIO_FAMILIAR              = 'AVALIACAO_SOCIO_FAMILIAR'
     , GESTAO_FINANCEIRA                     = 'GESTAO_FINANCEIRA'
-
     , ATENDIMENTO_MULTIDISCIPLINAR          = 'ATENDIMENTO_MULTIDISCIPLINAR'
     , DIAGNOSTICO_MULTIDISCIPLINAR          = 'DIAGNOSTICO_MULTIDISCIPLINAR'
     , DIAGNOSTICO_FISIOTERAPIA              = 'DIAGNOSTICO_FISIOTERAPIA'
@@ -93,10 +92,8 @@ export enum Modulos{
     , PLANEJAMENTO_PSICOLOGIA               = 'PLANEJAMENTO_PSICOLOGIA'
     , ESTUDO_CASOS_RESULTADOS               = 'ESTUDO_CASOS_RESULTADOS'
     , ALTERAR_SENHA                         = 'ALTERAR_SENHA'
- 
     , MOVIMENTACOES                         = 'MOVIMENTACOES'
     , PLANOS_CONTAS_CONTABEIS               = 'PLANOS_CONTAS_CONTABEIS'
-
     , COTACOES_MATERIAIS                    = 'COTACOES_MATERIAIS'
     , MOVIMENTACOES_MATERIAIS               = 'MOVIMENTACOES_MATERIAIS'
     , FUNCOES                               = 'FUNCOES'
@@ -108,10 +105,9 @@ export enum Modulos{
     , TRANSFERENCIA_VALORES                 = 'TRANSFERENCIA_VALORES'
     , CONCILIACAO_BANCARIA                  = 'CONCILIACAO_BANCARIA'
     , PROVISAO                              = 'PROVISAO'
-
     , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
-    
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
+    , SITUACOES_EX_ALUNOS                   = 'SITUACOES_EX_ALUNOS'
 
 
 }
