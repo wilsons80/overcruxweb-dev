@@ -108,6 +108,7 @@ export enum Modulos{
     , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
     , SITUACOES_EX_ALUNOS                   = 'SITUACOES_EX_ALUNOS'
+    , MOTIVOS_DESLIGAMENTOS                 = 'MOTIVOS_DESLIGAMENTOS'
 
 
 }

@@ -1,3 +1,4 @@
+import { MotivoDesligamentoModule } from './components/motivo-desligamento/motivo-desligamento.module';
 import { SituacaoExAlunoModule } from './components/situacao-ex-aluno/situacao-ex-aluno.module';
 import { TiposAtividadesModule } from './components/tipos-atividades/tipos-atividades.module';
 import { AuthGuard } from './guards/auth.guard';
@@ -239,7 +240,8 @@ registerLocaleData(localePt, 'pt-BR');
     ProvisionamentoModule,
     ExportarDadosAlunoModule,
     TiposAtividadesModule,
-    SituacaoExAlunoModule
+    SituacaoExAlunoModule,
+    MotivoDesligamentoModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,
