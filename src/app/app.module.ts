@@ -125,6 +125,7 @@ import { ConciliacaoModule } from './components/conciliacao/conciliacao.module';
 import { ProvisionamentoModule } from './components/provisionamento/provisionamento.module';
 import { ExportarDadosAlunoModule } from './components/relatorios/exportar-dados-aluno/exportar-dados-aluno.module';
 import { SituacaoExAlunoComponent } from './components/situacao-ex-aluno/situacao-ex-aluno.component';
+import { TiposPublicoPrioritarioModule } from './components/tipos-publico-prioritario/tipos-publico-prioritario.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -241,7 +242,8 @@ registerLocaleData(localePt, 'pt-BR');
     ExportarDadosAlunoModule,
     TiposAtividadesModule,
     SituacaoExAlunoModule,
-    MotivoDesligamentoModule
+    MotivoDesligamentoModule,
+    TiposPublicoPrioritarioModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

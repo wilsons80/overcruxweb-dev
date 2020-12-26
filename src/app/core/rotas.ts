@@ -77,4 +77,5 @@ export enum Rotas {
     TIPOS_ATIVIDADES                = 'api/tiposatividades/',
     SITUACOES_EX_ALUNOS             = 'api/situacoesexalunos/',
     MOTIVOS_DESLIGAMENTOS           = 'api/motivosdesligamentos/',
+    TIPOS_PUBLICO_PRIORITARIO       = 'api/tipospublicoprioritario/',
 }

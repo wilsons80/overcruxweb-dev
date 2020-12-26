@@ -109,6 +109,7 @@ export enum Modulos{
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
     , SITUACOES_EX_ALUNOS                   = 'SITUACOES_EX_ALUNOS'
     , MOTIVOS_DESLIGAMENTOS                 = 'MOTIVOS_DESLIGAMENTOS'
+    , TIPOS_PUBLICOS_PRIORITARIOS           = 'TIPOS_PUBLICOS_PRIORITARIOS'
 
 
 }
