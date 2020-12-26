@@ -45,6 +45,12 @@
             rota="motivosdesligamentos" toolTip="Motivos Desligamentos"></sub-menu>
         </div>
 
+        <!-- PUBLICO PRIORITARIO -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_PUBLICOS_PRIORITARIOS)" icone="done" titulo="Público Prioritário"
+            rota="tipospublicoprioritario" toolTip="Público Prioritário"></sub-menu>
+        </div>
+
 
     </div>
 </mat-nav-list>

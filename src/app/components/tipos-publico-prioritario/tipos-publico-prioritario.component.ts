@@ -66,7 +66,7 @@ export class TiposPublicoPrioritarioComponent implements OnInit {
 
 
   atualizar(tiposPublicoPrioritario: TiposPublicoPrioritario) {
-    this.router.navigate(['/motivosdesligamentos/cadastrar'], { queryParams: { id: tiposPublicoPrioritario.id } });
+    this.router.navigate(['/tipospublicoprioritario/cadastrar'], { queryParams: { id: tiposPublicoPrioritario.id } });
   }
 
   deletar(tiposPublicoPrioritario: TiposPublicoPrioritario) {
