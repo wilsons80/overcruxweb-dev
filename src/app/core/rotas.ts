@@ -76,4 +76,5 @@ export enum Rotas {
     EXPORTAR_DADOS_ALUNO            = 'api/exportardadosaluno/',
     TIPOS_ATIVIDADES                = 'api/tiposatividades/',
     SITUACOES_EX_ALUNOS             = 'api/situacoesexalunos/',
+    MOTIVOS_DESLIGAMENTOS           = 'api/motivosdesligamentos/',
 }
