@@ -7,7 +7,7 @@
 }
 
 .botao{
-    height: 200px;
+    min-height: 200px;
     width: 250px;
     background: url(../../../assets/img/no-foto.png) no-repeat 0 0;
     background-size: 100%;
@@ -19,4 +19,14 @@
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
+  }
+ 
+.nao-foto{
+    background: url(../../../assets/img/no-foto.png) no-repeat 0 0;
+ 
+}
+
+.imagem{
+    opacity: 0.3;
+    height: 80%;
   }
