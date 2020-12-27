@@ -1,8 +1,10 @@
+import { TiposPublicoPrioritario } from './tipos-publico-prioritario';
 import { NiveisTurmas } from './niveis-turmas';
 import { VulnerabilidadesAluno } from './vulnerabilidades-aluno';
 import { Unidade } from './unidade';
 import { PessoaFisica } from './pessoa-fisica';
 import { EncaminhamentoAluno } from './encaminhamento-aluno';
+import { MotivoDesligamento } from './motivo-desligamento';
 
 
 export class Aluno {
@@ -33,6 +35,9 @@ export class Aluno {
 
 	vulnerabilidades: VulnerabilidadesAluno[];
 	encaminhamentos: EncaminhamentoAluno[];
+
+	tiposPublicoPrioritario:TiposPublicoPrioritario;
+	motivoDesligamento:MotivoDesligamento;
 
 	nome?: string;
 	nomeMae?: string;

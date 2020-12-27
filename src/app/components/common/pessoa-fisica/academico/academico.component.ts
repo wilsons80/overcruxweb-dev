@@ -6,6 +6,10 @@ import { CondicoesMoradia } from 'src/app/core/condicoes-moradia';
 import { NiveisTurmasService } from 'src/app/services/niveis-turmas/niveis-turmas.service';
 import { NiveisTurmas } from 'src/app/core/niveis-turmas';
 import { ControlContainer, NgForm } from '@angular/forms';
+import { MotivoDesligamento } from 'src/app/core/motivo-desligamento';
+import { TiposPublicoPrioritario } from 'src/app/core/tipos-publico-prioritario';
+import { MotivoDesligamentoService } from 'src/app/services/motivo-desligamento/motivo-desligamento.service';
+import { TiposPublicoPrioritarioService } from 'src/app/services/tipos-publico-prioritario/tipos-publico-prioritario.service';
 
 @Component({
   selector: 'academico',
@@ -19,6 +23,8 @@ export class AcademicoComponent implements OnInit {
 
   unidades: Unidade[];
   niveisTurmas: NiveisTurmas[];
+  listaTiposPublicoPrioritario:TiposPublicoPrioritario[];
+  listaMotivosDesligamento:MotivoDesligamento[];
 
   sim_nao: any[] = [
     {tipo: 'Sim', flag: 'S'},
@@ -29,17 +35,28 @@ export class AcademicoComponent implements OnInit {
 
   constructor(
     private unidadeService: UnidadeService,
-    private niveisTurmasService: NiveisTurmasService
+    private niveisTurmasService: NiveisTurmasService,
+    private tiposPublicoPrioritarioService:TiposPublicoPrioritarioService,
+    private motivoDesligamentoService:MotivoDesligamentoService
     ) { }
 
   ngOnInit() {
     this.aluno.unidade = new Unidade();
     this.aluno.nivelTurma = new NiveisTurmas();
+    this.aluno.motivoDesligamento = new MotivoDesligamento();
+    this.aluno.tiposPublicoPrioritario = new TiposPublicoPrioritario();
 
     this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[])=> {
       this.unidades = unidades;
     });
 
+    this.tiposPublicoPrioritarioService.getAll().subscribe((listaTiposPublicoPrioritario: TiposPublicoPrioritario[])=> {
+      this.listaTiposPublicoPrioritario = listaTiposPublicoPrioritario;
+    });
+    
+    this.motivoDesligamentoService.getAll().subscribe((listaMotivosDesligamento: MotivoDesligamento[])=> {
+      this.listaMotivosDesligamento = listaMotivosDesligamento;
+    });
 
     this.niveisTurmasService.getAll()
       .subscribe((niveisTurmas: NiveisTurmas[]) => {
