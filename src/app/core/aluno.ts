@@ -39,6 +39,9 @@ export class Aluno {
 	tiposPublicoPrioritario:TiposPublicoPrioritario;
 	motivoDesligamento:MotivoDesligamento;
 
+	dataSugestaoDesligamento:Date;
+	descricaoSugestaoDesligamento:String;
+
 	nome?: string;
 	nomeMae?: string;
 	cpf?: string;

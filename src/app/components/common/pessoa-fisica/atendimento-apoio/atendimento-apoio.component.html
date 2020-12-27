@@ -82,10 +82,10 @@
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição de outros benefícios da família:</mat-label>
-        <textarea matInput #outrosBenSoc name="outrosBenSoc" [(ngModel)]="pessoaFisica.outrosBenSoc" cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
-        <mat-hint align="end">{{outrosBenSoc.value.length}} / 200</mat-hint>
+        <mat-label>Descrição da rede de apoio social / pessoal:</mat-label>
+        <textarea matInput #redeApSocRelev name="redeApSocRelev" [(ngModel)]="pessoaFisica.redeApSocRelev"
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
+        <mat-hint align="end">{{redeApSocRelev.value.length}} / 200</mat-hint>
     </mat-form-field>
 
 </div>
@@ -97,13 +97,7 @@
             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
         <mat-hint align="end">{{redeApoioSocial.value.length}} / 200</mat-hint>
     </mat-form-field>
-
-    <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição da rede de apoio social / pessoal:</mat-label>
-        <textarea matInput #redeApSocRelev name="redeApSocRelev" [(ngModel)]="pessoaFisica.redeApSocRelev"
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
-        <mat-hint align="end">{{redeApSocRelev.value.length}} / 200</mat-hint>
-    </mat-form-field>
+   
 </div>
 
 <!-- BENEFICIOS -->
