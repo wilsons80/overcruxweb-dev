@@ -49,7 +49,7 @@ export class TiposPublicoPrioritarioComponent implements OnInit {
   }
 
   consultar() {
-    if (this.tiposPublicoPrioritario.id) {
+    if (this.tiposPublicoPrioritario && this.tiposPublicoPrioritario.id) {
       this.tiposPublicoPrioritarioService.getById(this.tiposPublicoPrioritario.id).subscribe((tiposPublicoPrioritario: TiposPublicoPrioritario) => {
         if(!tiposPublicoPrioritario){
           this.mostrarTabela = false

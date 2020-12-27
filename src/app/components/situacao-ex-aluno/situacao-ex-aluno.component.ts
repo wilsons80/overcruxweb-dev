@@ -48,7 +48,7 @@ export class SituacaoExAlunoComponent implements OnInit {
   }
 
   consultar() {
-    if (this.situacaoExAluno.id) {
+    if (this.situacaoExAluno && this.situacaoExAluno.id) {
       this.situacaoExAlunoService.getById(this.situacaoExAluno.id).subscribe((situacaoExAluno: SituacaoExAluno) => {
         if(!situacaoExAluno){
           this.mostrarTabela = false

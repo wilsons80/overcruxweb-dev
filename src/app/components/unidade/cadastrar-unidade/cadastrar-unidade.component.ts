@@ -77,6 +77,7 @@ export class CadastrarUnidadeComponent implements OnInit {
     this.unidade = new Unidade();
     this.unidade.instituicao = new Instituicao();
     this.unidade.estruturasUnidades = [];
+    this.unidade.certificadosUnidade = [];
   }
 
   cancelar() {

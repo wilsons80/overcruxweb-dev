@@ -49,7 +49,7 @@ export class MotivoDesligamentoComponent implements OnInit {
   }
 
   consultar() {
-    if (this.motivoDesligamento.id) {
+    if (this.motivoDesligamento && this.motivoDesligamento.id) {
       this.motivoDesligamentoService.getById(this.motivoDesligamento.id).subscribe((motivoDesligamento: MotivoDesligamento) => {
         if(!motivoDesligamento){
           this.mostrarTabela = false

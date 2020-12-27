@@ -1,3 +1,4 @@
+import { CertificadoUnidade } from './certificado-unidade';
 import { EstruturaUnidade } from './estrutura-unidade';
 import { Instituicao } from './instituicao';
 
@@ -39,5 +40,6 @@ export class Unidade {
 	dataVigenciaCas:Date;
 	unidadeLogada:boolean;
 
-	estruturasUnidades:EstruturaUnidade[]
+	estruturasUnidades:EstruturaUnidade[];
+	certificadosUnidade:CertificadoUnidade[];
 }
