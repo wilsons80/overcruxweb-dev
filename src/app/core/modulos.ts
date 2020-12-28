@@ -110,6 +110,7 @@ export enum Modulos{
     , SITUACOES_EX_ALUNOS                   = 'SITUACOES_EX_ALUNOS'
     , MOTIVOS_DESLIGAMENTOS                 = 'MOTIVOS_DESLIGAMENTOS'
     , TIPOS_PUBLICOS_PRIORITARIOS           = 'TIPOS_PUBLICOS_PRIORITARIOS'
+    , TIPOS_DOADORES                        = 'TIPOS_DOADORES'
 
 
 }

@@ -1,3 +1,4 @@
+import { TiposDoadoresModule } from './components/tipos-doadores/tipos-doadores.module';
 import { MotivoDesligamentoModule } from './components/motivo-desligamento/motivo-desligamento.module';
 import { SituacaoExAlunoModule } from './components/situacao-ex-aluno/situacao-ex-aluno.module';
 import { TiposAtividadesModule } from './components/tipos-atividades/tipos-atividades.module';
@@ -243,7 +244,8 @@ registerLocaleData(localePt, 'pt-BR');
     TiposAtividadesModule,
     SituacaoExAlunoModule,
     MotivoDesligamentoModule,
-    TiposPublicoPrioritarioModule
+    TiposPublicoPrioritarioModule,
+    TiposDoadoresModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,
