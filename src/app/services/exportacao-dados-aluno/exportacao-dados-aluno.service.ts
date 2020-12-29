@@ -54,8 +54,8 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
       idPrograma: `${idPrograma}`,
       idProjeto: `${idProjeto}`,
       idUnidade: `${idUnidade}`,
-      p_dataInicioInstituicao: `${p_dataInicioInstituicao}`,
-      p_dataFimInstituicao: `${p_dataFimInstituicao}`,
+      dataInicioInstituicao: `${p_dataInicioInstituicao}`,
+      dataFimInstituicao: `${p_dataFimInstituicao}`,
       }
     });
   }

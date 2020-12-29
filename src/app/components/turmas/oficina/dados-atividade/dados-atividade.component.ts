@@ -75,7 +75,7 @@ export class DadosAtividadeComponent implements OnInit {
 
       });
 
-      this.programaService.getAllProgramasIntituicaoLogada().subscribe((programas: Programa[]) => {
+      this.programaService.getAllCombo().subscribe((programas: Programa[]) => {
         this.programas = programas;
       });
     }

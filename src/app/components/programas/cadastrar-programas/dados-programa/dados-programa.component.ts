@@ -30,7 +30,7 @@ export class DadosProgramaComponent implements OnInit {
 
     this.inicializarObjetos();
 
-    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
+    this.funcionarioService.getAllByCombo().subscribe((funcionarios: Funcionario[]) => {
       this.funcionarios = funcionarios;
     })
 

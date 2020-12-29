@@ -106,6 +106,7 @@ export enum Modulos{
     , CONCILIACAO_BANCARIA                  = 'CONCILIACAO_BANCARIA'
     , PROVISAO                              = 'PROVISAO'
     , EXPORTAR_DADOS_ALUNO                  = 'EXPORTAR_DADOS_ALUNO'
+<<<<<<< HEAD
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
     , SITUACOES_EX_ALUNOS                   = 'SITUACOES_EX_ALUNOS'
     , MOTIVOS_DESLIGAMENTOS                 = 'MOTIVOS_DESLIGAMENTOS'
@@ -113,5 +114,10 @@ export enum Modulos{
     , TIPOS_DOADORES                        = 'TIPOS_DOADORES'
     , DOADORES                              = 'DOADORES'
 
+=======
+    , RELATORIO_BENEFICIARIO                = 'RELATORIO_BENEFICIARIO'
+    , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
+    , RELATORIO_DP                          = 'RELATORIO_DP'
+>>>>>>> master
 
 }

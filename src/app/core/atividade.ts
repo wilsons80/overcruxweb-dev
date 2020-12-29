@@ -1,7 +1,5 @@
-import { Acoes } from './acoes';
 import { Programa } from './programa';
 import { ColaboradoresAtividade } from './colaboradores-atividade';
-import { PlanosAcao } from './planos-acao';
 import { Projeto } from './projeto';
 import { Unidade } from './unidade';
 import { MateriaisAtividade } from './materiais-atividade';
@@ -26,7 +24,6 @@ export class Atividade {
     sexta: string;
     terca: string;
     valorCustoAtividade: number;
-    observacoes:string;
 
     projeto: Projeto;
     programa: Programa;

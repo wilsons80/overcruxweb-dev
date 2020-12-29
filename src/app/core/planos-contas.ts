@@ -1,5 +1,5 @@
 export class PlanosContas {
-    idCategoria:number;
+    id:number;
 	planoConta:string;
 	categoriaContabil:string;
 	idInstituicao:number;

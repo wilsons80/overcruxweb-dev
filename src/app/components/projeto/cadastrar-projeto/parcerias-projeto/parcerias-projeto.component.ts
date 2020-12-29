@@ -146,4 +146,35 @@ export class ParceriasProjetoComponent implements OnInit {
   }
 
 
+  isSomaDasCategoriasDiferenteDaSomaDosParceiros() {
+    if(!this.parceriasProjeto.valorParceria || _.isEmpty(this.parceriasProjeto.parceriasCategorias)){
+      return false;
+    }
+
+    this.parceriasProjeto.valorParceria;
+    const total = this.parceriasProjeto.aditivosParceriasProjeto
+                        .map(adt => adt.valorAditivo)
+                        .reduce((total, numero) => total + numero, 0);
+    const somaParceiroMaisAditivo = this.parceriasProjeto.valorParceria + total;
+
+
+    let somaTodasCategorias         = null;
+    let somaTodosAtitivosCategorias = null;
+
+    this.parceriasProjeto.parceriasCategorias.forEach(pc => {
+      if(pc.aditivosParceriasCategorias.length > 0){
+        const total  = pc.aditivosParceriasCategorias.map(adt => adt.valorAditivo)
+                                                     .reduce((total, numero) => total + numero, 0);
+        somaTodosAtitivosCategorias += total;
+      }
+      somaTodasCategorias += pc.valorParceriaCategoria;
+    });
+    
+    let totalValoresAditivosCategorias = null;
+    if(somaTodosAtitivosCategorias) {
+      totalValoresAditivosCategorias = somaTodasCategorias + somaTodosAtitivosCategorias;
+    }
+    return somaTodosAtitivosCategorias && Number(somaParceiroMaisAditivo.toFixed(2)) != Number(totalValoresAditivosCategorias.toFixed(2));
+  }
+
 }

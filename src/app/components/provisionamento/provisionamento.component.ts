@@ -7,9 +7,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { ProgramaProjetoInstituicao } from 'src/app/core/programa-projeto-instituicao';
 import { Provisao } from 'src/app/core/provisao';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
+import { ProgramaProjetoInstituicaoService } from 'src/app/services/programa-projeto-instituicao/programa-projeto-instituicao.service';
 import { ProvisaoService } from 'src/app/services/provisao/provisao.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FileUtils } from 'src/app/utils/file-utils';
@@ -20,6 +22,7 @@ import { MovimentosBancariosInconsistentesComponent } from '../common/movimentos
 class Filter {
   dataInicio: Date;
   dataFim: Date;
+  nomeProgramaProjeto: string
 }
 
 @Component({
@@ -37,7 +40,7 @@ export class ProvisionamentoComponent implements OnInit {
   provisoes: Provisao[];
   filtro = new Filter();
   
-  displayedColumns: string[] = ['select', 'situacao', 'documento', 'dataProvisao', 'valor',  'complemento', 'categoria', 'centroCusto', 'grupoContas', 'descricaoFornecedor', 'nomeFornecedor'];
+  displayedColumns: string[] = ['select', 'situacao', 'documento', 'valor', 'dataprovisao',   'complemento', 'categoria', 'centroCusto', 'grupoContas', 'descricaoFornecedor', 'nomeFornecedor'];
   dataSource: MatTableDataSource<Provisao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
@@ -50,6 +53,8 @@ export class ProvisionamentoComponent implements OnInit {
 
   inconsistentes: Provisao[] = [];
 
+  centrosCustos: ProgramaProjetoInstituicao[];
+
   constructor(
     private provisaoService: ProvisaoService,
     private toastService: ToastService,
@@ -59,6 +64,7 @@ export class ProvisionamentoComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private loadingPopupService: LoadingPopupService,
+    private programaProjetoInstituicaoService: ProgramaProjetoInstituicaoService
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -79,6 +85,10 @@ export class ProvisionamentoComponent implements OnInit {
     this.dataSource.sort = this.sort;
 
     this.carregarMovimentosInconsistentes();
+
+    this.programaProjetoInstituicaoService.getAll().subscribe((centrosCustos: ProgramaProjetoInstituicao[]) => {
+      this.centrosCustos = centrosCustos;
+    })
   
   }
 
@@ -90,8 +100,10 @@ export class ProvisionamentoComponent implements OnInit {
   }
 
   carregar() {
+    this.selection.clear();
     this.provisaoService.carregar(this.filtro.dataInicio, 
-                                  this.filtro.dataFim)
+                                  this.filtro.dataFim,
+                                  this.filtro.nomeProgramaProjeto)
     .subscribe((provisoes: Provisao[]) => {
       this.provisoes = provisoes;
       this.dataSource.data = provisoes ? provisoes : [];
@@ -107,7 +119,8 @@ export class ProvisionamentoComponent implements OnInit {
     this.selection.clear();
     
     this.provisaoService.getFilter(this.filtro.dataInicio, 
-                                   this.filtro.dataFim)
+                                   this.filtro.dataFim,
+                                   this.filtro.nomeProgramaProjeto)
     .subscribe((provisoes: Provisao[]) => {
       this.provisoes = provisoes;
       this.dataSource.data = provisoes ? provisoes : [];
@@ -172,7 +185,7 @@ export class ProvisionamentoComponent implements OnInit {
             this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo de provisão, aguarde...');
             this.provisaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
-              this.fileUtils.downloadFile(dados, "provisao.xlsx");
+              this.fileUtils.downloadFileXLS(dados, "provisao.xlsx");
   
               this.buscar();
               this.toastService.showSucesso('Provisão exportada com sucesso!');

@@ -1,0 +1,6 @@
+
+.document-editor {
+    border: 0px solid var(--ck-color-base-border);
+    display: flex;
+    flex-flow: column nowrap;
+}

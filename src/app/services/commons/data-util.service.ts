@@ -64,7 +64,14 @@ export class DataUtilService {
     }
    
   }
-
+  /**
+  * Verifica se as duas primeiras datas estão entre as duas últimas datas informadas. </br>
+  * As datas de início são obrigatórios, devem ser informadas.
+  * @param dataInicio 
+  * @param dataFim 
+  * @param dataPesquisaInicio 
+  * @param dataPesquisaFim 
+  */
   public isEntreDatasTruncada(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
     const p_dataIni     = this.getDataTruncata(dataInicio);
     const p_dataFim     = this.getDataTruncata(dataFim);
@@ -82,7 +89,10 @@ export class DataUtilService {
   }
 
   private entreDatas(dataInicio: Date, dataFim: Date, dataPesquisaInicio: Date, dataPesquisaFim: Date): boolean {
-    return this.isVigente(dataPesquisaInicio, dataInicio, dataFim) || this.isVigente(dataPesquisaFim, dataInicio, dataFim);
+    if(this.getDataTruncata(dataInicio).getTime() < this.getDataTruncata(dataPesquisaInicio).getTime()) {
+      return false;
+    }
+    return this.isVigente(dataInicio, dataPesquisaInicio, dataPesquisaFim) && this.isVigente(dataFim, dataPesquisaInicio, dataPesquisaFim);
   }
 
 

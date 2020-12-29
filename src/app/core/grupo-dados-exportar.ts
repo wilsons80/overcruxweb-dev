@@ -2,10 +2,11 @@ import { Coluna } from './coluna';
 
 export class GrupoDadosExportar {
 
-	nome: string;
+	descricao: string;
+	entidade: string;
 	exportar: boolean;
 	colunas: Coluna[];
 	color?:string;
-	chave?:string;
+	nomeGrupo?:string;
 	
 }

@@ -29,7 +29,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   @Input() movimentacoes:Movimentacoes;
   @Input() idMovimentacao: number;
   @Input() perfilAcesso: Acesso;
-  @Input() contasBancariasReembolso;
+  @Input() contasBancarias: ContasBancaria[];
 
 
   @Output() onPagamentoInvalido = new EventEmitter();
@@ -53,12 +53,11 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   openFormCadastro = false;
   isAtualizar = false;
-  contasBancarias: ContasBancaria[];
+  
   valoresSuperiorValorMovimento = false;
   isContaReembolsoValida = true;
 
-  constructor(
-    private contasBancariaService: ContasBancariaService,
+  constructor(    
     private toastService: ToastService,
     private dataUtilService: DataUtilService,
   ) { 
@@ -67,11 +66,6 @@ export class PagamentosMovimentacaoComponent implements OnInit {
 
   ngOnInit() {
     this.initObjetos();
-
-    this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
-      this.contasBancarias = contasBancarias;
-    });
-
 
     BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES')
     .subscribe((movimentacao: Movimentacoes) => {

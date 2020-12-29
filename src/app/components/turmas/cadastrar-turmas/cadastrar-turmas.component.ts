@@ -98,8 +98,12 @@ export class CadastrarTurmasComponent implements OnInit {
 
   cadastrar() {
     if (!this.validarDatasDeTurmaAndOficinas() ) { return; }
+<<<<<<< HEAD
     if (!this.validarDatasProjeto() ) { return; }
     if (!this.validarDatasPrograma() ) { return; }
+=======
+    if (!this.validarDatasDeTurmaAndProgramaOuProjeto()) { return; }
+>>>>>>> master
 
     this.turmaService.cadastrar(this.turma).subscribe(() => {
       this.router.navigate(['turmas']);
@@ -118,14 +122,49 @@ export class CadastrarTurmasComponent implements OnInit {
 
   atualizar() {
     if (!this.validarDatasDeTurmaAndOficinas() ) { return; }
+    if (!this.validarDatasDeTurmaAndProgramaOuProjeto()) { return; }
 
     this.turmaService.alterar(this.turma).subscribe(() => {
       this.router.navigate(['turmas']);
       this.toastService.showSucesso('Turma atualizada com sucesso');
     });
-
   }
 
+  validarDatasDeTurmaAndProgramaOuProjeto() {
+    let dataValida = true;
+
+    const dataInicioTurma = this.dataUtilService.getDataTruncata(this.turma.dataInicioTurma);
+    const dataFimTurma    = this.dataUtilService.getDataTruncata(this.turma.dataFimTurma);
+
+    if(this.turma.projeto && this.turma.projeto.id) {
+      const dataInicio = this.dataUtilService.getDataTruncata(this.turma.projeto.dataInicio);
+      const dataFim    = this.dataUtilService.getDataTruncata(this.turma.projeto.dataFim);
+
+      const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim );
+      if(!isVigente) {
+        this.toastService.showAlerta('O período da turma: '
+                                     + ' (' + dataInicioTurma.toLocaleDateString() 
+                                     + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto') +
+                                     ') não está entre o período do projeto ('+ dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto' )+')' );
+        dataValida = false;
+      }
+
+    } else {
+      const dataInicio = this.dataUtilService.getDataTruncata(this.turma.programa.dataInicio);
+      const dataFim    = this.dataUtilService.getDataTruncata(this.turma.programa.dataFim);
+
+      const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicio, dataFim, dataInicioTurma, dataFimTurma );
+      if(!isVigente) {
+        this.toastService.showAlerta('O período da turma: '
+                                     + ' (' + dataInicioTurma.toLocaleDateString() 
+                                     + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto') +
+                                     ') não está entre o período do programa ('+ dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto' )+')' );
+        dataValida = false;
+      }
+    }
+
+    return dataValida;
+  }
 
   validarDatasDeTurmaAndOficinas(): boolean {
     let dataValida = true;
@@ -140,7 +179,7 @@ export class CadastrarTurmasComponent implements OnInit {
 
         const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim );
         if(!isVigente) {
-          this.toastService.showAlerta('Conflito entre as datas da oficina: ' + oficina.descricao.toUpperCase() + '(' + dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto') +
+          this.toastService.showAlerta('Conflito entre as datas da oficina: ' + oficina.descricao.toUpperCase() + ' (' + dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto') +
                                        ') com as datas da turma ('+ dataInicioTurma.toLocaleDateString() + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto' )+')' );
           dataValida = false;
         }

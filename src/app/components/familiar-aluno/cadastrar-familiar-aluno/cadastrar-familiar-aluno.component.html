@@ -139,7 +139,8 @@
             <form #formCadastroOutrasInformacoes="ngForm">
                 <ng-template matStepLabel>OUTRAS INFORMAÇÕES</ng-template>
                 <escolar [pessoaFisica]="familiar.pessoasFisica"></escolar>
-                <atendimento-apoio [pessoaFisica]="familiar.pessoasFisica"></atendimento-apoio>
+                <atendimento-apoio [pessoaFisica]="familiar.pessoasFisica" 
+                                   [origemTelaAluno]="false"></atendimento-apoio>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

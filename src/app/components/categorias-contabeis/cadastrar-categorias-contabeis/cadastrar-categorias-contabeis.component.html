@@ -21,12 +21,11 @@
                 <mat-label>Categoria Superior:</mat-label>
                 <mat-select name="categorias" [(ngModel)]=categoriasContabeis.categoriaSuperior.id>
                     <mat-option></mat-option>
-                    <mat-option *ngFor="let i of listaCategoriasContabeis" [value]=i.idCategoria>
+                    <mat-option *ngFor="let i of listaPlanosContas" [value]=i.id>
                         {{i.planoConta}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="listaCategoriasContabeis?.length === 0" align="start">Nenhuma categoria
-                    cadastrada</mat-hint>
+                <mat-hint *ngIf="listaPlanosContas?.length === 0" align="start">Nenhuma categoria cadastrada</mat-hint>
             </mat-form-field>
 
             <!-- NOME -->

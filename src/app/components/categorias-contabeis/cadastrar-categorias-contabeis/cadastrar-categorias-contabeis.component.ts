@@ -1,12 +1,10 @@
-import { PlanosContas } from './../../../core/planosContas';
+import { PlanosContas } from '../../../core/planos-contas';
 import { CategoriasContabeis } from './../../../core/categorias-contabeis';
 import { Component, OnInit } from '@angular/core';
 import { Acesso } from 'src/app/core/acesso';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { UnidadeService } from 'src/app/services/unidade/unidade.service';
-import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { TipoDespesa } from 'src/app/core/tipo-despesa';
 
 
@@ -17,15 +15,12 @@ import { TipoDespesa } from 'src/app/core/tipo-despesa';
 })
 export class CadastrarCategoriasContabeisComponent implements OnInit {
 
-  listaCategoriasContabeis: PlanosContas[];
+  listaPlanosContas: any[];
   categoriasContabeis: CategoriasContabeis;
 
   isAtualizar = false;
-
   tiposDespesas: TipoDespesa = new TipoDespesa();
-
   perfilAcesso: Acesso;
-
 
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
@@ -50,8 +45,14 @@ export class CadastrarCategoriasContabeisComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    /*
     this.categoriasContabeisService.getAllCombo().subscribe((listaPlanosContas: PlanosContas[]) => {
       this.listaCategoriasContabeis = listaPlanosContas;
+    })
+    */
+
+    this.categoriasContabeisService.getAllView(true).subscribe((retorno: PlanosContas[]) => {
+      this.listaPlanosContas = retorno;
     })
    
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;

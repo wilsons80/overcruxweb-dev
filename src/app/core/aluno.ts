@@ -4,7 +4,12 @@ import { VulnerabilidadesAluno } from './vulnerabilidades-aluno';
 import { Unidade } from './unidade';
 import { PessoaFisica } from './pessoa-fisica';
 import { EncaminhamentoAluno } from './encaminhamento-aluno';
+<<<<<<< HEAD
 import { MotivoDesligamento } from './motivo-desligamento';
+=======
+import { Programa } from './programa';
+import { Projeto } from './projeto';
+>>>>>>> master
 
 
 export class Aluno {
@@ -36,11 +41,23 @@ export class Aluno {
 	vulnerabilidades: VulnerabilidadesAluno[];
 	encaminhamentos: EncaminhamentoAluno[];
 
+<<<<<<< HEAD
 	tiposPublicoPrioritario:TiposPublicoPrioritario;
 	motivoDesligamento:MotivoDesligamento;
 
 	dataSugestaoDesligamento:Date;
 	descricaoSugestaoDesligamento:String;
+=======
+	programa: Programa;
+	projeto: Projeto;
+	
+	observacaoDeclaracaoPasse: string;
+	dataDeclaracaoPasse: Date;
+	observacaoDeclaracaoMatricula: string;
+	dataDeclaracaoMatricula: Date;
+	participaApresentacaoExterna: boolean;
+
+>>>>>>> master
 
 	nome?: string;
 	nomeMae?: string;

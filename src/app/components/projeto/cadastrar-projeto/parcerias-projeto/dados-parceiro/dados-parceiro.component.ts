@@ -3,6 +3,7 @@ import { ParceriasProjeto } from 'src/app/core/parcerias-projeto';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { Empresa } from 'src/app/core/empresa';
 import { AditivoParceriaProjeto } from 'src/app/core/aditivo-parceria-projeto';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'dados-parceiro',
@@ -15,11 +16,9 @@ export class DadosParceiroComponent implements OnInit {
   empresas: Empresa[];
 
   constructor(
-    private empresaService:EmpresaService
+    private empresaService:EmpresaService,
+    private dataUtilService: DataUtilService,
   ) {
-    
-    
-
   }
 
   ngOnInit() {
@@ -36,5 +35,9 @@ export class DadosParceiroComponent implements OnInit {
     let index = parceriasProjeto.aditivosParceriasProjeto.indexOf(aditivo);
     parceriasProjeto.aditivosParceriasProjeto.splice(index,1);
   } 
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 
 }

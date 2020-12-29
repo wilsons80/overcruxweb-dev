@@ -32,6 +32,9 @@ export class OficinaComponent implements OnInit, AfterContentChecked {
     this.openFormCadastro = evento;
   }
 
+  fecharFormulario(evento) {
+    this.openFormCadastro = false;
+  }
 
 
 }

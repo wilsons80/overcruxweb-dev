@@ -25,10 +25,9 @@ export class DadosProjetoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
+    this.funcionarioService.getAllByCombo().subscribe((funcionarios: Funcionario[]) => {
       this.funcionarios = funcionarios;
     });
-
   }
 
   onValorChangePrograma(event: any) {

@@ -45,7 +45,7 @@
 
     <mat-form-field fxFlex="50%" fxFlexOffset="20px">
         <mat-label>Condição da Moradia:</mat-label>
-        <mat-select [(ngModel)]="pessoaFisica.condicoesMoradia.id" name="condicaoMoradia">
+        <mat-select [(ngModel)]="pessoaFisica.condicoesMoradia.id" name="condicoesMoradia">
             <mat-option *ngFor="let m of condicoesMoradia" [value]="m.id">
                 {{m.descricao}}
             </mat-option>
@@ -62,17 +62,18 @@
 
 <!-- OUTRAS INFORMAÇÕES -->
 <mat-toolbar class="titulopartes">Benefícios</mat-toolbar>
-<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-        <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-                <mat-label>Já atendido em outro órgão da rede</mat-label>
-                <mat-select [(ngModel)]="atendidoOrgaoRede" name="atendidoOrgaoRede">
-                    <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
-                        {{m.tipo}}
-                    </mat-option>
-                </mat-select>
-        </mat-form-field></div>
-<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    
+<div *ngIf="origemTelaAluno" fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+            <mat-label>Já atendido em outro órgão da rede</mat-label>
+            <mat-select [(ngModel)]="atendidoOrgaoRede" name="atendidoOrgaoRede">
+                <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+                    {{m.tipo}}
+                </mat-option>
+            </mat-select>
+    </mat-form-field>
+</div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>    
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
         <mat-label>Descrição relevante do atendimento por outro órgão da rede:</mat-label>
         <textarea matInput #descricaoPessoaFisicaAtendidoOrgaoRede name="descricaoPessoaFisicaAtendidoOrgaoRede"
@@ -117,25 +118,27 @@
 
 </div>
 
-<mat-toolbar class="titulopartes">Origem do Beneficiário</mat-toolbar>
-<div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoEncaminhamento">
-        <div *ngFor="let encaminhamento of encaminhamentos; let index = index">
-            <formulario-encaminhamento [encaminhamento]="encaminhamento" 
-                                       [index]="index"
-                                       [encaminhamentos]="encaminhamentos"   
-                                       [perfilAcesso]="perfilAcesso" 
-                                       [entidadesSociais]="entidadesSociais">
-            </formulario-encaminhamento>
-        </div>
-        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
-            <div>
-                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addEncaminhamento()">
-                    <mat-icon>add</mat-icon>
-                </button>
+<div style="width: 100%;" *ngIf="origemTelaAluno">
+    <mat-toolbar class="titulopartes">Origem do Beneficiário</mat-toolbar>
+    <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    
+        <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoEncaminhamento">
+            <div *ngFor="let encaminhamento of encaminhamentos; let index = index">
+                <formulario-encaminhamento [encaminhamento]="encaminhamento" 
+                                           [index]="index"
+                                           [encaminhamentos]="encaminhamentos"   
+                                           [perfilAcesso]="perfilAcesso" 
+                                           [entidadesSociais]="entidadesSociais">
+                </formulario-encaminhamento>
             </div>
-        </div>                
+            <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                <div>
+                    <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addEncaminhamento()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>                
+        </div>
+    
     </div>
-
 </div>

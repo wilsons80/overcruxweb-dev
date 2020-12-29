@@ -58,4 +58,7 @@ export class AlunoService extends BaseService<Aluno> {
     }
   }
 
+  salvarTextoObservacao(dadosObservacaoRelatorio: any): any {
+    return this.http.put(`${Rotas.ALUNO}observacao/`, dadosObservacaoRelatorio );
+  }
 }

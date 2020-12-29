@@ -1,5 +1,5 @@
 import { TurmasService } from './../../../../services/turmas/turmas.service';
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, EventEmitter, Output } from '@angular/core';
 import { Turmas } from 'src/app/core/turmas';
 import { Atividade } from 'src/app/core/atividade';
 import { Unidade } from 'src/app/core/unidade';
@@ -22,6 +22,7 @@ export class CadastrarOficinasComponent implements OnInit {
 
   @Input() turma: Turmas;
   @Input() isValidarFormulario = false;
+  @Output() fecharFormulario = new EventEmitter();
 
   oficina: Atividade = new Atividade();
   isAtualizar = false;
@@ -66,6 +67,7 @@ export class CadastrarOficinasComponent implements OnInit {
       this.turma.oficinas.push(oficina);
       this.initObjeto();
 
+      this.fecharFormulario.emit(true);
   }
 
   atualizar() {
@@ -73,6 +75,7 @@ export class CadastrarOficinasComponent implements OnInit {
     this.turma.oficinas.splice(index, 1, this.oficina);
     this.isAtualizar = false;
     this.initObjeto();
+    this.fecharFormulario.emit(true);
   }
 
   cancelar() {

@@ -17,6 +17,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { FileUtils } from 'src/app/utils/file-utils';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 import { MovimentosBancariosInconsistentesComponent } from '../common/movimentos-bancarios-inconsistentes/movimentos-bancarios-inconsistentes.component';
+import { SaldosContasBancariaService } from 'src/app/services/saldos-contas-bancaria/saldos-contas-bancaria.service';
 
 class Filter {
   contaBancaria: ContasBancaria;
@@ -24,6 +25,10 @@ class Filter {
   dataFim: Date;
 }
 
+class SaldoContaBancaria {
+  saldoInicial: number;
+  saldoFinal: number;
+}
 
 @Component({
   selector: 'conciliacao',
@@ -41,7 +46,8 @@ export class ConciliacaoComponent implements OnInit {
   contasBancarias: ContasBancaria[];
 
   filtro = new Filter();
-  
+  saldoContaBancaria = null;
+
   displayedColumns: string[] = ['select','codigo', 'tipo', 'situacao', 'documento', 'dataConciliacao', 'banco',  'categoria', 'fornecedor', 'complemento', 'centroCusto', 'grupoContas', 'valor'];
   dataSource: MatTableDataSource<Conciliacao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
@@ -66,6 +72,7 @@ export class ConciliacaoComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private loadingPopupService: LoadingPopupService,
+    private saldosContasBancariaService: SaldosContasBancariaService
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -89,6 +96,7 @@ export class ConciliacaoComponent implements OnInit {
     this.limpar();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.saldoContaBancaria = null;
 
     this.carregarMovimentosInconsistentes();
   
@@ -188,7 +196,7 @@ export class ConciliacaoComponent implements OnInit {
             this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo para conciliação bancária, aguarde...');
             this.conciliacaoService.gerarArquivo(this.selection.selected)
             .subscribe((dados: any) => {
-              this.fileUtils.downloadFile(dados, "conciliacao.xlsx");
+              this.fileUtils.downloadFileXLS(dados, "conciliacao.xlsx");
   
               this.buscar();
               this.toastService.showSucesso('Conciliação bancária exportada com sucesso!');
@@ -236,4 +244,19 @@ export class ConciliacaoComponent implements OnInit {
     this.dataUtilService.onMascaraDataInput(event);
   }
 
+
+  getSaldosContasBancaria() {
+    if(this.filtro.contaBancaria.id && this.filtro.dataInicio && this.filtro.dataFim) {
+      this.saldosContasBancariaService.getSaldoContaBancaria(this.filtro.contaBancaria.id,
+                                                             this.filtro.dataInicio, 
+                                                             this.filtro.dataFim)
+      .subscribe((saldo: any) => {
+        this.saldoContaBancaria = new SaldoContaBancaria();
+        this.saldoContaBancaria.saldoInicial = saldo?.saldoInicial | 0;
+        this.saldoContaBancaria.saldoFinal   = saldo?.saldoFinal | 0;
+      });
+    } else {
+      this.saldoContaBancaria;
+    }
+  }
 }

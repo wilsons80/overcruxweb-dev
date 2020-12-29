@@ -4,6 +4,7 @@ import { Empresa } from 'src/app/core/empresa';
 import { ParceriasPrograma } from 'src/app/core/parcerias-programa';
 import {ControlContainer, NgForm} from '@angular/forms';
 import { AditivoParceriaPrograma } from 'src/app/core/aditivo-parceria-programa';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'dados-parceiro-programa',
@@ -17,7 +18,7 @@ export class DadosParceiroProgramaComponent implements OnInit {
   empresas: Empresa[];
 
   constructor(
-
+    private dataUtilService: DataUtilService,
     private empresaService:EmpresaService
   ) {
     
@@ -36,5 +37,8 @@ export class DadosParceiroProgramaComponent implements OnInit {
     parceriasPrograma.aditivosParceriasProgramas.splice(index,1);
   }
 
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 
 }

@@ -18,6 +18,7 @@ import { ArquivoPessoaFisicaService } from 'src/app/services/arquivo-pessoa-fisi
 import { CondicoesMoradia } from 'src/app/core/condicoes-moradia';
 import { Acesso } from 'src/app/core/acesso';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
+import { CondicoesMoradiaService } from 'src/app/services/condicoes-moradia/condicoes-moradia.service';
 
 @Component({
   selector: 'app-cadastrar-familiar-aluno',
@@ -41,7 +42,7 @@ export class CadastrarFamiliarAlunoComponent implements OnInit {
               private location: Location,
               private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
               private fileUtils: FileUtils,
-              private familiarAlunoService: FamiliarAlunoService
+              private familiarAlunoService: FamiliarAlunoService,              
               ) {
   }
 

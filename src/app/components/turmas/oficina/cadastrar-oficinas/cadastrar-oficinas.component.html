@@ -33,7 +33,7 @@
      fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
 
     <button *ngIf="!isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary"
-        (click)="initObjeto()">
+            (click)="cancelar()">
         Limpar Plano de Atividades
     </button>
 
@@ -42,8 +42,9 @@
         Adicionar Plano de Atividades
     </button>
 
-    <button *ngIf="isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" (click)="cancelar()">
-        Cancelar Plano de Atividades
+    <button *ngIf="isAtualizar" mat-raised-button name="botaoLimpar" fxFlex="20%" color="primary" 
+            (click)="atualizar()">
+        Atualizar Plano de Atividades
     </button>
 
 </div>

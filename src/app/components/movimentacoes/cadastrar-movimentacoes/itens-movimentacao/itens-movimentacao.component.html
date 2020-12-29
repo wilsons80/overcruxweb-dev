@@ -8,54 +8,61 @@
 
             <!-- DADOS INICIAIS -->
             <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
-            <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    
-                <!-- CATEGORIAS -->
-                <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                    <mat-label>Rubrica:</mat-label>
-                    <mat-select name="categoria" 
-                                [(ngModel)]=itensMovimentacoes.categoria.id 
-                                (selectionChange)="carregarContaContabil()"
-                                required>
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let i of planosContas" [value]=i.idCategoria>
-                            {{i.planoConta}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="planosContas?.length === 0" align="start">Nenhuma categoria cadastrada</mat-hint>
-                </mat-form-field>
-    
-                <!-- PEDIDO MATERIAL -->
-                <mat-form-field fxFlex="70%">
-                    <mat-label>Pedido Material:</mat-label>
-                    <mat-select name="pedidoMaterial" [(ngModel)]=itensMovimentacoes.pedidosMateriais.id>
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let i of pedidosMateriais" [value]=i.id>
-                            {{i.descricaoPedido}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="pedidosMateriais?.length === 0" align="start">Nenhum pedido material cadastrado</mat-hint>
-                </mat-form-field>
-    
+            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill>
+                <div ngModelGroup="comboRubrica" 
+                     fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                    <combo-pesquisavel #comboRubrica 
+                                       nome="rubrica" 
+                                       [itens]="planosContas" 
+                                       itemDescricao="planoConta"
+                                       itemId="id"
+                                       label="Rubrica"
+                                       [obrigatorio]="true"
+                                       placeholder="Escolha..."
+                                       [(valor)]="itensMovimentacoes.categoria"
+                                       (valorChange)="carregarContaContabil($event)"
+                                       style="margin-top: 10px;">
+                    </combo-pesquisavel>
+                </div> 
+            </div> 
+
+            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill>
+                <div ngModelGroup="comboPedidoMaterial"
+                     fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                    <combo-pesquisavel #comboPedidoMaterial 
+                                       nome="comboPedidoMaterial" 
+                                       [itens]="pedidosMateriais" 
+                                       itemDescricao="descricaoPedido"
+                                       itemId="id"
+                                       label="Pedido Material"
+                                       [obrigatorio]="false"
+                                       placeholder="Escolha..."
+                                       [(valor)]="itensMovimentacoes.pedidosMateriais"
+                                       style="margin-top: 10px;">
+                    </combo-pesquisavel>
+                </div>                
             </div>
     
-            <div fxLayout="row" fxLayoutGap="50px">
-                <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-                    <mat-label>Rubrica adicional:</mat-label>
-                    <mat-select name="categoriaAdicional" 
-                                [(ngModel)]=itensMovimentacoes.categoriaAdicional.id 
-                                (selectionChange)="carregarContaContabil()"
-                                >
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let i of planosContas" [value]=i.idCategoria>
-                            {{i.planoConta}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="planosContas?.length === 0" align="start">Nenhuma categoria cadastrada</mat-hint>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutGap="50px">
-            <mat-form-field fxFlexOffset="20px" fxFlex="15%">
+            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill>
+                <div ngModelGroup="comboRubricaAdicional" 
+                     fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                    <combo-pesquisavel #comboRubricaAdicional 
+                                       nome="rubricaAdicional" 
+                                       [itens]="planosContas" 
+                                       itemDescricao="planoConta"
+                                       itemId="id"
+                                       label="Rubrica Adicional"
+                                       [obrigatorio]="false"
+                                       placeholder="Escolha..."
+                                       [(valor)]="itensMovimentacoes.categoriaAdicional"
+                                       (valorChange)="carregarContaContabilAdicional($event)"
+                                       style="margin-top: 10px;">
+                    </combo-pesquisavel>
+                </div> 
+            </div>   
+
+            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;">
+                <mat-form-field fxFlexOffset="20px" fxFlex="15%">
                     <input (ngModelChange)="multiplicar($event)" 
                             [(ngModel)]="itensMovimentacoes.valorUnitarioItem" 
                             currencyMask name="valorUnitario" 
@@ -156,7 +163,7 @@
 
                 <ng-container matColumnDef="categoriaContabil">
                     <th mat-header-cell *matHeaderCellDef> Rubrica </th>
-                    <td mat-cell *matCellDef="let element"> {{element.categoria?.nome}} </td>
+                    <td mat-cell *matCellDef="let element"> {{getRubricaPlanoConta(element.categoria.id)}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantidadeMaterial">

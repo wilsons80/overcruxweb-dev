@@ -64,7 +64,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  displayedColumns: string[] = ['select', 'nome'];
+  displayedColumns: string[] = ['select', 'matricula','beneficiario','nomeMae','nomePai','unidade','dataEntrada', 'dataDesligamento'];
   dataSource: MatTableDataSource<ExportacaoDadosAluno> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
@@ -200,13 +200,12 @@ export class ExportarDadosAlunoComponent implements OnInit {
         this.loadingPopupService.mostrarMensagemDialog('Gerando arquivo, aguarde...');
         this.exportacaoDadosAlunoService.gerarArquivo(listaCompletaDadosExportar)
         .subscribe((dados: any) => {
-          this.fileUtils.downloadFile(dados, "exportacao-alunos.xlsx");
+          this.fileUtils.downloadFileXLS(dados, "exportacao-dados-alunos.xlsx");
           this.toastService.showSucesso('Dados exportados com sucesso!');
           this.loadingPopupService.closeDialog();
         }, 
         (error) => {
           this.loadingPopupService.closeDialog();
-          console.log(error);            
         })        
       } else {
         dialogRef.close();
@@ -227,7 +226,10 @@ export class ExportarDadosAlunoComponent implements OnInit {
     this.filtro.projeto      = new ComboProjeto();
     this.filtro.unidade      = new Unidade();
 
+    this.selection.clear();
     this.exportacaoDadosAlunos = [];
+    this.dataSource.data = [];
+
   }
   
   onValorChange(event: any) {
@@ -307,10 +309,16 @@ export class ExportarDadosAlunoComponent implements OnInit {
   }
 
 
-  getGrupoDados(chave): GrupoDadosExportar {
-    const grupoDados = this.dadosExportar.dados.find(d => d.chave === chave);
+  getGrupoDadosAluno(nomeGrupo): GrupoDadosExportar {
+    const grupoDados = this.dadosExportar.dados.filter(d => d.entidade === 'aluno').find(d => d.nomeGrupo === nomeGrupo);
     return grupoDados;
   }
+
+  getGrupoDadosFamiliar(nomeGrupo): GrupoDadosExportar {
+    const grupoDados = this.dadosExportar.dados.filter(d => d.entidade === 'familiar').find(d => d.nomeGrupo === nomeGrupo);
+    return grupoDados;
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
   addColunasAlunoDadosPessoais() {
@@ -330,7 +338,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'endereco', 'descricao':'Endereço', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'cidade', 'descricao':'Cidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'bairro', 'descricao':'Bairro', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufEndereco', 'descricao':'UF', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'pontoReferncia', 'descricao':'Ponto de Referência', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'telefoneResidencial', 'descricao':'TelefoneResidencial', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'celular', 'descricao':'Celular', 'exportar': true, 'color': 'primary'});
@@ -339,14 +347,14 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
 
     const dados: GrupoDadosExportar = {
-      nome: 'Dados Pessoais',
+      descricao: 'Dados Pessoais',
+      entidade: 'aluno',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'aluno_dados_pessoais'
+      nomeGrupo: 'dados_pessoais'
     };
 
-    this.dadosExportar.entidade = 'aluno';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -366,18 +374,17 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'alunoPublicoPrioritario', 'descricao':'Trata-se de público prioritário', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descPessoaBuscaAlunoEscola', 'descricao':'Descrição da pessoa que busca', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'desligamento', 'descricao':'Desligamento', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'outrasInformacoes', 'descricao':'Outras Informações', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'observacao', 'descricao':'Observação', 'exportar': true, 'color': 'primary'});
 
 
     const dados: GrupoDadosExportar = {
-      nome: 'Admissão',
+      descricao: 'Admissão',
+      entidade: 'aluno',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'aluno_admissao'
+      nomeGrupo: 'admissao'
     };
-    this.dadosExportar.entidade = 'aluno';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -399,13 +406,13 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
 
     const dados: GrupoDadosExportar = {
-      nome: 'Escolaridade',
+      descricao: 'Escolaridade',
+      entidade: 'aluno',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'aluno_escolaridade'
+      nomeGrupo: 'escolaridade'
     };
-    this.dadosExportar.entidade = 'aluno';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -419,30 +426,29 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'pis', 'descricao':'PIS/PASEP', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'identidade', 'descricao':'Identidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'orgaoExpedidor', 'descricao':'Órgão Expedidor', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Identidade', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufCI', 'descricao':'UF Identidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataEmissao', 'descricao':'Data Emissão', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'tituloEleitoral', 'descricao':'Título Eleitoral', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'zona', 'descricao':'Zone', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'sessao', 'descricao':'Sessão', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroReservista', 'descricao':'Número Reservista', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroRegiaoMilitar', 'descricao':'Número Região Militar', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Reservista', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufReservista', 'descricao':'UF Reservista', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'cnh', 'descricao':'CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'categoriaCnh', 'descricao':'Categoria CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataVencimentoCnh', 'descricao':'Data Vencimento CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroCarteiraTrabalho', 'descricao':'Número Carteira Trabalho', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroSerie', 'descricao':'Número Série', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Carteira Trabalho', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufCarteiraTrabalho', 'descricao':'UF Carteira Trabalho', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Documentos',
+      descricao: 'Documentos',
+      entidade: 'aluno',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'aluno_documentos'
+      nomeGrupo: 'documentos'
     };
-
-    this.dadosExportar.entidade = 'aluno';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -467,14 +473,13 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'origemBeneficio', 'descricao':'Origem do Benefício', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Outras Informações',
+      descricao: 'Outras Informações',
+      entidade: 'aluno',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave:'aluno_outras_informacoes'
+      nomeGrupo:'outras_informacoes'
     };
-
-    this.dadosExportar.entidade = 'aluno';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -486,7 +491,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'nomeCompleto', 'descricao':'Nome Completo', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataNascimento', 'descricao':'Data Nascimento', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'cidadeNaturalidade', 'descricao':'Cidade Naturalidade', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Naturalidade', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufNaturalidade', 'descricao':'UF Naturalidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'sexo', 'descricao':'Sexo', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'racaCor', 'descricao':'Raça/Cor', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'nomeMae', 'descricao':'Nome Mãe', 'exportar': true, 'color': 'primary'});
@@ -497,7 +502,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'endereco', 'descricao':'Endereço', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'cidade', 'descricao':'Cidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'bairro', 'descricao':'Bairro', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufEndereco', 'descricao':'UF', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'pontoReferncia', 'descricao':'Ponto de Referência', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'telefoneResidencial', 'descricao':'TelefoneResidencial', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'celular', 'descricao':'Celular', 'exportar': true, 'color': 'primary'});
@@ -506,14 +511,13 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
 
     const dados: GrupoDadosExportar = {
-      nome: 'Dados Pessoais',
+      descricao: 'Dados Pessoais',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_dados_pessoais'
+      nomeGrupo: 'dados_pessoais'
     };
-
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -530,14 +534,14 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'outrasInformacoes', 'descricao':'Outras Informações', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Parentesco',
+      descricao: 'Parentesco',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_parentesco'
+      nomeGrupo: 'parentesco'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }    
 
@@ -556,14 +560,14 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'descricaoDesligamento', 'descricao':'Descrição Desligamento', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Responsável',
+      descricao: 'Responsável',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_responsavel'
+      nomeGrupo: 'responsavel'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }  
   
@@ -577,14 +581,14 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'grauInstrucao', 'descricao':'Grau Instrução', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Escolaridade',
+      descricao: 'Escolaridade',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_escolaridade'
+      nomeGrupo: 'escolaridade'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   } 
 
@@ -598,30 +602,30 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'pis', 'descricao':'PIS/PASEP', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'identidade', 'descricao':'Identidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'orgaoExpedidor', 'descricao':'Órgão Expedidor', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Identidade', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufCI', 'descricao':'UF Identidade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataEmissao', 'descricao':'Data Emissão', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'tituloEleitoral', 'descricao':'Título Eleitoral', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'zona', 'descricao':'Zone', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'sessao', 'descricao':'Sessão', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroReservista', 'descricao':'Número Reservista', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroRegiaoMilitar', 'descricao':'Número Região Militar', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Reservista', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufReservista', 'descricao':'UF Reservista', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'cnh', 'descricao':'CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'categoriaCnh', 'descricao':'Categoria CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataVencimentoCnh', 'descricao':'Data Vencimento CNH', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroCarteiraTrabalho', 'descricao':'Número Carteira Trabalho', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'numeroSerie', 'descricao':'Número Série', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'uf', 'descricao':'UF Carteira Trabalho', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'ufCarteiraTrabalho', 'descricao':'UF Carteira Trabalho', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Documentos',
+      descricao: 'Documentos',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_documentos'
+      nomeGrupo: 'documentos'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }
 
@@ -640,14 +644,14 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'motivoNaoTrabalhar', 'descricao':'Motivo de não trabalhar', 'exportar': true, 'color': 'primary'});
 
     const dados: GrupoDadosExportar = {
-      nome: 'Dados Profissionais',
+      descricao: 'Dados Profissionais',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_dados_profissionais'
+      nomeGrupo: 'dados_profissionais'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }  
 
@@ -667,24 +671,24 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'descricaoDeficiencia', 'descricao':'Descrição deficiência', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoProblemaSaude', 'descricao':'Descrição Problema Saúde', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoMedicamentosControlados', 'descricao':'Descrição Medicamentos Controlados', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'jaAtendidoEmOutroOrgao', 'descricao':'Já atendido em outro órgao da rede ?', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'condicaoMoradia', 'descricao':'Condição Moradia', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'descricaoCondicaoMoradia', 'descricao':'Descrição Condição Moradia', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoRelevanteAtendimentoOutroOrgao', 'descricao':'Descrição relevante do Atendimento por outro órgão', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoOutrosBeneficiosFamilia', 'descricao':'Descrição de outros benefícios da familia', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoRelevanteRedeApoioSocial', 'descricao':'Descrição relevante da Rede de Apoio', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descricaoRedeApoioSocial', 'descricao':'Descrição da Rede de Apoio', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'valorOutrosBeneficiosSociais', 'descricao':'Valor de outros benefícios sociais', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'identificacaoOrigemRenda', 'descricao':'Identificação da origem de renda', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'origemBeneficio', 'descricao':'Origem do Benefício', 'exportar': true, 'color': 'primary'});
-
+    
     const dados: GrupoDadosExportar = {
-      nome: 'Outras Informações',
+      descricao: 'Outras Informações',
+      entidade: 'familiar',
       exportar: true,
       colunas: colunas,
       color:'primary',
-      chave: 'familiar_outras_informacoes'
+      nomeGrupo: 'outras_informacoes'
     };
 
-    this.dadosExportar.entidade = 'familiar';
     this.dadosExportar.dados.push(dados);
   }  
 

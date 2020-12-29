@@ -8,6 +8,7 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'app-cadastrar-projeto',
@@ -30,6 +31,7 @@ export class CadastrarProjetoComponent implements OnInit {
     private projetoService: ProjetoService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private dataUtilService: DataUtilService,
     private toastService: ToastService
   ) {
 
@@ -87,8 +89,13 @@ export class CadastrarProjetoComponent implements OnInit {
   }
 
   cadastrar() {
-    if (this.isDataProjetoDiferenteDataPrograma()) {
-      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+    if(!this.isValoresAditivosValidos()) {
+      this.toastService.showAlerta('ATENÇÃO: A soma das categorias e seus aditivos é diferente da soma do parceiro e seus aditivos.');
+      return;
+    }
+    
+    if (!this.isDataProjetoEntreDataPrograma()) {
+      this.toastService.showAlerta("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
 
@@ -97,23 +104,7 @@ export class CadastrarProjetoComponent implements OnInit {
     });
   }
 
-  isDataProjetoDiferenteDataPrograma() {
-    
-    if (this.projeto.programa) {
-      
-      let dataInicioPrograma: Date = this.projeto.programa.dataInicio ? new Date(this.projeto.programa.dataInicio) : null;
-      let dataFimPrograma: Date = this.projeto.programa.dataFim ? new Date(this.projeto.programa.dataFim) : null;
-      
-      if (dataInicioPrograma) dataInicioPrograma.setHours(0, 0, 0, 0);
-      if (dataFimPrograma) dataFimPrograma.setHours(0, 0, 0, 0);
-      
-      if(dataInicioPrograma && this.projeto.dataInicio && (dataInicioPrograma.getTime() != this.projeto.dataInicio.getTime())) return true;
-      if(dataFimPrograma && this.projeto.dataFim && (dataFimPrograma.getTime() != this.projeto.dataFim.getTime())) return true;
-    }
 
-    
-    return false;
-  }
 
   limpar() {
     this.inicializarObjetos();
@@ -124,8 +115,13 @@ export class CadastrarProjetoComponent implements OnInit {
   }
 
   atualizar() {
-    if (this.isDataProjetoDiferenteDataPrograma()) {
-      this.toastService.showSucesso("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+    if(!this.isValoresAditivosValidos()) {
+      this.toastService.showAlerta('ATENÇÃO: A soma das categorias e seus aditivos é diferente da soma do parceiro e seus aditivos.');
+      return;
+    }
+    
+    if (!this.isDataProjetoEntreDataPrograma()) {
+      this.toastService.showAlerta("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
       return;
     }
 
@@ -133,5 +129,48 @@ export class CadastrarProjetoComponent implements OnInit {
       this.toastService.showSucesso("Projeto atualizado com sucesso");
     });
 
+  }
+
+
+  
+  isValoresAditivosValidos(): boolean {
+    let valorTotalParceria = null;
+    let valorTotalAditivoParceria = null;
+
+    let valorTotalCategoria = null;
+    let valorTotalAditivoCategoria = null;
+
+    this.projeto.parceriasProjeto.forEach(p =>  {
+      valorTotalParceria += p.valorParceria;
+      p.aditivosParceriasProjeto.forEach(a => valorTotalAditivoParceria += a.valorAditivo);
+
+      p.parceriasCategorias.forEach(p => {
+        valorTotalCategoria += p.valorParceriaCategoria;
+        p.aditivosParceriasCategorias.forEach(a => valorTotalAditivoCategoria += a.valorAditivo);
+      });
+    })
+
+    let totalParceria  = null;
+    if(valorTotalAditivoParceria){
+      totalParceria  = Number(valorTotalParceria.toFixed(2))  + Number(valorTotalAditivoParceria.toFixed(2));
+    }
+    
+    let totalCategoria = null;
+    if(valorTotalAditivoCategoria) {
+      totalCategoria = Number(valorTotalCategoria.toFixed(2)) + Number(valorTotalAditivoCategoria.toFixed(2));
+    }
+
+    if(totalCategoria && totalParceria != totalCategoria) {return false;}
+    return true;
+  }
+
+  isDataProjetoEntreDataPrograma(): boolean {    
+    if (this.projeto.programa && this.projeto.programa.dataInicio) {    
+      let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
+      let dataFimPrograma: Date    = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
+      
+      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, dataInicioPrograma, dataFimPrograma);
+    }   
+    return true;
   }
 }

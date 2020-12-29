@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -8,6 +8,7 @@ import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { ItensMovimentacoes } from 'src/app/core/itens-movimentacoes';
 import { Material } from 'src/app/core/material';
 import { Movimentacoes } from 'src/app/core/movimentacoes';
+import { PlanosContas } from 'src/app/core/planos-contas';
 import { TributoItemMovimentacao } from 'src/app/core/tributo-item-movimentacao';
 import { Tributos } from 'src/app/core/tributos';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
@@ -15,7 +16,7 @@ import { PedidosMateriais } from './../../../../core/pedidos-materiais';
 import { CategoriasContabeisService } from './../../../../services/categorias-contabeis/categorias-contabeis.service';
 import { MaterialService } from './../../../../services/material/material.service';
 import { PedidosMateriaisService } from './../../../../services/pedidosMateriais/pedidos-materiais.service';
-import { PlanosContas } from 'src/app/core/planosContas';
+
 
 @Component({
   selector: 'itens-movimentacao',
@@ -52,7 +53,8 @@ export class ItensMovimentacaoComponent implements OnInit {
   constructor(
     private materialService: MaterialService,
     private categoriasContabeisService: CategoriasContabeisService,
-    private pedidosMateriaisService: PedidosMateriaisService
+    private pedidosMateriaisService: PedidosMateriaisService,
+    private drc: ChangeDetectorRef,  
   ) { }
 
   ngOnInit() {
@@ -62,10 +64,6 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.materiais = materiais;
     })
 
-    this.categoriasContabeisService.getAll().subscribe((categorias: CategoriasContabeis[]) => {
-      this.categorias = categorias;
-    })
-    
     this.categoriasContabeisService.getAllView(false).subscribe((planosContas: PlanosContas[]) => {
       this.planosContas = planosContas;
     })
@@ -74,12 +72,64 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.pedidosMateriais = pedidosMateriais;
     })
 
-
-    BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES')
-    .subscribe((movimentacao: Movimentacoes) => {
+    BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES').subscribe((movimentacao: Movimentacoes) => {
       this.carregarLista();
     })
 
+  }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+
+    if(this.itensMovimentacoes.pedidosMateriais && this.itensMovimentacoes.pedidosMateriais.id) {
+      this.selecionaPedidoMaterial(this.itensMovimentacoes.pedidosMateriais.id);
+    }
+
+    if(this.itensMovimentacoes.categoria && this.itensMovimentacoes.categoria.id) {
+      this.selecionaRubrica(this.itensMovimentacoes.categoria.id);
+    }
+
+    if(this.itensMovimentacoes.categoriaAdicional && this.itensMovimentacoes.categoriaAdicional.id) {
+      this.selecionaRubricaAdicional(this.itensMovimentacoes.categoriaAdicional.id);
+    }
+
+  }
+
+  selecionaRubrica(id: number) {
+    if(this.planosContas) {
+      const registro = this.planosContas.find((reg: any) => reg.id === id);
+      if (!!registro) {
+        this.onValorRubricaChange(registro);
+      }
+    }
+  }
+  selecionaRubricaAdicional(id: number) {
+    if(this.planosContas) {
+      const registro = this.planosContas.find((reg: any) => reg.id === id);
+      if (!!registro) {
+        this.onValorRubricaAdicionalChange(registro);
+      }
+    }
+  }
+
+  selecionaPedidoMaterial(id: number) {
+    if(this.pedidosMateriais) {
+      const registro = this.pedidosMateriais.find((reg: any) => reg.id === id);
+      if (!!registro) {
+        this.onValorChange(registro);
+      }
+    }
+  }
+
+  onValorChange(registro) {
+    this.itensMovimentacoes.pedidosMateriais = registro;
+  }
+
+  onValorRubricaChange(registro){
+    this.itensMovimentacoes.categoria = registro;
+  }
+  onValorRubricaAdicionalChange(registro){
+    this.itensMovimentacoes.categoriaAdicional = registro;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -101,9 +151,15 @@ export class ItensMovimentacaoComponent implements OnInit {
 
 
   getObjetosCompletosParaLista(itensMovimentacoes: ItensMovimentacoes) {
-    itensMovimentacoes.material         = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
-    itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
-    itensMovimentacoes.categoria        = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
+
+    if(itensMovimentacoes.material && itensMovimentacoes.material.id) {
+      itensMovimentacoes.material         = _.find(this.materiais, (m: Material) => m.id == itensMovimentacoes.material.id);
+    }
+
+    if(itensMovimentacoes.pedidosMateriais && itensMovimentacoes.pedidosMateriais.id) {
+      itensMovimentacoes.pedidosMateriais = _.find(this.pedidosMateriais, (m: PedidosMateriais) => m.id == itensMovimentacoes.pedidosMateriais.id);
+    }
+    //itensMovimentacoes.categoria        = _.find(this.categorias, (m: CategoriasContabeis) => m.id == itensMovimentacoes.categoria.id);
   }
 
   novo() {
@@ -206,12 +262,25 @@ export class ItensMovimentacaoComponent implements OnInit {
     return 0;
   }
 
-  carregarContaContabil(){
-    if (this.itensMovimentacoes.categoria && this.itensMovimentacoes.categoria.id) {
-      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.categorias,  (c: CategoriasContabeis) => c.id === this.itensMovimentacoes.categoria.id));
+  carregarContaContabil(event){
+    if (event) {
+      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
+    } else {
+      this.itensMovimentacoes.categoria = new CategoriasContabeis();
+    }
+  }
+  carregarContaContabilAdicional(event){
+    if (event) {
+      this.itensMovimentacoes.categoriaAdicional = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
+    } else {
+      this.itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
     }
   }
 
+  getRubricaPlanoConta(id): string {
+    const registro = _.find(this.planosContas,  (c) => c.id === id);
+    return registro ? registro.planoConta : "";
+  }
 
   addTributo() {
     if (!this.itensMovimentacoes.tributos) {
