@@ -111,6 +111,7 @@ export enum Modulos{
     , MOTIVOS_DESLIGAMENTOS                 = 'MOTIVOS_DESLIGAMENTOS'
     , TIPOS_PUBLICOS_PRIORITARIOS           = 'TIPOS_PUBLICOS_PRIORITARIOS'
     , TIPOS_DOADORES                        = 'TIPOS_DOADORES'
+    , DOADORES                              = 'DOADORES'
 
 
 }
