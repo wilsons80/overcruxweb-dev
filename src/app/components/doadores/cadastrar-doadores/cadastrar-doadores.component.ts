@@ -66,6 +66,9 @@ export class CadastrarDoadoresComponent implements OnInit {
       this.isAtualizar = true;
       this.doadoresService.getById(id).subscribe((doadores: Doadores) => {
         this.doadores = doadores;
+        this.filtroPessoa.pessoaFisica.id = this.doadores.pessoasFisica.id;
+        this.filtroEmpresa.empresa.id = this.doadores.empresa.id;
+
       });
     }
 

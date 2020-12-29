@@ -43,8 +43,8 @@
             <div ngModelGroup="comboPessoaFisica" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
                 <combo-pessoa-fisica    [showDisplayId]="true" 
-                                        [obrigatorio]="true" 
-                                        [selecionado]="filtroPessoa"
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtroPessoa.pessoaFisica"
                                         (valorChange)="onValorChangePessoa($event)">
                 </combo-pessoa-fisica>
             </div>
@@ -55,21 +55,18 @@
             <dados-pessoa-fisica [pessoaFisica]=doadores.pessoasFisica></dados-pessoa-fisica>
         </div> 
 
-        <!-- EMPRESA -->
+        <!-- PESSOA -->
         <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
-                <mat-label>Empresa:</mat-label>
-                <mat-select [(ngModel)]="doadores.empresa.id" name="empresa" required>
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of listaEmpresas" [value]=i.id>
-                        {{i.nomeFantasia}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="listaEmpresas?.length === 0" align="start">Nenhuma empresa
-                    cadastrada</mat-hint>
-            </mat-form-field>
-        </div>
+            <div ngModelGroup="comboEmpresa" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                fxFlexFill>
+                <combo-empresa    [showDisplayId]="true" 
+                                        [obrigatorio]="false" 
+                                        [selecionado]="filtroEmpresa.empresa"
+                                        (valorChange)="onValorChangeEmpresa($event)">
+                </combo-empresa>
+            </div>
+        </div> 
 
 
         <!-- BOTOES -->
