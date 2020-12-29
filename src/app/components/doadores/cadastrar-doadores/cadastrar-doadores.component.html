@@ -4,15 +4,16 @@
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <!-- TIPO DOADOR -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
                 <mat-label>Tipo Doador:</mat-label>
-                <mat-select name="tipo" [(ngModel)]=doadores.tipoDoador>
-                    <mat-option *ngFor="let i of listaTiposDoadores" value="i">
+                <mat-select [(ngModel)]="doadores.tipoDoador.id" name="tipoDoador">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of listaTiposDoadores" [value]=i.id>
                         {{i.codigo}} - {{i.descricao}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="listaTiposDoadores?.length === 0" align="start">Nenhum tipo de doador
-                    cadastrado</mat-hint>
+                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
+                    cadastrada</mat-hint>
             </mat-form-field>
 
             <!-- #DATA INICIO VINCULO  -->
@@ -37,18 +38,17 @@
 
 
         <!-- PESSOA -->
-         <!-- <mat-toolbar class="titulopartes">Pessoa</mat-toolbar>
+         <mat-toolbar class="titulopartes">Pessoa</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <div ngModelGroup="comboPessoaFisica" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
-                <combo-pessoa-fisica    [showDisplayId]="false" 
+                <combo-pessoa-fisica    [showDisplayId]="true" 
                                         [obrigatorio]="true" 
                                         [selecionado]="filtroPessoa"
-                                        [desabilitado]="isAtualizar" 
                                         (valorChange)="onValorChangePessoa($event)">
                 </combo-pessoa-fisica>
             </div>
-        </div>  -->
+        </div> 
 
         <div fxLayout="row" *ngIf="doadores.pessoasFisica.id" fxLayoutGap="50px"
             style="margin-top: 20px; margin-bottom: 20px" fxFlexFill>
@@ -56,19 +56,20 @@
         </div> 
 
         <!-- EMPRESA -->
-        <!-- <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
+        <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
                 <mat-label>Empresa:</mat-label>
-                <mat-select name="tipo" [(ngModel)]=doadores.empresa>
-                    <mat-option *ngFor="let i of listaEmpresas" value="i">
-                        {{i.cnpj}} - {{i.nomeRazaoSocial}}
+                <mat-select [(ngModel)]="doadores.empresa.id" name="empresa" required>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of listaEmpresas" [value]=i.id>
+                        {{i.nomeFantasia}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="listaEmpresas?.length === 0" align="start">Nenhuma empresa`
+                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
                     cadastrada</mat-hint>
             </mat-form-field>
-        </div> -->
+        </div>
 
 
         <!-- BOTOES -->

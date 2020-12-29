@@ -10,5 +10,4 @@ export class Doadores {
 	dataInicioVinculo: Date;
 	dataFimVinculo: Date;
 	idInstituicao: number;
-	usuarioAlteracao: number;
 }
