@@ -98,12 +98,7 @@ export class CadastrarTurmasComponent implements OnInit {
 
   cadastrar() {
     if (!this.validarDatasDeTurmaAndOficinas() ) { return; }
-<<<<<<< HEAD
-    if (!this.validarDatasProjeto() ) { return; }
-    if (!this.validarDatasPrograma() ) { return; }
-=======
     if (!this.validarDatasDeTurmaAndProgramaOuProjeto()) { return; }
->>>>>>> master
 
     this.turmaService.cadastrar(this.turma).subscribe(() => {
       this.router.navigate(['turmas']);
