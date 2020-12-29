@@ -1,11 +1,14 @@
+import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as _ from 'lodash';
 import { Acesso } from 'src/app/core/acesso';
 import { Doadores } from 'src/app/core/doadores';
 import { Empresa } from 'src/app/core/empresa';
 import { FilterEmpresa } from 'src/app/core/filter-empresa';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { TiposDoadores } from 'src/app/core/tipos-doadores';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { DoadoresService } from 'src/app/services/doadores/doadores.service';
 import { TiposDoadoresService } from 'src/app/services/tipos-doadores/tipos-doadores.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -41,11 +44,16 @@ export class CadastrarDoadoresComponent implements OnInit {
     private toastService: ToastService,
     private tiposDoadoresService: TiposDoadoresService,
     private pessoaFisicaService: PessoaFisicaService,
-    private empresaService: EmpresaService
+    private empresaService: EmpresaService,
+    private dataUtilService: DataUtilService,
+    private cd: ChangeDetectorRef
   ) {
-
   }
-
+ 
+ 
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
+  }
 
   ngOnInit() {
 
@@ -127,16 +135,14 @@ export class CadastrarDoadoresComponent implements OnInit {
 
 
   onValorChangeEmpresa(registro: any) {
-    this.filtroPessoa = registro;
+    this.filtroEmpresa = registro;
     if (registro) {
       this.mostrarDadosEmpresa(registro.id);
     }
   }
 
   mostrarDadosEmpresa(id: number) {
-    this.empresaService.getById(id).subscribe((empresa: Empresa) => {
-      this.doadores.empresa = empresa;
-    })
+    this.doadores.empresa = _.find(this.listaEmpresas, { id: id });
   }
 
   onValorChangePessoa(registro: any) {
@@ -150,6 +156,15 @@ export class CadastrarDoadoresComponent implements OnInit {
     this.pessoaFisicaService.getById(id).subscribe((pessoa: PessoaFisica) => {
       this.doadores.pessoasFisica = pessoa;
     })
+  }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
+  
+  isObrigatorio(elm:any){
+    if(elm == null || elm.id == null) return true;
+    return false;
   }
 
 }

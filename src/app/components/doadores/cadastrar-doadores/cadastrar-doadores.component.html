@@ -18,7 +18,12 @@
 
             <!-- #DATA INICIO VINCULO  -->
             <mat-form-field fxFlex="30%">
-                <input matInput name="dataInicio" [(ngModel)]=doadores.dataInicioVinculo [matDatepicker]="dataInicio" placeholder="Data de Início do Vínculo">
+                <input matInput 
+                          name="dataInicio" 
+                          [(ngModel)]=doadores.dataInicioVinculo 
+                          [matDatepicker]="dataInicio" 
+                          placeholder="Data de Início do Vínculo" 
+                          (input)="onMascaraDataInput($event)">
                 <mat-datepicker-toggle matSuffix [for]="dataInicio">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataInicio></mat-datepicker>
@@ -26,7 +31,12 @@
 
             <!-- #DATA FIM VINCULO  -->
             <mat-form-field fxFlex="30%">
-                <input matInput name="dataFim" [(ngModel)]=doadores.dataFimVinculo [matDatepicker]="dataFim" placeholder="Data Fim Vínculo">
+                <input matInput 
+                        name="dataFim" 
+                        [(ngModel)]=doadores.dataFimVinculo 
+                        [matDatepicker]="dataFim" 
+                        placeholder="Data Fim Vínculo"
+                        (input)="onMascaraDataInput($event)">
                 <mat-datepicker-toggle matSuffix [for]="dataFim">
                 </mat-datepicker-toggle>
                 <mat-datepicker #dataFim></mat-datepicker>
@@ -43,7 +53,7 @@
             <div ngModelGroup="comboPessoaFisica" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
                 <combo-pessoa-fisica    [showDisplayId]="true" 
-                                        [obrigatorio]="false" 
+                                        [obrigatorio]="!doadores.empresa.id" 
                                         [selecionado]="filtroPessoa.pessoaFisica"
                                         (valorChange)="onValorChangePessoa($event)">
                 </combo-pessoa-fisica>
@@ -55,13 +65,13 @@
             <dados-pessoa-fisica [pessoaFisica]=doadores.pessoasFisica></dados-pessoa-fisica>
         </div> 
 
-        <!-- PESSOA -->
+        <!-- EMPRESA -->
         <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <div ngModelGroup="comboEmpresa" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
                 <combo-empresa    [showDisplayId]="true" 
-                                        [obrigatorio]="false" 
+                                        [obrigatorio]="!doadores.pessoasFisica.id" 
                                         [selecionado]="filtroEmpresa.empresa"
                                         (valorChange)="onValorChangeEmpresa($event)">
                 </combo-empresa>
