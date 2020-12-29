@@ -12,7 +12,7 @@
                         {{i.codigo}} - {{i.descricao}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
+                <mat-hint *ngIf="listaTiposDoadores?.length === 0" align="start">Nenhuma empresa
                     cadastrada</mat-hint>
             </mat-form-field>
 
@@ -66,7 +66,7 @@
                         {{i.nomeFantasia}}
                     </mat-option>
                 </mat-select>
-                <mat-hint *ngIf="materiais?.length === 0" align="start">Nenhuma empresa
+                <mat-hint *ngIf="listaEmpresas?.length === 0" align="start">Nenhuma empresa
                     cadastrada</mat-hint>
             </mat-form-field>
         </div>
