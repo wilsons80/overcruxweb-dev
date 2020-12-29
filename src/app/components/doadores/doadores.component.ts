@@ -8,7 +8,13 @@ import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Doadores } from 'src/app/core/doadores';
 import { DoadoresService } from 'src/app/services/doadores/doadores.service';
+import { Combo } from 'src/app/core/combo';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
+
+export class Filter{
+	elm: Combo;
+}
 @Component({
   selector: 'doadores',
   templateUrl: './doadores.component.html',
@@ -18,13 +24,19 @@ export class DoadoresComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
+  
+  
   listaDoadores: Doadores[];
   doadores: Doadores = new Doadores();
   msg:string;
+  
+  filtro:Filter = new Filter();
+  listaCombo:Combo[];
 
+  carregarPerfil: CarregarPerfil;
   mostrarTabela = false;
 
-  displayedColumns: string[] = ['tipoDoador', 'nome', 'dataInicioVinculo', 'acoes'];
+  displayedColumns: string[] = ['tipoDoador', 'nomepf','nomepj', 'dataInicioVinculo', 'acoes'];
   dataSource: MatTableDataSource<Doadores> = new MatTableDataSource();
 
   perfilAcesso: Acesso;
@@ -35,11 +47,19 @@ export class DoadoresComponent implements OnInit {
     private dialog: MatDialog,
     private activatedRoute:ActivatedRoute
 
-  ) { }
+  ) { 
+    this.carregarPerfil = new CarregarPerfil();
+  }
 
   ngOnInit() {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    //  this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
+
+    this.filtro = new Filter();
+    this.filtro.elm = new Combo();
+    
+    this.carregarCombos();
     this.getAll();
   }
   limpar() {
@@ -49,8 +69,8 @@ export class DoadoresComponent implements OnInit {
   }
 
   consultar() {
-    if (this.doadores && this.doadores.id) {
-      this.doadoresService.getById(this.doadores.id).subscribe((doadores: Doadores) => {
+    if (this.filtro.elm && this.filtro.elm.id) {
+      this.doadoresService.getById(this.filtro.elm.id).subscribe((doadores: Doadores) => {
         if(!doadores){
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -66,7 +86,7 @@ export class DoadoresComponent implements OnInit {
 
 
   atualizar(doadores: Doadores) {
-    this.router.navigate(['/tiposdoadores/cadastrar'], { queryParams: { id: doadores.id } });
+    this.router.navigate(['/doadores/cadastrar'], { queryParams: { id: doadores.id } });
   }
 
   deletar(doadores: Doadores) {
@@ -96,18 +116,30 @@ export class DoadoresComponent implements OnInit {
   }
 
   getAll() {
-    this.doadoresService.getAll().subscribe((listaSituacoesExAlunos: Doadores[]) => {
-      this.listaDoadores = listaSituacoesExAlunos;
-      this.dataSource.data = listaSituacoesExAlunos ? listaSituacoesExAlunos : [];
-      this.verificaMostrarTabela(listaSituacoesExAlunos);
+    this.doadoresService.getAll().subscribe((listaDoadores: Doadores[]) => {
+      this.listaDoadores = listaDoadores;
+      this.dataSource.data = listaDoadores ? listaDoadores : [];
+      this.verificaMostrarTabela(listaDoadores);
     })
   }
-  verificaMostrarTabela(listaSituacoesExAlunos: Doadores[]) {
-    if(!listaSituacoesExAlunos ||listaSituacoesExAlunos.length == 0) {
+  verificaMostrarTabela(listaDoadores: Doadores[]) {
+    if(!listaDoadores ||listaDoadores.length == 0) {
       this.mostrarTabela = false; 
       this.msg = "Nenhum cadastro."
     }else{
       this.mostrarTabela = true; 
     }
+  }
+
+  private carregarCombos() {
+    this.doadoresService.getAllByCombo().subscribe((listaCombo: Combo[]) => {
+      this.listaCombo = listaCombo;
+
+      this.listaCombo.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    })
   }
 }

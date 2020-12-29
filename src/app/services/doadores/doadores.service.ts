@@ -8,6 +8,9 @@ import { BaseService } from '../base/base.service';
   providedIn: 'root'
 })
 export class DoadoresService extends BaseService<Doadores> {
+  getAllByCombo() {
+    return this.http.get(`${Rotas.DOADORES}dados/combo`);
+  }
 
   constructor(http: HttpClient) {
     super(http, Rotas.DOADORES);

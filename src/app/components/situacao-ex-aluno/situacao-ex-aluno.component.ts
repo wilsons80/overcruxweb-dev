@@ -7,6 +7,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { SituacaoExAluno } from 'src/app/core/situacoes-ex-alunos';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { Combo } from 'src/app/core/combo';
+
+export class Filter{
+	elm: Combo;
+}
 
 @Component({
   selector: 'situacao-ex-aluno',
@@ -20,6 +25,9 @@ export class SituacaoExAlunoComponent implements OnInit {
   listaSituacoesExAlunos: SituacaoExAluno[];
   situacaoExAluno: SituacaoExAluno = new SituacaoExAluno();
   msg:string;
+
+  filtro:Filter = new Filter();
+  listaCombo:Combo[];
 
   mostrarTabela = false;
 
@@ -39,6 +47,10 @@ export class SituacaoExAlunoComponent implements OnInit {
   ngOnInit() {
     this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.dataSource.paginator = this.paginator;
+    this.filtro = new Filter();
+    this.filtro.elm = new Combo();
+    
+    this.carregarCombos();
     this.getAll();
   }
   limpar() {
@@ -48,8 +60,8 @@ export class SituacaoExAlunoComponent implements OnInit {
   }
 
   consultar() {
-    if (this.situacaoExAluno && this.situacaoExAluno.id) {
-      this.situacaoExAlunoService.getById(this.situacaoExAluno.id).subscribe((situacaoExAluno: SituacaoExAluno) => {
+    if (this.filtro.elm && this.filtro.elm.id) {
+      this.situacaoExAlunoService.getById(this.filtro.elm.id).subscribe((situacaoExAluno: SituacaoExAluno) => {
         if(!situacaoExAluno){
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -108,5 +120,16 @@ export class SituacaoExAlunoComponent implements OnInit {
     }else{
       this.mostrarTabela = true; 
     }
+  }
+  private carregarCombos() {
+    this.situacaoExAlunoService.getAllByCombo().subscribe((listaCombo: Combo[]) => {
+      this.listaCombo = listaCombo;
+
+      this.listaCombo.sort((a,b) => {
+        if (a.nome > b.nome) {return 1;}
+        if (a.nome < b.nome) {return -1;}
+        return 0;
+      });
+    })
   }
 }
