@@ -124,6 +124,7 @@ import { ProvisionamentoModule } from './components/provisionamento/provisioname
 import { ExportarDadosAlunoModule } from './components/relatorios/exportar-dados-aluno/exportar-dados-aluno.module';
 import { RelatoriosBeneficiariosModule } from './components/relatorios/relatorios-beneficiarios/relatorios-beneficiarios.module';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { RelatoriosDpModule } from './components/relatorios/relatorios-dp/relatorios-dp.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -240,7 +241,8 @@ registerLocaleData(localePt, 'pt-BR');
     ExportarDadosAlunoModule,
     RelatoriosBeneficiariosModule,
     TiposAtividadesModule,
-    CKEditorModule
+    CKEditorModule,
+    RelatoriosDpModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

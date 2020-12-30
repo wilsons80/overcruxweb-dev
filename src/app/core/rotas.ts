@@ -76,4 +76,5 @@ export enum Rotas {
     EXPORTAR_DADOS_ALUNO            = 'api/exportardadosaluno/',
     PROGRAMA_PROJETO_INSTITUICAO    = 'api/programasprojetos/',
     TIPOS_ATIVIDADES                = 'api/tiposatividades/',
+    GESTAO_PESSOAL                  = 'api/relatoriogestaopessoal/',
 }

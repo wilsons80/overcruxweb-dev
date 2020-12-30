@@ -17,12 +17,10 @@ import { ComboBeneficiarioModule } from '../../common/combo-beneficiario/combo-b
     RelatoriosBeneficiariosRoutingModule,
     MaterialCommonModule,
     LoadingPopupModule,
-    MaterialCommonModule,
     ComboPesquisavelModule,
     ComboBeneficiarioModule,
     ComboProgramaModule,
     ComboProjetoModule,
-    LoadingPopupModule
   ]
 })
 export class RelatoriosBeneficiariosModule { }
