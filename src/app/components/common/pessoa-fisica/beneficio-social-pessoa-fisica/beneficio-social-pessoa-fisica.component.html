@@ -36,7 +36,8 @@
                    name="dataInicio_{{pinDataInicio}}"
                    [(ngModel)]="beneficio.dataInicio"  
                    [matDatepicker]="dataInicio"
-                   placeholder="Data de início">
+                   placeholder="Data de início"
+                   (input)="onMascaraDataInput($event)">
             <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
             <mat-datepicker #dataInicio></mat-datepicker>
         </mat-form-field>
@@ -46,7 +47,8 @@
                    name="dataFim_{{pinDataFim}}"
                    [(ngModel)]="beneficio.dataFim"
                    [matDatepicker]="dataFim"
-                   placeholder="Data Fim">
+                   placeholder="Data Fim"
+                   (input)="onMascaraDataInput($event)">
             <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
             <mat-datepicker #dataFim></mat-datepicker>
         </mat-form-field>

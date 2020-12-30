@@ -7,16 +7,13 @@
                 <mat-toolbar class="titulopartes">Dados</mat-toolbar>
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-                        <mat-form-field fxFlexOffset="20px" fxFlex="20%" fxFlexOffset="20px">
-                                <input matInput maxlength="50" name="codigo" placeholder="Código"
-                                        [(ngModel)]="cargo.codigo" required>
-                        </mat-form-field>
 
                         <mat-form-field fxFlex="35%" fxFlexOffset="20px">
-                                <input matInput maxlength="200" name="nome" placeholder="Nome" [(ngModel)]="cargo.nome">
+                                <input matInput maxlength="200" name="nome" placeholder="Nome do Cargo"
+                                        [(ngModel)]="cargo.nome">
                         </mat-form-field>
 
-                        <mat-form-field fxFlex="35%">
+                        <mat-form-field fxFlex="25%">
                                 <mat-label>Tipo Cargo:</mat-label>
                                 <mat-select [(ngModel)]="cargo.tipoCargo" name="tipoCargo" required>
                                         <mat-option></mat-option>
@@ -25,20 +22,25 @@
                                         </mat-option>
                                 </mat-select>
                         </mat-form-field>
+                        
+                        <mat-form-field fxFlex="20%">
+                                <input currencyMask [(ngModel)]="cargo.valorRemuneracao" name="remuneracao" placeholder="Remuneração:" matInput
+                                        maxlength="13" [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                                <span matPrefix>R$&nbsp;</span>
+                        </mat-form-field>
 
                 </div>
 
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
                         <mat-form-field fxFlexOffset="20px" fxFlex="20%" fxFlexOffset="20px">
-                                <input matInput maxlength="2" name="qtHoras"
-                                        placeholder="Quantidade da carga horária semanal do cargo"
+                                <input matInput maxlength="2" name="qtHoras" placeholder="Carga Horária"
                                         [(ngModel)]="cargo.qtdHoras">
                         </mat-form-field>
 
                         <mat-form-field fxFlex="80%">
                                 <mat-label>CBO</mat-label>
-                                <mat-select [(ngModel)]="cargo.cbo.id" name="cbo" >
+                                <mat-select [(ngModel)]="cargo.cbo.id" name="cbo">
                                         <mat-option></mat-option>
                                         <mat-option *ngFor="let m of cbos" [value]="m.id">
                                                 {{m.numero}} - {{m.descricaoTipo}}
@@ -51,27 +53,22 @@
 
                 <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
-                        <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="45%" appearance="outline">
-                                <mat-label>Descrição do perfil profissional do cargo</mat-label>
-                                <textarea #dsPerfilProfissional matInput
-                                          name="descricaoPerfilProfissional"
-                                          [(ngModel)]="cargo.descricaoPerfilProfissional"
-                                          cdkTextareaAutosize
-                                          #autosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="3"
-                                          maxlength="2000"></textarea>
+                        <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="45%"
+                                appearance="outline">
+                                <mat-label>Curso/Área de Conhecimento</mat-label>
+                                <textarea #dsPerfilProfissional matInput name="descricaoPerfilProfissional"
+                                        [(ngModel)]="cargo.descricaoPerfilProfissional" cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
+                                        maxlength="2000"></textarea>
                                 <mat-hint align="end">{{dsPerfilProfissional.value.length}} / 2000</mat-hint>
                         </mat-form-field>
 
                         <mat-form-field style="margin: 0 0 0 20px" fxFlex="45%" appearance="outline">
-                                <mat-label>Descrição do resumo das atividades do cargo</mat-label>
-                                <textarea #dsResumoAtividades matInput
-                                          name="descricaoResumoAtividades"
-                                          [(ngModel)]="cargo.descricaoResumoAtividades"
-                                          cdkTextareaAutosize
-                                          #autosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="3"
-                                          maxlength="2000"></textarea>
+                                <mat-label>Descrição das atividades</mat-label>
+                                <textarea #dsResumoAtividades matInput name="descricaoResumoAtividades"
+                                        [(ngModel)]="cargo.descricaoResumoAtividades" cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"
+                                        maxlength="2000"></textarea>
                                 <mat-hint align="end">{{dsResumoAtividades.value.length}} / 2000</mat-hint>
                         </mat-form-field>
                 </div>

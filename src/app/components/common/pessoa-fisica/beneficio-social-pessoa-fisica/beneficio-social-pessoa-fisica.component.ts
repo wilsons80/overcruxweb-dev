@@ -1,3 +1,4 @@
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { EncaminhamentoAluno } from 'src/app/core/encaminhamento-aluno';
 import { Acesso } from 'src/app/core/acesso';
@@ -26,7 +27,7 @@ export class BeneficioSocialPessoaFisicaComponent implements OnInit {
   pinDataInicio       = Date.now();
   pinDataFim          = Date.now();
 
-  constructor() { }
+  constructor(private dataUtilService: DataUtilService) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +42,9 @@ export class BeneficioSocialPessoaFisicaComponent implements OnInit {
       this.beneficio.beneficioSocial = _.cloneDeep(_.find(this.beneficiosSociais,  (f: BeneficioSocial) => f.id === this.beneficio.beneficioSocial.id));
     }
   }
-
+  
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 
 }
