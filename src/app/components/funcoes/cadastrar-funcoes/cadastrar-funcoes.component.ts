@@ -8,6 +8,8 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Funcoes } from 'src/app/core/funcoes';
 import { Acesso } from 'src/app/core/acesso';
 import { Instituicao } from 'src/app/core/instituicao';
+import { Cargo } from 'src/app/core/cargo';
+import { CargosService } from 'src/app/services/cargos/cargos.service';
 
 @Component({
   selector: 'cadastrar-funcoes',
@@ -26,14 +28,14 @@ export class CadastrarFuncoesComponent implements OnInit {
   perfilAcesso: Acesso;
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
+  cargos: Cargo[];
 
   constructor(
     private funcoesService: FuncoesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private unidadeService:UnidadeService,
-    private instituicaoService:InstituicaoService
+    private cargosService: CargosService,
 
   ) { }
 
@@ -50,8 +52,8 @@ export class CadastrarFuncoesComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.unidadeService.getAllUnidadeParaCombo().subscribe((unidades: Unidade[]) => {
-      this.unidades = unidades;
+    this.cargosService.getAll().subscribe((cargos: Cargo[]) => {
+      this.cargos = cargos;
     })
    
     let id: number;
@@ -74,6 +76,10 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   limpar() {
     this.inicializarObjetos();
+    this.funcao.descricao = "";
+    this.funcao.atribuicoes = "";
+    this.funcao.conhecimentosEspecificos = "";
+    this.funcao.comportamentosEsperados = "";
   }
 
   cancelar() {
@@ -96,7 +102,7 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   inicializarObjetos() {
     this.funcao = new Funcoes();
-    this.funcao.unidade = new Unidade();
+    this.funcao.cargo = new Cargo();
   }
 
   mostrarBotaoLimpar() {
