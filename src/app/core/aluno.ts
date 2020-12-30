@@ -7,6 +7,7 @@ import { EncaminhamentoAluno } from './encaminhamento-aluno';
 import { MotivoDesligamento } from './motivo-desligamento';
 import { Programa } from './programa';
 import { Projeto } from './projeto';
+import { BeneficioSocialPessoaFisica } from './beneficio-social-pessoa-fisica';
 
 
 export class Aluno {
@@ -37,6 +38,7 @@ export class Aluno {
 
 	vulnerabilidades: VulnerabilidadesAluno[];
 	encaminhamentos: EncaminhamentoAluno[];
+	benefeciosSociaisPessoaFisica: BeneficioSocialPessoaFisica[];
 
 	tiposPublicoPrioritario:TiposPublicoPrioritario;
 	motivoDesligamento:MotivoDesligamento;

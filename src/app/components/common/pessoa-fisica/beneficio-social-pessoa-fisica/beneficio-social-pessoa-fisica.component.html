@@ -1,0 +1,64 @@
+<fieldset class="bordas">
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+        <mat-form-field fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px">
+            <mat-label>Benefício Social</mat-label>
+            <mat-select [(ngModel)]="beneficio.beneficioSocial.id" 
+                        name="beneficioSocial_{{pinBeneficioSocial}}"
+                        (selectionChange)="carregarDadosBenficioSocial()"
+                        required>
+                <mat-option></mat-option>
+                <mat-option *ngFor="let i of beneficiosSociais" [value]=i.id>
+                    {{i.descricao}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="!beneficiosSociais || beneficiosSociais?.length === 0" align="start">Nenhum benefício social cadastrado
+            </mat-hint>
+        </mat-form-field>
+
+
+        <mat-form-field fxFlexOffset="20px" fxFlex="40%">
+            <input currencyMask 
+                   name="valor_{{pinValor}}"
+                   [(ngModel)]="beneficio.valor" 
+                   placeholder="Valor do benefício:" 
+                   matInput 
+                   maxlength="13"
+                   [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+            <span matPrefix>R$&nbsp;</span>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+
+        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+            <input matInput
+                   name="dataInicio_{{pinDataInicio}}"
+                   [(ngModel)]="beneficio.dataInicio"  
+                   [matDatepicker]="dataInicio"
+                   placeholder="Data de início">
+            <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+            <mat-datepicker #dataInicio></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+            <input matInput
+                   name="dataFim_{{pinDataFim}}"
+                   [(ngModel)]="beneficio.dataFim"
+                   [matDatepicker]="dataFim"
+                   placeholder="Data Fim">
+            <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+            <mat-datepicker #dataFim></mat-datepicker>
+        </mat-form-field>
+        
+        <div id="excluir" class="excluir">
+            <button mat-icon-button 
+            *ngIf="perfilAcesso.deleta" 
+            (click)="deletar()"
+            style="padding: 0px;">
+        <mat-icon>delete_forever</mat-icon>
+    </button>   
+        </div>
+
+    </div>
+</fieldset>

@@ -62,8 +62,6 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
       this.situacoesExAlunosService.getById(id).subscribe((situacaoExAluno: SituacaoExAluno) => {
         this.situacaoExAluno = situacaoExAluno;
         this.filtro.aluno.id = this.situacaoExAluno.aluno.id;
-        console.log("teste", this.filtro.aluno.id );
-        
       });
     }
 
