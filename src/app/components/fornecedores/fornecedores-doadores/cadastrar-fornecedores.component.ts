@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Acesso } from 'src/app/core/acesso';
-import { Fornecedor } from 'src/app/core/Fornecedores';
+import { Fornecedor } from 'src/app/core/fornecedor';
 import { Empresa } from 'src/app/core/empresa';
 import { FilterEmpresa } from 'src/app/core/filter-empresa';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
@@ -162,4 +162,5 @@ export class CadastrarFornecedoresComponent implements OnInit {
     return false;
   }
 
+  
 }
