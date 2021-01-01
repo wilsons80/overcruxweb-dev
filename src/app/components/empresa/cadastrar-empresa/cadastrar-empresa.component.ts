@@ -31,17 +31,18 @@ export class CadastrarEmpresaComponent implements OnInit {
     {id: CategoriaEmpresa.OUTRO, descricao: 'OUTRO'},
     
   ];
+  
+  tiposEmpresa: any [] = [
+    {tipo: TipoEmpresa.PARCEIRA, descricao: 'PARCEIRA'}, //P
+    {tipo: TipoEmpresa.PARCEIRAFORNECEDOR, descricao: 'PARCEIRA e FORNECEDOR'}, //R
+    {tipo: TipoEmpresa.PARCEIRACLIENTEFORNECEDOR, descricao: 'PARCEIRA, CLIENTE e FORNECEDOR'},//E
+    {tipo: TipoEmpresa.PARCEIRACLIENTE, descricao: 'PARCEIRA e CLIENTE'},//L
 
-    tiposEmpresa: any [] = [
-    {tipo: TipoEmpresa.PARCEIRA, descricao: 'PARCEIRA'},
-    {tipo: TipoEmpresa.PARCEIRACLIENTE, descricao: 'PARCEIRA e CLIENTE'},
-    {tipo: TipoEmpresa.PARCEIRAFORNECEDOR, descricao: 'PARCEIRA e FORNECEDOR'},
-    {tipo: TipoEmpresa.PARCEIRACLIENTEFORNECEDOR, descricao: 'PARCEIRA, CLIENTE e FORNECEDOR'},
-    {tipo: TipoEmpresa.CONVENIO, descricao: 'TERMO DE COLABORAÇÃO'},
-    {tipo: TipoEmpresa.CONTRATO, descricao: 'CONTRATO'},
-    {tipo: TipoEmpresa.FORNECEDOR, descricao: 'FORNECEDOR'},
-    {tipo: TipoEmpresa.FORNECEDORCLIENTE, descricao: 'FORNECEDOR e CLIENTE'},
-    {tipo: TipoEmpresa.CLIENTE, descricao: 'CLIENTE'}
+    // {tipo: TipoEmpresa.CONVENIO, descricao: 'TERMO DE COLABORAÇÃO'},
+    // {tipo: TipoEmpresa.CONTRATO, descricao: 'CONTRATO'},
+    // {tipo: TipoEmpresa.FORNECEDOR, descricao: 'FORNECEDOR'},
+    // {tipo: TipoEmpresa.FORNECEDORCLIENTE, descricao: 'FORNECEDOR e CLIENTE'},
+    // {tipo: TipoEmpresa.CLIENTE, descricao: 'CLIENTE'}
    // {tipo: TipoEmpresa.OUTRO, descricao: 'OUTRO'}
   ]
 
