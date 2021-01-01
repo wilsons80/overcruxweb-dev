@@ -81,4 +81,5 @@ export enum Rotas {
     TIPOS_PUBLICO_PRIORITARIO       = 'api/tipospublicoprioritario/',
     TIPOS_DOADORES                  = 'api/tiposdoadores/',
     BENEFICIOS_SOCIAIS              = 'api/beneficiossociais/',
+    FORNECEDORES                    = 'api/fornecedores/',
 }

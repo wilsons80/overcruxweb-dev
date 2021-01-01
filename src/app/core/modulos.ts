@@ -114,5 +114,6 @@ export enum Modulos{
     , RELATORIO_BENEFICIARIO                = 'RELATORIO_BENEFICIARIO'
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
     , RELATORIO_DP                          = 'RELATORIO_DP'
+    , FORNECEDORES                          = 'FORNECEDORES'
 
 }

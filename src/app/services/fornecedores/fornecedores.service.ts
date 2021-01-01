@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Doadores } from 'src/app/core/doadores';
+import { Fornecedor } from 'src/app/core/Fornecedores';
 import { Rotas } from 'src/app/core/rotas';
 import { BaseService } from '../base/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DoadoresService extends BaseService<Doadores> {
+export class FornecedoresService extends BaseService<Fornecedor> {
 
   constructor(http: HttpClient) {
-    super(http, Rotas.DOADORES);
+    super(http, Rotas.FORNECEDORES);
   }
 
-  getAllByCombo() {
-    return this.http.get(`${Rotas.DOADORES}dados/combo`);
+    getAllByCombo() {
+    return this.http.get(`${Rotas.FORNECEDORES}dados/combo`);
   }
 
 }
