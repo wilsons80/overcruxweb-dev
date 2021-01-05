@@ -23,7 +23,6 @@ import { FornecedoresComponent } from './fornecedores.component';
     ComboPessoaFisicaModule,
     ComboEmpresaModule,
     ComboPesquisavelModule
-
   ]
 })
 export class FornecedoresModule { }

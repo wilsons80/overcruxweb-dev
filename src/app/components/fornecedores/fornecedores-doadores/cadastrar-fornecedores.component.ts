@@ -8,12 +8,12 @@ import { Empresa } from 'src/app/core/empresa';
 import { FilterEmpresa } from 'src/app/core/filter-empresa';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { FornecedoresService } from 'src/app/services/Fornecedores/fornecedores.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FilterPessoaFisica } from '../../../core/filter-pessoa-fisica';
 import { EmpresaService } from '../../../services/empresa/empresa.service';
 import { PessoaFisicaService } from '../../../services/pessoa-fisica/pessoa-fisica.service';
 import { Input } from '@angular/core';
+import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.service';
 
 @Component({
   selector: 'cadastrar-fornecedores',

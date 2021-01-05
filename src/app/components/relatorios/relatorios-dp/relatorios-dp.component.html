@@ -42,7 +42,7 @@
                     <div ngModelGroup="comboBeneficiario" fxFlex="50" fxLayoutGap="20px">
                         <combo-funcionario [showDisplayId]="false" 
                                            [selecionado]="filtro.funcionario"
-                                           [desabilitado]="isAtualizar"
+                                           [desabilitado]="false"
                                            (valorChange)="onValorChangeFuncionario($event)">
                         </combo-funcionario>
                     </div> 

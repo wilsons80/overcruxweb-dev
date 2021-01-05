@@ -7,7 +7,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Combo } from 'src/app/core/combo';
 import { Fornecedor } from 'src/app/core/fornecedor';
-import { FornecedoresService } from 'src/app/services/Fornecedores/fornecedores.service';
+import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 
 
@@ -22,8 +22,6 @@ export class Filter {
 export class FornecedoresComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-
 
   listaFornecedores: Fornecedor[];
   fornecedor: Fornecedor = new Fornecedor();
