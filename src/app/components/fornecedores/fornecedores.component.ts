@@ -7,7 +7,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Combo } from 'src/app/core/combo';
 import { Fornecedor } from 'src/app/core/fornecedor';
-import { FornecedoresService } from 'src/app/services/Fornecedores/Fornecedores.service';
+import { FornecedoresService } from 'src/app/services/Fornecedores/fornecedores.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 
 

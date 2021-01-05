@@ -1,4 +1,3 @@
-import { TipoEmpresa } from 'src/app/core/tipo-empresa';
 import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +8,7 @@ import { Empresa } from 'src/app/core/empresa';
 import { FilterEmpresa } from 'src/app/core/filter-empresa';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { FornecedoresService } from 'src/app/services/Fornecedores/Fornecedores.service';
+import { FornecedoresService } from 'src/app/services/Fornecedores/fornecedores.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FilterPessoaFisica } from '../../../core/filter-pessoa-fisica';
 import { EmpresaService } from '../../../services/empresa/empresa.service';
