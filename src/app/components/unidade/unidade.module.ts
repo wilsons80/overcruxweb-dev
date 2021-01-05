@@ -1,3 +1,4 @@
+import { CertificadoUnidadeComponent } from './certificado-unidade/certificado-unidade.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
@@ -15,7 +16,7 @@ import { EstruturaUnidadeComponent } from './estrutura-unidade/estrutura-unidade
   declarations: [
     EscolherUnidadeComponent
     , UnidadeComponent
-    , CadastrarUnidadeComponent, DadosBasicosUnidadeComponent, EstruturaUnidadeComponent
+    , CadastrarUnidadeComponent, DadosBasicosUnidadeComponent, EstruturaUnidadeComponent, CertificadoUnidadeComponent
 
   ],
   imports: [

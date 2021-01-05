@@ -18,5 +18,11 @@ export class EmpresaService extends BaseService<Empresa> {
   getAllCombo() {
     return this.http.get(`${Rotas.EMPRESAS}combo/`);
   }
+  
+  getAllByCombo() {
+    return this.http.get(`${Rotas.EMPRESAS}dados/combo/`);
+  }
+
+
 
 }

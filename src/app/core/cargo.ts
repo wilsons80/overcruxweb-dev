@@ -7,7 +7,8 @@ export class Cargo {
 	tipoCargo: string;
 	usuarioAlteracao: number;
 	cbo: Cbo;
-  descricaoPerfilProfissional: string;
-  descricaoResumoAtividades: string;
-  qtdHoras: number;
+  	descricaoPerfilProfissional: string;
+  	descricaoResumoAtividades: string;
+	 qtdHoras: number;
+	 valorRemuneracao:number;
 }

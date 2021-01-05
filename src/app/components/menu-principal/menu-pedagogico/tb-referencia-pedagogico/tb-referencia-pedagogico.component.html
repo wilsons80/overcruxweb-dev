@@ -38,6 +38,18 @@
             <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_ATIVIDADES)" icone="list" titulo="Tipos de atividades"
             rota="tiposatividades" toolTip="Tipos de atividades"></sub-menu>
         </div>
+        
+        <!-- MOTIVO DESLIGAMENTO -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().MOTIVOS_DESLIGAMENTOS)" icone="web_asset_off" titulo="Motivos Desligamentos"
+            rota="motivosdesligamentos" toolTip="Motivos Desligamentos"></sub-menu>
+        </div>
+
+        <!-- PUBLICO PRIORITARIO -->
+        <div style="padding-left: 15px">
+            <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_PUBLICOS_PRIORITARIOS)" icone="done" titulo="Público Prioritário"
+            rota="tipospublicoprioritario" toolTip="Público Prioritário"></sub-menu>
+        </div>
 
 
     </div>

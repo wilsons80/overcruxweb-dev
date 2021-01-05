@@ -1,0 +1,104 @@
+<mat-toolbar class="subtitulo">Doadores</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <!-- TIPO DOADOR -->
+            <!-- <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <mat-label>Tipo Fornecedor:</mat-label>
+                <mat-select [(ngModel)]="fornecedor.ti" name="tipoDoador">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of listaTiposDoadores" [value]=i.id>
+                        {{i.codigo}} - {{i.descricao}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="listaTiposDoadores?.length === 0" align="start">Nenhuma empresa
+                    cadastrada</mat-hint>
+            </mat-form-field> -->
+
+            <!-- #DATA INICIO VINCULO  -->
+            <mat-form-field fxFlex="30%">
+                <input matInput 
+                          name="dataInicio" 
+                          [(ngModel)]=fornecedor.dataInicioVinculo 
+                          [matDatepicker]="dataInicio" 
+                          placeholder="Data de Início do Vínculo" 
+                          (input)="onMascaraDataInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="dataInicio">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataInicio></mat-datepicker>
+            </mat-form-field>
+
+            <!-- #DATA FIM VINCULO  -->
+            <mat-form-field fxFlex="30%">
+                <input matInput 
+                        name="dataFim" 
+                        [(ngModel)]=fornecedor.dataFimVinculo 
+                        [matDatepicker]="dataFim" 
+                        placeholder="Data Fim Vínculo"
+                        (input)="onMascaraDataInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="dataFim">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataFim></mat-datepicker>
+            </mat-form-field>
+
+           
+
+        </div>
+
+
+        <!-- PESSOA -->
+         <mat-toolbar class="titulopartes">Pessoa</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <div ngModelGroup="comboPessoaFisica" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                fxFlexFill>
+                <combo-pessoa-fisica    [showDisplayId]="true" 
+                                        [obrigatorio]="!fornecedor.empresa.id" 
+                                        [selecionado]="filtroPessoa.pessoaFisica"
+                                        (valorChange)="onValorChangePessoa($event)">
+                </combo-pessoa-fisica>
+            </div>
+        </div> 
+
+        <div fxLayout="row" *ngIf="fornecedor.pessoasFisica.id" fxLayoutGap="50px"
+            style="margin-top: 20px; margin-bottom: 20px" fxFlexFill>
+            <dados-pessoa-fisica [pessoaFisica]=fornecedor.pessoasFisica></dados-pessoa-fisica>
+        </div> 
+
+        <!-- EMPRESA -->
+        <mat-toolbar class="titulopartes">Empresa</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <div ngModelGroup="comboEmpresa" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
+                fxFlexFill>
+                <combo-empresa    [showDisplayId]="true" 
+                                        [obrigatorio]="!fornecedor.pessoasFisica.id" 
+                                        [selecionado]="filtroEmpresa.empresa"
+                                        (valorChange)="onValorChangeEmpresa($event)">
+                </combo-empresa>
+            </div>
+        </div> 
+
+
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </form>
+</div>

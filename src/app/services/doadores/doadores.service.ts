@@ -13,4 +13,8 @@ export class DoadoresService extends BaseService<Doadores> {
     super(http, Rotas.DOADORES);
   }
 
+  getAllByCombo() {
+    return this.http.get(`${Rotas.DOADORES}dados/combo`);
+  }
+
 }

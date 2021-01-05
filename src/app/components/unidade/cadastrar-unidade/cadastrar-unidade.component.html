@@ -33,9 +33,30 @@
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
                         <mat-icon>chevron_left</mat-icon>
                     </button>
+                    <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
                 </div>
             </form>
         </mat-step>
+       
+        <!-- ESTRUTURA -->
+        <mat-step [stepControl]="formCadastroEstrutura">
+            <form #formCadastroEstrutura="ngForm" matStepperIcon="phone">
+                <ng-template matStepLabel>CERTIFICADOS</ng-template>
+                
+                <certificado-unidade [listaCertificadoUnidade]=unidade.certificadosUnidade></certificado-unidade>
+                
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                    fxFlexFill>
+                    <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
+                </div>
+            </form>
+        </mat-step>
+
+
     </mat-horizontal-stepper>
 
     <!-- BOTOES -->

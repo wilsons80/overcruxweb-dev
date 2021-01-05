@@ -1,3 +1,6 @@
+import { TiposDoadoresModule } from './components/tipos-doadores/tipos-doadores.module';
+import { MotivoDesligamentoModule } from './components/motivo-desligamento/motivo-desligamento.module';
+import { SituacaoExAlunoModule } from './components/situacao-ex-aluno/situacao-ex-aluno.module';
 import { TiposAtividadesModule } from './components/tipos-atividades/tipos-atividades.module';
 import { AuthGuard } from './guards/auth.guard';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -122,6 +125,9 @@ import { ComboPesquisavelModule } from './components/common/combo-pesquisavel/co
 import { ConciliacaoModule } from './components/conciliacao/conciliacao.module';
 import { ProvisionamentoModule } from './components/provisionamento/provisionamento.module';
 import { ExportarDadosAlunoModule } from './components/relatorios/exportar-dados-aluno/exportar-dados-aluno.module';
+import { SituacaoExAlunoComponent } from './components/situacao-ex-aluno/situacao-ex-aluno.component';
+import { TiposPublicoPrioritarioModule } from './components/tipos-publico-prioritario/tipos-publico-prioritario.module';
+import { DoadoresModule } from './components/doadores/doadores.module';
 import { RelatoriosBeneficiariosModule } from './components/relatorios/relatorios-beneficiarios/relatorios-beneficiarios.module';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { RelatoriosDpModule } from './components/relatorios/relatorios-dp/relatorios-dp.module';
@@ -239,6 +245,12 @@ registerLocaleData(localePt, 'pt-BR');
     ConciliacaoModule,
     ProvisionamentoModule,
     ExportarDadosAlunoModule,
+    TiposAtividadesModule,
+    SituacaoExAlunoModule,
+    MotivoDesligamentoModule,
+    TiposPublicoPrioritarioModule,
+    TiposDoadoresModule,
+    DoadoresModule,
     RelatoriosBeneficiariosModule,
     TiposAtividadesModule,
     CKEditorModule,

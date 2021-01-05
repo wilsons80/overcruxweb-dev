@@ -1,3 +1,6 @@
+import { BeneficioSocialService } from './../../../../services/beneficio-social/beneficio-social';
+import { BeneficioSocialPessoaFisicaComponent } from './../beneficio-social-pessoa-fisica/beneficio-social-pessoa-fisica.component';
+import { BeneficioSocialPessoaFisica } from './../../../../core/beneficio-social-pessoa-fisica';
 import { Component, OnInit, Input } from '@angular/core';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import {CondicoesMoradiaService} from 'src/app/services/condicoes-moradia/condicoes-moradia.service';
@@ -10,6 +13,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { BeneficioSocial } from 'src/app/core/beneficio-social';
 
 @Component({
   selector: 'atendimento-apoio',
@@ -23,6 +27,7 @@ export class AtendimentoApoioComponent implements OnInit {
   @Input() atendidoOrgaoRede: string;
   @Input() encaminhamentos: EncaminhamentoAluno[];
   @Input() origemTelaAluno: boolean = true;
+  @Input() beneficiosSociaisPessoaFisica: BeneficioSocialPessoaFisica[];
 
   entidadesSociais: EntidadesSociais[];
 
@@ -49,10 +54,12 @@ export class AtendimentoApoioComponent implements OnInit {
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
+  beneficiosSociais: BeneficioSocial[];
 
   constructor(private condicaoMoradiaService: CondicoesMoradiaService,
               private activatedRoute: ActivatedRoute,
-              private entidadeSocialService: EntidadeSocialService,) { 
+              private entidadeSocialService: EntidadeSocialService,
+              private beneficioSocialService:BeneficioSocialService) { 
     this.carregarPerfil = new CarregarPerfil();            
   }
 
@@ -80,6 +87,12 @@ export class AtendimentoApoioComponent implements OnInit {
         this.entidadesSociais = entidadesSociais;
       });
 
+      this.beneficioSocialService.getAll().subscribe((beneficiosSociais: BeneficioSocial[]) => {
+        this.beneficiosSociais = beneficiosSociais;
+      });
+
+
+
   }
 
 
@@ -97,6 +110,17 @@ export class AtendimentoApoioComponent implements OnInit {
       encaminhamento.entidadeSocial = new EntidadesSociais();
   
       this.encaminhamentos.push(encaminhamento);
+  }
+  
+  addBeneficio() {
+      if (!this.beneficiosSociaisPessoaFisica) {
+        this.beneficiosSociaisPessoaFisica = [];
+      }
+      const beneficio = new BeneficioSocialPessoaFisica();
+      beneficio.beneficioSocial = new BeneficioSocial();
+      beneficio.pessoaFisica = new PessoaFisica();
+  
+      this.beneficiosSociaisPessoaFisica.push(beneficio);
   }
 
 }

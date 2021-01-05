@@ -182,5 +182,45 @@ export class CadastrarTurmasComponent implements OnInit {
     }
     return dataValida;
   }
+  
+  validarDatasProjeto(): boolean {
+    let dataValida = true;
+
+    const dataInicioTurma = this.dataUtilService.getDataTruncata(this.turma.dataInicioTurma);
+    const dataFimTurma    = this.dataUtilService.getDataTruncata(this.turma.dataFimTurma);
+
+    const dataInicio = this.dataUtilService.getDataTruncata(this.turma.projeto.dataInicio);
+    const dataFim    = this.dataUtilService.getDataTruncata(this.turma.projeto.dataFim);
+
+    const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim);
+
+    if(!isVigente) {
+      this.toastService.showAlerta('Conflito entre as datas do projeto: ' + this.turma.projeto.descricao.toUpperCase() + '(' + dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto') +
+                                   ') com as datas da turma ('+ dataInicioTurma.toLocaleDateString() + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto' )+')' );
+      dataValida = false;
+    }
+
+    return dataValida;
+  }
+
+  validarDatasPrograma(): boolean {
+    let dataValida = true;
+
+    const dataInicioTurma = this.dataUtilService.getDataTruncata(this.turma.dataInicioTurma);
+    const dataFimTurma    = this.dataUtilService.getDataTruncata(this.turma.dataFimTurma);
+
+    const dataInicio = this.dataUtilService.getDataTruncata(this.turma.programa.dataInicio);
+    const dataFim    = this.dataUtilService.getDataTruncata(this.turma.programa.dataFim);
+
+    const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim);
+
+    if(!isVigente) {
+      this.toastService.showAlerta('Conflito entre as datas do programa: ' + this.turma.programa.descricao.toUpperCase() + '(' + dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto') +
+                                   ') com as datas da turma ('+ dataInicioTurma.toLocaleDateString() + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto' )+')' );
+      dataValida = false;
+    }
+
+    return dataValida;
+  }
 
 }

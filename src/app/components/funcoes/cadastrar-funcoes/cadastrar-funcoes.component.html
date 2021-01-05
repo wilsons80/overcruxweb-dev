@@ -5,36 +5,75 @@
         <mat-toolbar class="titulopartes">Dados da Função</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
+             <!-- #CARGO -->
+             <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Cargo:</mat-label>
+                <mat-select  [(ngModel)]=funcao.cargo.id  name="cargo" required>
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let i of cargos" [value]=i.id>
+                        {{i.nome}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhum cargo
+                    cadastrado</mat-hint>
+            </mat-form-field>
+
             <!-- #NOME  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="40%">
                 <input  [(ngModel)]=funcao.nome #nome matInput maxlength="200" name="nome" placeholder="Nome:" required>
                 <mat-hint align="end">{{nome.value.length}} / 200</mat-hint>
             </mat-form-field>
 
-            <!-- UNIDADE -->
-            <mat-form-field fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Unidade:</mat-label>
-                <mat-select  [(ngModel)]=funcao.unidade.idUnidade  name="empresa" required>
-                    <mat-option></mat-option>
-                    <mat-option *ngFor="let i of unidades" [value]=i.idUnidade>
-                        {{i.nomeUnidade}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="unidades?.length === 0" align="start">Nenhuma unidade
-                    cadastrada</mat-hint>
-            </mat-form-field>
-
-        </div>
-        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-           
-             <!-- #VALOR  -->
-             <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+            <!-- #VALOR  -->
+            <mat-form-field fxFlex="35%" fxFlexOffset="20px">
                 <input currencyMask matInput maxlength="50" name="valorSalario"
                     placeholder="Valor da função:" [(ngModel)]="funcao.valorSalario"
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" required/>
                 <span matPrefix>R$&nbsp;</span>
             </mat-form-field>
 
+        </div>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+           
+            <!-- #DESCRICAO  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
+                <mat-label>Descrição:</mat-label>
+                <textarea [(ngModel)]="funcao.descricao" matInput #descricao name="descricao"  cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200">
+                    </textarea>
+                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+            </mat-form-field>
+            
+            <!-- #ATRIBUICOES  -->
+            <mat-form-field  fxFlex="50%" appearance="outline">
+                <mat-label>Atribuições:</mat-label>
+                <textarea [(ngModel)]="funcao.atribuicoes" matInput #atribuicoes name="atribuicoes"  cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200">
+                    </textarea>
+                <mat-hint align="end">{{atribuicoes.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+        </div>
+       
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+           
+            <!-- #CONHECIMENTOS  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
+                <mat-label>Conhecimentos Específicos:</mat-label>
+                <textarea [(ngModel)]="funcao.conhecimentosEspecificos" matInput #conhecimentos name="conhecimentos"  cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200">
+                    </textarea>
+                <mat-hint align="end">{{conhecimentos.value.length}} / 200</mat-hint>
+            </mat-form-field>
+            
+            <!-- #COMPORTAMENTOS  -->
+            <mat-form-field  fxFlex="50%" appearance="outline">
+                <mat-label>Comportamentos Esperados:</mat-label>
+                <textarea [(ngModel)]="funcao.comportamentosEsperados" matInput #comportamentos name="comportamentos"  cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" maxlength="200">
+                    </textarea>
+                <mat-hint align="end">{{comportamentos.value.length}} / 200</mat-hint>
+            </mat-form-field>
 
         </div>
 

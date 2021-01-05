@@ -25,20 +25,11 @@ export class FuncoesComponent implements OnInit {
   funcoes: Funcoes = new Funcoes();
   msg: string;
 
-  displayedColumns: string[] = ['id', 'nome', 'unidade','valor', 'acoes'];
+  displayedColumns: string[] = ['id', 'nome','valor', 'acoes'];
   dataSource: MatTableDataSource<Funcoes> = new MatTableDataSource();
   
    perfilAcesso: Acesso;
-   //= {
-  //   insere:true,
-  //   altera:true,
-  //   consulta:true,
-  //   deleta:true,
-  //   idModulo:186,
-  //   nomeModulo:"FUNCAO"
-  // };
-
-
+   
   constructor(
     private funcoesService: FuncoesService,
     private router: Router,

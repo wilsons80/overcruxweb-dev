@@ -83,10 +83,10 @@
     </mat-form-field>
 
     <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição de outros benefícios da família:</mat-label>
-        <textarea matInput #outrosBenSoc name="outrosBenSoc" [(ngModel)]="pessoaFisica.outrosBenSoc" cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
-        <mat-hint align="end">{{outrosBenSoc.value.length}} / 200</mat-hint>
+        <mat-label>Descrição da rede de apoio social / pessoal:</mat-label>
+        <textarea matInput #redeApSocRelev name="redeApSocRelev" [(ngModel)]="pessoaFisica.redeApSocRelev"
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
+        <mat-hint align="end">{{redeApSocRelev.value.length}} / 200</mat-hint>
     </mat-form-field>
 
 </div>
@@ -98,29 +98,32 @@
             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
         <mat-hint align="end">{{redeApoioSocial.value.length}} / 200</mat-hint>
     </mat-form-field>
-
-    <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
-        <mat-label>Descrição da rede de apoio social / pessoal:</mat-label>
-        <textarea matInput #redeApSocRelev name="redeApSocRelev" [(ngModel)]="pessoaFisica.redeApSocRelev"
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>
-        <mat-hint align="end">{{redeApSocRelev.value.length}} / 200</mat-hint>
-    </mat-form-field>
+   
 </div>
 
 <!-- BENEFICIOS -->
 <mat-toolbar class="titulopartes">Benefícios</mat-toolbar>
-<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    <mat-form-field fxFlex="35%" fxFlexOffset="20px">
-        <input currencyMask matInput maxlength="50" name="valorOutrosBenerficiosSoc"
-            placeholder="Valor de outros benefícios sociais:" [(ngModel)]="pessoaFisica.valorOutrosBenerficiosSoc"
-            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-        <span matPrefix>R$&nbsp;</span>
-    </mat-form-field>
-
-    <mat-form-field fxFlex="35%">
-        <input matInput maxlength="200" name="origemRendaFamiliar" placeholder="Identificação da origem da renda:"
-            [(ngModel)]="pessoaFisica.origemRendaFamiliar">
-    </mat-form-field>
+<div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    
+    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoBeneficio">
+        <div *ngFor="let beneficio of beneficiosSociaisPessoaFisica; let index = index">
+            <beneficio-social-pessoa-fisica 
+                                       [beneficio]="beneficio" 
+                                       [index]="index"
+                                       [beneficiosSociaisPessoaFisica]="beneficiosSociaisPessoaFisica"   
+                                       [perfilAcesso]="perfilAcesso"
+                                       [beneficiosSociais]="beneficiosSociais" 
+                                       >
+            </beneficio-social-pessoa-fisica>
+        </div>
+        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px; padding-bottom: 10px;">
+            <div>
+                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addBeneficio()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>                
+    </div>
 
 </div>
 

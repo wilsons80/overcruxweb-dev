@@ -1,0 +1,81 @@
+<mat-toolbar class="subtitulo">Situação Ex-Aluno</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+
+            <!-- #DATA AVALIACAO  -->
+            <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                <input matInput name="dataAvaliacao" [(ngModel)]=situacaoExAluno.dataAvaliacao [matDatepicker]="dataAvaliacao" placeholder="Data da Avaliação" required>
+                <mat-datepicker-toggle matSuffix [for]="dataAvaliacao">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataAvaliacao></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
+                <combo-beneficiario 
+                    [showDisplayId]="false" 
+                    [obrigatorio]="true" 
+                    [selecionado]="filtro.aluno"
+                    (valorChange)="onValorChange($event)">
+                </combo-beneficiario>
+            </div>
+        </div>
+
+        <div *ngIf="situacaoExAluno.aluno?.id">
+            <dados-aluno [aluno]=situacaoExAluno.aluno></dados-aluno>
+        </div>
+
+        <mat-toolbar style="margin-top: 20px; margin-bottom: 10px" class="titulopartes">Dados Complementares
+        </mat-toolbar>
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <!-- #PROFISSÃO ATUAL  -->
+            <mat-form-field fxFlexOffset="20px" fxFlex="30%">
+                <input #profissaoAtual matInput maxlength="200" required [(ngModel)]=situacaoExAluno.profissao
+                    name="profissaoAtual" placeholder="Profissão Atual:">
+                <mat-hint align="end">{{profissaoAtual.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <!-- #LOCAL DE TRABALHO  -->
+            <mat-form-field fxFlex="30%">
+                <input #localDeTrabalho matInput maxlength="200" [(ngModel)]=situacaoExAluno.localTrabalho
+                    name="localTrabalho" placeholder="Local de Trabalho:">
+                <mat-hint align="end">{{localDeTrabalho.value.length}} / 200</mat-hint>
+            </mat-form-field>
+
+            <!-- #CONDICAO DE TRABALHO -->
+            <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
+                <mat-label>Condição de Trabalho:</mat-label>
+                <mat-select name="condicaoDeTrabalho"  [(ngModel)]=situacaoExAluno.condicaoAtual  required>
+                    <mat-option *ngFor="let i of condicaoDeTrabalho" [value]=i>
+                        {{i}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+            fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </form>
+</div>

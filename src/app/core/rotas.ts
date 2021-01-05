@@ -77,4 +77,10 @@ export enum Rotas {
     PROGRAMA_PROJETO_INSTITUICAO    = 'api/programasprojetos/',
     TIPOS_ATIVIDADES                = 'api/tiposatividades/',
     GESTAO_PESSOAL                  = 'api/relatoriogestaopessoal/',
+    SITUACOES_EX_ALUNOS             = 'api/situacoesexalunos/',
+    MOTIVOS_DESLIGAMENTOS           = 'api/motivosdesligamentos/',
+    TIPOS_PUBLICO_PRIORITARIO       = 'api/tipospublicoprioritario/',
+    TIPOS_DOADORES                  = 'api/tiposdoadores/',
+    BENEFICIOS_SOCIAIS              = 'api/beneficiossociais/',
+    FORNECEDORES                    = 'api/fornecedores/',
 }

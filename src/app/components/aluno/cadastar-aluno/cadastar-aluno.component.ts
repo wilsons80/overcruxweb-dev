@@ -84,7 +84,7 @@ export class CadastarAlunoComponent implements OnInit {
 
   cadastrar() {
     this.tratarDados();
-
+    console.log("Aluno", this.aluno);
     this.alunoService.cadastrar(this.aluno).pipe(
       switchMap((alunoRetorno: Aluno) => {
         if (this.aluno.pessoaFisica.isFotoChanged && this.aluno.pessoaFisica.foto) {
@@ -121,6 +121,7 @@ export class CadastarAlunoComponent implements OnInit {
 
 
   atualizar() {
+    console.log("Aluno", this.aluno);
     this.tratarDados();
 
     if (this.aluno.pessoaFisica.cpf === null) {

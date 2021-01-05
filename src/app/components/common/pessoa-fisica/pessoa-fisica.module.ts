@@ -1,3 +1,5 @@
+import { BeneficioSocialPessoaFisicaComponent } from './beneficio-social-pessoa-fisica/beneficio-social-pessoa-fisica.component';
+import { BeneficioSocialPessoaFisica } from './../../../core/beneficio-social-pessoa-fisica';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DadosPessoaisComponent } from './dados-pessoais/dados-pessoais.component';
@@ -28,6 +30,7 @@ import { FormularioEncaminhamentoComponent } from './formulario-encaminhamento/f
     EscolarComponent,
     AtendimentoApoioComponent,
     FormularioEncaminhamentoComponent,
+    BeneficioSocialPessoaFisicaComponent
   ],
   imports: [
     CommonModule,

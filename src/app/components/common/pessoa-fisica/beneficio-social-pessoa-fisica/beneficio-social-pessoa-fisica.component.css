@@ -1,0 +1,9 @@
+.bordas{
+    margin: 20px 0 20px 0;
+    border-style: revert;
+    border-width: thin;
+}
+
+.excluir{
+    margin-top: 10px!important;
+}

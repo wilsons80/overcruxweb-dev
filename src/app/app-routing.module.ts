@@ -5,11 +5,13 @@ import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NovaSenhaComponent } from './components/nova-senha/nova-senha.component';
+import { BeneficioSocialPessoaFisicaComponent } from './components/common/pessoa-fisica/beneficio-social-pessoa-fisica/beneficio-social-pessoa-fisica.component';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'teste', component: BeneficioSocialPessoaFisicaComponent },
   { path: 'novasenha', component: NovaSenhaComponent, canActivate: [AuthGuard]},
   { path: 'acessorestrito', component: AcessoRestritoComponent, canActivate: [AuthGuard]},
   
