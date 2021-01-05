@@ -9,21 +9,21 @@ import { Acesso } from 'src/app/core/acesso';
 import { Cargo } from 'src/app/core/cargo';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ColaboradoresGestaoPessoal } from 'src/app/core/colaboradores-gestao-pessoal';
-import { ComboAluno } from 'src/app/core/combo-aluno';
 import { ComboFuncionario } from 'src/app/core/combo-funcionario';
 import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 import { Departamento } from 'src/app/core/departamento';
 import { Unidade } from 'src/app/core/unidade';
+import { Funcoes } from 'src/app/core/funcoes';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
+import { FuncoesService } from 'src/app/services/funcoes/funcoes.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
-import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisica.service';
 import { RelatorioDpService } from 'src/app/services/relatorio-dp/relatorio-dp.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { FileUtils } from 'src/app/utils/file-utils';
-
+import { CargosService } from 'src/app/services/cargos/cargos.service';
+import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 
 export interface TipoRelatorioDp {
   tipo: string;
@@ -38,7 +38,7 @@ export class Filter{
   unidade: Unidade;
   departamento: Departamento;
   cargo: Cargo;
-  funcao: number;
+  funcao: Funcoes;
 }
 
 @Component({
@@ -55,6 +55,9 @@ export class RelatoriosDpComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   comboUnidades: Unidade[];
+  comboFuncoes: Funcoes[];
+  comboCargos: Cargo[];
+  comboDepartamentos:Departamento[];
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
@@ -89,7 +92,10 @@ export class RelatoriosDpComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private loadingPopupService: LoadingPopupService,
     private relatorioDpService: RelatorioDpService,
-    private unidadeService: UnidadeService
+    private unidadeService: UnidadeService,
+    private funcoesService: FuncoesService,
+    private cargosService: CargosService,
+    private departamentoService: DepartamentoService,
   ) { 
     this.carregarPerfil = new CarregarPerfil();
   }
@@ -112,12 +118,12 @@ export class RelatoriosDpComponent implements OnInit {
     this.dataSource.data = [];
 
     this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
-    this.relatorioDpService.getFilter(this.filtro.cpfAluno.cpf,
-                                      this.filtro.funcionario.id,
-                                      this.filtro.unidade.idUnidade,
-                                      this.filtro.departamento.idDepartamento,
-                                      this.filtro.cargo.id,
-                                      null,
+    this.relatorioDpService.getFilter(this.filtro.cpfAluno?.cpf,
+                                      this.filtro.funcionario?.id,
+                                      this.filtro.unidade?.idUnidade,
+                                      this.filtro.departamento?.idDepartamento,
+                                      this.filtro.cargo?.id,
+                                      this.filtro.funcao?.id,
                                       this.filtro.dataInicio,
                                       this.filtro.dataFim)
     .subscribe(
@@ -203,6 +209,7 @@ export class RelatoriosDpComponent implements OnInit {
     this.filtro.unidade      = new Unidade();
     this.filtro.departamento = new Departamento();
     this.filtro.cargo        = new Cargo();
+    this.filtro.funcao       = new Funcoes();
 
     this.selection.clear();
     this.colaboradoresGestaoPessoal = [];
@@ -220,6 +227,18 @@ export class RelatoriosDpComponent implements OnInit {
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: Unidade[]) => {
       this.comboUnidades = unidades;
     });
+
+    this.funcoesService.getAll().subscribe((funcoes: Funcoes[]) => {
+      this.comboFuncoes = funcoes;
+    });
+
+    this.cargosService.getAll().subscribe((cargos: Cargo[]) => {
+      this.comboCargos = cargos;
+    });
+
+    this.departamentoService.getAllCombo().subscribe((departamentos:Departamento[]) => {
+      this.comboDepartamentos = departamentos;
+    })
   }
 
   onMascaraDataInput(event) {

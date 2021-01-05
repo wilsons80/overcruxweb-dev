@@ -1,4 +1,5 @@
 import { Cbo } from './cbo';
+import { Instituicao } from './instituicao';
 
 export class Cargo {
 	id: number;
@@ -9,6 +10,7 @@ export class Cargo {
 	cbo: Cbo;
   	descricaoPerfilProfissional: string;
   	descricaoResumoAtividades: string;
-	 qtdHoras: number;
-	 valorRemuneracao:number;
+	qtdHoras: number;
+	valorRemuneracao:number;
+	instituicao: Instituicao;
 }

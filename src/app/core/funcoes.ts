@@ -1,8 +1,6 @@
-import { Instituicao } from 'src/app/core/instituicao';
 import { Cargo } from './cargo';
-import { Unidade } from './unidade';
-export class Funcoes{
-    
+
+export class Funcoes {
     id:number;
 	nome:string;
 	cargo:Cargo;
@@ -11,6 +9,7 @@ export class Funcoes{
 	atribuicoes:string;
 	conhecimentosEspecificos:string;
     comportamentosEsperados:string;
-    
+	qtdCargaHorariaMinima:number;
+	qtdCargaHorariaMaxima:number;    
 }
 

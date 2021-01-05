@@ -38,33 +38,71 @@
                         <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
                         <mat-datepicker #dataFim></mat-datepicker>
                     </mat-form-field>
-                </div>
-    
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                    <div ngModelGroup="comboBeneficiario" fxFlex="34" fxLayoutGap="20px">
+
+                    <div ngModelGroup="comboBeneficiario" fxFlex="50" fxLayoutGap="20px">
                         <combo-funcionario [showDisplayId]="false" 
                                            [selecionado]="filtro.funcionario"
                                            [desabilitado]="isAtualizar"
                                            (valorChange)="onValorChangeFuncionario($event)">
                         </combo-funcionario>
-                    </div>                
-                </div>
-    
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill>   
-                    <div ngModelGroup="cbUnidade" fxFlex="100" fxFlexOffset="20px">
-                        <combo-pesquisavel #comboUnidade 
-                                            nome="unidade" 
-                                            [itens]="comboUnidades" 
-                                            itemDescricao="nomeUnidade"
-                                            itemId="id"
-                                            [showDisplayId]="false" 
-                                            placeholder="Unidade"
-                                            [obrigatorio]="false"
-                                            [(valor)]="filtro.unidade">
+                    </div> 
+                    
+                    <div ngModelGroup="cbDepartamento" fxFlex="50" fxFlexOffset="20px">
+                        <combo-pesquisavel #comboDepartamento
+                                           nome="departamento" 
+                                           [itens]="comboDepartamentos" 
+                                           itemDescricao="nmDepartamento"
+                                           itemId="idDepartamento"
+                                           [showDisplayId]="false" 
+                                           placeholder="Departamento"
+                                           [obrigatorio]="false"
+                                           [(valor)]="filtro.departamento">
                         </combo-pesquisavel>
                     </div>
+
                 </div>
     
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" fxFlexFill> 
+                    <div ngModelGroup="cbUnidade" fxFlex="33" fxFlexOffset="20px">
+                        <combo-pesquisavel #comboUnidade 
+                                           nome="unidade" 
+                                           [itens]="comboUnidades" 
+                                           itemDescricao="nomeUnidade"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           placeholder="Unidade"
+                                           [obrigatorio]="false"
+                                           [(valor)]="filtro.unidade">
+                        </combo-pesquisavel>
+                    </div>
+
+                    <div ngModelGroup="cbFuncoes" fxFlex="33" fxFlexOffset="20px">
+                        <combo-pesquisavel #comboFuncao
+                                           nome="funcao" 
+                                           [itens]="comboFuncoes" 
+                                           itemDescricao="nome"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           placeholder="Função"
+                                           [obrigatorio]="false"
+                                           [(valor)]="filtro.funcao">
+                        </combo-pesquisavel>
+                    </div>
+
+                    <div ngModelGroup="cbCargos" fxFlex="33" fxFlexOffset="20px">
+                        <combo-pesquisavel #comboCargo 
+                                           nome="cargo" 
+                                           [itens]="comboCargos" 
+                                           itemDescricao="nome"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           placeholder="Cargo"
+                                           [obrigatorio]="false"
+                                           [(valor)]="filtro.cargo">
+                        </combo-pesquisavel>
+                    </div>
+
+                </div>
     
                 <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                     <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" 
@@ -123,7 +161,7 @@
 
             <ng-container matColumnDef="colaborador" >
                 <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Colaborador</th>
-                <td mat-cell *matCellDef="let element"> {{element.colaborador }} </td>
+                <td mat-cell *matCellDef="let element"> {{element.nomeCobaborador }} </td>
             </ng-container>
 
             <ng-container matColumnDef="email" >
@@ -152,7 +190,7 @@
             </ng-container>            
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row);"></tr>
         </table>
         <div [hidden]="!mostrarTabela">
             <mat-paginator (page)="handlePageBottom($event)" 
