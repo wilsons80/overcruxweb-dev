@@ -1,9 +1,9 @@
 import { Cbo } from './cbo';
+import { GrausInstrucao } from './graus-instrucao';
 import { Instituicao } from './instituicao';
 
 export class Cargo {
 	id: number;
-	codigo: string;
 	nome: string;
 	tipoCargo: string;
 	usuarioAlteracao: number;
@@ -13,4 +13,5 @@ export class Cargo {
 	qtdHoras: number;
 	valorRemuneracao:number;
 	instituicao: Instituicao;
+	grausInstrucao:GrausInstrucao;
 }

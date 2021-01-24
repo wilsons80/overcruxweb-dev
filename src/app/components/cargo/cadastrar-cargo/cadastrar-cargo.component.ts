@@ -1,3 +1,4 @@
+import { GrausInstrucaoService } from './../../../services/graus-instrucao/graus-instrucao.service';
 import { Cbo } from './../../../core/cbo';
 import { CboService } from './../../../services/cbo/cbo.service';
 import { Location } from '@angular/common';
@@ -8,6 +9,7 @@ import { CargosService } from 'src/app/services/cargos/cargos.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { TipoCargo } from 'src/app/core/tipo-cargo';
 import { Acesso } from 'src/app/core/acesso';
+import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 
 @Component({
   selector: 'app-cadastrar-cargo',
@@ -28,19 +30,22 @@ export class CadastrarCargoComponent implements OnInit {
   isAtualizar = false;
 
   tiposCargo: TipoCargo = new TipoCargo();
+  grausInstrucao: GrausInstrucao[] = [];
 
   constructor(
     private cargoService: CargosService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private cboService: CboService
+    private cboService: CboService,
+    private grausInstrucaoService:GrausInstrucaoService
   ) { }
 
 
   ngOnInit() {
 
     this.limpar();
+
 
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
@@ -64,9 +69,15 @@ export class CadastrarCargoComponent implements OnInit {
         if( !this.cargo.cbo) {
           this.cargo.cbo = new Cbo();
         }
+        if(!this.cargo.grausInstrucao){
+          this.cargo.grausInstrucao = new GrausInstrucao();
+        }
       });
     }
 
+    this.grausInstrucaoService.getAll().subscribe((graus: GrausInstrucao[])=> {
+      this.grausInstrucao = graus;
+    })
     this.cboService.getAll().subscribe((cbos: Cbo[]) => {
       this.cbos = cbos;
     });
@@ -90,6 +101,7 @@ export class CadastrarCargoComponent implements OnInit {
   limpar() {
     this.cargo = new Cargo();
     this.cargo.cbo = new Cbo();
+    this.cargo.grausInstrucao = new GrausInstrucao();
   }
 
   cancelar() {
