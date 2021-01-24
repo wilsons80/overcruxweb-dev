@@ -37,7 +37,8 @@
                    [(ngModel)]="beneficio.dataInicio"  
                    [matDatepicker]="dataInicio"
                    placeholder="Data de início"
-                   (input)="onMascaraDataInput($event)">
+                   (input)="onMascaraDataInput($event)"
+                   required>
             <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
             <mat-datepicker #dataInicio></mat-datepicker>
         </mat-form-field>
