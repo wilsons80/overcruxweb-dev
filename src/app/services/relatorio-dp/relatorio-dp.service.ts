@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_BYPASS_INTERCEPTOR } from 'src/app/components/common/http-mgmt/http-mgmt.module';
-import { Rotas } from 'src/app/core/rotas';
 
 
 const rootPath = 'api/relatoriogestaopessoal/';
