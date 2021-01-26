@@ -118,5 +118,6 @@ export enum Modulos{
     , EMPRESAS_PARCEIRAS                    = 'EMPRESAS_PARCEIRAS'
     , EMPRESAS_FORNECEDORAS                 = 'EMPRESAS_FORNECEDORAS'
     , EMPRESAS_CLIENTES                     = 'EMPRESAS_CLIENTES'
-    
+    , RELATORIO_FINANCEIRO                  = 'RELATORIO_FINANCEIRO'
+
 }
