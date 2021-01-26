@@ -15,6 +15,10 @@ export class EmpresaService extends BaseService<Empresa> {
     super(http, Rotas.EMPRESAS);
   }
 
+  getAllPorTipo(tipo:string) {
+    return this.http.get(`${this.rota}tipoempresa/${tipo}`);
+  }
+
   getAllCombo() {
     return this.http.get(`${Rotas.EMPRESAS}combo/`);
   }

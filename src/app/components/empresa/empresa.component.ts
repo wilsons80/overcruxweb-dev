@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,13 +11,16 @@ import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-empresa',
+  selector: 'empresa',
   templateUrl: './empresa.component.html',
   styleUrls: ['./empresa.component.css']
 })
 export class EmpresaComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @Input() tipo: string;
+  @Input() titulo: string;
+  @Input() rotaCadastrar: string;
 
   empresas: Empresa[];
   mostrarTabela = false;
@@ -41,7 +44,7 @@ export class EmpresaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
 
 
     this.dataSource.paginator = this.paginator;
@@ -73,7 +76,7 @@ export class EmpresaComponent implements OnInit {
 
 
   atualizar(empresa: Empresa) {
-    this.router.navigate(['/empresa/cadastrar'], { queryParams: { idEmpresa: empresa.id } });
+    this.router.navigate([`/${this.rotaCadastrar}`], { queryParams: { idEmpresa: empresa.id } });
   }
 
   deletar(empresa: Empresa) {
@@ -103,7 +106,7 @@ export class EmpresaComponent implements OnInit {
   }
 
   getAll() {
-    this.empresaService.getAll().subscribe((empresas: Empresa[]) => {
+    this.empresaService.getAllPorTipo(this.tipo).subscribe((empresas: Empresa[]) => {
       this.empresas = empresas;
       this.dataSource.data = empresas ? empresas : [];
       this.verificaMostrarTabela(empresas);
@@ -118,4 +121,10 @@ export class EmpresaComponent implements OnInit {
       this.mostrarTabela = true;
     }
   }
+
+
+
+  go() {
+    this.router.navigateByUrl(`/${this.rotaCadastrar}`);
+  };
 }
