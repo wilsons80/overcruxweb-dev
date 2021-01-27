@@ -97,7 +97,7 @@ export class ProjetoComponent implements OnInit {
   }
 
   getAll() {
-    this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
+    this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
       this.projetos = projetos;
       this.dataSource.data = projetos ? projetos : [];
       this.verificaMostrarTabela(projetos);

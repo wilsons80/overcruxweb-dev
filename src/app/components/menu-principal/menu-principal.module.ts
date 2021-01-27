@@ -42,6 +42,7 @@ import { TbReferenciaPedagogicoComponent } from './menu-pedagogico/tb-referencia
 import { SubMenuRelatorioComponent } from './menu-secretaria/sub-menu-relatorio/sub-menu-relatorio.component';
 import { TbProgramasProjetosComponent } from './menu-programa-projeto/tb-referencia-programa-projeto/tb-referencia-programa-projeto.component';
 import { SubMenuRelatorioDpComponent } from './menu-gestao-pessoas/sub-menu-relatorio/sub-menu-relatorio-dp.component';
+import { SubMenuRelatorioFinanceiroComponent } from './menu-gestao-financeira/sub-menu-relatorio/sub-menu-relatorio-financeiro.component';
 
 
 
@@ -73,6 +74,7 @@ import { SubMenuRelatorioDpComponent } from './menu-gestao-pessoas/sub-menu-rela
     TbProgramasProjetosComponent,
     SubMenuRelatorioComponent,
     SubMenuRelatorioDpComponent,
+    SubMenuRelatorioFinanceiroComponent
   ],
   imports: [
     CommonModule,

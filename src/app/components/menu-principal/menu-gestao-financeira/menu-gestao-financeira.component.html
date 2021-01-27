@@ -28,6 +28,9 @@
             <!-- PROVISAO -->
             <sub-menu *ngIf="verificaAcesso(getModulos().PROVISAO)" icone="local_atm" titulo="Provisão" rota="provisao" toolTip="Provisão"></sub-menu>
 
+            <!-- RELATORIOS -->
+            <sub-menu-relatorio-financeiro *ngIf="verificaAcesso(getModulos().RELATORIO_GESTAO_FINANCEIRA)"></sub-menu-relatorio-financeiro>
+
             <!-- TABELAS REFERENCIA -->
             <tb-referencia-financeiro></tb-referencia-financeiro>
 

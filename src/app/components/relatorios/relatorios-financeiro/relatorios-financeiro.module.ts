@@ -9,6 +9,8 @@ import { LoadingPopupModule } from 'src/app/services/loadingPopup/loading-popup.
 import { ComboFuncionarioModule } from '../../common/combo-funcionario/combo-funcionario.module';
 import { RelatoriosFinanceiroComponent } from './relatorios-financeiro.component';
 import { RelatoriosFinanceiroRoutingModule } from './relatorios-financeiro-routing.module';
+import { ComboPessoaFisicaModule } from '../../common/combo-pessoa-fisica/combo-pessoa-fisica.module';
+import { ComboEmpresaModule } from '../../common/combo-empresa/combo-empresa.module';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { RelatoriosFinanceiroRoutingModule } from './relatorios-financeiro-routi
     ComboProgramaModule,
     ComboProjetoModule,
     ComboFuncionarioModule,
-    LoadingPopupModule
+    LoadingPopupModule,
+    ComboPessoaFisicaModule,
+    ComboEmpresaModule,
   ]
 })
-export class RelatoriosDpModule { }
+export class RelatoriosFinanceiroModule { }

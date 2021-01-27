@@ -132,6 +132,7 @@ import { RelatoriosBeneficiariosModule } from './components/relatorios/relatorio
 import { CKEditorModule } from 'ng2-ckeditor';
 import { RelatoriosDpModule } from './components/relatorios/relatorios-dp/relatorios-dp.module';
 import { FornecedoresModule } from './components/fornecedores/fornecedores.module';
+import { RelatoriosFinanceiroModule } from './components/relatorios/relatorios-financeiro/relatorios-financeiro.module';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -256,7 +257,8 @@ registerLocaleData(localePt, 'pt-BR');
     TiposAtividadesModule,
     CKEditorModule,
     RelatoriosDpModule,
-    FornecedoresModule
+    FornecedoresModule,
+    RelatoriosFinanceiroModule
   ],
   providers: [
     AuthGuard, UnidadeResolver, AcessoModuloResolver,

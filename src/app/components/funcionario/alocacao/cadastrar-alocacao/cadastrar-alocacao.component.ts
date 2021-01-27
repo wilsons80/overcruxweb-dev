@@ -39,7 +39,7 @@ export class CadastrarAlocacaoComponent implements OnInit {
       this.programas = programas;
     });
 
-    this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
+    this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
       this.projetos = projetos;
     });
 

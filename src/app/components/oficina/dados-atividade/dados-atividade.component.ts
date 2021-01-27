@@ -67,7 +67,7 @@ export class DadosAtividadeComponent implements OnInit {
     if ( this.activatedRoute.snapshot.data.modulo === Modulos.OFICINA) {
       this.mostrarCampos = true;
 
-      this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
+      this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
         this.todosProjetos = projetos;
         this.projetos      = projetos;
       });

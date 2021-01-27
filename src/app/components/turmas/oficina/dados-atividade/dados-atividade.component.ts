@@ -70,9 +70,8 @@ export class DadosAtividadeComponent implements OnInit {
         this.listaPlanosAcao = planosAcao;
       });
 
-      this.projetoService.getAll().subscribe((projetos: Projeto[]) => {
+      this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
         this.projetos = projetos;
-
       });
 
       this.programaService.getAllCombo().subscribe((programas: Programa[]) => {

@@ -6,24 +6,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Acesso } from 'src/app/core/acesso';
-import { Cargo } from 'src/app/core/cargo';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ColaboradoresGestaoPessoal } from 'src/app/core/colaboradores-gestao-pessoal';
-import { ComboFuncionario } from 'src/app/core/combo-funcionario';
-import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
-import { Departamento } from 'src/app/core/departamento';
-import { Unidade } from 'src/app/core/unidade';
-import { Funcoes } from 'src/app/core/funcoes';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
-import { FuncoesService } from 'src/app/services/funcoes/funcoes.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
-import { RelatorioDpService } from 'src/app/services/relatorio-dp/relatorio-dp.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { FileUtils } from 'src/app/utils/file-utils';
-import { CargosService } from 'src/app/services/cargos/cargos.service';
-import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 import { ComboPrograma } from 'src/app/core/combo-programa';
 import { ComboProjeto } from 'src/app/core/combo-projeto';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
@@ -35,6 +24,12 @@ import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-b
 import { PlanosContas } from 'src/app/core/planos-contas';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
 import { Observable } from 'rxjs';
+import { Projeto } from 'src/app/core/projeto';
+import { Programa } from 'src/app/core/programa';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { ComboEmpresa } from 'src/app/core/combo-empresa';
+import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 
 export interface TipoRelatorio {
   tipo: string;
@@ -44,10 +39,12 @@ export interface TipoRelatorio {
 
 export class Filter{
   fornecedorColaborador: any; //não está tipado pq o combo-pesquisável usa lista com objeto diferente
-  contaBancaria: ContasBancaria;
-  planoConta: PlanosContas;
-  programa: ComboPrograma;
-  projeto: ComboProjeto;
+  contaBancaria: ContasBancaria = new ContasBancaria();
+  planoConta: PlanosContas = new PlanosContas();
+  programa: ComboPrograma = new ComboPrograma();
+  projeto: ComboProjeto = new ComboProjeto();
+  empresa: ComboEmpresa = new ComboEmpresa();
+  pessoaFisica: ComboPessoaFisica = new ComboPessoaFisica();
   dataInicio: Date;
   dataFim: Date;
   dataInicioVenc: Date;
@@ -70,12 +67,16 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   comboPlanosContas: PlanosContas[];
   comboContasBancarias: ContasBancaria[];
 
+  todosProjetos: Projeto[];
+  comboProjetos: ComboProjeto[];
+  comboProgramas: ComboPrograma[];
+
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'datapagameento', 'rubrica'];
-  displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'valorfatura', 'numeroparcela', 'rubrica'];
-  displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'datapagameento', 'rubrica'];
+  displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'rubrica'];
+  displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
+  displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'rubrica'];
 
 
   displayedColumns: string[] = [];
@@ -94,7 +95,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   tiposRelatorios: TipoRelatorio[] = [
     {tipo: 'NP', descricao: 'Normativa Pagamentos', nomeRelatorio: 'normativa_pagamentos'},
     {tipo: 'FP', descricao: 'Faturas a Pagar', nomeRelatorio: 'faturas_pagar'},
-    {tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
+    //{tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
   ];
   tipoRelatorioSelecionado: TipoRelatorio;
 
@@ -106,6 +107,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private loadingPopupService: LoadingPopupService,
     private drc: ChangeDetectorRef,
+    private projetoService: ProjetoService,
+    private programaService: ProgramaService,
     private relatorioFaturasPagarService: RelatorioFaturasPagarService,
     private relatorioNormativaPagamentosService: RelatorioNormativaPagamentosService,
     private relatorioSaldoProjetoService: RelatorioSaldoProjetoService,
@@ -164,38 +167,26 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   
   prepararBuscaNormativaPagamentos(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'NP') { 
-      let programaprojeto = '';
-      let cnpjcpf         = '';
-      
-      if(this.filtro.programa && this.filtro.programa.id) {
-        programaprojeto = this.filtro.programa.nome;
-      }
-      if(this.filtro.projeto && this.filtro.projeto.id) {
-        programaprojeto = this.filtro.projeto.nome;
-      }
-      
       this.servicoBusca = this.relatorioNormativaPagamentosService;
-      this.servicoBusca$ = this.relatorioNormativaPagamentosService.getFilter(this.filtro.planoConta.id, cnpjcpf, programaprojeto, this.filtro.dataInicio, this.filtro.dataFim);
+      this.servicoBusca$ = this.relatorioNormativaPagamentosService.getFilter(this.filtro.planoConta?.id, 
+                                                                              this.filtro.empresa?.id, 
+                                                                              this.filtro.pessoaFisica?.id,
+                                                                              this.filtro.programa?.id,
+                                                                              this.filtro.projeto?.id, 
+                                                                              this.filtro.dataInicio, 
+                                                                              this.filtro.dataFim);
     }
     return this.servicoBusca$;
   }
 
   prepararBuscaFaturaPagar(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'FP') { 
-      let programaprojeto = '';
-      let cnpjcpf         = '';
-      
-      if(this.filtro.programa && this.filtro.programa.id) {
-        programaprojeto = this.filtro.programa.nome;
-      }
-      if(this.filtro.projeto && this.filtro.projeto.id) {
-        programaprojeto = this.filtro.projeto.nome;
-      }
-      
       this.servicoBusca = this.relatorioFaturasPagarService;
-      this.servicoBusca$ = this.relatorioFaturasPagarService.getFilter(this.filtro.planoConta.id, 
-                                                                       cnpjcpf, 
-                                                                       programaprojeto, 
+      this.servicoBusca$ = this.relatorioFaturasPagarService.getFilter(this.filtro.planoConta?.id, 
+                                                                       this.filtro.empresa?.id, 
+                                                                       this.filtro.pessoaFisica?.id,
+                                                                       this.filtro.programa?.id,
+                                                                       this.filtro.projeto?.id,
                                                                        this.filtro.dataInicio, 
                                                                        this.filtro.dataFim,
                                                                        this.filtro.dataInicioVenc, 
@@ -207,18 +198,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   prepararBuscaSaldoProjeto(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'SP') { 
-      let programaprojeto = '';
-      
-      if(this.filtro.programa && this.filtro.programa.id) {
-        programaprojeto = this.filtro.programa.nome;
-      }
-      if(this.filtro.projeto && this.filtro.projeto.id) {
-        programaprojeto = this.filtro.projeto.nome;
-      }
-     
       this.servicoBusca  = this.relatorioSaldoProjetoService;
       this.servicoBusca$ = this.relatorioSaldoProjetoService.getFilter(this.filtro.contaBancaria.id, 
-                                                                       programaprojeto, 
+                                                                       this.filtro.programa?.id,
+                                                                       this.filtro.projeto?.id,
                                                                        this.filtro.dataInicio, 
                                                                        this.filtro.dataFim);
     }
@@ -226,7 +209,6 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   }
 
   consultar() {
-    this.limparDataSourcer();
     this.prepararBusca();    
 
     this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
@@ -285,8 +267,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     }
     
     this.loadingPopupService.mostrarMensagemDialog('Gerando relatório ..');
-    const dados = this.selection.selected.map(d => d.idPessoaFisica);
-    this.servicoBusca.showRelatorio(this.tipoRelatorioSelecionado.tipo, mimetype, dados).subscribe(
+    const dados = this.selection.selected;
+    this.servicoBusca.showRelatorio(mimetype, dados).subscribe(
       response => {
         if(mimetype === this.MIMETYPE_PDF) {
           this.fileUtils.showFilePDF(response);
@@ -311,8 +293,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
     this.filtro.contaBancaria  = new ContasBancaria();
     this.filtro.planoConta     = new PlanosContas();
-    this.filtro.programa     = new ComboPrograma();
-    this.filtro.projeto     = new ComboProjeto();
+    this.filtro.programa       = new Programa();
+    this.filtro.projeto        = new Projeto();
+    this.filtro.empresa        = new ComboEmpresa();
+    this.filtro.pessoaFisica   = new ComboPessoaFisica();
 
     this.selection.clear();
     this.dadosDataSource = [];
@@ -334,19 +318,78 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
     this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
       this.comboContasBancarias = contasBancarias;
+      this.comboContasBancarias.forEach(c => {
+        c.descricaoCompleta = `Banco: ${c.banco.numero} - ${c.banco.nome} - Agência: ${c.numeroAgencia} - Conta: ${c.numeroContaBancaria}`;
+      })
     });
+
+    this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
+      this.todosProjetos    = projetos;
+      this.comboProjetos    = projetos;
+    });
+
+    this.programaService.getAllCombo().subscribe((programas: ComboPrograma[]) => {
+      this.comboProgramas = programas;
+    });
+
   }
 
   onMascaraDataInput(event) {
     return this.dataUtilService.onMascaraDataInput(event);
   }
 
-  carregarContaContabil(event){
-    if (event) {
-      this.filtro.planoConta = _.cloneDeep(_.find(this.comboPlanosContas,  (c) => c.id === event.id));
-    } else {
-      this.filtro.planoConta = new PlanosContas();
+  
+  carregarPrograma(programa: ComboPrograma) {
+    this.filtro.projeto = null;
+
+    if(!programa) {
+      this.comboProjetos = this.todosProjetos; 
+      return;
+    } 
+
+    this.comboProjetos   = this.todosProjetos.filter(p => p.programa && p.programa.id === programa.id).map(p => {
+      let combo = new ComboProjeto();
+      combo.id   = p.id;
+      combo.nome = p.nome;
+      return combo;
+    });
+  }
+
+  carregarProjeto(projeto: ComboProjeto) {
+    if(!projeto) {
+      this.filtro.projeto = null;
+      return;
     }
+  }
+
+  limparFiltroEmpresa(pessoaFisica){
+    this.filtro.pessoaFisica = pessoaFisica;
+    if(pessoaFisica) {
+      this.filtro.empresa = null;
+    }
+  }
+
+  limparFiltroPessoaFisica(empresa){
+    this.filtro.empresa = empresa;
+    if(empresa) {
+      this.filtro.pessoaFisica = null;
+    }
+  }
+
+  showFiltroFornecedor(): boolean {
+    return this.tipoRelatorioSelecionado.tipo !== 'SP'
+  }
+
+  showFiltroCategoria(): boolean {
+    return this.tipoRelatorioSelecionado.tipo !== 'SP'
+  }
+
+  showFiltroContaBancaria(): boolean {
+    return this.tipoRelatorioSelecionado.tipo === 'SP'
+  }
+
+  showFiltroDataVencimento(): boolean {
+    return this.tipoRelatorioSelecionado.tipo === 'FP'
   }
 
 }

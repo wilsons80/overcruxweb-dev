@@ -21,19 +21,22 @@ export class RelatorioSaldoProjetoService {
 
   
   getFilter(idcontaBancaria: string|number,
-            programaProjeto: string|number,
+            idPrograma: string|number,
+            idProjeto: string|number,
             dataInicio: any,
             dataFim: any) {
 
     idcontaBancaria   = idcontaBancaria || '';
-    programaProjeto   = programaProjeto || '';
+    idPrograma        = idPrograma || '';
+    idProjeto         = idProjeto || '';
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
 
     return this.http.get(`${rootPath}filter`, { params: {
       idcontaBancaria: `${idcontaBancaria}` ,
-      programaProjeto: `${programaProjeto}`,
+      idprograma: `${idPrograma}`,
+      idprojeto: `${idProjeto}` ,
       dataInicio: `${p_dataInicio}`,
       dataFim: `${p_dataFim}`
       }

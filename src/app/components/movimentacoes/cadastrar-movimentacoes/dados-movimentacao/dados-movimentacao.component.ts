@@ -223,10 +223,10 @@ export class DadosMovimentacaoComponent implements OnInit {
 
   getDescricaoDoador(doador: Doadores): string {
     if(doador.empresa) {
-      return doador.empresa.nomeRazaoSocial.toUpperCase();
+      return doador.empresa.nomeRazaoSocial?.toUpperCase();
     }
     if(doador.pessoasFisica){
-      return doador.pessoasFisica.nome.toUpperCase();
+      return doador.pessoasFisica.nome?.toUpperCase();
     }
   }
   getIdDoador(doador: Doadores): number {

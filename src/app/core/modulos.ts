@@ -115,6 +115,7 @@ export enum Modulos{
     , TIPOS_ATIVIDADES                      = 'TIPOS_ATIVIDADES'
     , RELATORIO_DP                          = 'RELATORIO_DP'
     , FORNECEDORES                          = 'FORNECEDORES'
+    , RELATORIO_GESTAO_FINANCEIRA           = 'RELATORIO_GESTAO_FINANCEIRA'
     , RELATORIO_FINANCEIRO                  = 'RELATORIO_FINANCEIRO'
 
 }

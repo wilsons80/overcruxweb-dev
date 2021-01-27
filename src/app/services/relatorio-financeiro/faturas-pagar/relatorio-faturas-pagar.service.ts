@@ -21,16 +21,20 @@ export class RelatorioFaturasPagarService {
 
   
   getFilter(idcategoria: string|number,
-            cnpj_cpf: string|number,
-            programaProjeto: string|number,
+            idEmpresa: string|number,
+            idPessoaFisica: string|number,
+            idPrograma: string|number,
+            idProjeto: string|number,
             dataInicio: any,
             dataFim: any,
             dataInicioVenc: any,
             dataFimVenc: any) {
 
     idcategoria       = idcategoria || '';
-    cnpj_cpf          = cnpj_cpf || '';
-    programaProjeto   = programaProjeto || '';
+    idEmpresa         = idEmpresa || '';
+    idPessoaFisica    = idPessoaFisica || '';
+    idPrograma        = idPrograma || '';
+    idProjeto         = idProjeto || '';
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
@@ -39,8 +43,10 @@ export class RelatorioFaturasPagarService {
 
     return this.http.get(`${rootPath}filter`, { params: {
       idcategoria: `${idcategoria}` ,
-      cnpj_cpf: `${cnpj_cpf}` ,
-      programaProjeto: `${programaProjeto}`,
+      idempresa: `${idEmpresa}` ,
+      idpessoafisica: `${idPessoaFisica}` ,
+      idprograma: `${idPrograma}`,
+      idprojeto: `${idProjeto}` ,
       dataInicio: `${p_dataInicio}`,
       dataFim: `${p_dataFim}`,
       dataInicioVenc: `${p_dataInicioVenc}`,

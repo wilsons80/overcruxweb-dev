@@ -20,60 +20,127 @@
 
             <div *ngIf="tipoRelatorioSelecionado">
 
-                <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill>
-                    <div ngModelGroup="comboRubrica" 
-                         fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill *ngIf="showFiltroCategoria()">
+                    <div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
                         <combo-pesquisavel #comboRubrica 
                                            nome="rubrica" 
-                                           [itens]="planosContas" 
+                                           [itens]="comboPlanosContas" 
                                            itemDescricao="planoConta"
                                            itemId="id"
                                            label="Rubrica"
-                                           [obrigatorio]="true"
                                            placeholder="Escolha..."
-                                           [(valor)]="filtro.planosContas"
-                                           (valorChange)="carregarContaContabil($event)"
+                                           [(valor)]="filtro.planoConta"
                                            style="margin-top: 10px;">
                         </combo-pesquisavel>
                     </div> 
                 </div> 
 
-                <div fxLayout="row" 
-                    fxLayoutGap="50px" 
-                    style="margin-top: 10px; margin-bottom: 10px" 
-                    fxFlexFill>
-                    <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                        <mat-label>Agência - Conta Corrente</mat-label>
-                        <mat-select name="contaBancaria" 
-                                    [(ngModel)]="movimentacoes.contaBancaria.id"
-                                    (selectionChange)="carregarContaBancaria()">
-                            <mat-option></mat-option>
-                            <mat-option *ngFor="let m of contasBancarias" [value]="m.id">
-                                Banco: {{m.banco.numero}} - {{m.banco.nome}} - Agência: {{m.numeroAgencia}} - Conta: {{m.numeroContaBancaria}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill *ngIf="showFiltroContaBancaria()">
+                    <div ngModelGroup="comboContaBancaria" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pesquisavel #comboContaBancaria 
+                                           nome="contaBancaria" 
+                                           [itens]="comboContasBancarias" 
+                                           itemDescricao="descricaoCompleta"
+                                           itemId="id"
+                                           label="Agência - Conta Corrente"
+                                           placeholder="Escolha..."
+                                           [(valor)]="filtro.contaBancaria"
+                                           style="margin-top: 10px;">
+                        </combo-pesquisavel>
+                    </div> 
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                    <mat-form-field fxFlex= "200px" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <div ngModelGroup="comboPrograma" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pesquisavel #comboPrograma 
+                                            nome="programa" 
+                                            [itens]="comboProgramas" 
+                                            itemDescricao="nome"
+                                            itemId="id"
+                                            label="Programa"
+                                            placeholder="Escolha..."
+                                            [(valor)]="filtro.programa"
+                                            (valorChange)="carregarPrograma($event)"
+                                            style="margin-top: 10px;">
+                        </combo-pesquisavel>
+                    </div>
+
+                    <div ngModelGroup="comboProjeto" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pesquisavel #comboProjeto 
+                                            nome="projeto" 
+                                            [itens]="comboProjetos" 
+                                            itemDescricao="nome"
+                                            itemId="id"
+                                            label="Projeto"
+                                            placeholder="Escolha..."
+                                            [(valor)]="filtro.projeto"
+                                            (valorChange)="carregarProjeto($event)"
+                                            style="margin-top: 10px;">
+                        </combo-pesquisavel>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill *ngIf="showFiltroFornecedor()">
+                    <div ngModelGroup="comboPessoaFisica" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pessoa-fisica    label="Fornecedor (Pessoa Física)"
+                                                [fxFlexOffset]="0"
+                                                [selecionado]="filtro.pessoaFisica"
+                                                (valorChange)="limparFiltroEmpresa($event)">
+                        </combo-pessoa-fisica>
+                    </div>
+
+                    <div ngModelGroup="comboEmpresa" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-empresa    label="Fornecedor (Empresa)"
+                                          [fxFlexOffset]="0"
+                                          [selecionado]="filtro.empresa"
+                                          (valorChange)="limparFiltroPessoaFisica($event)">
+                        </combo-empresa>
+                    </div>                    
+
+                </div>
+
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                    <mat-form-field fxFlex= "150px" fxLayoutGap="20px" fxFlexOffset="20px">
                         <input matInput name= "dataInicio"
                                 [matDatepicker]="dataInicio" 
                                 placeholder="Data início" 
+                                required
                                 [(ngModel)]="filtro.dataInicio"
                                 (input)="onMascaraDataInput($event)">
                         <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
                         <mat-datepicker #dataInicio></mat-datepicker>
                     </mat-form-field>
                 
-                    <mat-form-field fxFlex= "200px" >
+                    <mat-form-field fxFlex= "150px" >
                         <input matInput name="dataFim"
                                 [matDatepicker]="dataFim" 
                                 placeholder="Data fim" 
+                                required
                                 [(ngModel)]="filtro.dataFim"
                                 (input)="onMascaraDataInput($event)">
                         <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
                         <mat-datepicker #dataFim></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex= "200px" fxLayoutGap="20px" fxFlexOffset="20px" *ngIf="showFiltroDataVencimento()">
+                        <input matInput name= "dataInicioVenc"
+                                [matDatepicker]="dataInicioVenc" 
+                                placeholder="Data início Vencimento" 
+                                [(ngModel)]="filtro.dataInicioVenc"
+                                (input)="onMascaraDataInput($event)">
+                        <mat-datepicker-toggle matSuffix [for]="dataInicioVenc"></mat-datepicker-toggle>
+                        <mat-datepicker #dataInicioVenc></mat-datepicker>
+                    </mat-form-field>
+                
+                    <mat-form-field fxFlex= "200px" *ngIf="showFiltroDataVencimento()">
+                        <input matInput name="dataFimVenc"
+                                [matDatepicker]="dataFimVenc" 
+                                placeholder="Data fim Vencimento" 
+                                [(ngModel)]="filtro.dataFimVenc"
+                                (input)="onMascaraDataInput($event)">
+                        <mat-datepicker-toggle matSuffix [for]="dataFimVenc"></mat-datepicker-toggle>
+                        <mat-datepicker #dataFimVenc></mat-datepicker>
                     </mat-form-field>
 
                 </div>
@@ -81,19 +148,17 @@
     
                 <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                     <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" 
-                            [ngStyle]="{'background-color' : formulario.valid ? 'green' : ''}" 
-                            style="color: white;" 
-                            [fxHide]="!mostrarTabela"
-                            [disabled]="formulario.invalid">
+                            [ngStyle]="{'background-color' : mostrarTabela ? 'green' : ''}" 
+                            style="color: rgb(252, 250, 250);" 
+                            [fxHide]="!mostrarTabela">
                         GERAR PDF
                     </button>
     
                     <button mat-raised-button fxFlex="150px" 
                             (click)="getRelatorio(MIMETYPE_EXCEL)" 
-                            [ngStyle]="{'background-color' : formulario.valid ? 'green' : ''}" 
-                            style="color: white;" 
-                            [fxHide]="!mostrarTabela"
-                            [disabled]="formulario.invalid">
+                            [ngStyle]="{'background-color' : mostrarTabela ? 'green' : ''}" 
+                            style="color: rgb(255, 254, 254);" 
+                            [fxHide]="!mostrarTabela">
                         GERAR EXCEL
                     </button>
     
@@ -134,35 +199,51 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="colaborador" >
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Colaborador</th>
-                <td mat-cell *matCellDef="let element"> {{element.nomeCobaborador }} </td>
+            <ng-container matColumnDef="programaprojeto" >
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Programa/Projeto</th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeProgramaProjeto }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="email" >
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">E-mail</th>
-                <td mat-cell *matCellDef="let element"> {{element.email }} </td>
+            <ng-container matColumnDef="fornecedor" >
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Fornecedor</th>
+                <td mat-cell *matCellDef="let element"> {{element.descFornecedor }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="unidade">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Unidade</th>
-                <td mat-cell *matCellDef="let element"> {{element.unidade }} </td>
+            <ng-container matColumnDef="numerodocumento">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 100px">N. documento</th>
+                <td mat-cell *matCellDef="let element"> {{element.numeroDocumento }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="departamento">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Departamento</th>
-                <td mat-cell *matCellDef="let element"> {{element.departamento }} </td>
+            <ng-container matColumnDef="cnpjcpf">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 150px">CNPJ/CPF</th>
+                <td mat-cell *matCellDef="let element"> {{element.cnpjCpf }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="cargo">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Cargo</th>
-                <td mat-cell *matCellDef="let element"> {{element.cargo }} </td>
+            <ng-container matColumnDef="datadocumento">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 120px">Data documento</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataDocumento}} </td>
             </ng-container>            
 
-            <ng-container matColumnDef="funcao">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 200px">Funcao</th>
-                <td mat-cell *matCellDef="let element"> {{element.funcao }} </td>
+            <ng-container matColumnDef="valormovimentacao">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 120px">Valor movimento</th>
+                <td mat-cell *matCellDef="let element"> {{element.valorMovimentacao | currency: 'BRL'}} </td>
             </ng-container>            
+
+            <ng-container matColumnDef="valorpagamento">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 120px">Valor pagamento</th>
+                <td mat-cell *matCellDef="let element"> {{element.valorPagamento | currency: 'BRL'}} </td>
+            </ng-container>  
+
+            <ng-container matColumnDef="datavencimento">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 120px">Data vencimento</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataVencimentoProxima}} </td>
+            </ng-container> 
+
+            <ng-container matColumnDef="rubrica">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Rubrica</th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeCategoria}} </td>
+            </ng-container>  
+
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row);"></tr>
@@ -182,7 +263,3 @@
 
     </div>
 </div>
-
-
-
-

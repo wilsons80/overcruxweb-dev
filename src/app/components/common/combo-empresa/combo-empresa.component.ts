@@ -18,6 +18,8 @@ export class ComboEmpresaComponent implements OnInit {
   @Input() obrigatorio;
   @Input() selecionado;
   @Input() desabilitado;
+  @Input() label;
+  @Input() fxFlexOffset = "20px";
 
   @Output() valorChange = new EventEmitter();
 

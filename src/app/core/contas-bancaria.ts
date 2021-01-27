@@ -16,5 +16,8 @@ export class ContasBancaria {
 	telefoneTitular: string;
     emailTitular: string;
     contaAssociada: number;
+
+    descricaoCompleta?:string; // usado em combo pesquisavel
+
 }
 
