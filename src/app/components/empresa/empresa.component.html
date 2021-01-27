@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Gestão de Parcerias</mat-toolbar>
+<mat-toolbar class="subtitulo">{{titulo}}</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultarDepartamento="ngForm">
@@ -85,8 +85,8 @@
 
         <div fxLayout="row"  *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
             <div>
-                <button matTooltip="Adicionar nova empresa" mat-fab color="primary"
-                    [routerLink]="['/empresa/cadastrar']" routerLinkActive="router-link-active">
+                <button matTooltip="Adicionar" mat-fab color="primary"
+                    (click)="go()" >
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

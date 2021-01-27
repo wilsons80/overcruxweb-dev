@@ -26,6 +26,9 @@
 
     <!-- ESTOQUES -->
     <sub-menu *ngIf="verificaAcesso(getModulos().ESTOQUES)" icone="apartment" titulo="Estoques" rota="estoques" toolTip="Estoques de Materiais"></sub-menu>
+    
+    <!-- ESTOQUES -->
+    <sub-menu *ngIf="verificaAcesso(getModulos().EMPRESAS_FORNECEDORAS)" icone="group_add" titulo="Empresas Fornecedoras" rota="empresasfornecedoras" toolTip="Empresas Fornecedoras"></sub-menu>
 
     </div>
 </mat-nav-list>

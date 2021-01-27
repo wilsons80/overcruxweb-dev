@@ -20,7 +20,10 @@
         <sub-menu *ngIf="verificaAcesso(getModulos().PROJETO)"   icone="folder_open" titulo="Projetos" rota="projetos" toolTip="Projetos"></sub-menu>
 
         <!-- GESTAO DE PARCERIAS -->
-        <sub-menu *ngIf="verificaAcesso(getModulos().PARCERIAS)" icone="group_add" titulo="Gestão de Parcerias" rota="empresa" toolTip="Gestão de Parcerias"></sub-menu>
+        <sub-menu *ngIf="verificaAcesso(getModulos().EMPRESAS_PARCEIRAS)" icone="group_add" titulo="Gestão de Parcerias" rota="empresasparceiras" toolTip="Gestão de Parcerias"></sub-menu>
+        
+        <!-- EMPRESAS_CLIENTES-->
+        <sub-menu *ngIf="verificaAcesso(getModulos().EMPRESAS_CLIENTES)" icone="group_add" titulo="Empresas Clientes" rota="empresasclientes" toolTip="Empresas Clientes"></sub-menu>
 
         <!-- PRESTACAO DE CONTAS -->
         <sub-menu *ngIf="verificaAcesso(getModulos().PRESTACAO_CONTAS)" icone="monetization_on" titulo="Prestação de contas" rota="home" toolTip="Prestação de contas"></sub-menu>

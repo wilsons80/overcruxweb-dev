@@ -6,11 +6,17 @@ import { CadastrarEmpresaComponent } from './cadastrar-empresa/cadastrar-empresa
 import { EmpresaRoutingModule } from './empresa-routing.module';
 import { EmpresaComponent } from './empresa.component';
 import { CadastroEnderecoModule } from '../common/cadastro-endereco/cadastro-endereco.module';
+import { ParceirasComponent } from './parceiras/parceiras.component';
+import { FornecedorasComponent } from './fornecedoras/fornecedoras.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { CadastrarParceirasComponent } from './parceiras/cadastrar-parceiras/cadastrar-parceiras.component';
+import { CadastrarFornecedorasComponent } from './fornecedoras/cadastrar-fornecedoras/cadastrar-fornecedoras.component';
+import { CadastrarClientesComponent } from './clientes/cadastrar-clientes/cadastrar-clientes.component';
 
 
 
 @NgModule({
-  declarations: [EmpresaComponent, CadastrarEmpresaComponent],
+  declarations: [EmpresaComponent, CadastrarEmpresaComponent, ParceirasComponent, FornecedorasComponent, ClientesComponent, CadastrarParceirasComponent, CadastrarFornecedorasComponent, CadastrarClientesComponent],
   imports: [
     CommonModule,
     EmpresaRoutingModule,
