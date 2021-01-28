@@ -76,7 +76,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'rubrica'];
   displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
-  displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'rubrica'];
+  displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','tipo', 'descricao','parceiro','numerodocumento', 'dataoperacao', 'valoroperacao', 'bancoagenciaconta', 'saldo'];
 
 
   displayedColumns: string[] = [];
@@ -95,7 +95,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   tiposRelatorios: TipoRelatorio[] = [
     {tipo: 'NP', descricao: 'Normativa Pagamentos', nomeRelatorio: 'normativa_pagamentos'},
     {tipo: 'FP', descricao: 'Faturas a Pagar', nomeRelatorio: 'faturas_pagar'},
-    //{tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
+    {tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
   ];
   tipoRelatorioSelecionado: TipoRelatorio;
 
@@ -199,8 +199,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   prepararBuscaSaldoProjeto(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'SP') { 
       this.servicoBusca  = this.relatorioSaldoProjetoService;
-      this.servicoBusca$ = this.relatorioSaldoProjetoService.getFilter(this.filtro.contaBancaria.id, 
-                                                                       this.filtro.programa?.id,
+      this.servicoBusca$ = this.relatorioSaldoProjetoService.getFilter(this.filtro.programa?.id,
                                                                        this.filtro.projeto?.id,
                                                                        this.filtro.dataInicio, 
                                                                        this.filtro.dataFim);

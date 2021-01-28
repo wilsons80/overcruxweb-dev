@@ -20,13 +20,11 @@ export class RelatorioSaldoProjetoService {
   }
 
   
-  getFilter(idcontaBancaria: string|number,
-            idPrograma: string|number,
+  getFilter(idPrograma: string|number,
             idProjeto: string|number,
             dataInicio: any,
             dataFim: any) {
 
-    idcontaBancaria   = idcontaBancaria || '';
     idPrograma        = idPrograma || '';
     idProjeto         = idProjeto || '';
 
@@ -34,7 +32,6 @@ export class RelatorioSaldoProjetoService {
     const p_dataFim = dataFim ? dataFim.getTime() : '';
 
     return this.http.get(`${rootPath}filter`, { params: {
-      idcontaBancaria: `${idcontaBancaria}` ,
       idprograma: `${idPrograma}`,
       idprojeto: `${idProjeto}` ,
       dataInicio: `${p_dataInicio}`,
