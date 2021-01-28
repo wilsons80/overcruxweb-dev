@@ -18,4 +18,10 @@ export class ContasBancariaService extends BaseService<ContasBancaria> {
   getAllComboByInstituicaoLogada() {
     return this.http.get(`${Rotas.CONTAS_BANCARIA}combo/instituicoes`);
   }
+
+  @Cacheable()
+  getAllContasCentroCustos() {
+    return this.http.get(`${Rotas.CONTAS_BANCARIA}instituicao/contascentrocustos`);
+  }
+
 }
