@@ -1,20 +1,6 @@
 <div fxLayout="row" fxLayoutGap="50px"  fxFlexFill>
-
-    <mat-form-field fxFlex fxFlexOffset="20px">
-        <mat-label>Conta reembolso</mat-label>
-        <mat-select [(ngModel)]=reembolso.contaBancaria.id
-                    (selectionChange)="validarContaReembolso()" 
-                    required
-                    name="contasReembolso_{{pinContaBancaria}}">
-            <mat-option></mat-option>
-            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
-                {{getNomeProjetoPrograma(i)}}
-            </mat-option>
-        </mat-select>
-        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
-    </mat-form-field>
     
-    <mat-form-field fxFlex="170px">
+    <mat-form-field fxFlex="170px" fxFlexOffset="20px">
         <input [(ngModel)]="reembolso.data"
                matInput 
                #campoDataReembolso
@@ -22,8 +8,8 @@
                [min]="pagamentosFatura.dataPagamento"
                [required]="reembolso.contaBancaria.id"
                [matDatepicker]="dataReembolso"
-               placeholder="Data do reembolso"
-               
+               placeholder="Data do reembolso" 
+               (change)="onCarregarContasReembolso()"              
                >
         <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
         <mat-datepicker #dataReembolso></mat-datepicker>
@@ -62,19 +48,35 @@
  
 </div>
 
+
 <div fxLayout="row" fxLayoutGap="50px">
-    <mat-form-field fxFlex="40%" fxFlexOffset="20px">
+
+    <mat-form-field fxFlex="50" fxFlexOffset="20px">
+        <mat-label>Conta reembolso</mat-label>
+        <mat-select [(ngModel)]=reembolso.contaBancaria.id
+                    (selectionChange)="validarContaReembolso()" 
+                    required
+                    name="contasReembolso_{{pinContaBancaria}}">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let i of contasCentroCusto" [value]=i.id>
+                {{getNomeProjetoPrograma(i)}}
+            </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="contasCentroCusto?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="50" fxFlexOffset="20px">
         <mat-label>Conta de destino do reembolso</mat-label>
         <mat-select [(ngModel)]=reembolso.contaBancariaDestino.id
                     (selectionChange)="carregarContaBancariaDestino()" 
                     required
                     name="contasDestino_{{pinContaBancaria}}">
             <mat-option></mat-option>
-            <mat-option *ngFor="let i of contasBancarias" [value]=i.id>
+            <mat-option *ngFor="let i of contasCentroCusto" [value]=i.id>
                 {{getNomeProjetoPrograma(i)}}
             </mat-option>
         </mat-select>
-        <mat-hint *ngIf="contasBancarias?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
+        <mat-hint *ngIf="contasCentroCusto?.length === 0" align="start">Nenhuma conta bancária cadastrada</mat-hint>
     </mat-form-field>
 </div>
 

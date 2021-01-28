@@ -38,7 +38,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   isAtualizar = false;  
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
-  isContasReembolsoInvalidas = false;
 
   isValorTotalItensInvalido  = false;
   isValorTotalFaturaInvalido = false;
@@ -46,7 +45,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   tributos: Tributos[];
   contasBancarias: ContasBancaria[];
-  contasCentroCusto: ContasBancaria[];
+
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
@@ -87,10 +86,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     
     this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
       this.contasBancarias = contasBancarias;
-    });
-
-    this.contasBancariaService.getAllContasCentroCustos().subscribe((contasBancarias: ContasBancaria[]) => {
-      this.contasCentroCusto = contasBancarias;
     });
     
     this.tributosService.getAll().subscribe((tributos: Tributos[]) => {
@@ -229,11 +224,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
   isContaReembolsoValida(): boolean {
 
-    if(this.contaReembolsoInValida()) {
-      this.toastService.showAlerta('Há reembolso(s) de pagamentos que não correspondem a contas dos projetos/programas.');
-      return false;
-    }
-
     const reembolsosSemContaBancaria = this.movimentacoes.pagamentosFatura.filter(p => p.reembolsos.find(r => !r.contaBancaria.id));
     if(reembolsosSemContaBancaria && reembolsosSemContaBancaria.length > 0) {
       this.toastService.showAlerta('Há reembolso(s) de pagamentos sem informação da conta bancária.');
@@ -266,30 +256,6 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     return true;
   }
 
-  contaReembolsoInValida(): boolean {
-    this.isContasReembolsoInvalidas = false;
-    if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
-      this.movimentacoes.pagamentosFatura.forEach(pag => {
-        if(pag.reembolsos && pag.reembolsos.length > 0) {
-          pag.reembolsos.forEach(re => {
-            const contas = this.contasCentroCusto.filter(conta => conta.id === re.contaBancaria.id );
-            if(contas.length === 0) {
-              re.contaBancaria = new ContasBancaria();
-              this.isContasReembolsoInvalidas = true;
-            }
-            
-            const contasDestino = this.contasCentroCusto.filter(conta => conta.id === re.contaBancariaDestino.id );
-            if(contasDestino.length === 0) {
-              re.contaBancariaDestino = new ContasBancaria();
-              this.isContasReembolsoInvalidas = true;
-            } 
-          })
-        }
-      })
-    }
-
-    return this.isContasReembolsoInvalidas;
-  }
 
   carregarContasBancarios(evento) {
     // ABA DE PAGAMENTOS

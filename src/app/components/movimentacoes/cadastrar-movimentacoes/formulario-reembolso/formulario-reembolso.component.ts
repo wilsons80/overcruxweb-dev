@@ -12,6 +12,8 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
+import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'formulario-reembolso',
@@ -31,6 +33,8 @@ export class FormularioReembolsoComponent implements OnInit {
   programas: ComboPrograma[];
   projetos: ComboProjeto[];
 
+  contasCentroCusto: ContasBancaria[];
+
   pinContaBancaria  = Date.now();
   pinCheckReembolso = Date.now();
   pinDataReembolso  = Date.now();
@@ -38,7 +42,9 @@ export class FormularioReembolsoComponent implements OnInit {
   pinDescricao      = Date.now();
 
   constructor(private toastService: ToastService,
+              private dataUtilService: DataUtilService,
               private projetoService: ProjetoService,
+              private contasBancariaService: ContasBancariaService,
               private programaService: ProgramaService) { 
 }
 
@@ -46,6 +52,8 @@ export class FormularioReembolsoComponent implements OnInit {
     if(!this.reembolso.contaBancariaDestino){
       this.reembolso.contaBancariaDestino = new ContasBancaria();
     } 
+
+    this.carregarContasBancarias();
   }
 
   deletar() {
@@ -53,6 +61,22 @@ export class FormularioReembolsoComponent implements OnInit {
   }
 
 
+  carregarContasBancarias(){
+    if(this.reembolso.data) {
+      this.contasBancariaService.getAllContasCentroCustos(this.dataUtilService.getDataTruncata(this.reembolso.data))
+      .subscribe((contasBancarias: ContasBancaria[]) => {
+        this.contasCentroCusto = contasBancarias;
+      });
+    }
+  }
+
+  onCarregarContasReembolso(){
+    this.contasCentroCusto = [];
+    this.reembolso.contaBancaria = new ContasBancaria();
+    this.reembolso.contaBancariaDestino = new ContasBancaria();
+
+    this.carregarContasBancarias();
+  }
 
   validarContaReembolso() {
     this.carregarContaBancaria();

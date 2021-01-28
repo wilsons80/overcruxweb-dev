@@ -19,9 +19,12 @@ export class ContasBancariaService extends BaseService<ContasBancaria> {
     return this.http.get(`${Rotas.CONTAS_BANCARIA}combo/instituicoes`);
   }
 
-  @Cacheable()
-  getAllContasCentroCustos() {
-    return this.http.get(`${Rotas.CONTAS_BANCARIA}instituicao/contascentrocustos`);
+  
+  getAllContasCentroCustos(dataReembolso: any) {
+    const p_dataReembolso = dataReembolso ? dataReembolso.getTime() : '';
+    return this.http.get(`${Rotas.CONTAS_BANCARIA}instituicao/contascentrocustos`, {params: {
+      dataReembolso: `${p_dataReembolso}`
+    }});
   }
 
 }
