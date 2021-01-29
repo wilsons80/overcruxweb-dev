@@ -24,12 +24,13 @@
     
     <!-- NIS -->
     <mat-form-field fxFlex="30%">
-        <input matInput [(ngModel)]="pessoaFisica.nis" name="nis" placeholder="NIS" [textMask]="{mask: mascaraNIS}">
+        <input matInput [(ngModel)]="pessoaFisica.nis" name="NIS / PIS / NIT" placeholder="NIS / PIS / NIT" [textMask]="{mask: mascaraNIS}">
     </mat-form-field>
 
     <mat-form-field fxFlex="30%">
-        <input matInput maxlength="30" [(ngModel)]="pessoaFisica.numeroPisPasep" name="numeroPisPasep"
-            placeholder="Número do PIS ou PASEP">
+        <input matInput maxlength="30" 
+               [(ngModel)]="pessoaFisica.numeroPisPasep" name="numeroPisPasep"
+               placeholder="Número do PASEP">
     </mat-form-field>
 </div>
 
@@ -53,8 +54,10 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="22%">
-        <input matInput name="dataEmissaoCI" [matDatepicker]="dataEmissaoCI" placeholder="Data de Emissão"
-            [(ngModel)]="pessoaFisica.dataEmissaoCI">
+        <input matInput name="dataEmissaoCI" [matDatepicker]="dataEmissaoCI" 
+               placeholder="Data de Emissão"
+               (input)="onMascaraDataInput($event)"
+               [(ngModel)]="pessoaFisica.dataEmissaoCI">
         <mat-datepicker-toggle matSuffix [for]="dataEmissaoCI"></mat-datepicker-toggle>
         <mat-datepicker #dataEmissaoCI></mat-datepicker>
     </mat-form-field>
@@ -112,8 +115,10 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="25%">
-        <input matInput name="vencimentoCNH" [matDatepicker]="vencimentoCNH" placeholder="Data de vencimento da CNH"
-            [(ngModel)]="pessoaFisica.vencimentoCNH">
+        <input matInput name="vencimentoCNH" [matDatepicker]="vencimentoCNH" 
+               placeholder="Data de vencimento da CNH"
+               (input)="onMascaraDataInput($event)"
+               [(ngModel)]="pessoaFisica.vencimentoCNH">
         <mat-datepicker-toggle matSuffix [for]="vencimentoCNH"></mat-datepicker-toggle>
         <mat-datepicker #vencimentoCNH></mat-datepicker>
     </mat-form-field>

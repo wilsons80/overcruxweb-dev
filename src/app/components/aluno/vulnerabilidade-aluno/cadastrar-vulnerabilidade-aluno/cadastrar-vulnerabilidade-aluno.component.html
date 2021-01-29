@@ -4,6 +4,7 @@
         <mat-form-field fxFlex="15%" fxFlexOffset="20px">
             <input matInput name="dataIdentificacao"
                 [matDatepicker]="dataIdentificacao"
+                (input)="onMascaraDataInput($event)"
                 placeholder="Data de identificação"
                 [(ngModel)]="vulnerabilidade.dataIdentificacao">
             <mat-datepicker-toggle matSuffix [for]="dataIdentificacao"></mat-datepicker-toggle>
@@ -14,6 +15,7 @@
         <mat-form-field fxFlex="15%" fxFlexOffset="20px">
             <input matInput name="dataSolucao"
                 [matDatepicker]="dataSolucao"
+                (input)="onMascaraDataInput($event)"
                 placeholder="Data de Solução:"
                 [(ngModel)]="vulnerabilidade.dataSolucao">
             <mat-datepicker-toggle matSuffix [for]="dataSolucao"></mat-datepicker-toggle>

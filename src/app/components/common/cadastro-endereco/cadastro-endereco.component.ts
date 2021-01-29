@@ -39,9 +39,9 @@ export class CadastroEnderecoComponent implements OnInit {
   enderecoBuilder(endereco) {
     if (endereco && endereco.sucesso) {
       this.dadosEndereco.uf       = endereco.uf;
-      this.dadosEndereco.cidade   = endereco.localidade.toUpperCase() + ' ' + endereco.complemento.toUpperCase();
-      this.dadosEndereco.bairro   = endereco.bairro.toUpperCase();
-      this.dadosEndereco.endereco = endereco.logradouro.toUpperCase();
+      this.dadosEndereco.cidade   = endereco.localidade + ' ' + endereco.complemento;
+      this.dadosEndereco.bairro   = endereco.bairro;
+      this.dadosEndereco.endereco = endereco.logradouro;
     } else {
       this.dadosEndereco.uf       = null;
       this.dadosEndereco.cidade   = null;

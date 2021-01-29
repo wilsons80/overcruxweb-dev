@@ -197,3 +197,18 @@
             placeholder="Email Profissional:" email>
     </mat-form-field>
 </div>
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+    <mat-form-field fxFlex="80%" fxFlexOffset="20px">
+        <input matInput maxlength="100" name="descMotivoDemissao" 
+               placeholder="Descrição Motivo Demissão"
+               [(ngModel)]="funcionario.descMotivoDemissao">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="120px">
+        <input matInput name="dataUltimoExame" [matDatepicker]="dataUltimoExame" placeholder="Data último exame"
+               [(ngModel)]="funcionario.dataUltimoExame">
+        <mat-datepicker-toggle matSuffix [for]="dataUltimoExame"></mat-datepicker-toggle>
+        <mat-datepicker #dataAdmissao></mat-datepicker>
+    </mat-form-field>
+</div>

@@ -17,6 +17,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { SharedDirectivesModule } from 'src/app/directives/shared-directives.module';
 import { CadastroEnderecoModule } from '../cadastro-endereco/cadastro-endereco.module';
 import { FormularioEncaminhamentoComponent } from './formulario-encaminhamento/formulario-encaminhamento.component';
+import { ComboPesquisavelModule } from '../combo-pesquisavel/combo-pesquisavel.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FormularioEncaminhamentoComponent } from './formulario-encaminhamento/f
     MaterialCommonModule,
     NgxCurrencyModule,
     SharedDirectivesModule,
-    CadastroEnderecoModule
+    CadastroEnderecoModule,
+    ComboPesquisavelModule
   ],
   exports:[
     DadosPessoaisComponent,

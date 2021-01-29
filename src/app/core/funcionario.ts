@@ -33,6 +33,7 @@ export class Funcionario {
 	dependentes: Dependentes[];
 	horaInicioJornada: string;
 	horaFimJornada: string;
-	
+	descMotivoDemissao: string;
+	dataUltimoExame: Date;
 
 }

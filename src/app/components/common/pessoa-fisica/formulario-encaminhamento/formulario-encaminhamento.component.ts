@@ -4,6 +4,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { EntidadesSociais } from 'src/app/core/entidades-sociais';
 import { ControlContainer, NgForm } from '@angular/forms';
 import * as _ from 'lodash';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'formulario-encaminhamento',
@@ -23,7 +24,7 @@ export class FormularioEncaminhamentoComponent implements OnInit {
   pinDataEncaminhamento = Date.now();
   pinDescricao          = Date.now();
 
-  constructor() { }
+  constructor(private dataUtilService: DataUtilService) { }
 
   ngOnInit(): void {
   }
@@ -39,5 +40,7 @@ export class FormularioEncaminhamentoComponent implements OnInit {
     }
   }
 
-
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 }

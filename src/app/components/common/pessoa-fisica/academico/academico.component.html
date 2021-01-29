@@ -4,8 +4,9 @@
 
   <div fxFlex="15%" fxFlexOffset="20px">
     <mat-form-field fxFlex="90%">
-      <input matInput maxlength="15" name="matricula" placeholder="Matrícula" [disabled]="isEditarMatricula"
-        [(ngModel)]="aluno.matriculaAluno">
+      <input matInput maxlength="15" name="matricula"
+             placeholder="Matrícula" [disabled]="isEditarMatricula"
+             [(ngModel)]="aluno.matriculaAluno">
     </mat-form-field>
 
     <div style="padding-top: 14px;">
@@ -15,7 +16,7 @@
     </div>
   </div>
 
-  <mat-form-field fxFlex="50%">
+  <mat-form-field fxFlex="85%">
     <mat-label>Selecione a Unidade</mat-label>
     <mat-select name="unidade" [(ngModel)]="aluno.unidade.idUnidade" required>
       <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
@@ -24,34 +25,62 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="35%">
-    <mat-label>Nível da turma</mat-label>
-    <mat-select [(ngModel)]="aluno.nivelTurma.id" name="nivelTurma">
-      <mat-option *ngFor="let m of niveisTurmas" [value]="m.id">
-        {{m.descricao}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+</div>
+
+
+<div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+  <div ngModelGroup="comboPrograma" fxFlexOffset="20px" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" class="marginCombo">
+      <combo-pesquisavel #comboPrograma 
+                          nome="programa" 
+                          [itens]="comboProgramas" 
+                          itemDescricao="nome"
+                          itemId="id"
+                          label="Programa"
+                          placeholder="Escolha..."
+                          [(valor)]="aluno.programa"
+                          (valorChange)="carregarPrograma($event)"
+                          style="margin-top: 10px;">
+      </combo-pesquisavel>
+  </div>
+
+  <div ngModelGroup="comboProjeto" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" class="marginCombo">
+      <combo-pesquisavel #comboProjeto 
+                          nome="projeto" 
+                          [itens]="comboProjetos" 
+                          itemDescricao="nome"
+                          itemId="id"
+                          label="Projeto"
+                          placeholder="Escolha..."
+                          [(valor)]="aluno.projeto"
+                          (valorChange)="carregarProjeto($event)"
+                          style="margin-top: 10px;">
+      </combo-pesquisavel>
+  </div>
+
+
 </div>
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
   <mat-form-field fxFlexOffset="20px" fxFlex="15%">
     <input matInput name="dataEntrada" [matDatepicker]="dataEntrada" placeholder="Data de entrada"
-      [(ngModel)]="aluno.dataEntrada">
+           (input)="onMascaraDataInput($event)" 
+           [(ngModel)]="aluno.dataEntrada">
     <mat-datepicker-toggle matSuffix [for]="dataEntrada"></mat-datepicker-toggle>
     <mat-datepicker #dataEntrada></mat-datepicker>
   </mat-form-field>
 
 
-  <mat-form-field fxFlex="15%" fxFlexOffset="20px">
-    <input matInput name="dataDesligamento" [matDatepicker]="dataDesligamento" placeholder="Data de desligamento"
-      [(ngModel)]="aluno.dataDesligamento">
+  <mat-form-field fxFlex="15%" >
+    <input matInput name="dataDesligamento" [matDatepicker]="dataDesligamento" 
+           placeholder="Data de desligamento"
+           (input)="onMascaraDataInput($event)"
+           [(ngModel)]="aluno.dataDesligamento">
     <mat-datepicker-toggle matSuffix [for]="dataDesligamento"></mat-datepicker-toggle>
     <mat-datepicker #dataDesligamento></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+  <mat-form-field fxFlex="20%">
     <mat-label>Motivo Desligamento</mat-label>
     <mat-select [(ngModel)]="aluno.motivoDesligamento.id" name="motivoDesligamento">
       <mat-option *ngFor="let m of listaMotivosDesligamento" [value]="m.id">
@@ -62,24 +91,26 @@
       cadastrado</mat-hint>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline" hintLabel="Máximo 200 caracteres">
-    <mat-label>Desligamento:</mat-label>
-    <textarea matInput #message name="desligamento" [(ngModel)]="aluno.descDesligamento" cdkTextareaAutosize
-      #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" maxlength="200"></textarea>
-    <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+  <mat-form-field fxFlex="40%">
+    <input matInput #desligamento maxlength="200" name="desligamento"
+      placeholder="Desligamento" [(ngModel)]="aluno.descDesligamento">
+      <mat-hint align="end">{{desligamento.value.length}} / 200</mat-hint>
   </mat-form-field>
+
 </div>
 
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
   <mat-form-field fxFlex="20%" fxFlexOffset="20px">
     <input matInput name="dataSugestaoDesligamento" [matDatepicker]="dataSugestaoDesligamento"
-      placeholder="Data sugestão de desligamento" [(ngModel)]="aluno.dataSugestaoDesligamento">
+           placeholder="Data sugestão de desligamento" 
+           (input)="onMascaraDataInput($event)"
+           [(ngModel)]="aluno.dataSugestaoDesligamento">
     <mat-datepicker-toggle matSuffix [for]="dataSugestaoDesligamento"></mat-datepicker-toggle>
     <mat-datepicker #dataSugestaoDesligamento></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="70%" fxFlexOffset="20px">
+  <mat-form-field fxFlex="80%" fxFlexOffset="20px">
     <input matInput #descricaoSugestao maxlength="200" name="descricaoSugestao"
       placeholder="Descrição sugestão de desligamento" [(ngModel)]="aluno.descricaoSugestaoDesligamento">
       <mat-hint align="end">{{descricaoSugestao.value.length}} / 200</mat-hint>
@@ -95,7 +126,7 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
   <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-    <mat-label>Mora com os pais ?</mat-label>
+    <mat-label>Mora com o responsável ?</mat-label>
     <mat-select [(ngModel)]="aluno.moraPais" name="moraPais">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
         {{m.tipo}}
@@ -124,7 +155,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-  <mat-form-field fxFlexOffset="20px" fxFlex="35%">
+  <mat-form-field fxFlexOffset="20px" fxFlex="30%">
     <mat-label>Tipo Público Prioritário</mat-label>
     <mat-select [(ngModel)]="aluno.tiposPublicoPrioritario.id" name="tiposPublicoPrioritario">
       <mat-option *ngFor="let m of listaTiposPublicoPrioritario" [value]="m.id">
@@ -135,7 +166,7 @@
       cadastrado</mat-hint>
   </mat-form-field>
 
-  <mat-form-field fxFlexOffset="20px" fxFlex="100%">
+  <mat-form-field fxFlexOffset="20px" fxFlex="70%">
     <input matInput maxlength="500" #publicoPrioritario name="publicoPrioritario"
       placeholder="Aluno se trata de público prioritário" [(ngModel)]="aluno.publicoPrioritario">
 
@@ -163,7 +194,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-  <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline" hintLabel="Máximo 200 caracteres">
+  <mat-form-field fxFlexOffset="20px" fxFlex="100%" appearance="outline" hintLabel="Máximo 200 caracteres">
     <mat-label>Outras informações:</mat-label>
     <textarea matInput #message name="descOutrasInformacoes" [(ngModel)]="aluno.descOutrasInformacoes"
       cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>

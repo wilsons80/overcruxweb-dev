@@ -5,6 +5,7 @@ import { SituacoesVulnerabilidade } from 'src/app/core/situacoes-vulnerabilidade
 import { Solucoes } from 'src/app/core/solucoes';
 import { SolucaoService } from 'src/app/services/solucao/solucao.service';
 import { SituacaoVulnerabilidadeService } from 'src/app/services/situacao-vulnerabilidade/situacao-vulnerabilidade.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'cadastrar-vulnerabilidade-aluno',
@@ -20,6 +21,7 @@ export class CadastrarVulnerabilidadeAlunoComponent implements OnInit {
   solucoes: Solucoes[];
 
   constructor(private solucaoService: SolucaoService,
+              private dataUtilService: DataUtilService,
               private situacaoVulnerabilidadeService: SituacaoVulnerabilidadeService) {
   }
 
@@ -60,5 +62,8 @@ export class CadastrarVulnerabilidadeAlunoComponent implements OnInit {
     this.vulnerabilidade = vulnerabilidade;
   }
 
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 }
 

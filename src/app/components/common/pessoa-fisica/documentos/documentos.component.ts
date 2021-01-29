@@ -2,6 +2,7 @@ import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { EnderecoService } from 'src/app/services/endereco/endereco.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'documentos',
@@ -22,7 +23,8 @@ export class DocumentosComponent implements OnInit {
   ]
 
   constructor(
-    private enderecoService:EnderecoService
+    private enderecoService:EnderecoService,
+    private dataUtilService: DataUtilService
   ) {
    }
 
@@ -41,4 +43,8 @@ export class DocumentosComponent implements OnInit {
     this.mascaraCpf = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,];
   }
 
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
+  
 }

@@ -4,6 +4,7 @@ import { CondicoesMoradia } from 'src/app/core/condicoes-moradia';
 import { PessoaFisica } from './../../../../core/pessoa-fisica';
 import { CondicoesMoradiaService } from './../../../../services/condicoes-moradia/condicoes-moradia.service';
 import { EnderecoService } from 'src/app/services/endereco/endereco.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector:  'dados-pessoais',
@@ -24,20 +25,20 @@ export class DadosPessoaisComponent implements OnInit {
   ]
 
   estadoCivil: any[] =[
-    {tipo:  'SOLTEIRO'},
-    {tipo:  'CASADO'},
-    {tipo:  'UNIÃO ESTÁVEL'},
-    {tipo:  'DIVORCIADO'},
-    {tipo:  'VIÚVO'}
+    {tipo:  'Solteiro'},
+    {tipo:  'Casado'},
+    {tipo:  'União Estável'},
+    {tipo:  'Divorciado'},
+    {tipo:  'Viúvo'}
   ]
   
-  racas: String[] =['AMARELO', 'BRANCO','INDÍGENA','NEGRO','PARDO']
+  racas: String[] =['Amarelo', 'Branco','Indígena','Negro','Pardo']
   
-  tipoSanguineo: String[] =['A+', 'A-','B+','AB+','AB-', 'O+', 'O-'];
+  tipoSanguineo: String[] =['A+', 'A-','B+', 'B-', 'AB+','AB-', 'O+', 'O-'];
 
   sexo: any[] =[
-    {sigla:  'M', descricao:  'MASCULINO'},
-    {sigla:  'F', descricao:  'FEMININO'}
+    {sigla:  'M', descricao:  'Masculino'},
+    {sigla:  'F', descricao:  'Feminino'}
   ]
 
   sim_nao: any[] = [
@@ -60,7 +61,8 @@ export class DadosPessoaisComponent implements OnInit {
 
   constructor(
     private condicoesMoradiaService: CondicoesMoradiaService,
-    private enderecoService: EnderecoService
+    private enderecoService: EnderecoService,
+    private dataUtilService: DataUtilService
   ) { }
 
   ngOnInit() {
@@ -93,5 +95,9 @@ export class DadosPessoaisComponent implements OnInit {
       this.pessoaFisica.urlFoto = myReader.result;
     }
     myReader.readAsDataURL(file);
+  }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
   }
 }

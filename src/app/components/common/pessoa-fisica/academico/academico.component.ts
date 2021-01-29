@@ -10,6 +10,13 @@ import { MotivoDesligamento } from 'src/app/core/motivo-desligamento';
 import { TiposPublicoPrioritario } from 'src/app/core/tipos-publico-prioritario';
 import { MotivoDesligamentoService } from 'src/app/services/motivo-desligamento/motivo-desligamento.service';
 import { TiposPublicoPrioritarioService } from 'src/app/services/tipos-publico-prioritario/tipos-publico-prioritario.service';
+import * as _ from 'lodash';
+import { Projeto } from 'src/app/core/projeto';
+import { ComboProjeto } from 'src/app/core/combo-projeto';
+import { ComboPrograma } from 'src/app/core/combo-programa';
+import { ProjetoService } from 'src/app/services/projeto/projeto.service';
+import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'academico',
@@ -31,13 +38,20 @@ export class AcademicoComponent implements OnInit {
     {tipo: 'Não', flag: 'N'}
   ];
 
+  todosProjetos: Projeto[];
+  comboProjetos: ComboProjeto[];
+  comboProgramas: ComboPrograma[];
+  
   isEditarMatricula = true;
 
   constructor(
     private unidadeService: UnidadeService,
     private niveisTurmasService: NiveisTurmasService,
     private tiposPublicoPrioritarioService:TiposPublicoPrioritarioService,
-    private motivoDesligamentoService:MotivoDesligamentoService
+    private motivoDesligamentoService:MotivoDesligamentoService,
+    private projetoService: ProjetoService,
+    private programaService: ProgramaService,
+    private dataUtilService: DataUtilService
     ) { }
 
   ngOnInit() {
@@ -46,7 +60,7 @@ export class AcademicoComponent implements OnInit {
     this.aluno.motivoDesligamento = new MotivoDesligamento();
     this.aluno.tiposPublicoPrioritario = new TiposPublicoPrioritario();
 
-    this.unidadeService.getAllUnidadesUsuarioLogadoTemAcesso().subscribe((unidades: Unidade[])=> {
+    this.unidadeService.getAllUnidadeParaCombo().subscribe((unidades: Unidade[])=> {
       this.unidades = unidades;
     });
 
@@ -61,7 +75,16 @@ export class AcademicoComponent implements OnInit {
     this.niveisTurmasService.getAll()
       .subscribe((niveisTurmas: NiveisTurmas[]) => {
         this.niveisTurmas = niveisTurmas;
-      });
+    });
+
+    this.projetoService.getAllIntituicaoLogada().subscribe((projetos: Projeto[]) => {
+      this.todosProjetos    = projetos;
+      this.comboProjetos    = projetos;
+    });
+
+    this.programaService.getAllCombo().subscribe((programas: ComboPrograma[]) => {
+      this.comboProgramas = programas;
+    });
   }
 
 
@@ -69,4 +92,31 @@ export class AcademicoComponent implements OnInit {
     this.isEditarMatricula = !this.isEditarMatricula;
   }
 
+
+  carregarPrograma(programa: ComboPrograma) {
+    this.aluno.projeto = null;
+
+    if(!programa) {
+      this.comboProjetos = this.todosProjetos; 
+      return;
+    } 
+
+    this.comboProjetos   = this.todosProjetos.filter(p => p.programa && p.programa.id === programa.id).map(p => {
+      let combo = new ComboProjeto();
+      combo.id   = p.id;
+      combo.nome = p.nome;
+      return combo;
+    });
+  }
+
+  carregarProjeto(projeto: ComboProjeto) {
+    if(!projeto) {
+      this.aluno.projeto = null;
+      return;
+    }
+  }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 }

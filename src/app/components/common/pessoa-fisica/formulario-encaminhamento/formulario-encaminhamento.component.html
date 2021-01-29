@@ -18,6 +18,7 @@
            name="dataEncaminhaAluno_{{pinDataEncaminhamento}}" 
            [matDatepicker]="dataEncaminhaAluno" 
            placeholder="Data de encaminhamento"
+           (input)="onMascaraDataInput($event)"
            [(ngModel)]="encaminhamento.dataEncaminhaAluno"
            required>
     <mat-datepicker-toggle matSuffix [for]="dataEncaminhaAluno"></mat-datepicker-toggle>

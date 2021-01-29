@@ -91,4 +91,7 @@ export class PessoaFisica{
    origemRendaFamiliar: string;
 
    emailProfissional:string;
+
+   foneRecado: string;
+   celular2: string;
 }
