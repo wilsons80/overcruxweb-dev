@@ -36,8 +36,10 @@ export class FilterExportacao{
   maeAluno: ComboPessoaFisica;
   paiAluno: ComboPessoaFisica;
   responsavel: ComboPessoaFisica;
-  dataInicioInstituicao: Date;
-  dataFimInstituicao: Date;
+  dataInicioEntradaInstituicao: Date;
+  dataFimEntradaInstituicao: Date;
+  dataInicioSaidaInstituicao: Date;
+  dataFimSaidaInstituicao: Date;
   programa: ComboPrograma;
   projeto: ComboProjeto;
   unidade: Unidade;
@@ -129,8 +131,10 @@ export class ExportarDadosAlunoComponent implements OnInit {
                                                this.filtro.projeto.id,
                                                this.filtro.unidade.idUnidade,
                                                this.filtro.responsavel.id,
-                                               this.filtro.dataInicioInstituicao,
-                                               this.filtro.dataFimInstituicao)
+                                               this.filtro.dataInicioEntradaInstituicao,
+                                               this.filtro.dataFimEntradaInstituicao,
+                                               this.filtro.dataInicioSaidaInstituicao,
+                                               this.filtro.dataFimSaidaInstituicao)
       .subscribe((dados: ExportacaoDadosAluno[]) => {
       this.exportacaoDadosAlunos = dados;
       
@@ -218,10 +222,10 @@ export class ExportarDadosAlunoComponent implements OnInit {
     this.filtro = new FilterExportacao();
 
     this.filtro.beneficiario = new ComboAluno();
-    this.filtro.cpfAluno     = new  ComboPessoaFisica();
-    this.filtro.maeAluno     = new  ComboPessoaFisica();
+    this.filtro.cpfAluno     = new ComboPessoaFisica();
+    this.filtro.maeAluno     = new ComboPessoaFisica();
     this.filtro.paiAluno     = new ComboPessoaFisica();
-    this.filtro.responsavel  = new  ComboPessoaFisica();
+    this.filtro.responsavel  = new ComboPessoaFisica();
     this.filtro.programa     = new ComboPrograma();
     this.filtro.projeto      = new ComboProjeto();
     this.filtro.unidade      = new Unidade();

@@ -18,23 +18,44 @@
                 </div> 
 
                 <mat-form-field fxFlex= "200px" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <input matInput name= "dataInicio"
-                            [matDatepicker]="dataInicio" 
-                            placeholder="Data início instituicao" 
-                            [(ngModel)]="filtro.dataInicioInstituicao"
+                    <input matInput name= "dataInicioEntrada"
+                            [matDatepicker]="dataInicioEntrada" 
+                            placeholder="Data Início Entrada" 
+                            [(ngModel)]="filtro.dataInicioEntradaInstituicao"
                             (input)="onMascaraDataInput($event)">
-                    <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
-                    <mat-datepicker #dataInicio></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="dataInicioEntrada"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicioEntrada></mat-datepicker>
                 </mat-form-field>
             
                 <mat-form-field fxFlex= "200px" >
-                    <input matInput name="dataFim"
-                            [matDatepicker]="dataFim" 
-                            placeholder="Data fim instituicao" 
-                            [(ngModel)]="filtro.dataFimInstituicao"
+                    <input matInput name="dataFimEntrada"
+                            [matDatepicker]="dataFimEntrada" 
+                            placeholder="Data Fim Entrada" 
+                            [(ngModel)]="filtro.dataFimEntradaInstituicao"
                             (input)="onMascaraDataInput($event)">
-                    <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
-                    <mat-datepicker #dataFim></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="dataFimEntrada"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFimEntrada></mat-datepicker>
+                </mat-form-field>
+
+
+                <mat-form-field fxFlex= "220px" fxLayoutGap="20px" fxFlexOffset="20px">
+                    <input matInput name= "dataInicioSaida"
+                            [matDatepicker]="dataInicioSaida" 
+                            placeholder="Data Início Desligamento" 
+                            [(ngModel)]="filtro.dataInicioEntradaInstituicao"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataInicioSaida"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicioSaida></mat-datepicker>
+                </mat-form-field>
+            
+                <mat-form-field fxFlex= "220px" >
+                    <input matInput name="dataFimSaida"
+                            [matDatepicker]="dataFimSaida" 
+                            placeholder="Data Fim Desligamento" 
+                            [(ngModel)]="filtro.dataFimEntradaInstituicao"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataFimSaida"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFimSaida></mat-datepicker>
                 </mat-form-field>
 
             </div>

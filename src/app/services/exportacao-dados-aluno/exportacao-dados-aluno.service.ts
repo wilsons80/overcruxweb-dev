@@ -31,8 +31,10 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
             idProjeto: string|number,
             idUnidade: string|number,
             idResponsavel: string|number,
-            dataInicioInstituicao: any,
-            dataFimInstituicao: any) {
+            dataInicioEntradaInstituicao: any,
+            dataFimEntradaInstituicao: any,
+            dataInicioSaidaInstituicao: any,
+            dataFimSaidaInstituicao: any,) {
 
     cpf             = cpf || '';
     idBeneficiario  = idBeneficiario || '';
@@ -43,8 +45,10 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
     idUnidade       = idUnidade || '';
     idResponsavel   = idResponsavel || '';
 
-    const p_dataInicioInstituicao = dataInicioInstituicao ? dataInicioInstituicao.getTime() : '';
-    const p_dataFimInstituicao = dataFimInstituicao ? dataFimInstituicao.getTime() : '';
+    const p_dataInicioEntradaInstituicao = dataInicioEntradaInstituicao ? dataInicioEntradaInstituicao.getTime() : '';
+    const p_dataFimEntradaInstituicao = dataFimEntradaInstituicao ? dataFimEntradaInstituicao.getTime() : '';
+    const p_dataInicioSaidaInstituicao = dataInicioSaidaInstituicao ? dataInicioSaidaInstituicao.getTime() : '';
+    const p_dataFimSaidaInstituicao = dataFimSaidaInstituicao ? dataFimSaidaInstituicao.getTime() : '';
 
     return this.http.get(Rotas.EXPORTAR_DADOS_ALUNO + 'filter', { params: {
       cpf: `${cpf}` ,
@@ -54,8 +58,10 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
       idPrograma: `${idPrograma}`,
       idProjeto: `${idProjeto}`,
       idUnidade: `${idUnidade}`,
-      dataInicioInstituicao: `${p_dataInicioInstituicao}`,
-      dataFimInstituicao: `${p_dataFimInstituicao}`,
+      dataInicioEntradaInstituicao: `${p_dataInicioEntradaInstituicao}`,
+      dataFimEntradaInstituicao: `${p_dataFimEntradaInstituicao}`,
+      dataInicioSaidaInstituicao: `${p_dataInicioSaidaInstituicao}`,
+      dataFimSaidaInstituicao: `${p_dataFimSaidaInstituicao}`,
       }
     });
   }

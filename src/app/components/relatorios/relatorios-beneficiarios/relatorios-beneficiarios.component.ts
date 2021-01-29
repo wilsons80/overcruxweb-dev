@@ -135,6 +135,8 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
                                                this.filtro.unidade.idUnidade,
                                                this.filtro.responsavel.id,
                                                this.filtro.dataInicioInstituicao,
+                                               null,
+                                               null,
                                                this.filtro.dataFimInstituicao)
     .subscribe(
       (dados: ExportacaoDadosAluno[]) => {
