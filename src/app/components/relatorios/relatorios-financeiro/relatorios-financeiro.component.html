@@ -32,7 +32,13 @@
                                            [(valor)]="filtro.planoConta"
                                            style="margin-top: 10px;">
                         </combo-pesquisavel>
-                    </div> 
+                    </div>
+                    
+                    <div style="margin-top: 50px;" *ngIf="showFiltroRubricaAdicional()">
+                        <div style="margin-top: 25px;">
+                            <mat-checkbox  name="rubricaAdicional" [(ngModel)]="filtro.rubricaAdicional">Rubrica adicional</mat-checkbox>
+                        </div>
+                    </div>                    
                 </div> 
 
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill *ngIf="showFiltroContaBancaria()">
@@ -276,7 +282,7 @@
             </ng-container> 
 
             <ng-container matColumnDef="rubrica">
-                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Rubrica</th>
+                <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Rubrica {{filtro.rubricaAdicional ? ' Adicional': ''}}</th>
                 <td mat-cell *matCellDef="let element"> {{element.nomeCategoria}} </td>
             </ng-container>  
 

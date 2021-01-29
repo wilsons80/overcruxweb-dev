@@ -26,13 +26,15 @@ export class RelatorioNormativaPagamentosService {
             idPrograma: string|number,
             idProjeto: string|number,
             dataInicio: any,
-            dataFim: any) {
+            dataFim: any,
+            rubricaAdicional: boolean) {
 
     idcategoria       = idcategoria || '';
     idEmpresa         = idEmpresa || '';
     idPessoaFisica    = idPessoaFisica || '';
     idPrograma        = idPrograma || '';
-    idProjeto          = idProjeto || '';
+    idProjeto         = idProjeto || '';
+    const p_rubricaAdicional  = rubricaAdicional ? 'A' : 'N';
 
     const p_dataInicio = dataInicio ? dataInicio.getTime() : '';
     const p_dataFim = dataFim ? dataFim.getTime() : '';
@@ -44,7 +46,8 @@ export class RelatorioNormativaPagamentosService {
       idprograma: `${idPrograma}`,
       idprojeto: `${idProjeto}` ,
       dataInicio: `${p_dataInicio}`,
-      dataFim: `${p_dataFim}`
+      dataFim: `${p_dataFim}`,
+      tipoRubrica: `${p_rubricaAdicional}`
       }
     });
   }

@@ -49,6 +49,7 @@ export class Filter{
   dataFim: Date;
   dataInicioVenc: Date;
   dataFimVenc: Date;
+  rubricaAdicional: boolean;
 }
 
 @Component({
@@ -174,7 +175,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
                                                                               this.filtro.programa?.id,
                                                                               this.filtro.projeto?.id, 
                                                                               this.filtro.dataInicio, 
-                                                                              this.filtro.dataFim);
+                                                                              this.filtro.dataFim,
+                                                                              this.filtro.rubricaAdicional);
     }
     return this.servicoBusca$;
   }
@@ -300,6 +302,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     this.selection.clear();
     this.dadosDataSource = [];
     this.dataSource.data = [];
+    this.mostrarTabela = false;
   }
 
   limpar() {
@@ -389,6 +392,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   showFiltroDataVencimento(): boolean {
     return this.tipoRelatorioSelecionado.tipo === 'FP'
+  }
+
+  showFiltroRubricaAdicional(): boolean {
+    return this.tipoRelatorioSelecionado.tipo === 'NP'
   }
 
 }
