@@ -42,7 +42,7 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroEscolaridade">
             <form #formCadastroEscolaridade="ngForm">
                 <ng-template matStepLabel>ESCOLARIDADE</ng-template>
-                <escolaridade [pessoaFisica]="aluno.pessoaFisica"></escolaridade>
+                <escolaridade [aluno]="aluno"></escolaridade>
                 <escolar [pessoaFisica]="aluno.pessoaFisica"></escolar>
             </form>
 

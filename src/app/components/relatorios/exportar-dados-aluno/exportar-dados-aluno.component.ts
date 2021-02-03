@@ -348,6 +348,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
     colunas.push({'nome':'celular', 'descricao':'Celular', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'email', 'descricao':'Email', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'autorizoRecebimentoEmail', 'descricao':'Autorizo Recebimento de emails', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'foneRecado', 'descricao':'Telefone Recado', 'exportar': true, 'color': 'primary'});
 
 
     const dados: GrupoDadosExportar = {
@@ -369,12 +370,12 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
     colunas.push({'nome':'matricula', 'descricao':'Matrícula', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'unidade', 'descricao':'Unidade', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'nivelTurma', 'descricao':'Nível da Turma', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'programa', 'descricao':'Programa', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'projeto', 'descricao':'Projeto', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataEntrada', 'descricao':'Data de Entrada', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'dataDesligamento', 'descricao':'Data Desligamento', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'moraComOsPais', 'descricao':'Mora com os pais ?', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'paisSaoCasados', 'descricao':'Pais são casados ?', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'alunoMatriculadoEscolaPublica', 'descricao':'Está matriculado na escola pública ?', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'alunoPublicoPrioritario', 'descricao':'Trata-se de público prioritário', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'descPessoaBuscaAlunoEscola', 'descricao':'Descrição da pessoa que busca', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'desligamento', 'descricao':'Desligamento', 'exportar': true, 'color': 'primary'});
@@ -382,7 +383,7 @@ export class ExportarDadosAlunoComponent implements OnInit {
 
 
     const dados: GrupoDadosExportar = {
-      descricao: 'Admissão',
+      descricao: 'Inclusão',
       entidade: 'aluno',
       exportar: true,
       colunas: colunas,
@@ -398,13 +399,12 @@ export class ExportarDadosAlunoComponent implements OnInit {
     const colunas:Coluna[] = [];
 
     colunas.push({'nome':'descricao', 'descricao':'Descrição', 'exportar': true, 'color': 'primary'});
+    colunas.push({'nome':'alunoMatriculadoEscolaPublica', 'descricao':'Está matriculado na escola pública ?', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'nivelEscolaridade', 'descricao':'Nível de Escolaridade', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'grauInstrucao', 'descricao':'Grau de Instrução', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'tipoEscolaRegular', 'descricao':'Tipo da Escola Regular', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'TurnoEscolaRegular', 'descricao':'Turno da Escola Regular', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'identificacaoEscolaFrequentada', 'descricao':'Escola Frequentada', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'nomeCursoEscolaRegular', 'descricao':'Nome do Curso Regular', 'exportar': true, 'color': 'primary'});
-    colunas.push({'nome':'periodoCursoEscolaRegular', 'descricao':'Período do Curso Regular', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'serieCursoEscolaRegular', 'descricao':'Série do Curso Regular', 'exportar': true, 'color': 'primary'});
     colunas.push({'nome':'regiaoAdministrativaEscola', 'descricao':'Região Administrativa da Escola', 'exportar': true, 'color': 'primary'});
 

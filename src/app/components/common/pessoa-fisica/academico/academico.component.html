@@ -125,7 +125,7 @@
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-  <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+  <mat-form-field fxFlex="35%" fxFlexOffset="20px">
     <mat-label>Mora com o responsável ?</mat-label>
     <mat-select [(ngModel)]="aluno.moraPais" name="moraPais">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
@@ -137,15 +137,6 @@
   <mat-form-field fxFlex="35%" fxFlexOffset="20px">
     <mat-label>Pais do beneficiário são casados ?</mat-label>
     <mat-select [(ngModel)]="aluno.paisCasados" name="paisCasados">
-      <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
-        {{m.tipo}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field fxFlex="35%" fxFlexOffset="20px">
-    <mat-label>Aluno está matriculado na escola pública ?</mat-label>
-    <mat-select [(ngModel)]="aluno.matriculadoEscPub" name="matriculadoEscPub">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
         {{m.tipo}}
       </mat-option>

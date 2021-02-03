@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import { Aluno } from 'src/app/core/aluno';
 
 @Component({
   selector: 'escolaridade',
@@ -12,8 +13,8 @@ import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 })
 export class EscolaridadeComponent implements OnInit {
 
-  @Input() pessoaFisica: PessoaFisica = new PessoaFisica();
-
+  @Input() aluno: Aluno;
+  
   grausInstrucao: GrausInstrucao[];
 
   formaIngresso: any[] = [
@@ -33,12 +34,18 @@ export class EscolaridadeComponent implements OnInit {
     { id: 'I', tipo: 'CURSANDO' },
   ]
 
+  sim_nao: any[] = [
+    {tipo: 'Sim', flag: 'S'},
+    {tipo: 'Não', flag: 'N'}
+  ];
+
   constructor(private grausInstrucaoService: GrausInstrucaoService) {
-    this.pessoaFisica.grausInstrucao = new GrausInstrucao();
+    //this.aluno.pessoaFisica = new PessoaFisica();
+    //this.aluno.pessoaFisica.grausInstrucao = new GrausInstrucao();
   }
 
   ngOnInit() {
-    this.pessoaFisica.grausInstrucao = new GrausInstrucao();
+    this.aluno.pessoaFisica.grausInstrucao = new GrausInstrucao();
 
     this.grausInstrucaoService.getAll()
       .subscribe((graus: GrausInstrucao[]) => this.grausInstrucao = graus);
