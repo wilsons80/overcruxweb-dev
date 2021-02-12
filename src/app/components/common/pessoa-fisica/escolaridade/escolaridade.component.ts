@@ -14,6 +14,7 @@ import { Aluno } from 'src/app/core/aluno';
 export class EscolaridadeComponent implements OnInit {
 
   @Input() aluno: Aluno;
+  @Input() pessoaFisica: PessoaFisica;
   
   grausInstrucao: GrausInstrucao[];
 
@@ -40,12 +41,10 @@ export class EscolaridadeComponent implements OnInit {
   ];
 
   constructor(private grausInstrucaoService: GrausInstrucaoService) {
-    //this.aluno.pessoaFisica = new PessoaFisica();
-    //this.aluno.pessoaFisica.grausInstrucao = new GrausInstrucao();
   }
 
   ngOnInit() {
-    this.aluno.pessoaFisica.grausInstrucao = new GrausInstrucao();
+    this.pessoaFisica.grausInstrucao = new GrausInstrucao();
 
     this.grausInstrucaoService.getAll()
       .subscribe((graus: GrausInstrucao[]) => this.grausInstrucao = graus);

@@ -3,14 +3,14 @@
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
     <mat-form-field fxFlex="50%" fxFlexOffset="20px">
         <mat-label>Grau de Instrução</mat-label>
-        <mat-select [(ngModel)]="aluno.pessoaFisica.grausInstrucao.id" name="grausInstrucao">
+        <mat-select [(ngModel)]="pessoaFisica.grausInstrucao.id" name="grausInstrucao">
             <mat-option *ngFor="let m of grausInstrucao" [value]="m.id">
                 {{m.descricao}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="50%" fxFlexOffset="20px">
+    <mat-form-field fxFlex="50%" fxFlexOffset="20px" *ngIf="aluno">
         <mat-label>Aluno está matriculado na escola pública ?</mat-label>
         <mat-select [(ngModel)]="aluno.matriculadoEscPub" name="matriculadoEscPub">
           <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
