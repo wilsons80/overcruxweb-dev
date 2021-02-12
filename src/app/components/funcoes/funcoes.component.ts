@@ -25,7 +25,7 @@ export class FuncoesComponent implements OnInit {
   funcoes: Funcoes = new Funcoes();
   msg: string;
 
-  displayedColumns: string[] = ['id', 'nome','valor', 'acoes'];
+  displayedColumns: string[] = ['cargo', 'nome','valor', 'acoes'];
   dataSource: MatTableDataSource<Funcoes> = new MatTableDataSource();
   
    perfilAcesso: Acesso;
@@ -101,7 +101,7 @@ export class FuncoesComponent implements OnInit {
   }
 
   getAll() {
-    this.funcoesService.getAll().subscribe((listaFuncoes: Funcoes[]) => {
+    this.funcoesService.getAllByIdInstituicao().subscribe((listaFuncoes: Funcoes[]) => {
       this.listaFuncoes = listaFuncoes;
       this.dataSource.data = listaFuncoes ? listaFuncoes : [];
       this.verificaMostrarTabela(listaFuncoes);

@@ -42,6 +42,12 @@ export class ComboBeneficiarioComponent implements OnInit {
 
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["selecionado"] && this.selecionado.id) {
+      this.preencherComboBeneficiario();
+    }
+  }
+
   private preencherComboBeneficiario(){
     if (this.selecionado && this.selecionado.id) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});

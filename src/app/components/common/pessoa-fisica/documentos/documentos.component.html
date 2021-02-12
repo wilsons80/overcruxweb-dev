@@ -6,8 +6,8 @@
                [(ngModel)]="pessoaFisica.cpf" 
                name="cpf" 
                placeholder="CPF:"
-               maxlength="11"
-               type="text" 
+               [textMask]="{mask: mascaraCpf}"
+               [cpfValidator]
                *ngIf="!validaCPF">
 
         <input matInput 

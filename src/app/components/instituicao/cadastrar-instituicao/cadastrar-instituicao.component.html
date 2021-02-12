@@ -1,4 +1,4 @@
-<mat-toolbar class="subtitulo">Colaboradores</mat-toolbar>
+<mat-toolbar class="subtitulo">Instituição</mat-toolbar>
 
 <div class="painel-principal" style="padding: 10px;">
     <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
@@ -9,12 +9,11 @@
                 <ng-template matStepLabel>DADOS INICIAIS</ng-template>
 
                 <dados-instituicao [instituicao]=instituicao></dados-instituicao>
-                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-                fxFlexFill>
-              <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
-                  <mat-icon>chevron_right</mat-icon>
-              </button>
-          </div>
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+                    <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
+                </div>
             </form>
         </mat-step>
 
@@ -22,8 +21,9 @@
         <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroFuncoes">
             <form #formCadastroFuncoes="ngForm">
                 <ng-template matStepLabel>FUNÇÕES</ng-template>
-
-                <funcoes-instituicao [instituicao]=instituicao></funcoes-instituicao>
+                <div ngModelGroup="funcoes">
+                    <funcoes-instituicao [instituicao]=instituicao></funcoes-instituicao>
+                </div>
             </form>
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
                   fxFlexFill>

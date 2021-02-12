@@ -38,8 +38,8 @@ export class FilterExportacao{
   responsavel: ComboPessoaFisica;
   dataInicioEntradaInstituicao: Date;
   dataFimEntradaInstituicao: Date;
-  dataInicioSaidaInstituicao: Date;
-  dataFimSaidaInstituicao: Date;
+  dataInicioVigenciaInstituicao: Date;
+  dataFimVigenciaInstituicao: Date;
   programa: ComboPrograma;
   projeto: ComboProjeto;
   unidade: Unidade;
@@ -133,8 +133,8 @@ export class ExportarDadosAlunoComponent implements OnInit {
                                                this.filtro.responsavel.id,
                                                this.filtro.dataInicioEntradaInstituicao,
                                                this.filtro.dataFimEntradaInstituicao,
-                                               this.filtro.dataInicioSaidaInstituicao,
-                                               this.filtro.dataFimSaidaInstituicao)
+                                               this.filtro.dataInicioVigenciaInstituicao,
+                                               this.filtro.dataFimVigenciaInstituicao)
       .subscribe((dados: ExportacaoDadosAluno[]) => {
       this.exportacaoDadosAlunos = dados;
       

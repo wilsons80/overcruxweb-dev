@@ -31,7 +31,7 @@ export class CargoComponent implements OnInit {
 
   perfilAcesso: Acesso;
 
-  displayedColumns: string[] = ['codigo', 'nome', 'tipoCargo','acoes'];
+  displayedColumns: string[] = ['nome', 'tipoCargo','acoes'];
   dataSource: MatTableDataSource<Cargo> = new MatTableDataSource();
 
 

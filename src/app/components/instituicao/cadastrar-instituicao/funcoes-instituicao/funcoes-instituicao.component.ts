@@ -3,7 +3,7 @@ import { FuncoesService } from './../../../../services/funcoes/funcoes.service';
 import { FuncionarioService } from './../../../../services/funcionario/funcionario.service';
 import { FuncoesInstituicao } from './../../../../core/funcoes-instituicao';
 import { Funcoes } from './../../../../core/funcoes';
-import { Component, OnInit, Input, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, SimpleChanges, forwardRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -12,11 +12,15 @@ import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
 import { Cargo } from 'src/app/core/cargo';
 import { Funcionario } from 'src/app/core/funcionario';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 
 @Component({
   selector: 'funcoes-instituicao',
   templateUrl: './funcoes-instituicao.component.html',
-  styleUrls: ['./funcoes-instituicao.component.css']
+  styleUrls: ['./funcoes-instituicao.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm },
+                  { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }],    
 })
 export class FuncoesInstituicaoComponent implements OnInit {
 
@@ -43,17 +47,16 @@ export class FuncoesInstituicaoComponent implements OnInit {
 
 
   constructor(
-
+    private dataUtilService: DataUtilService,
     private funcionarioService: FuncionarioService,
     private funcoesService: FuncoesService
-
   ) { }
 
   ngOnInit() {
     this.inicializaLista();
     this.initObjetos();
 
-    this.funcoesService.getAll().subscribe((listaFuncoes: Funcoes[]) => {
+    this.funcoesService.getAllByIdInstituicao().subscribe((listaFuncoes: Funcoes[]) => {
       this.listaFuncoes = listaFuncoes;
     })
 
@@ -149,6 +152,10 @@ export class FuncoesInstituicaoComponent implements OnInit {
       this.instituicao.funcoesInstituicao.splice(index, 1);
       this.carregarLista();
     }
+  }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
   }
 
 }

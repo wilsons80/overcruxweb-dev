@@ -33,8 +33,8 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
             idResponsavel: string|number,
             dataInicioEntradaInstituicao: any,
             dataFimEntradaInstituicao: any,
-            dataInicioSaidaInstituicao: any,
-            dataFimSaidaInstituicao: any,) {
+            dataInicioVigenciaInstituicao: any,
+            dataFimVigenciaInstituicao: any,) {
 
     cpf             = cpf || '';
     idBeneficiario  = idBeneficiario || '';
@@ -47,8 +47,8 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
 
     const p_dataInicioEntradaInstituicao = dataInicioEntradaInstituicao ? dataInicioEntradaInstituicao.getTime() : '';
     const p_dataFimEntradaInstituicao = dataFimEntradaInstituicao ? dataFimEntradaInstituicao.getTime() : '';
-    const p_dataInicioSaidaInstituicao = dataInicioSaidaInstituicao ? dataInicioSaidaInstituicao.getTime() : '';
-    const p_dataFimSaidaInstituicao = dataFimSaidaInstituicao ? dataFimSaidaInstituicao.getTime() : '';
+    const p_dataInicioVigenciaInstituicao = dataInicioVigenciaInstituicao ? dataInicioVigenciaInstituicao.getTime() : '';
+    const p_dataFimVigenciaInstituicao = dataFimVigenciaInstituicao ? dataFimVigenciaInstituicao.getTime() : '';
 
     return this.http.get(Rotas.EXPORTAR_DADOS_ALUNO + 'filter', { params: {
       cpf: `${cpf}` ,
@@ -60,8 +60,8 @@ export class ExportacaoDadosAlunoService  extends BaseService<ExportacaoDadosAlu
       idUnidade: `${idUnidade}`,
       dataInicioEntradaInstituicao: `${p_dataInicioEntradaInstituicao}`,
       dataFimEntradaInstituicao: `${p_dataFimEntradaInstituicao}`,
-      dataInicioSaidaInstituicao: `${p_dataInicioSaidaInstituicao}`,
-      dataFimSaidaInstituicao: `${p_dataFimSaidaInstituicao}`,
+      dataInicioVigenciaInstituicao: `${p_dataInicioVigenciaInstituicao}`,
+      dataFimVigenciaInstituicao: `${p_dataFimVigenciaInstituicao}`,
       }
     });
   }

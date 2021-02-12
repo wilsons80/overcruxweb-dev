@@ -19,7 +19,7 @@
             </form>
         </mat-step>
 
-        <!--  ACADEMICO -->
+        <!--  INCLUSÃO -->
         <mat-step style="padding-bottom: 20px" [stepControl]="formCadastroAcademico">
             <form #formCadastroAcademico="ngForm">
                 <ng-template matStepLabel>INCLUSÃO</ng-template>
@@ -63,7 +63,7 @@
             <form #formCadastroDocumentos="ngForm">
                 <ng-template matStepLabel>DOCUMENTOS</ng-template>
 
-                <documentos [pessoaFisica]="aluno.pessoaFisica" [validaCPF]="true" ></documentos>
+                <documentos [pessoaFisica]="aluno.pessoaFisica" [validaCPF]="false" ></documentos>
             </form>
 
             <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"

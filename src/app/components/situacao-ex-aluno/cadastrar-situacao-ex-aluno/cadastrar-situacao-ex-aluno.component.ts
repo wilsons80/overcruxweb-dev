@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
 import { Aluno } from 'src/app/core/aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ComboAluno } from 'src/app/core/combo-aluno';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { Iniciativa } from 'src/app/core/iniciativa';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { Programa } from 'src/app/core/programa';
 import { SituacaoExAluno } from 'src/app/core/situacoes-ex-alunos';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
@@ -25,9 +27,12 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
   condicaoDeTrabalho = ['BOA', 'RUIM'];
   situacaoExAluno: SituacaoExAluno;
 
-  perfilAcesso: Acesso;
+  
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
 
   isAtualizar: boolean = false;
 
@@ -38,12 +43,12 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
     private toastService: ToastService,
     private alunoService: AlunoService,
   ) {
-
+    this.carregarPerfil = new CarregarPerfil();
   }
 
 
   ngOnInit() {
-
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.inicializarObjetos()
 
     this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
@@ -61,17 +66,23 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
       this.isAtualizar = true;
       this.situacoesExAlunosService.getById(id).subscribe((situacaoExAluno: SituacaoExAluno) => {
         this.situacaoExAluno = situacaoExAluno;
-        this.filtro.aluno.id = this.situacaoExAluno.aluno.id;
+        this.filtro.aluno = {
+          id: this.situacaoExAluno.aluno.id ,
+          nome: this.situacaoExAluno.aluno.pessoaFisica.nome
+        }
       });
     }
 
   }
+
+
   inicializarObjetos() {
     this.filtro = new FilterAlunos();
     this.filtro.aluno = new ComboAluno();
 
     this.situacaoExAluno = new SituacaoExAluno();
     this.situacaoExAluno.aluno = new Aluno();
+    this.situacaoExAluno.aluno.pessoaFisica = new PessoaFisica();
   }
 
   mostrarBotaoLimpar() {
@@ -98,12 +109,11 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
   }
 
   atualizar() {
-
     this.situacoesExAlunosService.alterar(this.situacaoExAluno).subscribe(() => {
       this.toastService.showSucesso("Situação atualizada com sucesso");
     });
-
   }
+
   onValorChange(event: any) {
     this.filtro.aluno = event;
     if(this.filtro.aluno){

@@ -64,9 +64,9 @@
 
 
 <!-- OUTRAS INFORMAÇÕES -->
-<mat-toolbar class="titulopartes">Benefícios</mat-toolbar>
+<mat-toolbar class="titulopartes">Apoio</mat-toolbar>
 <div *ngIf="origemTelaAluno" fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+    <mat-form-field fxFlex="50%" fxFlexOffset="20px">
             <mat-label>Já atendido em outro órgão da rede</mat-label>
             <mat-select [(ngModel)]="atendidoOrgaoRede" name="atendidoOrgaoRede">
                 <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
@@ -95,7 +95,7 @@
 </div>
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-    <mat-form-field fxFlexOffset="20px" fxFlex="50%" appearance="outline">
+    <mat-form-field fxFlexOffset="20px" fxFlex="100%" appearance="outline">
         <mat-label>Descrição relevante da rede de apoio social / pessoal:</mat-label>
         <textarea matInput #redeApoioSocial name="redeApoioSocial" [(ngModel)]="pessoaFisica.redeApoioSocial"
             cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" maxlength="200"></textarea>

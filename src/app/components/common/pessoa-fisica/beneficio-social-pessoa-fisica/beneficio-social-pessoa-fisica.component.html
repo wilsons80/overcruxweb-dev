@@ -49,6 +49,7 @@
                    [(ngModel)]="beneficio.dataFim"
                    [matDatepicker]="dataFim"
                    placeholder="Data Fim"
+                   [min]="beneficio.dataInicio"
                    (input)="onMascaraDataInput($event)">
             <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
             <mat-datepicker #dataFim></mat-datepicker>

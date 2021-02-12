@@ -3,8 +3,6 @@
     <form #formCadastro="ngForm">
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-
-            <!-- #DATA AVALIACAO  -->
             <mat-form-field fxFlex="15%" fxFlexOffset="20px">
                 <input matInput name="dataAvaliacao" [(ngModel)]=situacaoExAluno.dataAvaliacao [matDatepicker]="dataAvaliacao" placeholder="Data da Avaliação" required>
                 <mat-datepicker-toggle matSuffix [for]="dataAvaliacao">
@@ -16,11 +14,10 @@
         <mat-toolbar class="titulopartes">Beneficiário</mat-toolbar>
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <div ngModelGroup="comboBeneficiario" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
-                <combo-beneficiario 
-                    [showDisplayId]="false" 
-                    [obrigatorio]="true" 
-                    [selecionado]="filtro.aluno"
-                    (valorChange)="onValorChange($event)">
+                <combo-beneficiario [showDisplayId]="false" 
+                                    [obrigatorio]="true" 
+                                    [selecionado]="filtro.aluno"
+                                    (valorChange)="onValorChange($event)">
                 </combo-beneficiario>
             </div>
         </div>
@@ -35,27 +32,25 @@
             <!-- #PROFISSÃO ATUAL  -->
             <mat-form-field fxFlexOffset="20px" fxFlex="30%">
                 <input #profissaoAtual matInput maxlength="200" required [(ngModel)]=situacaoExAluno.profissao
-                    name="profissaoAtual" placeholder="Profissão Atual:">
+                    name="profissaoAtual" placeholder="Profissão Atual">
                 <mat-hint align="end">{{profissaoAtual.value.length}} / 200</mat-hint>
             </mat-form-field>
 
             <!-- #LOCAL DE TRABALHO  -->
             <mat-form-field fxFlex="30%">
                 <input #localDeTrabalho matInput maxlength="200" [(ngModel)]=situacaoExAluno.localTrabalho
-                    name="localTrabalho" placeholder="Local de Trabalho:">
+                    name="localTrabalho" placeholder="Local de Trabalho">
                 <mat-hint align="end">{{localDeTrabalho.value.length}} / 200</mat-hint>
             </mat-form-field>
 
             <!-- #CONDICAO DE TRABALHO -->
             <mat-form-field fxFlex="30%" fxLayoutGap="20px" fxFlexOffset="20px">
-                <mat-label>Condição de Trabalho:</mat-label>
-                <mat-select name="condicaoDeTrabalho"  [(ngModel)]=situacaoExAluno.condicaoAtual  required>
-                    <mat-option *ngFor="let i of condicaoDeTrabalho" [value]=i>
-                        {{i}}
-                    </mat-option>
-                </mat-select>
+                <input #condicaoAtual matInput maxlength="200" [(ngModel)]=situacaoExAluno.condicaoAtual
+                       name="condicaoAtual" placeholder="Condição de Trabalho">
+                <mat-hint align="end">{{condicaoAtual.condicaoAtual}} / 200</mat-hint>
             </mat-form-field>
         </div>
+
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
             fxFlexFill>

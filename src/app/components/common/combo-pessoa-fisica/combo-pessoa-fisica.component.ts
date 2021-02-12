@@ -1,5 +1,5 @@
 import { ComboPessoaFisica } from './../../../core/combo-pessoa-fisica';
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { ComboFuncionario } from 'src/app/core/combo-funcionario';
 import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
@@ -48,6 +48,12 @@ export class ComboPessoaFisicaComponent implements OnInit {
       });
     }, 0);
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["selecionado"] && this.selecionado.id) {
+      this.preencherCombo();
+    }
   }
 
   private preencherCombo(){

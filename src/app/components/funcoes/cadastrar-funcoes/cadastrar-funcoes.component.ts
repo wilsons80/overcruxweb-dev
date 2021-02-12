@@ -10,6 +10,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Instituicao } from 'src/app/core/instituicao';
 import { Cargo } from 'src/app/core/cargo';
 import { CargosService } from 'src/app/services/cargos/cargos.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-funcoes',
@@ -25,7 +26,9 @@ export class CadastrarFuncoesComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil;
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
   cargos: Cargo[];
@@ -37,12 +40,13 @@ export class CadastrarFuncoesComponent implements OnInit {
     private toastService: ToastService,
     private cargosService: CargosService,
 
-  ) { }
+  ) {
+    this.carregarPerfil = new CarregarPerfil();
+   }
 
   ngOnInit() {
     this.inicializarObjetos();
-
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

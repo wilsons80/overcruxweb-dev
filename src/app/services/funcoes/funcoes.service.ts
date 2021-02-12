@@ -13,4 +13,9 @@ export class FuncoesService extends BaseService<Funcoes> {
     super(http, Rotas.FUNCOES);
   }
 
+
+  getAllByIdInstituicao() {
+    return this.http.get(`${Rotas.FUNCOES}instituicao`);
+  }
+
 }

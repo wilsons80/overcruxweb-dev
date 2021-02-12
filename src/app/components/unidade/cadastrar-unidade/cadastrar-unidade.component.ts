@@ -1,5 +1,5 @@
 import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -40,6 +40,7 @@ export class CadastrarUnidadeComponent implements OnInit {
     private unidadeService: UnidadeService,
     private router: Router,
     private toastService: ToastService,
+    private drc: ChangeDetectorRef,
     private arquivoUnidadeService: ArquivoUnidadeService,
     private fileUtils: FileUtils,
     private toolbarPrincipalService: ToolbarPrincipalService,
@@ -73,6 +74,12 @@ export class CadastrarUnidadeComponent implements OnInit {
     }
 
   }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+  }
+
+  
   inicializarObjetos() {
     this.unidade = new Unidade();
     this.unidade.instituicao = new Instituicao();

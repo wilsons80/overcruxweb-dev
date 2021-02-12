@@ -46,7 +46,7 @@ export class CadastrarDoadoresComponent implements OnInit {
     private pessoaFisicaService: PessoaFisicaService,
     private empresaService: EmpresaService,
     private dataUtilService: DataUtilService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
   }
  

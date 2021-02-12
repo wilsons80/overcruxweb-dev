@@ -94,7 +94,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   dadosDataSource: any[]
 
   tiposRelatorios: TipoRelatorio[] = [
-    {tipo: 'NP', descricao: 'Normativa Pagamentos', nomeRelatorio: 'normativa_pagamentos'},
+    {tipo: 'NP', descricao: 'Relação Nominativa de Pagamentos', nomeRelatorio: 'Relação Nominativa de Pagamentos'},
     {tipo: 'FP', descricao: 'Faturas a Pagar', nomeRelatorio: 'faturas_pagar'},
     {tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
   ];

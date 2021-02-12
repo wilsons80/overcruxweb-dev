@@ -39,23 +39,25 @@
 
 
                 <mat-form-field fxFlex= "220px" fxLayoutGap="20px" fxFlexOffset="20px">
-                    <input matInput name= "dataInicioSaida"
-                            [matDatepicker]="dataInicioSaida" 
-                            placeholder="Data Início Desligamento" 
-                            [(ngModel)]="filtro.dataInicioEntradaInstituicao"
-                            (input)="onMascaraDataInput($event)">
-                    <mat-datepicker-toggle matSuffix [for]="dataInicioSaida"></mat-datepicker-toggle>
-                    <mat-datepicker #dataInicioSaida></mat-datepicker>
+                    <input matInput name= "dataInicioVigencia"
+                           [matDatepicker]="dataInicioVigencia" 
+                           placeholder="Data Início Vigência" 
+                           [required]="filtro.dataFimVigenciaInstituicao"
+                           [(ngModel)]="filtro.dataInicioVigenciaInstituicao"
+                           (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataInicioVigencia"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicioVigencia></mat-datepicker>
                 </mat-form-field>
             
                 <mat-form-field fxFlex= "220px" >
-                    <input matInput name="dataFimSaida"
-                            [matDatepicker]="dataFimSaida" 
-                            placeholder="Data Fim Desligamento" 
-                            [(ngModel)]="filtro.dataFimEntradaInstituicao"
+                    <input matInput name="dataFimVigencia"
+                            [matDatepicker]="dataFimVigencia" 
+                            placeholder="Data Fim Vigência" 
+                            [required]="filtro.dataInicioVigenciaInstituicao"
+                            [(ngModel)]="filtro.dataFimVigenciaInstituicao"
                             (input)="onMascaraDataInput($event)">
-                    <mat-datepicker-toggle matSuffix [for]="dataFimSaida"></mat-datepicker-toggle>
-                    <mat-datepicker #dataFimSaida></mat-datepicker>
+                    <mat-datepicker-toggle matSuffix [for]="dataFimVigencia"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFimVigencia></mat-datepicker>
                 </mat-form-field>
 
             </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { ComboEmpresa } from 'src/app/core/combo-empresa';
@@ -46,6 +46,12 @@ export class ComboEmpresaComponent implements OnInit {
       });
     }, 0);
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["selecionado"] && this.selecionado.id) {
+      this.preencherCombo();
+    }
   }
 
   private preencherCombo() {

@@ -1,14 +1,18 @@
-import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
 import { Acesso } from 'src/app/core/acesso';
 import { CertificadoUnidade } from 'src/app/core/certificado-unidade';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 @Component({
   selector: 'certificado-unidade',
   templateUrl: './certificado-unidade.component.html',
-  styleUrls: ['./certificado-unidade.component.css']
+  styleUrls: ['./certificado-unidade.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm },
+                  { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }],    
 })
 export class CertificadoUnidadeComponent implements OnInit {
 
@@ -31,13 +35,16 @@ export class CertificadoUnidadeComponent implements OnInit {
 
 
   constructor(
-
-
+    private dataUtilService: DataUtilService,
+    private drc: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.initObjetos();
+  }
 
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -112,4 +119,8 @@ export class CertificadoUnidadeComponent implements OnInit {
 
   }
 
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
 }

@@ -22,6 +22,7 @@
                           name="dataInicio" 
                           [(ngModel)]=doadores.dataInicioVinculo 
                           [matDatepicker]="dataInicio" 
+                          (input)="onMascaraDataInput($event)"
                           placeholder="Data de Início do Vínculo" 
                           (input)="onMascaraDataInput($event)">
                 <mat-datepicker-toggle matSuffix [for]="dataInicio">
@@ -35,6 +36,7 @@
                         name="dataFim" 
                         [(ngModel)]=doadores.dataFimVinculo 
                         [matDatepicker]="dataFim" 
+                        [min]="doadores.dataInicioVinculo"
                         placeholder="Data Fim Vínculo"
                         (input)="onMascaraDataInput($event)">
                 <mat-datepicker-toggle matSuffix [for]="dataFim">

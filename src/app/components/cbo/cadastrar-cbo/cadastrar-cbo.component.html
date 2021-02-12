@@ -7,21 +7,26 @@
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <mat-form-field fxFlexOffset="20px" fxFlex= "20%" fxFlexOffset="20px" >
-                <input matInput maxlength="10"  name="numero" placeholder="Número" [(ngModel)]="cbo.numero" 
+                <input matInput maxlength="10"  
+                       name="numero" 
+                       placeholder="Número" 
+                       [(ngModel)]="cbo.numero" 
                        [textMask]="{mask: maskNumeroCBO}" 
                        pattern="^\d{5}-\d{1}$"
                        required>
              </mat-form-field>
             
              <mat-form-field fxFlex= "80%">
-                <input matInput maxlength="100"  name="descricao" placeholder="Descrição do tipo" [(ngModel)]="cbo.descricaoTipo" required>
+                <input matInput maxlength="100"  
+                       name="descricao" placeholder="Descrição do tipo" 
+                    [(ngModel)]="cbo.descricaoTipo">
              </mat-form-field>
 
         </div>
 
         <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
             <mat-form-field fxFlexOffset="20px" fxFlex= "100%" fxFlexOffset="20px" >
-                <input matInput maxlength="200"  name="nome" placeholder="Nome" [(ngModel)]="cbo.nomeTitulo" required>
+                <input matInput maxlength="200"  name="nome" placeholder="Nome" [(ngModel)]="cbo.nomeTitulo">
             </mat-form-field>
         </div>
 

@@ -83,6 +83,7 @@
   <mat-form-field fxFlex="20%">
     <mat-label>Motivo Desligamento</mat-label>
     <mat-select [(ngModel)]="aluno.motivoDesligamento.id" name="motivoDesligamento">
+      <mat-option></mat-option>
       <mat-option *ngFor="let m of listaMotivosDesligamento" [value]="m.id">
         {{m.motivoDesligamento}}
       </mat-option>
@@ -125,7 +126,7 @@
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
-  <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+  <mat-form-field fxFlex="30%" fxFlexOffset="20px">
     <mat-label>Mora com o responsável ?</mat-label>
     <mat-select [(ngModel)]="aluno.moraPais" name="moraPais">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
@@ -149,6 +150,7 @@
   <mat-form-field fxFlexOffset="20px" fxFlex="30%">
     <mat-label>Tipo Público Prioritário</mat-label>
     <mat-select [(ngModel)]="aluno.tiposPublicoPrioritario.id" name="tiposPublicoPrioritario">
+      <mat-option></mat-option>
       <mat-option *ngFor="let m of listaTiposPublicoPrioritario" [value]="m.id">
         {{m.descricao}}
       </mat-option>

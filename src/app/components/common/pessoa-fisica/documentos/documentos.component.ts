@@ -33,9 +33,9 @@ export class DocumentosComponent implements OnInit {
       this.ufs = ufs;
     });
 
-    if(this.validaCPF) {
+    //if(this.validaCPF) {
       this.adicionarMascara();
-    }
+    //}
   }
 
 

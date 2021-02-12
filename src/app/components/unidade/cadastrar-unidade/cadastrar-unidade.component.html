@@ -4,20 +4,17 @@
 
     <mat-horizontal-stepper #stepper style="background: transparent; padding: 10px">
 
-        <!------------------ DADOS BÁSICOS ------------------------>
+        <!-- DADOS BÁSICOS -->
         <mat-step [stepControl]="formCadastroDadosBasicos">
             <form #formCadastroDadosBasicos="ngForm" state="dadosBasicos">
                 <ng-template matStepLabel>DADOS DO BÁSICO</ng-template>
-                
                 <dados-basicos-unidade [unidade]=unidade></dados-basicos-unidade>
                 
-                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-                    fxFlexFill>
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
                         <mat-icon>chevron_right</mat-icon>
                     </button>
                 </div>
-
             </form>
         </mat-step>
 
@@ -25,11 +22,9 @@
         <mat-step [stepControl]="formCadastroEstrutura">
             <form #formCadastroEstrutura="ngForm" matStepperIcon="phone">
                 <ng-template matStepLabel>ESTRUTURA</ng-template>
-                
                 <estrutura-unidade [listaEstruturaUnidade]=unidade.estruturasUnidades></estrutura-unidade>
                 
-                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-                    fxFlexFill>
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
                         <mat-icon>chevron_left</mat-icon>
                     </button>
@@ -40,15 +35,15 @@
             </form>
         </mat-step>
        
-        <!-- ESTRUTURA -->
-        <mat-step [stepControl]="formCadastroEstrutura">
-            <form #formCadastroEstrutura="ngForm" matStepperIcon="phone">
+        <!-- CERTIFICADOS -->
+        <mat-step [stepControl]="formCertificados">
+            <form #formCertificados="ngForm" matStepperIcon="phone">
                 <ng-template matStepLabel>CERTIFICADOS</ng-template>
+                <div ngModelGroup="certificados">
+                    <certificado-unidade [listaCertificadoUnidade]=unidade.certificadosUnidade></certificado-unidade>
+                </div>    
                 
-                <certificado-unidade [listaCertificadoUnidade]=unidade.certificadosUnidade></certificado-unidade>
-                
-                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-                    fxFlexFill>
+                <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
                     <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
                         <mat-icon>chevron_left</mat-icon>
                     </button>
@@ -61,12 +56,12 @@
 
     <!-- BOTOES -->
     <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
-        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]=formCadastroDadosBasicos.invalid
+        <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" [disabled]="formCadastroDadosBasicos.invalid || formCertificados.invalid"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">
             Cadastrar
         </button>
 
-        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]=formCadastroDadosBasicos.invalid
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" [disabled]="formCadastroDadosBasicos.invalid || formCertificados.invalid"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="atualizar()">
             Atualizar
         </button>

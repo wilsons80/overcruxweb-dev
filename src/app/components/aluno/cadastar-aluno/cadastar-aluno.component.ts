@@ -121,12 +121,7 @@ export class CadastarAlunoComponent implements OnInit {
 
 
   atualizar() {
-    console.log("Aluno", this.aluno);
     this.tratarDados();
-
-    if (this.aluno.pessoaFisica.cpf === null) {
-      this.aluno.pessoaFisica.cpf = String(this.aluno.id);
-    }
 
     this.loadingPopupService.mostrarMensagemDialog('Salvando dados do aluno, aguarde...');
     this.alunoService.alterar(this.aluno).pipe(
