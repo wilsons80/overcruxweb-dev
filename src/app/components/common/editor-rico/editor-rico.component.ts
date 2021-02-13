@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, forwardRef, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EditorPecaDespacho } from 'src/app/core/peca-despacho';
 import { AlunoService } from 'src/app/services/aluno/aluno.service';
@@ -26,7 +25,7 @@ export class EditorRicoComponent implements OnInit, AfterViewInit, OnDestroy {
   tipoRelatorio: "";
 
   name = 'ng2-ckeditor';
-  ckeConfig: any;
+  ckeConfig: CKEDITOR.config;
   @ViewChild("myckeditor") ckeditor: any;
 
   constructor(
