@@ -7,6 +7,7 @@ import { PessoaFisicaService } from 'src/app/services/pessoa-fisica/pessoa-fisic
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { PessoaFisica } from './../../../core/pessoa-fisica';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-curso-formacao',
@@ -21,7 +22,9 @@ export class CadastrarCursoFormacaoComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -36,7 +39,7 @@ export class CadastrarCursoFormacaoComponent implements OnInit {
 
   ngOnInit() {
     this.inicializarObjetos();
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

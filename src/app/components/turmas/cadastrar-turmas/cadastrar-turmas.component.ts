@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { TurmasService } from 'src/app/services/turmas/turmas.service';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { Atividade } from 'src/app/core/atividade';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-turmas',
@@ -21,7 +22,9 @@ export class CadastrarTurmasComponent implements OnInit {
 
   turma: Turmas = new Turmas();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -44,7 +47,7 @@ export class CadastrarTurmasComponent implements OnInit {
   
   ngOnInit() {
     this.initObjetos();
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

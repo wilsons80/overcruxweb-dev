@@ -11,6 +11,7 @@ import { ParceriasPrograma } from 'src/app/core/parcerias-programa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { AditivoParceriaPrograma } from 'src/app/core/aditivo-parceria-programa';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'parcerias-programa',
@@ -33,7 +34,8 @@ export class ParceriasProgramaComponent implements OnInit {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   isAtualizar = false;
 
@@ -53,7 +55,8 @@ export class ParceriasProgramaComponent implements OnInit {
 
     this.initObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => this.empresas = empresas);
 
   }

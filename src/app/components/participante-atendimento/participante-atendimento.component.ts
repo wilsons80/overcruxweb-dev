@@ -9,6 +9,8 @@ import { PerfilAcesso } from 'src/app/core/perfil-acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { ParticipantesAtendimentosService } from 'src/app/services/participantes-atendimentos/participantes-atendimentos.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { Acesso } from 'src/app/core/acesso';
 
 @Component({
   selector: 'app-participante-atendimento',
@@ -23,7 +25,9 @@ export class ParticipanteAtendimentoComponent implements OnInit {
   mostrarTabela: boolean = false;
   participanteAtendimento: ParticipanteAtendimento = new ParticipanteAtendimento();
   msg: string;
-  perfilAcesso: PerfilAcesso;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['data','Atendimento', 'Familiares', 'Funcionario', 'acoes'];
   dataSource: MatTableDataSource<ParticipanteAtendimento> = new MatTableDataSource();
@@ -37,7 +41,7 @@ export class ParticipanteAtendimentoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

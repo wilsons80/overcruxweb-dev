@@ -14,6 +14,7 @@ import { EmpresaService } from '../../../services/empresa/empresa.service';
 import { PessoaFisicaService } from '../../../services/pessoa-fisica/pessoa-fisica.service';
 import { Input } from '@angular/core';
 import { FornecedoresService } from 'src/app/services/fornecedores/fornecedores.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-fornecedores',
@@ -28,7 +29,9 @@ export class CadastrarFornecedoresComponent implements OnInit {
   filtroPessoa: FilterPessoaFisica;
   filtroEmpresa: FilterEmpresa;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -57,7 +60,7 @@ export class CadastrarFornecedoresComponent implements OnInit {
 
     this.inicializarObjetos()
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

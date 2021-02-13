@@ -13,6 +13,7 @@ import { TalentosService } from 'src/app/services/talentos/talentos.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import { Funcionario } from 'src/app/core/funcionario';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-talento',
@@ -33,7 +34,8 @@ export class TalentoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'dataRespostaTalento', 'nrNotaCompetencia', 'acoes'];
   dataSource: MatTableDataSource<Talento> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -48,7 +50,7 @@ export class TalentoComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
       this.funcionarios = funcionarios;

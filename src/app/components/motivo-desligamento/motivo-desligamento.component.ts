@@ -8,6 +8,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { MotivoDesligamento } from 'src/app/core/motivo-desligamento';
 import { MotivoDesligamentoService } from 'src/app/services/motivo-desligamento/motivo-desligamento.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'motivo-desligamento',
@@ -27,7 +28,9 @@ export class MotivoDesligamentoComponent implements OnInit {
   displayedColumns: string[] = ['id', 'motivoDesligamento', 'acoes'];
   dataSource: MatTableDataSource<MotivoDesligamento> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   constructor(
     private motivoDesligamentoService: MotivoDesligamentoService,
@@ -38,7 +41,8 @@ export class MotivoDesligamentoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

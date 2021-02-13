@@ -11,6 +11,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CboService } from 'src/app/services/cbo/cbo.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cbo',
@@ -27,7 +28,8 @@ export class CboComponent implements OnInit {
 
   mostrarTabela = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['numero', 'nome', 'descricao', 'acoes'];
   dataSource: MatTableDataSource<Cbo> = new MatTableDataSource();
@@ -41,7 +43,7 @@ export class CboComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

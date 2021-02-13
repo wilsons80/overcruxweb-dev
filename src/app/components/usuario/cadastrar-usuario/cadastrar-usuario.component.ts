@@ -9,6 +9,7 @@ import { FileUtils } from 'src/app/utils/file-utils';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-usuario',
@@ -17,7 +18,9 @@ import { Acesso } from 'src/app/core/acesso';
 })
 export class CadastrarUsuarioComponent implements OnInit {
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();  
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -36,7 +39,7 @@ export class CadastrarUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

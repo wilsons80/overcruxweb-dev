@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { ParceriasProjeto } from 'src/app/core/parcerias-projeto';
 import { Empresa } from 'src/app/core/empresa';
 import { NovoObjetoService } from 'src/app/services/novo-objeto/novo-objeto.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'parcerias-projeto',
@@ -30,7 +31,8 @@ export class ParceriasProjetoComponent implements OnInit {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   isAtualizar = false;
 
@@ -50,7 +52,8 @@ export class ParceriasProjetoComponent implements OnInit {
 
     this.initObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.empresaService.getAll().subscribe((empresas: Empresa[]) => this.empresas = empresas);
 
   }

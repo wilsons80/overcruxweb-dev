@@ -13,6 +13,7 @@ import { Projeto } from 'src/app/core/projeto';
 import { Unidade } from 'src/app/core/unidade';
 import { NiveisTurmas } from 'src/app/core/niveis-turmas';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'turmas',
@@ -26,7 +27,9 @@ export class TurmasComponent implements OnInit {
   turmas: Turmas[];
   turma: Turmas = new Turmas();
   msg: string;
-  perfilAcesso: Acesso;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarTabela = false;
 
@@ -41,7 +44,8 @@ export class TurmasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

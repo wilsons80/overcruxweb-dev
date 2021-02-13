@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -27,12 +28,13 @@ export class ListarOficinasComponent implements OnInit {
   displayedColumns: string[] = ['descricao', 'datainicio','horario', 'datafim', 'maxparticipantes', 'projeto', 'acoes'];
   dataSource: MatTableDataSource<Atividade> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.carregarLista();

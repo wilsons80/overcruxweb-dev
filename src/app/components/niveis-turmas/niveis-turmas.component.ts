@@ -9,6 +9,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NiveisTurmasService } from 'src/app/services/niveis-turmas/niveis-turmas.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'niveis-turmas',
@@ -27,7 +28,9 @@ export class NiveisTurmasComponent implements OnInit {
   msg: string;
 
   displayedColumns: string[] = ['codigo', 'descricao', 'acoes'];
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
 
   dataSource: MatTableDataSource<NiveisTurmas> = new MatTableDataSource();
@@ -41,7 +44,8 @@ export class NiveisTurmasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

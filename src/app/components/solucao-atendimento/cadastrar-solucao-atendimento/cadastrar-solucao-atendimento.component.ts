@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-solucao-atendimento',
@@ -17,7 +18,9 @@ export class CadastrarSolucaoAtendimentoComponent implements OnInit {
   isAtualizar = false;
 
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -31,7 +34,7 @@ export class CadastrarSolucaoAtendimentoComponent implements OnInit {
 
   ngOnInit() {
 
-  this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
   if(!this.perfilAcesso.insere){
     this.mostrarBotaoCadastrar = false;

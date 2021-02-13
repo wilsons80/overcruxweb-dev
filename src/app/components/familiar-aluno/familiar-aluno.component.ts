@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -24,7 +25,9 @@ export class FamiliarAlunoComponent implements OnInit {
 
   familiares: Familiares[];
   familiar: Familiares = new Familiares();
-  perfilAcesso: Acesso;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   situacaoParentesco: SituacaoParentesco = new SituacaoParentesco();
 
@@ -42,7 +45,7 @@ export class FamiliarAlunoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

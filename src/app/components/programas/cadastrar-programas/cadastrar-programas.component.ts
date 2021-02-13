@@ -11,6 +11,7 @@ import { Programa } from './../../../core/programa';
 import { FuncionarioService } from './../../../services/funcionario/funcionario.service';
 import {Iniciativa} from 'src/app/core/iniciativa';
 import {Projeto} from 'src/app/core/projeto';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-programas',
@@ -24,7 +25,9 @@ export class CadastrarProgramasComponent implements OnInit {
   isAtualizar: boolean = false;
 
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -43,7 +46,7 @@ export class CadastrarProgramasComponent implements OnInit {
 
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

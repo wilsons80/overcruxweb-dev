@@ -4,6 +4,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { TipoOcorrenciaAlunoService } from 'src/app/services/tipo-ocorrencia-aluno/tipo-ocorrencia-aluno.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-tipo-ocorrencia-aluno',
@@ -14,7 +15,9 @@ export class CadastrarTipoOcorrenciaAlunoComponent implements OnInit {
 
   tipoocorrenciaaluno: TipoOcorrenciaAluno = new TipoOcorrenciaAluno();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -31,7 +34,7 @@ export class CadastrarTipoOcorrenciaAlunoComponent implements OnInit {
 
   ngOnInit() {
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

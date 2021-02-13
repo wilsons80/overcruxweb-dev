@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { CboService } from 'src/app/services/cbo/cbo.service';
 import { Cbo } from 'src/app/core/cbo';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-cbo',
@@ -14,7 +15,9 @@ export class CadastrarCboComponent implements OnInit {
 
   cbo: Cbo = new Cbo();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -32,7 +35,7 @@ export class CadastrarCboComponent implements OnInit {
 
   ngOnInit() {
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

@@ -16,6 +16,7 @@ import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-
 import { UsuariosUnidades } from 'src/app/core/usuarios-unidades';
 import { ModuloService } from 'src/app/services/modulo/modulo.service';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class GrupoModuloComponent implements OnInit {
   modulos: Modulo[];
   modulo: Modulo = new Modulo();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarTabela = false;
   msg: string;
@@ -52,7 +54,7 @@ export class GrupoModuloComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.consultar();

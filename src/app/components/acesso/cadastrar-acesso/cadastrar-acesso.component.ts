@@ -37,7 +37,7 @@ export class CadastrarAcessoComponent implements OnInit {
   isAtualizar = false;
 
   perfilAcesso: Acesso = new Acesso();
-  carregarPerfil: CarregarPerfil;
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
@@ -56,7 +56,7 @@ export class CadastrarAcessoComponent implements OnInit {
     private instituicaoService: InstituicaoService,
     private router: Router
   ) {
-    this.carregarPerfil = new CarregarPerfil();
+   
   }
 
   ngOnInit() {

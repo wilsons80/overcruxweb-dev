@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { UsuarioUnidadeService } from 'src/app/services/usuario-unidade/usuario-unidade.service';
 import { UsuariosUnidades } from 'src/app/core/usuarios-unidades';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'unidade',
@@ -32,7 +33,9 @@ export class UnidadeComponent implements OnInit {
 
   openFormCadastro = true;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -50,7 +53,7 @@ export class UnidadeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

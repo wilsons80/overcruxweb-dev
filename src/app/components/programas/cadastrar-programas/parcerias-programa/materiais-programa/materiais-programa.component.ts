@@ -14,6 +14,7 @@ import { MaterialService } from 'src/app/services/material/material.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import {ControlContainer, NgForm} from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'materiais-programa',
@@ -35,7 +36,9 @@ export class MateriaisProgramaComponent implements OnInit, OnDestroy {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   isAtualizar = false;
 
@@ -56,7 +59,8 @@ export class MateriaisProgramaComponent implements OnInit, OnDestroy {
 
     this.initObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.materialService.getAll().subscribe((materiais:Material[]) => this.materiais = materiais);
 
     this.sub = this.novoObjetoService.initObjeto.subscribe(() => {

@@ -4,6 +4,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { NiveisTurmasService } from 'src/app/services/niveis-turmas/niveis-turmas.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-niveis-turmas',
@@ -14,7 +15,9 @@ export class CadastrarNiveisTurmasComponent implements OnInit {
 
   nivelTurma: NiveisTurmas;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -32,7 +35,7 @@ export class CadastrarNiveisTurmasComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

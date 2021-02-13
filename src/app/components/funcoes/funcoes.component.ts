@@ -10,6 +10,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'funcoes',
@@ -28,7 +29,8 @@ export class FuncoesComponent implements OnInit {
   displayedColumns: string[] = ['cargo', 'nome','valor', 'acoes'];
   dataSource: MatTableDataSource<Funcoes> = new MatTableDataSource();
   
-   perfilAcesso: Acesso;
+   perfilAcesso: Acesso = new Acesso();
+   carregarPerfil: CarregarPerfil  = new CarregarPerfil();   
    
   constructor(
     private funcoesService: FuncoesService,
@@ -38,7 +40,7 @@ export class FuncoesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-   this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

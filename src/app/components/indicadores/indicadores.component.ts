@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Indicadores } from './../../core/indicadores';
 import { IndicadoresService } from './../../services/indicadores/indicadores.service';
@@ -26,7 +27,8 @@ export class IndicadoresComponent implements OnInit {
 
   displayedColumns: string[] = ['nome', 'objetivo', 'dataInicio', 'dataFim', 'acoes'];
   dataSource: MatTableDataSource<Indicadores> = new MatTableDataSource();
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -38,7 +40,7 @@ export class IndicadoresComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

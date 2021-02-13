@@ -227,8 +227,8 @@ export class RelatoriosDpComponent implements OnInit {
     this.unidadeService.getAllByInstituicaoDaUnidadeLogada().subscribe((unidades: Unidade[]) => {
       this.comboUnidades = unidades;
     });
-
-    this.funcoesService.getAll().subscribe((funcoes: Funcoes[]) => {
+    
+    this.funcoesService.getAllByIdInstituicao().subscribe((funcoes: Funcoes[]) => {
       this.comboFuncoes = funcoes;
     });
 

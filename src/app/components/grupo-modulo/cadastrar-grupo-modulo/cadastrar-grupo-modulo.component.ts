@@ -15,6 +15,7 @@ import { Unidade } from 'src/app/core/unidade';
 import { Location } from '@angular/common';
 import * as _ from 'lodash';
 import { Instituicao } from 'src/app/core/instituicao';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-grupo-modulo',
@@ -36,7 +37,9 @@ export class CadastrarGrupoModuloComponent implements OnInit {
 
   ////////////////////////////////////////////////////////////////////////////
 
-  acesso: Acesso;
+  acesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -63,7 +66,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.acesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.acesso.insere) {
       this.mostrarBotaoCadastrar = false;

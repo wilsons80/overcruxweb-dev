@@ -11,6 +11,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CotacoesMateriais } from './../../core/cotacoes-materiais';
 import { MaterialService } from 'src/app/services/material/material.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cotacoes-materiais',
@@ -31,15 +32,8 @@ export class CotacoesMateriaisComponent implements OnInit {
   displayedColumns: string[] = ['id', 'material', 'dataCotacao', 'dataValidadeCotacao', 'valorTotalCotacao', 'acoes'];
   dataSource: MatTableDataSource<CotacoesMateriais> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
-  //  = {
-  //   insere: true,
-  //   altera: true,
-  //   consulta: true,
-  //   deleta: true,
-  //   idModulo: 188,
-  //   nomeModulo: "COTACOES_MATERIAIS"
-  // };
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -51,7 +45,7 @@ export class CotacoesMateriaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

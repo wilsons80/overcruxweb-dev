@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Programa } from './../../core/programa';
@@ -28,7 +29,8 @@ export class ProgramasComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'objetivo', 'dataInicio', 'dataFim', 'restricao', 'acoes'];
   dataSource: MatTableDataSource<Programa> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -40,10 +42,7 @@ export class ProgramasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
-
-    console.log("acesso", this.perfilAcesso);
-    
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

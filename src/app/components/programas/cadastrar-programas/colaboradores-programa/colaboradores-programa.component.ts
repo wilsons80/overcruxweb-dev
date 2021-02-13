@@ -19,6 +19,7 @@ import { TiposContratacoesService } from 'src/app/services/tipos-contratacoes/ti
 import { UnidadeSelecionadaService } from 'src/app/services/unidadeSelecionada/unidade-selecionada.service';
 import { ComposicaoRhProgramaService } from 'src/app/services/composicao-rh-programa/composicao-rh-programa.service';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class ColaboradoresProgramaComponent implements OnInit {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   isAtualizar = false;
 
@@ -75,13 +77,13 @@ export class ColaboradoresProgramaComponent implements OnInit {
   ngOnInit() {
 
     this.initObjetos();
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.composicaoRhProgramaService.composicaoRhProgramaChange.subscribe((listaComposicaoRhPrograma: ComposicaoRhPrograma[])=>{
       this.listaComposicaoRhPrograma = listaComposicaoRhPrograma;
       this.excluirFuncionarioDeComposicaoDeletada();
     })
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
     this.cargosService.getAll().subscribe((cargos: Cargo[]) => this.cargos = cargos);
     this.tiposContratacoesService.getAll().subscribe((tiposContratacoes: TiposContratacoes[]) => this.listaTiposContratacoes = tiposContratacoes);
 

@@ -11,6 +11,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { FaltasFuncionarioService } from 'src/app/services/faltas-funcionario/faltas-funcionario.service';
 import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-faltas-funcionario',
@@ -31,8 +32,8 @@ export class FaltasFuncionarioComponent implements OnInit {
   displayedColumns: string[] = ['funcionarioFaltou', 'funcionarioCadastrouFalta', 'dataFaltaFuncionario', 'acoes'];
   dataSource: MatTableDataSource<FaltasFuncionario> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
-
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -45,8 +46,7 @@ export class FaltasFuncionarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
-
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {

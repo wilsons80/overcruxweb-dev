@@ -9,6 +9,7 @@ import { PlanosAcaoService } from 'src/app/services/planosAcao/planos-acao.servi
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-planos-acao',
@@ -27,7 +28,9 @@ export class PlanosAcaoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'iniciativa', 'dataInicio','dataFim', 'acoes'];
   dataSource: MatTableDataSource<PlanosAcao> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   
   constructor(
@@ -39,7 +42,8 @@ export class PlanosAcaoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

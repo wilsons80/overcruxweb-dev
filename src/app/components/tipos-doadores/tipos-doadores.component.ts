@@ -8,6 +8,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { TiposDoadores } from 'src/app/core/tipos-doadores';
 import { TiposDoadoresService } from 'src/app/services/tipos-doadores/tipos-doadores.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'tipos-doadores',
@@ -27,7 +28,9 @@ export class TiposDoadoresComponent implements OnInit {
   displayedColumns: string[] = ['codigo', 'descricao', 'acoes'];
   dataSource: MatTableDataSource<TiposDoadores> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   constructor(
     private tiposDoadoresService: TiposDoadoresService,
@@ -38,7 +41,7 @@ export class TiposDoadoresComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

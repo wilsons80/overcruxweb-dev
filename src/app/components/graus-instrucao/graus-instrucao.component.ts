@@ -9,6 +9,7 @@ import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 import { Acesso } from 'src/app/core/acesso';
 import { GrausInstrucaoService } from 'src/app/services/graus-instrucao/graus-instrucao.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-graus-instrucao',
@@ -24,7 +25,8 @@ export class GrausInstrucaoComponent implements OnInit {
   grausInstrucao: GrausInstrucao = new GrausInstrucao();
   msg: string;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   displayedColumns: string[] = ['descricao', 'acoes'];
@@ -39,7 +41,7 @@ export class GrausInstrucaoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
 
     this.dataSource.paginator = this.paginator;

@@ -7,6 +7,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { IniciativaService } from 'src/app/services/iniciativa/iniciativa.service';
 import { MetasService } from 'src/app/services/metas/metas.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-iniciativas',
@@ -20,7 +21,9 @@ export class CadastrarIniciativasComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -38,7 +41,7 @@ export class CadastrarIniciativasComponent implements OnInit {
 
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

@@ -14,6 +14,7 @@ import { Instituicao } from 'src/app/core/instituicao';
 import { InstituicaoService } from 'src/app/services/instituicao/instituicao.service';
 import { TipoUnidade } from 'src/app/core/tipo-unidade';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -23,7 +24,9 @@ import * as _ from 'lodash';
 })
 export class CadastrarUnidadeComponent implements OnInit {
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -48,7 +51,7 @@ export class CadastrarUnidadeComponent implements OnInit {
 
   ngOnInit() {
     this.inicializarObjetos();
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

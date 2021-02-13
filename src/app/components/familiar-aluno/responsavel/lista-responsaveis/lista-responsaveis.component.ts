@@ -8,6 +8,7 @@ import { ResponsaveisAluno } from 'src/app/core/responsaveis-aluno';
 import { TipoResponsaveis } from 'src/app/core/tipo-responsaveis';
 import { Acesso } from 'src/app/core/acesso';
 import { ActivatedRoute } from '@angular/router';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -30,12 +31,13 @@ export class ListaResponsaveisComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'dataVinculacao', 'dataDesvinculacao', 'aluno', 'acoes'];
   dataSource: MatTableDataSource<ResponsaveisAluno> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.carregarListaResponsaveis();

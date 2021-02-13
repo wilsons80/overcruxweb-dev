@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { EnderecoService } from 'src/app/services/endereco/endereco.service';
 import { EntidadesSociais } from 'src/app/core/entidades-sociais';
 import { Empresa } from 'src/app/core/empresa';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-entidade-social',
@@ -19,7 +20,9 @@ export class CadastrarEntidadeSocialComponent implements OnInit {
 
   categoriaEmpresa: CategoriaEmpresa;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -30,16 +33,6 @@ export class CadastrarEntidadeSocialComponent implements OnInit {
     {id: CategoriaEmpresa.OUTRO, descricao: 'OUTRO'},
   ];
 
- /* 
-  tiposEmpresa: any [] = [
-    {tipo: TipoEmpresa.PARCEIRA, descricao: 'PARCEIRA'},
-    {tipo: TipoEmpresa.CONVENIO, descricao: 'CONVÊNIO'},
-    {tipo: TipoEmpresa.CONTRATO, descricao: 'CONTRATO'},
-    {tipo: TipoEmpresa.FORNECEDOR, descricao: 'FORNECEDOR'},
-    {tipo: TipoEmpresa.CLIENTE, descricao: 'CLIENTE'}
-    {tipo: TipoEmpresa.OUTRO, descricao: 'OUTRO'}
-  ]
-*/
   ufs: any[] = [
     {nome: 'DF'}
   ]
@@ -65,7 +58,7 @@ export class CadastrarEntidadeSocialComponent implements OnInit {
   ngOnInit() {
     this.entidadeSocial.empresa = new Empresa();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

@@ -13,6 +13,7 @@ import { CategoriasContabeisService } from 'src/app/services/categorias-contabei
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CategoriasContabeis } from './../../core/categorias-contabeis';
 import { TipoDespesa } from './../../core/tipo-despesa';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class CategoriasContabeisComponent implements OnInit {
   displayedColumns: string[] = ['tipo', 'nome', 'categoria', 'acoes'];
   dataSource: MatTableDataSource<CategoriasContabeis> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   tiposDespesas: TipoDespesa = new TipoDespesa();
   listaPlanosContas: any[];
@@ -46,7 +48,8 @@ export class CategoriasContabeisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
     this.getAllCombo();

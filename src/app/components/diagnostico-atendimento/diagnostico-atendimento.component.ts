@@ -9,6 +9,7 @@ import { Diagnostico } from 'src/app/core/diagnostico';
 import { Acesso } from 'src/app/core/acesso';
 import { DiagnosticoAtendimentoService } from 'src/app/services/diagnostico-atendimento/diagnostico-atendimento.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-diagnostico-atendimento',
@@ -26,8 +27,9 @@ export class DiagnosticoAtendimentoComponent implements OnInit {
 
   displayedColumns: string[] = ['descricao', 'acoes'];
   dataSource: MatTableDataSource<Diagnostico> = new MatTableDataSource();
-  perfilAcesso: Acesso;
-
+  
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(
     private diagnosticoService: DiagnosticoAtendimentoService,
@@ -37,7 +39,8 @@ export class DiagnosticoAtendimentoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

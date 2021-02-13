@@ -10,6 +10,7 @@ import { Questionario } from 'src/app/core/questionario';
 import { QuestionarioService } from 'src/app/services/questionario/questionario.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { TipoQuestionario } from 'src/app/core/tipo-questionario';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-questionario',
@@ -28,7 +29,9 @@ export class QuestionarioComponent implements OnInit {
   displayedColumns: string[] = ['descricao', 'tipoQuestionario', 'dataInicio', 'dataFim', 'acoes'];
   dataSource: MatTableDataSource<Questionario> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   tiposQuestionario: TipoQuestionario = new TipoQuestionario();
 
   constructor(
@@ -40,7 +43,8 @@ export class QuestionarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
 

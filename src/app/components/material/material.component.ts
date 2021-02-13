@@ -10,6 +10,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Material } from 'src/app/core/material';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { MaterialService } from 'src/app/services/material/material.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 
@@ -29,7 +30,9 @@ export class MaterialComponent implements OnInit {
 
 
   displayedColumns: string[] = ['nome', 'codigoUnidadeMedida', 'nomeMaterialNotafiscal', 'acoes'];
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
 
   dataSource: MatTableDataSource<Material> = new MatTableDataSource();
@@ -43,7 +46,7 @@ export class MaterialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

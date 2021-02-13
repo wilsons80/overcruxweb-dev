@@ -10,6 +10,7 @@ import { Atendimento } from 'src/app/core/atendimento';
 import { Acesso } from 'src/app/core/acesso';
 import { AtendimentosService } from 'src/app/services/atendimentos/atendimentos.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-atendimento',
@@ -24,8 +25,9 @@ export class AtendimentoComponent implements OnInit {
   mostrarTabela: boolean = false;
   atendimento: Atendimento = new Atendimento();
   msg: string;
-  perfilAcesso: Acesso;
-
+  
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['DataAtendimento', 'Aluno', 'Diagnostico', 'acoes'];
   dataSource: MatTableDataSource<Atendimento> = new MatTableDataSource();
@@ -39,7 +41,7 @@ export class AtendimentoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

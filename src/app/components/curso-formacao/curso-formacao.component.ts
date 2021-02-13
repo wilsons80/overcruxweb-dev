@@ -9,6 +9,7 @@ import { CursoFormacao } from 'src/app/core/curso-formacao';
 import { CursoFormacaoService } from 'src/app/services/curso-formacao/curso-formacao.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-curso-formacao',
@@ -28,8 +29,8 @@ export class CursoFormacaoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'dataInicio', 'dataFim', 'acoes'];
 
 
- perfilAcesso: Acesso;
-
+ perfilAcesso: Acesso = new Acesso();
+ carregarPerfil: CarregarPerfil  = new CarregarPerfil();
  
  dataSource: MatTableDataSource<CursoFormacao> = new MatTableDataSource();
  
@@ -42,7 +43,8 @@ export class CursoFormacaoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

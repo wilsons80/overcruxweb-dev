@@ -7,6 +7,7 @@ import { ObjetivoService } from 'src/app/services/objetivo/objetivo.service';
 import { PerspectivaService } from 'src/app/services/perspectiva/perspectiva.service';
 import { ToastService } from './../../../services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-objetivo',
@@ -20,7 +21,9 @@ export class CadastrarObjetivoComponent implements OnInit {
 
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -39,7 +42,7 @@ export class CadastrarObjetivoComponent implements OnInit {
 
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

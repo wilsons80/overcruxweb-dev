@@ -12,6 +12,7 @@ import { FuncionarioService } from 'src/app/services/funcionario/funcionario.ser
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { TipoFuncionario } from 'src/app/core/tipo-funcionario';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-funcionario',
@@ -26,7 +27,9 @@ export class FuncionarioComponent implements OnInit {
   mostrarTabela: boolean = false;
   funcionario: Funcionario = new Funcionario();
   msg: string;
-  perfilAcesso: Acesso;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   tiposFuncionario: TipoFuncionario = new TipoFuncionario();
 
@@ -42,7 +45,7 @@ export class FuncionarioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

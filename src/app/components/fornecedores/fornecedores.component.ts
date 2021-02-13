@@ -30,13 +30,13 @@ export class FornecedoresComponent implements OnInit {
   filtro: Filter = new Filter();
   listaCombo: Combo[];
 
-  carregarPerfil: CarregarPerfil;
   mostrarTabela = false;
 
   displayedColumns: string[] = ['tipo', 'nomepf', 'nomepj', 'dataInicioVinculo', 'acoes'];
   dataSource: MatTableDataSource<Fornecedor> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(
     private fornecedoresService: FornecedoresService,
@@ -45,11 +45,11 @@ export class FornecedoresComponent implements OnInit {
     private activatedRoute: ActivatedRoute
 
   ) {
-    this.carregarPerfil = new CarregarPerfil();
   }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
 
     this.filtro = new Filter();

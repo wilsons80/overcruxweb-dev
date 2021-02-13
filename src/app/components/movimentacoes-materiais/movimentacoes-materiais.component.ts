@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { MovimentacoesMateriais } from 'src/app/core/movimentacoes-materiais';
 import { MovimentacoesMateriaisService } from 'src/app/services/movimentacoes-materiais/movimentacoes-materiais.service';
 import { TipoMovimentacao } from 'src/app/core/tipo-movimentacao';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'movimentacoes-materiais',
@@ -29,15 +30,9 @@ export class MovimentacoesMateriaisComponent implements OnInit {
   displayedColumns: string[] = ['id', 'descricaoMovimentacaoMaterial', 'tipoMovimentacao', 'acoes'];
   dataSource: MatTableDataSource<MovimentacoesMateriais> = new MatTableDataSource();
   
-   perfilAcesso: Acesso
-   = {
-    insere:true,
-    altera:true,
-    consulta:true,
-    deleta:true,
-    idModulo:186,
-    nomeModulo:"FUNCAO"
-  };
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   tiposMovimentacao: TipoMovimentacao = new TipoMovimentacao();
 
@@ -49,7 +44,7 @@ export class MovimentacoesMateriaisComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  //  this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

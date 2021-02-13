@@ -12,6 +12,7 @@ import { ControleMenuService } from 'src/app/services/controle-menu/controle-men
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { UploadFotoComponent } from '../upload-foto/upload-foto.component';
 import { TipoUnidade } from 'src/app/core/tipo-unidade';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 
@@ -30,7 +31,9 @@ export class UnidadeComponent implements OnInit {
   mostrarTabela = false;
   msg: string;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   tipoUnidade: TipoUnidade = new TipoUnidade();
 
   displayedColumns: string[] = ['sigla', 'nome', 'tipo', 'acoes'];
@@ -44,7 +47,7 @@ export class UnidadeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

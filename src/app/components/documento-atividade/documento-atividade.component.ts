@@ -11,6 +11,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { DocumentoAtividadeService } from 'src/app/services/documento-atividade/documento-atividade.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-documento-atividade',
@@ -25,8 +26,8 @@ export class DocumentoAtividadeComponent implements OnInit {
   msg: string;
   atividade: Atividade;
 
-  perfilAcesso: Acesso;
-
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = [
     'descricao',
@@ -44,7 +45,7 @@ export class DocumentoAtividadeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.altera && !this.perfilAcesso.deleta) {
       this.displayedColumns = [

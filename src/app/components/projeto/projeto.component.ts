@@ -9,6 +9,7 @@ import { Projeto } from 'src/app/core/projeto';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-projeto',
@@ -28,7 +29,9 @@ export class ProjetoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'dataPrevisaoInicio', 'dataInicio', 'dataFim', 'restricao', 'acoes'];
   dataSource: MatTableDataSource<Projeto> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   constructor(
     private projetoService: ProjetoService,
@@ -39,7 +42,8 @@ export class ProjetoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

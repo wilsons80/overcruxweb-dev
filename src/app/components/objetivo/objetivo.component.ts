@@ -9,6 +9,7 @@ import { Objetivo } from 'src/app/core/objetivo';
 import { Acesso } from 'src/app/core/acesso';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { ObjetivoService } from './../../services/objetivo/objetivo.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-objetivo',
@@ -27,7 +28,8 @@ export class ObjetivoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'perspectiva', 'dataImplantacao', 'acoes'];
   dataSource: MatTableDataSource<Objetivo> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   constructor(
@@ -39,7 +41,7 @@ export class ObjetivoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

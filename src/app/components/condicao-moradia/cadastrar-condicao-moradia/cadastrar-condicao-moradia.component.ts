@@ -5,6 +5,7 @@ import { CondicoesMoradia } from 'src/app/core/condicoes-moradia';
 import { CondicoesMoradiaService } from 'src/app/services/condicoes-moradia/condicoes-moradia.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-condicao-moradia',
@@ -17,7 +18,9 @@ export class CadastrarCondicaoMoradiaComponent implements OnInit {
   condicaoMoradia: CondicoesMoradia = new CondicoesMoradia();
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -31,7 +34,7 @@ export class CadastrarCondicaoMoradiaComponent implements OnInit {
 
   ngOnInit() {
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

@@ -11,6 +11,8 @@ import { FuncionarioService } from 'src/app/services/funcionario/funcionario.ser
 import { ParticipantesAtendimentosService } from 'src/app/services/participantes-atendimentos/participantes-atendimentos.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
+import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-participante-atendimento',
@@ -28,7 +30,10 @@ export class CadastrarParticipanteAtendimentoComponent implements OnInit {
   funcionarios: Funcionario[];
 
 
-  perfilAcesso: PerfilAcesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -53,8 +58,7 @@ export class CadastrarParticipanteAtendimentoComponent implements OnInit {
     this.participanteAtendimento.funcionario = new Funcionario();
 
 
-
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

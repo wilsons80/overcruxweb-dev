@@ -8,6 +8,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { SituacaoExAluno } from 'src/app/core/situacoes-ex-alunos';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Combo } from 'src/app/core/combo';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 export class Filter{
 	elm: Combo;
@@ -34,7 +35,8 @@ export class SituacaoExAlunoComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'dataAvaliacao', 'condicaoAtual', 'acoes'];
   dataSource: MatTableDataSource<SituacaoExAluno> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(
     private situacaoExAlunoService: SituacoesExAlunosService,
@@ -45,7 +47,8 @@ export class SituacaoExAlunoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.filtro = new Filter();
     this.filtro.elm = new Combo();

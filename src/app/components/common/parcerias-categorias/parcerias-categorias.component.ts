@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { NovoObjetoService } from 'src/app/services/novo-objeto/novo-objeto.service';
 import { Subscription } from 'rxjs';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'parcerias-categorias',
@@ -33,7 +34,8 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   isAtualizar = false;
 
@@ -55,7 +57,7 @@ export class ParceriasCategoriasComponent implements OnInit, OnDestroy {
 
     this.initObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.categoriasContabeisService.getAllCombo().subscribe((categoriasContabeis:CategoriasContabeis[]) => {
       this.categoriasContabeis = categoriasContabeis;

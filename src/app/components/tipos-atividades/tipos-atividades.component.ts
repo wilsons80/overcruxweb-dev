@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { TiposAtividades } from 'src/app/core/tipos-atividades';
 import { TiposAtividadesService } from 'src/app/services/tipos-atividades/tipos-atividades.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
@@ -26,7 +27,9 @@ export class TiposAtividadesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'descricao', 'instituicao', 'acoes'];
   dataSource: MatTableDataSource<TiposAtividades> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   constructor(
     private tipoAtividadeService: TiposAtividadesService,
@@ -37,7 +40,7 @@ export class TiposAtividadesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

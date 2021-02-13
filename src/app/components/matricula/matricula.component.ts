@@ -20,6 +20,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { ComboAluno } from 'src/app/core/combo-aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'matricula',
@@ -43,7 +44,9 @@ export class MatriculaComponent implements OnInit {
 
 
   msg: string;
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   mostrarTabela = false;
 
@@ -64,7 +67,8 @@ export class MatriculaComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
 
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {

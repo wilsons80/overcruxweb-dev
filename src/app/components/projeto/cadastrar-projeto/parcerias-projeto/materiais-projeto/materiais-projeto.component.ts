@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { MateriaisProjeto } from 'src/app/core/materiais-projeto';
 import { Material } from 'src/app/core/material';
 import { MaterialService } from 'src/app/services/material/material.service';
@@ -31,7 +32,8 @@ export class MateriaisProjetoComponent implements OnInit, OnDestroy {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   isAtualizar = false;
 
@@ -53,7 +55,7 @@ export class MateriaisProjetoComponent implements OnInit, OnDestroy {
 
     this.initObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.materialService.getAll().subscribe((materiais: Material[]) => this.materiais = materiais);
 
     this.sub = this.novoObjetoService.initObjeto.subscribe(() => {

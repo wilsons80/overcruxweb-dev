@@ -7,6 +7,7 @@ import { Departamento } from './../../../core/departamento';
 import { DepartamentoService } from './../../../services/departamento/departamento.service';
 import { ToastService } from './../../../services/toast/toast.service';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-departamento',
@@ -21,7 +22,9 @@ export class CadastrarDepartamentoComponent implements OnInit {
 
   isAtualizar: boolean = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+  
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -41,7 +44,7 @@ export class CadastrarDepartamentoComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

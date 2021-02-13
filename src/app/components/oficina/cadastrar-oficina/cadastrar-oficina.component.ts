@@ -12,6 +12,7 @@ import { Programa } from 'src/app/core/programa';
 import { Unidade } from 'src/app/core/unidade';
 import { TiposAtividades } from 'src/app/core/tipos-atividades';
 import { TiposAtividadesService } from 'src/app/services/tipos-atividades/tipos-atividades.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-oficina',
@@ -23,7 +24,9 @@ export class CadastrarOficinaComponent implements OnInit {
   oficina: Atividade = new Atividade();
 
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -41,7 +44,7 @@ export class CadastrarOficinaComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

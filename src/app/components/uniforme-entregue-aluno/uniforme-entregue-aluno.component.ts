@@ -18,6 +18,7 @@ import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import * as _ from 'lodash';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 class FiltroBusca {
   atividade: Atividade = new Atividade();
@@ -48,7 +49,8 @@ export class UniformeEntregueAlunoComponent implements OnInit {
   atividades: Atividade[];
 
   msg: string;
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarTabela = false;
   displayedColumns: string[] = ['nome', 'nomeUniforme', 'dataUniformeEntregue', 'qtdUniformeEntregue',
@@ -68,7 +70,7 @@ export class UniformeEntregueAlunoComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

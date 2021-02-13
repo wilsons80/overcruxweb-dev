@@ -10,6 +10,7 @@ import { Metas } from 'src/app/core/metas';
 import { Acesso } from 'src/app/core/acesso';
 import { MetasService } from 'src/app/services/metas/metas.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-metas',
@@ -26,7 +27,8 @@ export class MetasComponent implements OnInit {
   msg: string;
 
   displayedColumns: string[] = ['nome', 'indicadores', 'dataInicio', 'dataFim', 'acoes'];
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   dataSource: MatTableDataSource<Metas> = new MatTableDataSource();
@@ -40,7 +42,8 @@ export class MetasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

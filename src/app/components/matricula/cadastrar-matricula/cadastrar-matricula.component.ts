@@ -20,6 +20,7 @@ import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
 import { FilterAlunos } from 'src/app/core/filter-alunos';
 import { ComboAluno } from 'src/app/core/combo-aluno';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -39,7 +40,9 @@ export class CadastrarMatriculaComponent implements OnInit {
   turmas: Turmas[];
   turma: Turmas = new Turmas();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -66,7 +69,8 @@ export class CadastrarMatriculaComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
     }

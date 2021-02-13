@@ -33,13 +33,13 @@ export class DoadoresComponent implements OnInit {
   filtro:Filter = new Filter();
   listaCombo:Combo[];
 
-  carregarPerfil: CarregarPerfil;
   mostrarTabela = false;
 
   displayedColumns: string[] = ['tipoDoador', 'nomepf','nomepj', 'dataInicioVinculo', 'acoes'];
   dataSource: MatTableDataSource<Doadores> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   constructor(
     private doadoresService: DoadoresService,
@@ -48,12 +48,11 @@ export class DoadoresComponent implements OnInit {
     private activatedRoute:ActivatedRoute
 
   ) { 
-    this.carregarPerfil = new CarregarPerfil();
   }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
-    //  this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+    
     this.dataSource.paginator = this.paginator;
 
     this.filtro = new Filter();

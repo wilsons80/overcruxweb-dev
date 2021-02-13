@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { TiposContratacoesService } from '../../../../services/tipos-contratacoes/tipos-contratacoes.service';
 import { ColaboradoresPrograma } from 'src/app/core/colaboradores-programa';
 import { Programa } from 'src/app/core/programa';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'composicao-rh-programa',
@@ -36,7 +37,9 @@ export class ComposicaoRhProgramaComponent implements OnInit {
 
   openFormCadastro = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   isAtualizar = false;
 
@@ -56,7 +59,8 @@ export class ComposicaoRhProgramaComponent implements OnInit {
   ngOnInit() {
 
     this.initObjetos();
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.cargosService.getAll().subscribe((cargos: Cargo[]) => this.cargos = cargos);
     this.tiposContratacoesService.getAll().subscribe((tiposContratacoes: TiposContratacoes[]) => this.listaTiposContratacoes = tiposContratacoes);
 

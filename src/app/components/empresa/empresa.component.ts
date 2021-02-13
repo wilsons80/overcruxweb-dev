@@ -9,6 +9,7 @@ import { Empresa } from 'src/app/core/empresa';
 import { Acesso } from 'src/app/core/acesso';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'empresa',
@@ -30,8 +31,8 @@ export class EmpresaComponent implements OnInit {
 
   displayedColumns: string[] = ['codigo', 'nomeRazaoSocial', 'cnpj', 'telefone', 'ativa', 'acoes'];
 
-  perfilAcesso: Acesso;
-
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
 
   dataSource: MatTableDataSource<Empresa> = new MatTableDataSource();
@@ -44,7 +45,7 @@ export class EmpresaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
 
     this.dataSource.paginator = this.paginator;

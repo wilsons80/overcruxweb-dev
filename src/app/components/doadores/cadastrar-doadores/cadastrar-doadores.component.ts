@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { Doadores } from 'src/app/core/doadores';
 import { Empresa } from 'src/app/core/empresa';
 import { FilterEmpresa } from 'src/app/core/filter-empresa';
@@ -29,7 +30,9 @@ export class CadastrarDoadoresComponent implements OnInit {
   filtroPessoa: FilterPessoaFisica;
   filtroEmpresa: FilterEmpresa;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -59,7 +62,7 @@ export class CadastrarDoadoresComponent implements OnInit {
 
     this.inicializarObjetos()
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

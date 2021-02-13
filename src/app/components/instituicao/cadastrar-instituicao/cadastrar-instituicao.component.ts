@@ -10,6 +10,7 @@ import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolb
 import { Observable } from 'rxjs';
 import { Instituicao } from 'src/app/core/instituicao';
 import { ArquivoInstituicaoService } from 'src/app/services/arquivo/arquivo-instituicao.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'cadastrar-instituicao',
@@ -18,7 +19,9 @@ import { ArquivoInstituicaoService } from 'src/app/services/arquivo/arquivo-inst
 })
 export class CadastrarInstituicaoComponent implements OnInit {
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -38,7 +41,7 @@ export class CadastrarInstituicaoComponent implements OnInit {
 
   ngOnInit() {
     this.initObjetos();
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;

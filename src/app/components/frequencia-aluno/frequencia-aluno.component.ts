@@ -19,6 +19,7 @@ import { Aluno } from 'src/app/core/aluno';
 import * as _ from 'lodash';
 import { Moment } from "node_modules/moment/moment";
 import * as moment from "node_modules/moment/moment";
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 class FiltroBusca {
@@ -52,7 +53,8 @@ export class FrequenciaAlunoComponent implements OnInit {
   atividades: Atividade[];
 
   msg: string;
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarBotaoGerarListaFrequencia = false;
   mostrarTabela = false;
@@ -71,7 +73,7 @@ export class FrequenciaAlunoComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

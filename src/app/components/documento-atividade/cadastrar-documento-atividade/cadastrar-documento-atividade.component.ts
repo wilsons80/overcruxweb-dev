@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ToastService } from "src/app/services/toast/toast.service";
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
+import { CarregarPerfil } from "src/app/core/carregar-perfil";
 
 
 @Component({
@@ -20,7 +21,9 @@ export class CadastrarDocumentoAtividadeComponent implements OnInit {
 
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -34,16 +37,15 @@ export class CadastrarDocumentoAtividadeComponent implements OnInit {
 
   ngOnInit() {
 
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
-  this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
-
-  if(!this.perfilAcesso.insere){
-    this.mostrarBotaoCadastrar = false;
-  }
-  
-  if(!this.perfilAcesso.altera){
-    this.mostrarBotaoAtualizar = false;
-  }
+    if(!this.perfilAcesso.insere){
+      this.mostrarBotaoCadastrar = false;
+    }
+    
+    if(!this.perfilAcesso.altera){
+      this.mostrarBotaoAtualizar = false;
+    }
     this.documentoAtividade.atividade = new Atividade();
 
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {

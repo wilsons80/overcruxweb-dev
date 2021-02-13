@@ -9,6 +9,7 @@ import { Acesso } from 'src/app/core/acesso';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'oficina',
@@ -28,7 +29,9 @@ export class OficinaComponent implements OnInit {
   displayedColumns: string[] = ['descricao', 'datainicio', 'datafim', 'maxparticipantes', 'projeto', 'acoes'];
   dataSource: MatTableDataSource<Atividade> = new MatTableDataSource();
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
 
   constructor(
     private oficinaService: AtividadeService,
@@ -39,7 +42,7 @@ export class OficinaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
 
     this.consultar();

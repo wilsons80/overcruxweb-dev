@@ -21,6 +21,7 @@ import { Aluno } from 'src/app/core/aluno';
 import { Avaliacao } from 'src/app/core/avaliacao';
 import * as _ from 'lodash';
 import { AvaliacaoAtividadeService } from 'src/app/services/avaliacao-atividade/avaliacao-atividade.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 
@@ -64,7 +65,8 @@ export class AvaliacaoAlunoComponent implements OnInit {
   ]
 
   msg: string;
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   mostrarBotaoGerarLista = false;
   mostrarTabela = false;
@@ -85,7 +87,7 @@ export class AvaliacaoAlunoComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

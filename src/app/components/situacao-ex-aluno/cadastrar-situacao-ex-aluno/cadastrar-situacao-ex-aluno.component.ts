@@ -51,8 +51,6 @@ export class CadastrarSituacaoExAlunoComponent implements OnInit {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.inicializarObjetos()
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
-
     if (!this.perfilAcesso.insere) {
       this.mostrarBotaoCadastrar = false;
     }

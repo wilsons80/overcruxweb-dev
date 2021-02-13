@@ -9,6 +9,7 @@ import { Perspectiva } from 'src/app/core/perspectiva';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { PerspectivaService } from './../../services/perspectiva/perspectiva.service';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-perspectiva',
@@ -26,7 +27,10 @@ export class PerspectivaComponent implements OnInit {
 
   displayedColumns: string[] = ['nome', 'dtImplantacao', 'dtTermino', 'unidade', 'acoes'];
   dataSource: MatTableDataSource<Perspectiva> = new MatTableDataSource();
-  perfilAcesso: Acesso;
+
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   
   constructor(
@@ -38,7 +42,8 @@ export class PerspectivaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

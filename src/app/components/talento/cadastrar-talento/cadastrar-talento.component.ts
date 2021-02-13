@@ -12,6 +12,7 @@ import { Questionario } from './../../../core/questionario';
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
 import { Funcionario } from 'src/app/core/funcionario';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastrar-talento',
@@ -25,7 +26,10 @@ export class CadastrarTalentoComponent implements OnInit {
   questionarios: Questionario[];
 
   isAtualizar: boolean = false;
-  perfilAcesso: Acesso;
+
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -42,7 +46,7 @@ export class CadastrarTalentoComponent implements OnInit {
   ngOnInit() {
     this.inicializarObjetos();
     
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

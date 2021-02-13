@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { Acesso } from 'src/app/core/acesso';
 import { TipoCargo } from 'src/app/core/tipo-cargo';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cargo',
@@ -29,7 +30,8 @@ export class CargoComponent implements OnInit {
 
   mostrarTabela = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['nome', 'tipoCargo','acoes'];
   dataSource: MatTableDataSource<Cargo> = new MatTableDataSource();
@@ -46,7 +48,7 @@ export class CargoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     this.dataSource.paginator = this.paginator;
     this.getAll();

@@ -10,6 +10,7 @@ import { AcaoCompetencia } from 'src/app/core/acao-competencia';
 import { AcoesCompetenciaService } from 'src/app/services/acoes-competencia/acoes-competencia.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { Acesso } from '../../core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-acao-competencia',
@@ -25,7 +26,8 @@ export class AcaoCompetenciaComponent implements OnInit {
   acaoCompetencia: AcaoCompetencia = new AcaoCompetencia();
   msg: string;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['descricao', 'dataInicio', 'acoes'];
 
@@ -41,8 +43,7 @@ export class AcaoCompetenciaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
-
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }

@@ -13,6 +13,7 @@ import { GrausInstrucao } from 'src/app/core/graus-instrucao';
 import { Acesso } from 'src/app/core/acesso';
 import { AutenticadorService } from 'src/app/services/autenticador/autenticador.service';
 import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-cadastar-aluno',
@@ -25,7 +26,9 @@ export class CadastarAlunoComponent implements OnInit {
 
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
@@ -47,7 +50,7 @@ export class CadastarAlunoComponent implements OnInit {
     this.aluno.vulnerabilidades = [];
     this.aluno.pessoaFisica.grausInstrucao = new GrausInstrucao();
 
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

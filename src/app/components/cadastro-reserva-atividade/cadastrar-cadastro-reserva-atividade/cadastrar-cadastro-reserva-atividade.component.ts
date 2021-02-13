@@ -9,6 +9,7 @@ import { CadastroReservaAtividade } from './../../../core/cadastro-reserva-ativi
 import { PessoaFisicaService } from './../../../services/pessoa-fisica/pessoa-fisica.service';
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 
 @Component({
@@ -24,7 +25,9 @@ export class CadastrarCadastroReservaAtividadeComponent implements OnInit {
 
   isAtualizar = false;
 
-  perfilAcesso: Acesso;
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+
   mostrarBotaoCadastrar = true
   mostrarBotaoAtualizar = true;
 
@@ -39,7 +42,7 @@ export class CadastrarCadastroReservaAtividadeComponent implements OnInit {
 
   ngOnInit() {
    
-    this.perfilAcesso = this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if(!this.perfilAcesso.insere){
       this.mostrarBotaoCadastrar = false;

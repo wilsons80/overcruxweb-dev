@@ -12,6 +12,7 @@ import { Iniciativa } from 'src/app/core/iniciativa';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { IniciativaService } from './../../services/iniciativa/iniciativa.service';
 import { Acesso } from 'src/app/core/acesso';
+import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 
 @Component({
   selector: 'app-iniciativa',
@@ -27,9 +28,8 @@ export class IniciativasComponent implements OnInit {
   iniciativa: Iniciativa = new Iniciativa();
   msg: string;
 
-  perfilAcesso: Acesso;
-
-
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
 
   displayedColumns: string[] = ['nome', 'metas', 'dataInicio', 'dataFim', 'acoes'];
 
@@ -45,7 +45,8 @@ export class IniciativasComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.perfilAcesso =  this.activatedRoute.snapshot.data.perfilAcesso[0];
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }
