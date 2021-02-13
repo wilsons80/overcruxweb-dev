@@ -66,7 +66,7 @@ export class CadastrarGrupoModuloComponent implements OnInit {
   ngOnInit() {
     this.limpar();
 
-    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+    this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.acesso);
 
     if (!this.acesso.insere) {
       this.mostrarBotaoCadastrar = false;
