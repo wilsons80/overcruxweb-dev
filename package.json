@@ -33,6 +33,7 @@
     "@angular/platform-browser": "11.0.0",
     "@angular/platform-browser-dynamic": "11.0.0",
     "@angular/router": "11.0.0",
+    "@types/ckeditor": "^4.9.10",
     "@types/jwt-decode": "^2.2.1",
     "@types/mocha": "^5.2.7",
     "angular-dual-listbox": "^5.0.1",
