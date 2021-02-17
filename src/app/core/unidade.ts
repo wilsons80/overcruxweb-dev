@@ -1,3 +1,4 @@
+import { ArquivoMetadados } from './arquivo-metadado';
 import { CertificadoUnidade } from './certificado-unidade';
 import { EstruturaUnidade } from './estrutura-unidade';
 import { Instituicao } from './instituicao';
@@ -11,7 +12,7 @@ export class Unidade {
 	telefone: string
 	descricaoSituacaoImovel: string
 	descricaoEstruturaFisicaImovel: string
-	arquivo: number
+	arquivoMetadados: ArquivoMetadados;
 	usuarioAlteracao: number
 	visao: string
 	missao: string

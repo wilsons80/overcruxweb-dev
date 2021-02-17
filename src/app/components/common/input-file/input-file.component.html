@@ -1,0 +1,10 @@
+<button mat-flat-button (click)="inputFile.click()" [color]="cor">
+    <mat-icon>folder_open</mat-icon>
+    <span>&nbsp;{{ label }}</span>
+</button>
+
+<input #inputFile
+  type="file" id="uploadFile_{{data}}"
+  name="uploadFile_{{data}}" hidden
+  (change)="onSelectionChange($event.target.files)"
+  [accept]="extensoesAceitas" [multiple]="multiplosArquivos" />

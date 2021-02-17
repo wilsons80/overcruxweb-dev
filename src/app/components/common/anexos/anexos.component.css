@@ -1,0 +1,44 @@
+fieldset {
+    border: 1px solid #CCC;
+    padding: 15px 10px;
+    margin-bottom: 20px;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+
+  .mat-column-descricao {
+    width: 40% !important;
+  }
+
+mat-cell{
+    display:flex !important;
+    justify-content:center!important;
+
+  }
+
+  mat-header-cell {
+    display:flex;
+    justify-content:center;
+  }
+
+#tamanho-maximo-anexos td,
+#tamanho-maximo-anexos th {
+  border: 1px solid #AAA;
+  padding: 7px 12px;
+}
+#tamanho-maximo-anexos table {
+  border-collapse: collapse;
+}
+
+i {
+  font-size: 22px;
+}

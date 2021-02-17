@@ -194,3 +194,43 @@ cdk-virtual-scroll-viewport {
 .editor-rico .cke_chrome {
   border: none !important;
 }
+
+
+
+.cinza {
+  color: rgba(0,0,0,0.54);
+}
+
+
+button.visualizador-botao-sem-espaco.mat-button,
+a.visualizador-botao-sem-espaco.mat-button {
+    margin: 0 0 0 0.8rem;
+    padding: 0;
+    min-height: auto;
+    min-width: auto;
+}
+
+
+/* Barra de porcentagem */
+
+.barra-porcentagem-container[class="barra-porcentagem-container"] {
+	background-color: #E3F2FD;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.barra-porcentagem-parcial[class="barra-porcentagem-parcial"] {
+	background-color: #aaddff;
+}
+
+.barra-porcentagem-parcial.excedeu {
+	background-color: #F44336;
+}
+
+.barra-porcentagem-valor.excedeu.label{
+  color: #D00D23;
+  padding-bottom: 10px;
+}
+
+.barra-porcentagem-valor.excedeu[class="excedeu"] {
+	color: #FFF;
+}

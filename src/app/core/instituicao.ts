@@ -1,9 +1,10 @@
+import { ArquivoMetadados } from './arquivo-metadado';
 import { FuncoesInstituicao } from './funcoes-instituicao';
 export class Instituicao {
 
 	id: number;
 	nome: string;
-	arquivo: number;
+	metadados: ArquivoMetadados;
 	usuarioAlteracao: number;
 	mostraLista: boolean;
 	areaAtuacao:string;

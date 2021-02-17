@@ -15,16 +15,28 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { NgxCurrencyModule } from 'ngx-currency';
+import { ComboFuncionarioModule } from '../common/combo-funcionario/combo-funcionario.module';
+import { AnexosComponent, AnexosTamanhosPermitidosComponent } from '../common/anexos/anexos.component';
+import { InputFileComponent } from '../common/input-file/input-file.component';
+import { BarraPorcentagemComponent } from '../common/anexos/barra-porcentagem/barra-porcentagem.component';
+import { VisualizarArquivoComponent } from '../common/visualizar-arquivo/visualizar-arquivo.component';
 
 
 
 @NgModule({
-  declarations: [CadastrarAcoesAtividadeComponent,
+  declarations: [
+                 CadastrarAcoesAtividadeComponent,
                  AcoesAtividadeComponent,
                  FormularioAcaoOficinaComponent,
                  MateriaisAcoesComponent,
                  CadastrarMateriaisAcaoComponent,
-                 ListarMateriaisAcaoComponent],
+                 ListarMateriaisAcaoComponent,
+                 AnexosComponent,
+                 AnexosTamanhosPermitidosComponent,
+                 InputFileComponent,
+                 BarraPorcentagemComponent,
+                 VisualizarArquivoComponent
+                ],
   imports: [
     CommonModule,
     AcoesAtividadeRoutingModule,
@@ -33,6 +45,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     MatExpansionModule,
     MatTabsModule,
     NgxCurrencyModule,
+    ComboFuncionarioModule
   ]
 })
 export class AcoesAtividadeModule { }

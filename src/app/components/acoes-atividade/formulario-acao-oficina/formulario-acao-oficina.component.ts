@@ -1,36 +1,41 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { Acoes } from 'src/app/core/acoes';
 import { AtividadeService } from 'src/app/services/atividade/atividade.service';
 import { Atividade } from 'src/app/core/atividade';
-import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import { Funcionario } from 'src/app/core/funcionario';
 import * as _ from 'lodash';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 
 
 @Component({
   selector: 'formulario-acao-oficina',
   templateUrl: './formulario-acao-oficina.component.html',
-  styleUrls: ['./formulario-acao-oficina.component.css']
+  styleUrls: ['./formulario-acao-oficina.component.css'] ,
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm },
+                  { provide: ControlContainer, useExisting: forwardRef(() => NgModelGroup) }],  
+
 })
 export class FormularioAcaoOficinaComponent implements OnInit {
 
   atividades: Atividade[];
   funcionarios: Funcionario[];
 
+  local_execucao: any[] = [
+    {tipo: 'Interna', flag: 'I'},
+    {tipo: 'Externa', flag: 'E'}
+  ];
+
   @Input() acao: Acoes;
 
   constructor(private atividadeService: AtividadeService,
-              private funcionarioService: FuncionarioService) {
+              private dataUtilService: DataUtilService) {
 
   }
 
   ngOnInit() {
     this.atividadeService.getAll().subscribe((atividades: Atividade[]) => {
       this.atividades = atividades;
-    });
-
-    this.funcionarioService.getAll().subscribe((funcionarios: Funcionario[]) => {
-      this.funcionarios = funcionarios;
     });
   }
 
@@ -41,25 +46,21 @@ export class FormularioAcaoOficinaComponent implements OnInit {
   }
 
   mostrarDadosAtividade(idAtividade) {
-    this.acao.oficina = _.cloneDeep(_.find(this.atividades, (a: Atividade) => a.id === idAtividade));
-  }
-
-
-  carregarDadosFuncionarioAprovacao() {
-    if (this.acao.funcionarioAprovaAcao.id) {
-      this.acao.funcionarioAprovaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acao.funcionarioAprovaAcao.id));
+    
+    if(idAtividade) {
+      this.acao.oficina = _.cloneDeep(_.find(this.atividades, (a: Atividade) => a.id === idAtividade));
+    } else {
+      this.acao.oficina = new Atividade();
     }
   }
 
-  carregarDadosFuncionarioExecucao() {
-    if (this.acao.funcionarioExecutaAcao.id) {
-      this.acao.funcionarioExecutaAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acao.funcionarioExecutaAcao.id));
-    }
-  }
-  carregarDadosFuncionarioPlanejamento() {
-    if (this.acao.funcionarioPlanejamentoAcao.id) {
-      this.acao.funcionarioPlanejamentoAcao = _.cloneDeep(_.find(this.funcionarios,  (f: Funcionario) => f.id === this.acao.funcionarioPlanejamentoAcao.id));
-    }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
   }
 
+
+  onValorChangeFuncionario(registro: any) {
+    this.acao.funcionarioAprovaAcao = registro;
+  }
 }

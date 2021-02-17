@@ -14,13 +14,15 @@ export class FileUtils {
     }
 
     convertBufferArrayToBase64(bufferArry: any) {
-         let TYPED_ARRAY = new Uint8Array(bufferArry);
-
-        let base64String = btoa(new Uint8Array(TYPED_ARRAY).reduce(function (data, byte) {
-            return data + String.fromCharCode(byte);
-        }, ''));
-        
-        return this.domSanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64,` + base64String);
+        if(bufferArry.byteLength){
+            let TYPED_ARRAY = new Uint8Array(bufferArry);
+    
+            let base64String = btoa(new Uint8Array(TYPED_ARRAY).reduce(function (data, byte) {
+                return data + String.fromCharCode(byte);
+            }, ''));
+            
+            return this.domSanitizer.bypassSecurityTrustUrl(`data:image/jpg;base64,` + base64String);
+        }
     }
 
 
@@ -56,5 +58,29 @@ export class FileUtils {
         window.open(fileURL, '_blank');
     }
     
+    showFile(dados, nomeArquivo, contentType) {
+        const file = new File([dados], nomeArquivo, { type: contentType });
+        const fileURL = URL.createObjectURL(file);
+        window.open(encodeURI(fileURL), '_blank');
+        
+
+        /*
+        const blob = new Blob([dados], { type: contentType });
+        const fileURL = URL.createObjectURL(blob);
+        window.open(encodeURI(fileURL), '_blank');
+        */
+
+    }
+
+
+    downloadFile(dados, nomeArquivo, contentType) {
+        const blob = new Blob([dados], { type: contentType});
+        const url= window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = nomeArquivo;
+        anchor.href = url;
+        anchor.click();
+    }
+
 }
 

@@ -1,0 +1,22 @@
+.barra-porcentagem-container {
+	width: 100%;
+	height: 2rem;
+	text-align: center;
+	margin: 1rem 0;
+	line-height: 2rem;
+	border-radius: 1rem;
+	position: relative;
+	overflow: hidden;
+}
+
+.barra-porcentagem-parcial {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 2rem;
+	transition: all ease .5s;
+}
+
+.barra-porcentagem-valor {
+	position: relative;
+}

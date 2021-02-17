@@ -1,19 +1,23 @@
-<mat-toolbar class="subtitulo">Cadastrar ação do Plano de Atividades</mat-toolbar>
+<mat-toolbar class="subtitulo">Planejamento das Atividades</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <form #formCadastro="ngForm">
         <div class="painel-principal" style="padding: 10px;">
             <mat-tab-group>
                 <!-- DADOS DA AÇÃO -->
-                <mat-tab label="AÇÃO">
+                <mat-tab label="PLANO ATIVIDADE">
                     <form #formCadastroDadosAcao="ngForm">
-                        <formulario-acao-oficina [acao]="acoes"></formulario-acao-oficina>
+                        <div ngModelGroup="comboAcoesPlanejamento">
+                            <formulario-acao-oficina [acao]="acoes"></formulario-acao-oficina>
+                        </div>
                     </form>
                 </mat-tab>
         
                 <!-- MATERIAIS DA AÇÃO -->
                 <mat-tab label="MATERIAIS">
                     <form #formCadastroMateriaisAcao="ngForm">
-                        <materiais-acoes [acao]="acoes"></materiais-acoes>
+                        <div ngModelGroup="comboMateriais">
+                            <materiais-acoes [acao]="acoes"></materiais-acoes>
+                        </div>
                     </form>
                 </mat-tab>
             </mat-tab-group>
@@ -25,11 +29,14 @@
     <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
         fxFlexFill>
         <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-            color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+                color="primary" [disabled]="formCadastroDadosAcao.invalid || formCadastro.invalid" (click)="cadastrar()"> Cadastrar
         </button>
 
-        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
-            color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+        <button *ngIf="isAtualizar && mostrarBotaoAtualizar" 
+                mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" 
+                [disabled]="formCadastroDadosAcao.invalid || formCadastro.invalid" 
+                (click)="atualizar()">
             Atualizar
         </button>
 

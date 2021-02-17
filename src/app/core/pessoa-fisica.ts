@@ -1,3 +1,4 @@
+import { ArquivoMetadados } from './arquivo-metadado';
 import { CondicoesMoradia } from './condicoes-moradia';
 import { GrausInstrucao } from './graus-instrucao';
 
@@ -65,7 +66,9 @@ export class PessoaFisica{
    valorBolsaFamilia:number;
    valorOutrosBenerficiosSoc:number;
    valorRenda:number;
-   idArquivo:number;
+   
+   metadados: ArquivoMetadados;
+
    condicoesMoradia:CondicoesMoradia;
    grausInstrucao:GrausInstrucao;
    usuarioAlteracao:number;

@@ -1,0 +1,12 @@
+<div class="barra-porcentagem-container">
+  <!-- <h2>O tamanhos dos anexos excedeu o mÃ¡ximo permitido. Ã‰ necessÃ¡rio excluir algum deles.</h2> -->
+  <div  [ngClass]="{'excedeu': parcial > total}" class="barra-porcentagem-parcial" [ngStyle]="{'width': largura}"></div>
+  <div class="barra-porcentagem-valor">
+     {{ parcial | bytes }} de {{ total | bytes }} 
+  </div>
+</div>
+
+<div *ngIf="parcial > total"  class="atencao">
+  A soma do tamanho dos anexos excedeu o valor máximo ({{ total | bytes }})
+</div><p>
+

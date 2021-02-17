@@ -7,14 +7,29 @@ import { OrderByPipe } from './order-by.pipe';
 import { CpfPipe } from './cpf.pipe';
 import { HighlightPipe } from './highlight.pipe';
 import { DataComHoraPipe } from './data-com-hora.pipe';
+import { BytesPipe } from './bytes/bytes.pipe';
 
 
 
 @NgModule({
-  declarations: [DataSimplesPipe, FormatTimePipe,CnpjPipe, CpfPipe, HighlightPipe, DataComHoraPipe,  OrderByPipe],
+  declarations: [DataSimplesPipe, 
+                 FormatTimePipe, 
+                 CnpjPipe, 
+                 CpfPipe, 
+                 HighlightPipe, 
+                 DataComHoraPipe,  
+                 OrderByPipe,
+                 BytesPipe],
   imports: [
     CommonModule
   ],
-  exports:[DataSimplesPipe,FormatTimePipe, OrderByPipe , CnpjPipe, HighlightPipe,DataComHoraPipe, CpfPipe]
+  exports:[DataSimplesPipe,
+           FormatTimePipe, 
+           OrderByPipe , 
+           CnpjPipe, 
+           HighlightPipe,
+           DataComHoraPipe, 
+           CpfPipe,
+           BytesPipe]
 })
 export class SharedPipesModule { }

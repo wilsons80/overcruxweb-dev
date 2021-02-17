@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Atividade } from 'src/app/core/atividade';
 import { Acesso } from 'src/app/core/acesso';
@@ -10,6 +10,8 @@ import * as _ from 'lodash';
 import { FuncionarioService } from 'src/app/services/funcionario/funcionario.service';
 import { Funcionario } from 'src/app/core/funcionario';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { PessoaFisica } from 'src/app/core/pessoa-fisica';
+import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
 
 @Component({
   selector: 'app-cadastrar-acoes-atividade',
@@ -30,14 +32,20 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
   constructor(
     private acoesAtividadeService: AcoesAtividadeService,
+    private funcionarioService: FuncionarioService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private drc: ChangeDetectorRef,
+    private toolbarPrincipalService: ToolbarPrincipalService
   ) {
     this.acoes.oficina = new Atividade();
     this.carregarPerfil = new CarregarPerfil();
   }
 
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+  }
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
@@ -51,15 +59,41 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
     }
 
     this.acoes.funcionarioAprovaAcao = new Funcionario();
-    this.acoes.funcionarioExecutaAcao = new Funcionario();
-    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
+    this.acoes.funcionarioAprovaAcao.pessoasFisica = new PessoaFisica();
 
+    this.acoes.funcionarioExecutaAcao = new Funcionario();
+    this.acoes.funcionarioExecutaAcao.pessoasFisica = new PessoaFisica();
+
+    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
+    this.acoes.funcionarioPlanejamentoAcao.pessoasFisica = new PessoaFisica();
 
     const codigoacao = this.activatedRoute.snapshot.queryParams.codigoacao ? this.activatedRoute.snapshot.queryParams.codigoacao : null;
     if (codigoacao) {
       this.isAtualizar = true;
-      this.acoesAtividadeService.getById(codigoacao).subscribe((acoes: Acoes) => {
+      this.acoesAtividadeService.getById(codigoacao)
+      .subscribe((acoes: Acoes) => {
         this.acoes = acoes;
+
+        if(this.acoes.dataAprovaAcao) {
+          this.mostrarBotaoAtualizar = false;
+        }
+
+        if(!this.acoes.funcionarioPlanejamentoAcao.pessoasFisica) {
+          this.acoes.funcionarioPlanejamentoAcao.pessoasFisica = new PessoaFisica();
+        }
+
+        if(!this.acoes.funcionarioAprovaAcao && !this.acoes.funcionarioAprovaAcao.pessoasFisica) {
+          this.acoes.funcionarioAprovaAcao = new Funcionario();
+          this.acoes.funcionarioAprovaAcao.pessoasFisica = new PessoaFisica();
+        }
+
+        this.funcionarioService.getByPessoaFisica(this.toolbarPrincipalService.idPessoaFisica)
+        .subscribe((funcionario: Funcionario) => {
+          if(funcionario && funcionario.id) {
+            this.acoes.funcionarioPlanejamentoAcao = funcionario;
+          }
+        });
+
       });
     }
 

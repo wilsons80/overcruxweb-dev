@@ -8,9 +8,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { environment } from '../environments/environment';
 import { versions } from 'src/environments/versions';
 
-declare var $: any;
-declare var CKEDITOR: any;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

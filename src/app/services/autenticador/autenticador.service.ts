@@ -199,7 +199,7 @@ export class AutenticadorService {
   setArquivo(arquivoRetorno){
     if (arquivoRetorno) {
       let arquivo: any = this.fileUtils.convertBufferArrayToBase64(arquivoRetorno)
-      let urlArquivo = arquivo.changingThisBreaksApplicationSecurity
+      let urlArquivo = arquivo ? arquivo.changingThisBreaksApplicationSecurity: '';
       localStorage.setItem("logo", urlArquivo);
       this.toolbarPrincipalService.logo = urlArquivo;
     }
@@ -208,7 +208,7 @@ export class AutenticadorService {
   setFotoPerfil(arquivoPFRetorno){
     if (arquivoPFRetorno) {
       let arquivo: any = this.fileUtils.convertBufferArrayToBase64(arquivoPFRetorno)
-      let urlArquivo = arquivo.changingThisBreaksApplicationSecurity
+      let urlArquivo = arquivo ? arquivo.changingThisBreaksApplicationSecurity: '';
       localStorage.setItem("fotoPerfil", urlArquivo);
       this.menuPrincipalService.fotoPerfil = urlArquivo;
     }

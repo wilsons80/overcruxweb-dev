@@ -1,4 +1,5 @@
 import { Funcionario } from 'src/app/core/funcionario';
+import { AnexosAcaoPlanejamento } from './anexos-acao-planejamento';
 import { Atividade } from './atividade';
 import { MateriaisAcao } from './materiais-acao';
 
@@ -25,5 +26,11 @@ export class Acoes {
 	usuarioAlteracao: number;
 
 	materiaisAcao: MateriaisAcao[];
+	localExecucao: string;
+
+
+	anexos: AnexosAcaoPlanejamento[] = [];
+	
+	tamanhoMaximoAnexoExcedido?: boolean;
 	
 }
