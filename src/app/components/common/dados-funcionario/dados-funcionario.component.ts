@@ -39,7 +39,7 @@ export class DadosFuncionarioComponent implements OnInit {
       this.arquivoPessoaFisicaService.get(this.funcionario.pessoasFisica.id).subscribe((foto: any) => {
         this.funcionario.pessoasFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.funcionario.pessoasFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.funcionario.pessoasFisica.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
         this.descricaoTipoFuncionario = this.tipoFuncionario.getDescricao(this.funcionario.cargo.tipoCargo);
       });
     }

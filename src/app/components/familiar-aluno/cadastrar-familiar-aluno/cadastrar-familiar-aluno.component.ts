@@ -76,7 +76,7 @@ export class CadastrarFamiliarAlunoComponent implements OnInit {
       ).subscribe((foto: any) => {
         this.familiar.pessoasFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.familiar.pessoasFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.familiar.pessoasFisica.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
         BroadcastEventService.get('ON_RESPONSAVEL_VIGENTE_ALUNO').emit(this.familiar.aluno.id);
       });
 

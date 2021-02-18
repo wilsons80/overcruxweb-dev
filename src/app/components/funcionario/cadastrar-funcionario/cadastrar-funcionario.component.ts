@@ -79,7 +79,7 @@ export class CadastrarFuncionarioComponent implements OnInit {
       ).subscribe((foto: any) => {
         this.funcionario.pessoasFisica.foto = foto;
         let fotoBase64:any = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.funcionario.pessoasFisica.urlFoto = fotoBase64.changingThisBreaksApplicationSecurity;
+        this.funcionario.pessoasFisica.urlFoto = fotoBase64 ? fotoBase64.changingThisBreaksApplicationSecurity : '';
       });
     }
   }

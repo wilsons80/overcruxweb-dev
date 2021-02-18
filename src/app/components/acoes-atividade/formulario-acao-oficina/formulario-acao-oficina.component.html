@@ -1,18 +1,8 @@
-<div class="painel-principal" style="padding: 10px;" ngModelGroup="comboAcao">
+<div class="painel-principal" ngModelGroup="comboAcao">
+
+    <div fxLayout="row"  fxLayoutGap="50px" fxFlexFill>
     
-    <!-- DADOS INICIAIS -->
-    <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill>
-    
-        <div fxLayout="column" fxFlex="33%">
-            <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
-                <mat-form-field style="margin-left: 20px; margin-bottom: 20px" >
-                    <input #descricao matInput maxlength="50" [(ngModel)]="acao.descricao"
-                            name="Descricao" placeholder="Descricao:" required>
-                    <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
-            </mat-form-field>
-        </div>
-    
-        <div fxLayout="column" fxFlex="33%">
+        <div fxLayout="column" fxFlex="50%">
             <mat-toolbar class="titulopartes">Plano de Atividades</mat-toolbar>
                 <mat-form-field style="margin-right: 20px;margin-left: 10px"  fxFlex= "95%" >
                     <mat-label>Plano de Atividades</mat-label>
@@ -29,7 +19,7 @@
             </mat-form-field>
         </div>
 
-        <div fxLayout="column" fxFlex="33%">
+        <div fxLayout="column" fxFlex="50%">
             <mat-toolbar class="titulopartes">Funcionário Planejamento</mat-toolbar>
             <mat-form-field style="margin-left: 20px; margin-bottom: 20px" >
                 <input #funcionarioPlanejamento 
@@ -43,9 +33,48 @@
 
     </div>
     
+    <div *ngIf="acao.oficina.id">
+        <dados-atividade [atividade]="acao.oficina"></dados-atividade>
+    </div>
+
+    
+    <mat-toolbar class="titulopartes">Período das Atividades</mat-toolbar>
+    <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill>
+        
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input #descricaoLotes 
+                       matInput 
+                       maxlength="100" 
+                       disabled
+                       [(ngModel)]="acao.dataPrevisaoInicio"
+                       name="descricaoLote" 
+                       placeholder="Descrição Lote">
+            </mat-form-field>
+
+    
+            <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                <input matInput name= "dataAprovaAcao" 
+                        [matDatepicker]="dataAprovaAcao" 
+                        placeholder="Data Aprovação" 
+                        (input)="onMascaraDataInput($event)"
+                        disabled
+                        [(ngModel)]="acao.dataAprovaAcao">
+                <mat-datepicker-toggle matSuffix [for]="dataAprovaAcao"></mat-datepicker-toggle>
+                <mat-datepicker #dataAprovaAcao></mat-datepicker>
+            </mat-form-field>
+    
+            <div ngModelGroup="comboFuncionario" fxFlex="60%" fxLayoutGap="20px" style="padding-top: 15px;">
+                <combo-funcionario [showDisplayId]="false" 
+                                    [selecionado]="acao.funcionarioAprovaAcao"
+                                    [desabilitado]="true"
+                                    (valorChange)="onValorChangeFuncionario($event)">
+                </combo-funcionario>
+            </div>
+    </div>
+
     <mat-toolbar class="titulopartes">Execução</mat-toolbar>
     <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill>
-        <mat-form-field fxFlex= "30%" fxFlexOffset="20px">
+        <mat-form-field fxFlex= "15%" fxFlexOffset="20px">
             <input matInput name= "dataPrevisaoInicio" 
                    [matDatepicker]="dataPrevisaoInicio" 
                    placeholder="Data Previsão de Início" 
@@ -56,7 +85,7 @@
         </mat-form-field>
 
 
-        <mat-form-field fxFlex="30%">
+        <mat-form-field fxFlex="15%">
             <mat-label>Local Execução</mat-label>
             <mat-select [(ngModel)]="acao.localExecucao" name="localExecucao">
                 <mat-option></mat-option>        
@@ -71,45 +100,24 @@
     <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
         <mat-form-field style="margin: 0 0 0 20px" fxFlexOffset="20px" fxFlex="100%" appearance="outline">
                 <mat-label>Descrição das atividades</mat-label>
-                <textarea #descricaoObjetivoAcao matInput
-                            name="descricaoObjetivoAcao"
-                            [(ngModel)]="acao.descricaoObjetivoAcao"
+                <textarea #descricao matInput
+                            name="descricao"
+                            [(ngModel)]="acao.descricao"
                             cdkTextareaAutosize
                             #autosize="cdkTextareaAutosize"
                             cdkAutosizeMinRows="3"
                             maxlength="200"></textarea>
-                <mat-hint align="end">{{descricaoObjetivoAcao.value.length}} / 200</mat-hint>
+                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
         </mat-form-field>
     </div>   
     
-    <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill>
+    <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill *ngIf="false">
         <div ngModelGroup="mgAnexosPlanejamento" fxFlex="100" fxLayoutGap="20px" style="padding-top: 15px;">
             <anexos [dadostela]="acao"></anexos>
         </div>
     </div> 
     
-    <mat-toolbar class="titulopartes aprovacao" >Aprovação</mat-toolbar>
-    <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
 
-        <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-            <input matInput name= "dataAprovaAcao" 
-                   [matDatepicker]="dataAprovaAcao" 
-                   placeholder="Data Aprovação" 
-                   (input)="onMascaraDataInput($event)"
-                   disabled
-                   [(ngModel)]="acao.dataAprovaAcao">
-            <mat-datepicker-toggle matSuffix [for]="dataAprovaAcao"></mat-datepicker-toggle>
-            <mat-datepicker #dataAprovaAcao></mat-datepicker>
-        </mat-form-field>
-
-        <div ngModelGroup="comboFuncionario" fxFlex="80" fxLayoutGap="20px" style="padding-top: 15px;">
-            <combo-funcionario [showDisplayId]="false" 
-                               [selecionado]="acao.funcionarioAprovaAcao"
-                               [desabilitado]="true"
-                               (valorChange)="onValorChangeFuncionario($event)">
-            </combo-funcionario>
-        </div>
-    </div>
 
 
     

@@ -70,7 +70,7 @@ export class DadosFamiliarComponent implements OnInit {
       this.arquivoPessoaFisicaService.get(this.familiar.pessoasFisica.id).subscribe((foto: any) => {
         this.familiar.pessoasFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.familiar.pessoasFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.familiar.pessoasFisica.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
       });
     }
   }

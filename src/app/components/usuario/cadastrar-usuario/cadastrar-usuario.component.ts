@@ -63,7 +63,7 @@ export class CadastrarUsuarioComponent implements OnInit {
       ).subscribe((foto: any) => {
         this.usuarioSistema.pessoaFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.usuarioSistema.pessoaFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.usuarioSistema.pessoaFisica.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
       });
     }
   }

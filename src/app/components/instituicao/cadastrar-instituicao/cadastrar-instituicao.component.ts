@@ -62,7 +62,7 @@ export class CadastrarInstituicaoComponent implements OnInit {
       ).subscribe((foto: any) => {
           this.instituicao.foto = foto;
           foto = this.fileUtils.convertBufferArrayToBase64(foto);
-          this.instituicao.urlFoto = foto.changingThisBreaksApplicationSecurity;
+          this.instituicao.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
       });
     }
 

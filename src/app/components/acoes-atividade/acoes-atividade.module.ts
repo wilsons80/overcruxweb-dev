@@ -45,7 +45,8 @@ import { VisualizarArquivoComponent } from '../common/visualizar-arquivo/visuali
     MatExpansionModule,
     MatTabsModule,
     NgxCurrencyModule,
-    ComboFuncionarioModule
+    ComboFuncionarioModule,
+    DadosAtividadeModule
   ]
 })
 export class AcoesAtividadeModule { }

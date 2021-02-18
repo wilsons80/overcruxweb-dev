@@ -59,7 +59,7 @@ export class FormularioRateioComponent implements OnInit {
 
     this.toogle.valueChanges.subscribe(newToogleValue=> {
       this.rateio.statusPercentual = newToogleValue;
-   });
+    });
   }
 
   ngAfterContentChecked(): void {

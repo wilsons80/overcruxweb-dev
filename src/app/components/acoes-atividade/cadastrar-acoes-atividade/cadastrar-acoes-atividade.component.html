@@ -13,7 +13,7 @@
                 </mat-tab>
         
                 <!-- MATERIAIS DA AÇÃO -->
-                <mat-tab label="MATERIAIS">
+                <mat-tab label="MATERIAIS" *ngIf="false">
                     <form #formCadastroMateriaisAcao="ngForm">
                         <div ngModelGroup="comboMateriais">
                             <materiais-acoes [acao]="acoes"></materiais-acoes>

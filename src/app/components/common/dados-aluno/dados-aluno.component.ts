@@ -35,7 +35,7 @@ export class DadosAlunoComponent implements OnInit {
       this.arquivoPessoaFisicaService.get(this.aluno.pessoaFisica.id).subscribe((foto: any) => {
         this.aluno.pessoaFisica.foto = foto;
         foto = this.fileUtils.convertBufferArrayToBase64(foto);
-        this.aluno.pessoaFisica.urlFoto = foto.changingThisBreaksApplicationSecurity;
+        this.aluno.pessoaFisica.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
       });
     }
   }

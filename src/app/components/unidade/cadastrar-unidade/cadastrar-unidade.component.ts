@@ -72,7 +72,7 @@ export class CadastrarUnidadeComponent implements OnInit {
       ).subscribe((foto: any) => {
           this.unidade.foto = foto;
           foto = this.fileUtils.convertBufferArrayToBase64(foto);
-          this.unidade.urlFoto = foto.changingThisBreaksApplicationSecurity;
+          this.unidade.urlFoto = foto ? foto.changingThisBreaksApplicationSecurity : '';
       });
     }
 
