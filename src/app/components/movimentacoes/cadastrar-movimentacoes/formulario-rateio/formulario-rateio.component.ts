@@ -54,8 +54,6 @@ export class FormularioRateioComponent implements OnInit {
       this.rateio.programa = new Programa();
     }
 
-    this.filtro.programa.id = this.rateio.programa.id;
-    this.filtro.projeto.id  = this.rateio.projeto.id;
 
     this.toogle.valueChanges.subscribe(newToogleValue=> {
       this.rateio.statusPercentual = newToogleValue;
@@ -64,6 +62,9 @@ export class FormularioRateioComponent implements OnInit {
 
   ngAfterContentChecked(): void {
     this.drc.detectChanges();
+
+    this.filtro.programa.id = this.rateio.programa.id;
+    this.filtro.projeto.id  = this.rateio.projeto.id;
   }
 
   validarDuplicado() {

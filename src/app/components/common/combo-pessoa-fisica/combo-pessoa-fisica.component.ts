@@ -57,7 +57,7 @@ export class ComboPessoaFisicaComponent implements OnInit {
   }
 
   private preencherCombo(){
-    if (this.selecionado && this.selecionado.id) {
+    if (this.selecionado && this.selecionado && this.selecionado.id) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
   } 

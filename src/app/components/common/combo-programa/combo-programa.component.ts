@@ -50,13 +50,13 @@ export class ComboProgramaComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["selecionado"] && this.selecionado.id) {
+    if (changes["selecionado"] && this.selecionado &&  this.selecionado.id) {
       this.preencherCombo();
     }
   }
 
   private preencherCombo(){
-    if (this.selecionado && this.selecionado.id) {
+    if (this.selecionado && this.selecionado && this.selecionado.id) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
   } 

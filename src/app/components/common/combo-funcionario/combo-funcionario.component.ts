@@ -47,7 +47,7 @@ export class ComboFuncionarioComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["selecionado"] && this.selecionado.id) {
+    if (changes["selecionado"] && this.selecionado && this.selecionado.id) {
       this.preencherCombo();
     }
   }
