@@ -75,7 +75,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'valorpagamento', 'rubrica'];
+  displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'numerotransacao', 'datapagamento', 'rubrica'];
   displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
   displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','tipo', 'descricao','parceiro','numerodocumento', 'dataoperacao', 'valoroperacao', 'bancoagenciaconta', 'saldo'];
 
@@ -377,6 +377,12 @@ export class RelatoriosFinanceiroComponent implements OnInit {
       this.filtro.pessoaFisica = null;
     }
   }
+
+
+  isRequiredFiltroData(): boolean {
+    return this.tipoRelatorioSelecionado.tipo !== 'FP'
+  }
+
 
   showFiltroFornecedor(): boolean {
     return this.tipoRelatorioSelecionado.tipo !== 'SP'

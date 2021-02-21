@@ -3,11 +3,14 @@
     <form #formCadastro="ngForm">
         <div class="painel-principal" style="padding: 10px;">
             <mat-tab-group>
+                
                 <!-- DADOS DA AÇÃO -->
                 <mat-tab label="PLANO ATIVIDADE">
                     <form #formCadastroDadosAcao="ngForm">
                         <div ngModelGroup="comboAcoesPlanejamento">
-                            <formulario-acao-oficina [acao]="acoes"></formulario-acao-oficina>
+                            <formulario-grupo-acao-oficina [grupoAcao]="grupoAcao" 
+                                                           [perfilAcesso]="perfilAcesso">
+                            </formulario-grupo-acao-oficina>
                         </div>
                     </form>
                 </mat-tab>
@@ -20,6 +23,7 @@
                         </div>
                     </form>
                 </mat-tab>
+                
             </mat-tab-group>
         </div>
     </form>    

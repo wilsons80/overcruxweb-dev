@@ -47,7 +47,7 @@ export class AcoesAtividadeComponent implements OnInit {
 
   turnos: TipoTurno = new TipoTurno();
 
-  displayedColumns: string[] = ['descricao', 'dataInicio', 'dataFim', 'dataPrevisaoFim', 'dataPrevisaoInicio', 'acoes'];
+  displayedColumns: string[] = ['atividade', 'periodo', 'descricao', 'dataPrevisaoInicio', 'acoes'];
   dataSource: MatTableDataSource<Acoes> = new MatTableDataSource();
 
   constructor(
@@ -135,7 +135,7 @@ export class AcoesAtividadeComponent implements OnInit {
   }
 
   atualizar(acoesAtividade: Acoes) {
-    this.router.navigate(['/acoesoficinas/cadastrar'], { queryParams: { codigoacao: acoesAtividade.id } });
+    this.router.navigate(['/acoesoficinas/cadastrar'], { queryParams: { codigoacao: acoesAtividade.grupoAcao.id } });
   }
 
   deletar(acoesAtividade: Acoes) {

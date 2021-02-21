@@ -37,4 +37,9 @@ export class FuncoesUteisService {
     return array;
   }
 
+
+  getApenasNumeros(valor) {
+    return valor.replace(/\D/g, '');
+  }
+  
 }

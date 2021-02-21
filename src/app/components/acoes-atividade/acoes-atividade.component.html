@@ -57,8 +57,7 @@
             </div>
                 
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
 
                 <button mat-raised-button fxFlex="20%" (click)="consultar()">
                     CONSULTAR
@@ -73,29 +72,24 @@
 
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
-            <ng-container matColumnDef="descricao">
-                <th mat-header-cell *matHeaderCellDef> Descrição: </th>
+              <ng-container matColumnDef="atividade">
+                <th mat-header-cell *matHeaderCellDef> Atividade </th>
+                <td mat-cell *matCellDef="let element"> {{element.grupoAcao?.atividade?.descricao}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="periodo">
+                <th mat-header-cell *matHeaderCellDef> Período: </th>
+                <td mat-cell *matCellDef="let element"> {{element.grupoAcao?.numeroGrupo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef> Ação: </th>
                 <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="dataInicio">
-                <th mat-header-cell *matHeaderCellDef> Data início:  </th>
-                <td mat-cell *matCellDef="let element"> {{element.dataInicio | dataSimples}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="dataFim">
-                <th mat-header-cell *matHeaderCellDef> Data fim:  </th>
-                <td mat-cell *matCellDef="let element"> {{element.dataFim | dataSimples}} </td>
               </ng-container>
 
               <ng-container matColumnDef="dataPrevisaoInicio">
                 <th mat-header-cell *matHeaderCellDef> Data previsão início:  </th>
                 <td mat-cell *matCellDef="let element"> {{element.dataPrevisaoInicio | dataSimples}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="dataPrevisaoFim">
-                <th mat-header-cell *matHeaderCellDef> Data previsão fim:  </th>
-                <td mat-cell *matCellDef="let element"> {{element.dataPrevisaoFim | dataSimples}} </td>
               </ng-container>
 
               <ng-container matColumnDef="acoes">

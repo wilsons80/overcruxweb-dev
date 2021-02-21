@@ -12,6 +12,10 @@ import { Funcionario } from 'src/app/core/funcionario';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolbar-principal.service';
+import { GrupoAcoes } from 'src/app/core/grupo-acoes';
+import { GrupoAcoesService } from 'src/app/services/grupo-acoes/grupo-acoes.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
+import { FuncoesUteisService } from 'src/app/services/commons/funcoes-uteis.service';
 
 @Component({
   selector: 'app-cadastrar-acoes-atividade',
@@ -20,7 +24,9 @@ import { ToolbarPrincipalService } from 'src/app/services/toolbarPrincipal/toolb
 })
 export class CadastrarAcoesAtividadeComponent implements OnInit {
 
-  acoes: Acoes = new Acoes();
+  grupoAcao: GrupoAcoes = new GrupoAcoes();
+
+  //acoes: Acoes = new Acoes();
 
   carregarPerfil: CarregarPerfil;
   perfilAcesso: Acesso = new Acesso();
@@ -31,15 +37,18 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
 
   constructor(
-    private acoesAtividadeService: AcoesAtividadeService,
-    private funcionarioService: FuncionarioService,
+    //private acoesAtividadeService: AcoesAtividadeService,
+    private funcoesUteisService: FuncoesUteisService,
+    private grupoAcoesService: GrupoAcoesService,
+    private funcionarioService: FuncionarioService,    
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastService: ToastService,
     private drc: ChangeDetectorRef,
+    private dataUtilService: DataUtilService,
     private toolbarPrincipalService: ToolbarPrincipalService
   ) {
-    this.acoes.oficina = new Atividade();
+    this.grupoAcao.atividade = new Atividade();
     this.carregarPerfil = new CarregarPerfil();
   }
 
@@ -58,41 +67,31 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.acoes.funcionarioAprovaAcao = new Funcionario();
-    this.acoes.funcionarioAprovaAcao.pessoasFisica = new PessoaFisica();
+    this.grupoAcao.funcionarioAnalise = new Funcionario();
+    this.grupoAcao.funcionarioAnalise.pessoasFisica = new PessoaFisica();
 
-    this.acoes.funcionarioExecutaAcao = new Funcionario();
-    this.acoes.funcionarioExecutaAcao.pessoasFisica = new PessoaFisica();
 
-    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
-    this.acoes.funcionarioPlanejamentoAcao.pessoasFisica = new PessoaFisica();
-
-    const codigoacao = this.activatedRoute.snapshot.queryParams.codigoacao ? this.activatedRoute.snapshot.queryParams.codigoacao : null;
-    if (codigoacao) {
+    const idGrupoAcao = this.activatedRoute.snapshot.queryParams.codigoacao ? this.activatedRoute.snapshot.queryParams.codigoacao : null;
+    if (idGrupoAcao) {
       this.isAtualizar = true;
-      this.acoesAtividadeService.getById(codigoacao)
-      .subscribe((acoes: Acoes) => {
-        this.acoes = acoes;
+      this.grupoAcoesService.getById(idGrupoAcao)
+      .subscribe((grupoAcao: GrupoAcoes) => {
+        this.grupoAcao = grupoAcao;
 
-        if(this.acoes.dataAprovaAcao) {
+        if(this.grupoAcao.statusAnalise === 'A') {
           this.mostrarBotaoAtualizar = false;
         }
 
-        if(!this.acoes.funcionarioPlanejamentoAcao.pessoasFisica) {
-          this.acoes.funcionarioPlanejamentoAcao.pessoasFisica = new PessoaFisica();
-        }
+        if(!this.grupoAcao.funcionarioAnalise.pessoasFisica) {
+          this.grupoAcao.funcionarioAnalise.pessoasFisica = new PessoaFisica();
 
-        if(!this.acoes.funcionarioAprovaAcao && !this.acoes.funcionarioAprovaAcao.pessoasFisica) {
-          this.acoes.funcionarioAprovaAcao = new Funcionario();
-          this.acoes.funcionarioAprovaAcao.pessoasFisica = new PessoaFisica();
+          this.funcionarioService.getByPessoaFisica(this.toolbarPrincipalService.idPessoaFisica)
+          .subscribe((funcionario: Funcionario) => {
+            if(funcionario && funcionario.id) {
+              this.grupoAcao.funcionarioAnalise = funcionario;
+            }
+          });
         }
-
-        this.funcionarioService.getByPessoaFisica(this.toolbarPrincipalService.idPessoaFisica)
-        .subscribe((funcionario: Funcionario) => {
-          if(funcionario && funcionario.id) {
-            this.acoes.funcionarioPlanejamentoAcao = funcionario;
-          }
-        });
 
       });
     }
@@ -110,23 +109,20 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
   cadastrar() {
     if (!this.validarDatas() ) { return; }
 
-    this.acoesAtividadeService.cadastrar(this.acoes).subscribe(() => {
+    this.grupoAcao.numeroGrupo = this.funcoesUteisService.getApenasNumeros(this.grupoAcao.numeroGrupo);
+    this.grupoAcoesService.cadastrar(this.grupoAcao).subscribe(() => {
       this.router.navigate(['acoesoficinas']);
-      this.toastService.showSucesso('Ações atividade cadastrada com sucesso');
+      this.toastService.showSucesso('Planejamento de atividade cadastrado com sucesso');
     });
   }
 
 
 
   limpar() {
-    this.acoes = new Acoes();
-    this.acoes.oficina = new Atividade();
-
-    this.acoes.funcionarioPlanejamentoAcao = new Funcionario();
-    this.acoes.funcionarioAprovaAcao = new Funcionario();
-    this.acoes.funcionarioExecutaAcao = new Funcionario();
-  
-    this.acoes.materiaisAcao =  [];
+    this.grupoAcao = new GrupoAcoes();
+    this.grupoAcao.atividade = new Atividade();
+    this.grupoAcao.funcionarioAnalise = new Funcionario();
+    this.grupoAcao.acoes =  [];
   }
 
   cancelar() {
@@ -137,50 +133,50 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
   atualizar() {
     if (!this.validarDatas() ) { return; }
 
-    if(this.acoes.materiaisAcao) {
-      const temQuantidadeInvalida = this.acoes.materiaisAcao.find(m => !m.quantidadeMaterial || m.quantidadeMaterial === 0);
-      if(temQuantidadeInvalida) {
-        this.toastService.showSucesso('Existem materiais com quantidade não informada ou com valor zero(0)');
-        return;
-      }
-
-
-      const materiaisTemp = this.acoes.materiaisAcao.map(m => m.material.nome);
-      const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) != index)
-      const jaExiste = findDuplicates(materiaisTemp);
-      if(jaExiste && jaExiste.length) {
-        this.toastService.showAlerta('Existem materiais duplicados na oficina.');
-        return;
-      }
-    }
-
-    this.acoesAtividadeService.alterar(this.acoes).subscribe(() => {
+    this.grupoAcao.numeroGrupo = this.funcoesUteisService.getApenasNumeros(this.grupoAcao.numeroGrupo);
+    this.grupoAcoesService.alterar(this.grupoAcao).subscribe(() => {
       this.router.navigate(['acoesoficinas']);
-      this.toastService.showSucesso('Ações atividade atualizada com sucesso');
+      this.toastService.showSucesso('Planejamento de atividade atualizado com sucesso');
     });
+
   }
 
-  private getValorByDate(valor) {
-    if(valor === null || valor === undefined) return null;
-
-    if(valor && valor instanceof Date) {
-      const data = valor.toLocaleDateString().split('/');
-      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
-    }
-
-    if(valor && !(valor instanceof Date)) {
-      const dataString = new Date(valor).toLocaleDateString();
-      const data = dataString.split('/');
-      return new Date(data[2]+'-'+data[1]+'-'+data[0]);
-    }
-  }
-
+  
   validarDatas(): boolean {
-    const dataInicioAtividade     = this.getValorByDate(this.acoes.oficina.dataInicio);
-    const dataFimAtividade        = this.getValorByDate(this.acoes.oficina.dataFim);
+    let resultado = true;
 
-    const dataIncioMatricula      = this.getValorByDate(this.acoes.dataInicio);
-    const dataFimMatricula        = this.getValorByDate(this.acoes.dataFim);
+    const dataInicioAtividade     = this.dataUtilService.getValorByDate(this.grupoAcao.atividade.dataInicio);
+    const dataFimAtividade        = this.dataUtilService.getValorByDate(this.grupoAcao.atividade.dataFim);
+
+    if(this.grupoAcao.acoes && this.grupoAcao.acoes.length > 0) {
+      this.grupoAcao.acoes.forEach(acao => {
+        const dataIncioMatricula      = this.dataUtilService.getValorByDate(acao.dataPrevisaoInicio);
+        if (dataIncioMatricula && dataIncioMatricula.getTime() < dataInicioAtividade.getTime()) {
+          this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
+          resultado = false;
+        }
+
+        if (dataFimAtividade) {
+          if (dataIncioMatricula && dataIncioMatricula.getTime() > dataFimAtividade.getTime()) {
+            this.toastService.showAlerta('A data de início informada não pode ser maior que a data de fim da atividade selecionada.');
+            resultado = false;
+          }
+        }
+
+      });
+    }
+
+    return resultado;
+  }
+  
+
+  /*
+  validarDatas(): boolean {
+    const dataInicioAtividade     = this.dataUtilService.getValorByDate(this.acoes.oficina.dataInicio);
+    const dataFimAtividade        = this.dataUtilService.getValorByDate(this.acoes.oficina.dataFim);
+
+    const dataIncioMatricula      = this.dataUtilService.getValorByDate(this.acoes.dataInicio);
+    const dataFimMatricula        = this.dataUtilService.getValorByDate(this.acoes.dataFim);
 
     if (dataIncioMatricula && dataIncioMatricula.getTime() < dataInicioAtividade.getTime()) {
       this.toastService.showAlerta('A data de início informada não pode ser menor que a data de início da atividade selecionada.');
@@ -214,6 +210,7 @@ export class CadastrarAcoesAtividadeComponent implements OnInit {
 
     return true;
   }
+  */
 
 
 }

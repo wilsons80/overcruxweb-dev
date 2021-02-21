@@ -1,0 +1,108 @@
+<div class="painel-principal" style="padding-bottom: 10px;" ngModelGroup="comboAcao">
+
+    <div fxLayout="row"  fxLayoutGap="50px" fxFlexFill>
+    
+        <div fxLayout="column" fxFlex="50%">
+            <mat-toolbar class="titulopartes">Plano de Atividades</mat-toolbar>
+                <mat-form-field style="margin-right: 20px;margin-left: 10px"  fxFlex= "95%" >
+                    <mat-label>Plano de Atividades</mat-label>
+                    <mat-select [(ngModel)]="grupoAcao.atividade.id"
+                                (selectionChange)="mostrarDadosAtividade($event.value)"
+                                name="atividade" 
+                                required>
+                        <mat-option></mat-option>        
+                        <mat-option *ngFor="let u of atividades" [value]="u.id" >
+                            {{u.descricao}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="atividades?.length === 0"  align="start">Nenhuma atividade cadastrada</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxFlex="50%">
+            <mat-toolbar class="titulopartes">Funcionário Analise</mat-toolbar>
+            <mat-form-field style="margin-left: 20px; margin-bottom: 20px" >
+                <input #funcionarioAnalise 
+                       matInput 
+                       maxlength="100" 
+                       disabled
+                       [(ngModel)]="grupoAcao.funcionarioAnalise.pessoasFisica.nome"
+                       name="Funcionário Analise" placeholder="Funcionário Analise">
+            </mat-form-field>
+        </div>
+
+    </div>
+    
+    <div *ngIf="grupoAcao.atividade.id">
+        <dados-atividade [atividade]="grupoAcao.atividade"></dados-atividade>
+    </div>
+
+    
+    <mat-toolbar *ngIf="grupoAcao.atividade.id" class="titulopartes">Período das Atividades</mat-toolbar>
+    <div fxLayout="row"  fxLayoutGap="50px" class="espaco" fxFlexFill *ngIf="grupoAcao.atividade.id">
+        
+        <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+            <input #periodoAtividade 
+                    matInput 
+                    [disabled]="grupoAcao.id"
+                    [textMask]="{mask: mascaraPeriodo}"
+                    [(ngModel)]="grupoAcao.numeroGrupo"
+                    name="numeroGrupo" 
+                    (change)="buscarGrupoAcao()"
+                    placeholder="Período (mês-ano)">
+        </mat-form-field>
+
+        <!--Imagem (like/deslike) -->
+        <container-element [ngSwitch]="grupoAcao.statusAnalise" *ngIf="showFormularioAcao">
+            <div *ngSwitchCase="'A'" style="margin-top: 21px; color: rgb(0, 128, 0);">
+                <span class="material-icons">thumb_up</span> Aprovado
+            </div>
+            <div *ngSwitchCase="'R'" style="margin-top: 21px; color: rgb(155, 15, 5);">
+                <span class="material-icons" >thumb_up</span> Reprovado
+            </div>
+            <div *ngSwitchDefault style="margin-top: 21px; color: rgb(212, 165, 8); font-weight: bold;">
+                <span class="material-icons">pan_tool</span> Em análise
+            </div>
+        </container-element>
+
+
+        <!--Enviar para Analisar (Sim/Não) -->
+        <div fxFlex="10%" style="margin-top: 18px;margin-left: 26px;" *ngIf="showFormularioAcao">
+            <mat-checkbox color="primary"
+                          title="Enviar para Analisar" 
+                          name="statusEnvioAnalise" 
+                          style="margin-top: 25px;"
+                          [disabled]="isAprovado()"
+                          [(ngModel)]="grupoAcao.statusEnvioAnalise">
+                Enviar para Analisar
+            </mat-checkbox>
+        </div>
+    
+    </div>
+
+    <div fxLayout="column" *ngIf="showFormularioAcao">
+        <mat-toolbar class="titulopartes"><span>Planejamento</span></mat-toolbar>
+        <div fxLayout="column" fxLayoutGap="50px"  fxFlexFill>
+            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoPlanejamento">
+                <div *ngFor="let acao of grupoAcao.acoes; let index = index">
+                    <formulario-acao [acao]="acao" 
+                                     [index]="index"
+                                     [acoes]="grupoAcao.acoes"   
+                                     [perfilAcesso]="perfilAcesso">
+                    </formulario-acao>
+                </div>
+                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                    <div>
+                        <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addAcao()" [disabled]="isAprovado()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+
+    
+</div>   
+

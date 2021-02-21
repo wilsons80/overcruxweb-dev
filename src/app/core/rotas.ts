@@ -67,7 +67,6 @@ export enum Rotas {
     MOVIMENTACOES_MATERIAIS         = 'api/movimentacoesmateriais/',
     ITENS_PEDIDOS_MATERIAIS         = 'api/itenspedidosmateriais/',
     ITENS_MOVIMENTACOES             = 'api/itensmovimentacoes/',
-    ACAO                            = 'api/acoesoficinas/',
     EXTRATO                         = 'api/extrato/',
     TRIBUTOS                        = 'api/tributos/',
     CONCILIACAO                     = 'api/conciliacao/',
@@ -83,4 +82,5 @@ export enum Rotas {
     TIPOS_DOADORES                  = 'api/tiposdoadores/',
     BENEFICIOS_SOCIAIS              = 'api/beneficiossociais/',
     FORNECEDORES                    = 'api/fornecedores/',
+    GRUPO_ACOES                     = 'api/grupoacoes/',
 }
