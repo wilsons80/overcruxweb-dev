@@ -37,6 +37,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { ComboPesquisavelModule } from '../components/common/combo-pesquisavel/combo-pesquisavel.module';
 import { LoadingPopupModule } from '../components/common/loading-popup/loading-popup.module';
 import { EditorRicoModule } from '../components/common/editor-rico/editor-rico.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 const modulos = [
@@ -75,6 +76,7 @@ const modulos = [
     , MatBadgeModule
     , LoadingPopupModule
     , EditorRicoModule
+    , MatDialogModule
 ]
 
 @NgModule({
