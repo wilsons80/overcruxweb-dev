@@ -48,6 +48,9 @@ import { FormularioAcaoComponent } from './formulario-acao/formulario-acao.compo
     NgxCurrencyModule,
     ComboFuncionarioModule,
     DadosAtividadeModule
-  ]
+  ],
+  entryComponents: [
+    AnexosTamanhosPermitidosComponent,
+  ],
 })
 export class AcoesAtividadeModule { }
