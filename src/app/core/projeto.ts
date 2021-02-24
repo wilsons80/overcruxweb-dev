@@ -18,7 +18,7 @@ export class Projeto {
 	dataPrevisaoInicio: Date;
 	dataPrevisaoTermino: Date;
 	iniciativa: Iniciativa;
-	programa: Programa;
+	programa: any;
 	usuarioAlteracao: number;
 	publicoAlvo:string;
 	justificativa:string;

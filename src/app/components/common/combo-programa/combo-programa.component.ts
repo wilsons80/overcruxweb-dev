@@ -2,6 +2,7 @@ import { Component, EventEmitter, forwardRef, Input, OnInit, Output, SimpleChang
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { ComboPrograma } from 'src/app/core/combo-programa';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 
 
@@ -37,7 +38,7 @@ export class ComboProgramaComponent implements OnInit {
       this.programaService.getAllCombo().subscribe((programas: ComboPrograma[]) => {
         this.dados = programas;
         this.preencherCombo();
-        
+
         this.dados.forEach(a => a.nome = a.nome);
         this.dados.sort((a,b) => {
           if (a.nome > b.nome) {return 1;}
@@ -45,18 +46,16 @@ export class ComboProgramaComponent implements OnInit {
           return 0;
         });
       });
-    }, 0)
-
+    }, 0);
   }
 
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["selecionado"] && this.selecionado && this.selecionado.id) {
-      this.preencherCombo();
-    }
+    this.preencherCombo();
   }
 
   private preencherCombo(){
-    if (this.selecionado && this.selecionado && this.selecionado.id) {
+    if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
   } 

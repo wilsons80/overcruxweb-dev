@@ -53,7 +53,7 @@ export class ComboFuncionarioComponent implements OnInit {
   }
 
   private preencherCombo(){
-    if (this.selecionado && this.selecionado.id) {
+    if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
   } 

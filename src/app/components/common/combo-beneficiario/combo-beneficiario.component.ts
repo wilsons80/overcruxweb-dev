@@ -49,7 +49,7 @@ export class ComboBeneficiarioComponent implements OnInit {
   }
 
   private preencherComboBeneficiario(){
-    if (this.selecionado && this.selecionado.id) {
+    if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
   } 

@@ -151,7 +151,7 @@ export class CadastrarTurmasComponent implements OnInit {
       const dataInicio = this.dataUtilService.getDataTruncata(this.turma.programa.dataInicio);
       const dataFim    = this.dataUtilService.getDataTruncata(this.turma.programa.dataFim);
 
-      const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicio, dataFim, dataInicioTurma, dataFimTurma );
+      const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim );
       if(!isVigente) {
         this.toastService.showAlerta('O período da turma: '
                                      + ' (' + dataInicioTurma.toLocaleDateString() 
@@ -175,7 +175,7 @@ export class CadastrarTurmasComponent implements OnInit {
         const dataInicio = this.dataUtilService.getDataTruncata(oficina.dataInicio);
         const dataFim    = this.dataUtilService.getDataTruncata(oficina.dataFim);
 
-        const isVigente = this.dataUtilService.isEntreDatasTruncada(dataInicioTurma, dataFimTurma, dataInicio, dataFim );
+        const isVigente = this.dataUtilService.isEntreDatasTruncada( dataInicio, dataFim, dataInicioTurma, dataFimTurma );
         if(!isVigente) {
           this.toastService.showAlerta('Conflito entre as datas da oficina: ' + oficina.descricao.toUpperCase() + ' (' + dataInicio.toLocaleDateString() + ' - ' + (dataFim ? dataFim.toLocaleDateString() : 'em aberto') +
                                        ') com as datas da turma ('+ dataInicioTurma.toLocaleDateString() + ' - ' + (dataFimTurma ? dataFimTurma.toLocaleDateString() : 'em aberto' )+')' );

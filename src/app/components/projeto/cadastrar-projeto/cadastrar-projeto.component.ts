@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { Acesso } from 'src/app/core/acesso';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 @Component({
   selector: 'app-cadastrar-projeto',
@@ -42,9 +43,7 @@ export class CadastrarProjetoComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.inicializarObjetos()
-
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
     if (!this.perfilAcesso.insere) {
@@ -55,10 +54,6 @@ export class CadastrarProjetoComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
-    this.programaService.getAll().subscribe((programas: Programa[]) => {
-      this.programas = programas;
-    })
-
     let idProjeto: number;
     idProjeto = this.activatedRoute.snapshot.queryParams.idProjeto ? this.activatedRoute.snapshot.queryParams.idProjeto : null;
     if (idProjeto) {
@@ -66,7 +61,7 @@ export class CadastrarProjetoComponent implements OnInit {
       this.projetoService.getById(idProjeto).subscribe((projeto: Projeto) => {
         this.projeto = projeto;
         if (!this.projeto.programa) {
-          this.projeto.programa = new Programa();
+          this.projeto.programa = new Programa();          
         }
       });
     }
@@ -172,7 +167,7 @@ export class CadastrarProjetoComponent implements OnInit {
       let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
       let dataFimPrograma: Date    = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
       
-      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, dataInicioPrograma, dataFimPrograma);
+      return this.dataUtilService.isEntreDatasTruncada(dataInicioPrograma, dataFimPrograma, this.projeto.dataInicio, this.projeto.dataFim);
     }   
     return true;
   }

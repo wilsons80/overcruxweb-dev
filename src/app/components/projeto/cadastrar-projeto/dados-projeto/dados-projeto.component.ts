@@ -6,6 +6,7 @@ import { Funcionario } from 'src/app/core/funcionario';
 import * as _ from 'lodash';
 import { Programa } from 'src/app/core/programa';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
+import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 
 
 @Component({
@@ -21,7 +22,6 @@ export class DadosProjetoComponent implements OnInit {
   funcionarios: Funcionario[];
 
   constructor(private funcionarioService: FuncionarioService) {
-             
   }
 
   ngOnInit() {
