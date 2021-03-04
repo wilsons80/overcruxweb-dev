@@ -141,7 +141,9 @@ export class ExportarDadosAlunoComponent implements OnInit {
       this.dataSource.data = dados ? dados : [];
       this.verificaMostrarTabela(dados);
 
-      this.masterToggle();
+      this.selection.clear();
+      this.dataSource.data.forEach(row => this.selection.select(row));
+      
     })
   }
 

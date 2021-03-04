@@ -220,9 +220,11 @@ export class RelatoriosFinanceiroComponent implements OnInit {
         this.dadosDataSource = dados;
       
         this.dataSource.data = dados ? dados : [];
-        this.verificaMostrarTabela(dados);
+        
+        this.selection.clear();
+        this.dataSource.data.forEach(row => this.selection.select(row))
 
-        this.masterToggle();
+        this.verificaMostrarTabela(dados);
     },
     (error) => {
       this.toastService.showAlerta("Não foi possível recuperar os dados.")

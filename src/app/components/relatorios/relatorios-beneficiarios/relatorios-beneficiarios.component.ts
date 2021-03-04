@@ -144,9 +144,10 @@ export class RelatoriosBeneficiariosComponent implements OnInit {
         this.exportacaoDadosAlunos = dados;
       
         this.dataSource.data = dados ? dados : [];
+        this.dataSource.data.forEach(row => this.selection.select(row));
+        
         this.verificaMostrarTabela(dados);
-
-        this.masterToggle();
+        
     },
     (error) => {
       this.toastService.showAlerta("Não foi possível recuperar os dados.")

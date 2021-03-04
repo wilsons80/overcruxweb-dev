@@ -134,7 +134,7 @@ export class RelatoriosDpComponent implements OnInit {
         this.dataSource.data = dados ? dados : [];
         this.verificaMostrarTabela(dados);
 
-        this.masterToggle();
+        this.dataSource.data.forEach(row => this.selection.select(row));
     },
     (error) => {
       this.toastService.showAlerta("Não foi possível recuperar os dados.")

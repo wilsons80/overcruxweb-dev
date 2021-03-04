@@ -134,6 +134,9 @@ export class ConciliacaoComponent implements OnInit {
       this.conciliacoes = conciliacoes;
       this.dataSource.data = conciliacoes ? conciliacoes : [];
       this.verificaMostrarTabela(conciliacoes);
+
+      this.selection.clear();
+      this.dataSource.data.forEach(row => this.selection.select(row));
     })
   }
 

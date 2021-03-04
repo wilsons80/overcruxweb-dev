@@ -125,6 +125,10 @@ export class ProvisionamentoComponent implements OnInit {
       this.provisoes = provisoes;
       this.dataSource.data = provisoes ? provisoes : [];
       this.verificaMostrarTabela(provisoes);
+
+      this.selection.clear();
+      this.dataSource.data.forEach(row => this.selection.select(row));
+      
     })
   }
 
