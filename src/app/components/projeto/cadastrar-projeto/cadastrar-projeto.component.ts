@@ -97,6 +97,11 @@ export class CadastrarProjetoComponent implements OnInit {
       return;
     }
 
+    if(!this.isDataParceriaEntreDataProjeto()) {
+      this.toastService.showAlerta("Operação não realizada. As datas da parceria estão diferentes das datas do projeto selecionado.");
+      return;
+    }
+
     this.projetoService.cadastrar(this.projeto).subscribe(() => {
       this.toastService.showSucesso("Projeto cadastrado com sucesso");
     });
@@ -120,6 +125,11 @@ export class CadastrarProjetoComponent implements OnInit {
     
     if (!this.isDataProjetoEntreDataPrograma()) {
       this.toastService.showAlerta("Operação não realizada. As datas do projeto estão diferentes das datas do programa selecionado.");
+      return;
+    }
+
+    if(!this.isDataParceriaEntreDataProjeto()) {
+      this.toastService.showAlerta("Operação não realizada. As datas da parceria estão diferentes das datas do projeto selecionado.");
       return;
     }
 
@@ -167,8 +177,22 @@ export class CadastrarProjetoComponent implements OnInit {
       let dataInicioPrograma: Date = this.dataUtilService.getDataTruncata(this.projeto.programa.dataInicio);
       let dataFimPrograma: Date    = this.dataUtilService.getDataTruncata(this.projeto.programa.dataFim);
       
-      return this.dataUtilService.isEntreDatasTruncada(dataInicioPrograma, dataFimPrograma, this.projeto.dataInicio, this.projeto.dataFim);
+      return this.dataUtilService.isEntreDatasTruncada(this.projeto.dataInicio, this.projeto.dataFim, dataInicioPrograma, dataFimPrograma);
     }   
     return true;
+  }
+  
+  isDataParceriaEntreDataProjeto(): boolean {
+    let isEntreDatas = true;
+    if (this.projeto.parceriasProjeto && this.projeto.parceriasProjeto.length > 0) {
+      this.projeto.parceriasProjeto.forEach(pp => {
+        let dataInicioParceria: Date = this.dataUtilService.getDataTruncata(pp.dataInicio);
+        let dataFimParceria: Date    = this.dataUtilService.getDataTruncata(pp.dataFim);
+
+        isEntreDatas = this.dataUtilService.isEntreDatasTruncada(dataInicioParceria, dataFimParceria, this.projeto.dataInicio, this.projeto.dataFim);
+        if(!isEntreDatas) {return}
+      });
+    }
+    return isEntreDatas;
   }
 }

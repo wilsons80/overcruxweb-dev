@@ -62,8 +62,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   MIMETYPE_PDF   = "pdf";
   MIMETYPE_EXCEL = "xls";
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   comboPlanosContas: PlanosContas[];
   comboContasBancarias: ContasBancaria[];

@@ -110,6 +110,9 @@ export class ConciliacaoComponent implements OnInit {
   }
 
   carregar() {
+    this.getSaldosContasBancaria();
+
+
     this.conciliacaoService.carregar(this.filtro.dataInicio, 
                                      this.filtro.dataFim, 
                                      this.filtro.contaBancaria.id)
@@ -126,7 +129,7 @@ export class ConciliacaoComponent implements OnInit {
 
   buscar() {
     this.selection.clear();
-    
+
     this.conciliacaoService.getFilter(this.filtro.dataInicio, 
                                       this.filtro.dataFim, 
                                       this.filtro.contaBancaria.id)
@@ -249,17 +252,18 @@ export class ConciliacaoComponent implements OnInit {
 
 
   getSaldosContasBancaria() {
+    this.saldoContaBancaria = new SaldoContaBancaria();
+    this.saldoContaBancaria.saldoInicial = 0;
+    this.saldoContaBancaria.saldoFinal   = 0;
+
     if(this.filtro.contaBancaria.id && this.filtro.dataInicio && this.filtro.dataFim) {
       this.saldosContasBancariaService.getSaldoContaBancaria(this.filtro.contaBancaria.id,
                                                              this.filtro.dataInicio, 
                                                              this.filtro.dataFim)
       .subscribe((saldo: any) => {
-        this.saldoContaBancaria = new SaldoContaBancaria();
-        this.saldoContaBancaria.saldoInicial = saldo?.saldoInicial | 0;
-        this.saldoContaBancaria.saldoFinal   = saldo?.saldoFinal | 0;
+        this.saldoContaBancaria.saldoInicial = saldo && saldo.saldoInicial ? saldo.saldoInicial : 0;
+        this.saldoContaBancaria.saldoFinal   = saldo && saldo.saldoFinal ? saldo.saldoFinal : 0;
       });
-    } else {
-      this.saldoContaBancaria;
     }
   }
 }
