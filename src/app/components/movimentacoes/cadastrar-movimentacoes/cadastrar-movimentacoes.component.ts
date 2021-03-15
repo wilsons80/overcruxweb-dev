@@ -114,6 +114,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isContaReembolsoValida()) { return; }
     if( this.isValidarTributoMovimentacao()) { return; }
     if( this.isItensValidados() ) { return; }
+    if( this.isValidarPagamentoFutura()) { return; }
 
     this.movimentacoesService.cadastrar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Movimentação cadastrada com sucesso');
@@ -163,6 +164,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     if( !this.isContaReembolsoValida()) { return; }
     if( this.isValidarTributoMovimentacao()) { return; }
     if( this.isItensValidados() ) { return; }
+    if( this.isValidarPagamentoFutura()) { return; }
 
     this.movimentacoesService.alterar(this.movimentacoes).subscribe((movimentacao: Movimentacoes) => {
       this.toastService.showSucesso('Registro atualizado com sucesso.');
@@ -207,6 +209,21 @@ export class CadastrarMovimentacoesComponent implements OnInit {
 
     return false;
   }
+
+  isValidarPagamentoFutura() {
+    let retorno = false;
+
+    if(this.movimentacoes.pagamentosFatura) {
+      const isDataFuturas = this.movimentacoes.pagamentosFatura.filter(p => this.dataUtilService.getDataTruncata(p.dataPagamento).getTime() > new Date().getTime() ) ;
+      if(isDataFuturas && isDataFuturas.length) {
+        this.toastService.showAlerta('Não é permitido cadastrar pagamento de faturas com data no futuro.');
+        retorno = true;
+      }
+    }
+
+    return retorno;
+  }
+
 
   isValidarTributoMovimentacao() {
     let retorno = false;
