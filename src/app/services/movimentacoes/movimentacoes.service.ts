@@ -16,9 +16,7 @@ export class MovimentacoesService extends BaseService<Movimentacoes> {
     super(http, Rotas.MOVIMENTACOES);
   }
 
-  getAllDestino() {
-    return this.http.get(Rotas.MOVIMENTACOES + `destino`);
-  }
+  
 
   getAllOrigem() {
     return this.http.get(Rotas.MOVIMENTACOES + `origem`);
@@ -69,4 +67,25 @@ export class MovimentacoesService extends BaseService<Movimentacoes> {
     });
   }
 
+
+  getFilterTransferenciaValores(idContaBanciariaOrigem: string|number,
+                                idContaBanciariaDestino: string|number,
+                                valor: string|number,
+                                data: any) {
+
+    idContaBanciariaOrigem       = idContaBanciariaOrigem || '';
+    idContaBanciariaDestino      = idContaBanciariaDestino || '';
+    valor                        = valor || '';
+
+    const p_data = data ? data.getTime() : '';
+
+
+    return this.http.get(Rotas.MOVIMENTACOES + 'filter/transferenciavalores', { params: {
+        contaorigem: `${idContaBanciariaOrigem}` ,
+        contadestico: `${idContaBanciariaDestino}` ,
+        valor: `${valor}`,
+        data: `${p_data}`,
+        }
+    });
+  }
 }

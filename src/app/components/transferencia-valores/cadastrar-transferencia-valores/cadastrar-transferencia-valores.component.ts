@@ -13,6 +13,7 @@ import { MovimentacoesService } from 'src/app/services/movimentacoes/movimentaco
 import { ToastService } from 'src/app/services/toast/toast.service';
 import * as _ from 'lodash';
 import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-bancaria.service';
+import { DataUtilService } from 'src/app/services/commons/data-util.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { ContasBancariaService } from 'src/app/services/contas-bancaria/contas-b
 export class CadastrarTransferenciaValoresComponent implements OnInit {
   movimentacoes: Movimentacoes;
 
-  contasBancarias: ContasBancaria[];
+  comboContasBancarias: ContasBancaria[];
 
   isAtualizar = false;  
   mostrarBotaoCadastrar = true;
@@ -33,6 +34,7 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
   carregarPerfil: CarregarPerfil;
 
   constructor(
+    private dataUtilService: DataUtilService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private drc: ChangeDetectorRef,
@@ -44,9 +46,6 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
     this.carregarPerfil = new CarregarPerfil();
   }
 
-  ngAfterContentChecked(): void {
-    this.drc.detectChanges();
-  }
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
@@ -61,10 +60,8 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
     
-    this.contasBancariaService.getAllComboByInstituicaoLogada()
-    .subscribe((contasBancarias: ContasBancaria[]) => {
-      this.contasBancarias = contasBancarias;
-    })
+
+    this.carregarCombos();
 
 
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
@@ -72,6 +69,7 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
       this.isAtualizar = true;
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
+
 
         if (!this.movimentacoes.contaBancaria) {
           this.movimentacoes.contaBancaria = new ContasBancaria();
@@ -85,6 +83,29 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
     }
 
   }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+
+    if(this.movimentacoes.contaBancaria && this.movimentacoes.contaBancaria.id) {
+      this.selecionaContaBancariaOrigem(this.movimentacoes.contaBancaria.id);
+    }
+
+    if(this.movimentacoes.contaBancariaDestino && this.movimentacoes.contaBancariaDestino.id) {
+      this.selecionaContaBancariaDestino(this.movimentacoes.contaBancariaDestino.id);
+    }
+
+  }
+
+  carregarCombos(){
+    this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
+      this.comboContasBancarias = contasBancarias;
+      this.comboContasBancarias.forEach(c => {
+        c.descricaoCompleta = `Banco: ${c.banco.numero} - ${c.banco.nome} - Agência: ${c.numeroAgencia} - Conta: ${c.numeroContaBancaria}`;
+      })
+    });
+  }
+
 
   cadastrar() {
     if(!this.isContasTransferenciaValidas()){ return; }
@@ -150,19 +171,6 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
     return true;
   }
 
-  carregarContaBancaria() {
-    if (this.movimentacoes.contaBancaria && this.movimentacoes.contaBancaria.id) {
-      this.movimentacoes.contaBancaria = _.cloneDeep(_.find(this.contasBancarias,  (c: ContasBancaria) => c.id === this.movimentacoes.contaBancaria.id));
-    }
-  }
-
-  carregarContaBancariaDestino() {
-    if (this.movimentacoes.contaBancariaDestino && this.movimentacoes.contaBancariaDestino.id) {
-      this.movimentacoes.contaBancariaDestino = _.cloneDeep(_.find(this.contasBancarias,  (c: ContasBancaria) => c.id === this.movimentacoes.contaBancariaDestino.id));
-    }
-  }
-
-
   validarValorDocumento(valor) {
     if (valor.includes("-")) {
       this.movimentacoes.valorMovimentacao = null;
@@ -178,4 +186,38 @@ export class CadastrarTransferenciaValoresComponent implements OnInit {
     return true;
   }
 
+
+  selecionaContaBancariaOrigem(idContaBancaria: number) {
+    if(this.comboContasBancarias) {
+      const conta = this.comboContasBancarias.find((item: any) => item.id === idContaBancaria);
+      if (!!conta) {
+        this.onValorContaBancariaOrigemChange(conta);
+      }
+    }
+  }
+  
+  onValorContaBancariaOrigemChange(item) {
+    this.movimentacoes.contaBancaria = item;
+  }
+
+
+  selecionaContaBancariaDestino(idContaBancaria: number) {
+    if(this.comboContasBancarias) {
+      const conta = this.comboContasBancarias.find((item: any) => item.id === idContaBancaria);
+      if (!!conta) {
+        this.onValorContaBancariaDestinoChange(conta);
+      }
+    }
+  }
+  
+  onValorContaBancariaDestinoChange(item) {
+    this.movimentacoes.contaBancariaDestino = item;
+  }
+
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
+  }
+
+  
 }
