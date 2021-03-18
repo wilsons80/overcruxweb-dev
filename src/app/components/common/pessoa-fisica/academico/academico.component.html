@@ -29,34 +29,23 @@
 
 
 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-  <div ngModelGroup="comboPrograma" fxFlexOffset="20px" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" class="marginCombo">
-      <combo-pesquisavel #comboPrograma 
-                          nome="programa" 
-                          [itens]="comboProgramas" 
-                          itemDescricao="nome"
-                          itemId="id"
-                          label="Programa"
-                          placeholder="Escolha..."
-                          [(valor)]="aluno.programa"
-                          (valorChange)="carregarPrograma($event)"
-                          style="margin-top: 10px;">
-      </combo-pesquisavel>
+  <div ngModelGroup="comboPrograma" fxFlex="50%" fxLayoutGap="20px">
+      <mat-toolbar class="titulopartes">Programa</mat-toolbar>
+      <combo-programa [showDisplayId]="false" 
+                      [obrigatorio]="false" 
+                      [selecionado]="aluno.programa"
+                      (valorChange)="onValorChangePrograma($event)">
+      </combo-programa>
   </div>
 
-  <div ngModelGroup="comboProjeto" fxLayout="column" fxFlex="50%" fxLayoutGap="20px" class="marginCombo">
-      <combo-pesquisavel #comboProjeto 
-                          nome="projeto" 
-                          [itens]="comboProjetos" 
-                          itemDescricao="nome"
-                          itemId="id"
-                          label="Projeto"
-                          placeholder="Escolha..."
-                          [(valor)]="aluno.projeto"
-                          (valorChange)="carregarProjeto($event)"
-                          style="margin-top: 10px;">
-      </combo-pesquisavel>
+  <div ngModelGroup="comboProjeto" fxFlex="50%" fxLayoutGap="20px" fxFlexOffset="20px">
+      <mat-toolbar class="titulopartes">Projeto</mat-toolbar>
+      <combo-projeto [showDisplayId]="false" 
+                      [obrigatorio]="false" 
+                      [selecionado]="aluno.projeto"
+                      (valorChange)="onValorChangeProjeto($event)">
+      </combo-projeto>
   </div>
-
 
 </div>
 
@@ -195,3 +184,5 @@
   </mat-form-field>
  
 </div>
+
+aluno.programa: {{aluno.programa | json}}
