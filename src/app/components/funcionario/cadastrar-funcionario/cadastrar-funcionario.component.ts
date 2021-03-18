@@ -135,7 +135,13 @@ export class CadastrarFuncionarioComponent implements OnInit {
     pessoaFisica.celular = pessoaFisica.celular ? this.getApenasNumeros(pessoaFisica.celular.toString()) : null
     pessoaFisica.cpf = pessoaFisica.cpf ? this.getApenasNumeros(pessoaFisica.cpf.toString()) : null
     pessoaFisica.telefoneResidencial = pessoaFisica.telefoneResidencial ? this.getApenasNumeros(pessoaFisica.telefoneResidencial.toString()) : null
-  }  
+
+    pessoaFisica.celular2 = pessoaFisica.celular2 ? this.getApenasNumeros(pessoaFisica.celular2.toString()) : null
+    pessoaFisica.foneRecado = pessoaFisica.foneRecado ? this.getApenasNumeros(pessoaFisica.foneRecado.toString()) : null
+
+  }
+
+
 
   mostrarBotaoLimpar(){
     if(this.isAtualizar) return false;

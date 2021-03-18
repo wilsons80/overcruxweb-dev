@@ -124,10 +124,14 @@ export class CadastrarUsuarioComponent implements OnInit {
   }
 
 
+
   tratarDados() {
     this.usuarioSistema.pessoaFisica.cep = this.usuarioSistema.pessoaFisica.cep ? this.retiraMascara(this.usuarioSistema.pessoaFisica.cep.toString()) : null
     this.usuarioSistema.pessoaFisica.celular = this.usuarioSistema.pessoaFisica.celular ? this.retiraMascara(this.usuarioSistema.pessoaFisica.celular.toString()) : null
     this.usuarioSistema.pessoaFisica.cpf = this.usuarioSistema.pessoaFisica.cpf ? this.retiraMascara(this.usuarioSistema.pessoaFisica.cpf.toString()) : null
     this.usuarioSistema.pessoaFisica.telefoneResidencial = this.usuarioSistema.pessoaFisica.telefoneResidencial ? this.retiraMascara(this.usuarioSistema.pessoaFisica.telefoneResidencial.toString()) : null
-  }
+
+    this.usuarioSistema.pessoaFisica.celular2 = this.usuarioSistema.pessoaFisica.celular2 ? this.retiraMascara(this.usuarioSistema.pessoaFisica.celular2.toString()) : null
+    this.usuarioSistema.pessoaFisica.foneRecado = this.usuarioSistema.pessoaFisica.foneRecado ? this.retiraMascara(this.usuarioSistema.pessoaFisica.foneRecado.toString()) : null
+  }  
 }

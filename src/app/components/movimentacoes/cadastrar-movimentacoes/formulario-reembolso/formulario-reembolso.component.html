@@ -30,6 +30,18 @@
         <span matSuffix *ngIf="reembolso.statusPercentual" style="padding-left: 5px;">%&nbsp;</span>
     </mat-form-field>
 
+    <mat-form-field fxFlex= "170px" fxFlexOffset="20px">
+        <input [(ngModel)]="reembolso.transacao"
+               #descricao
+               name="transacao_{{pinTransacao}}"
+               placeholder="Nr. Transação"
+               matInput maxlength="20"
+               />
+<!--        <mat-hint align="start">{{descricao.value.length}} / 200</mat-hint>    -->
+    </mat-form-field>
+
+
+
     <div fxFlex="10%" style="margin-top: 22px; margin-left: 20px;" >
         <mat-checkbox color="primary"
                       title="Escolha a forma de reembolso entre % ou R$" 

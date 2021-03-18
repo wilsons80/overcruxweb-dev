@@ -23,4 +23,6 @@ export class PagamentosFatura{
 
 	rateioPagamento: RateiosPagamentos[];
 	reembolsos: ReembolsosPagamentos[];
+
+	valorDesconto: number;
 }

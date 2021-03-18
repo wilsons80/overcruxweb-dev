@@ -95,6 +95,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     pagamentosFatura.valorJuros = 0;
     pagamentosFatura.valorMulta = 0;
     pagamentosFatura.valorPagamento = 0;
+
+    pagamentosFatura.valorDesconto = 0;
+    
     Object.assign(pagamentosFatura, this.pagamentosFatura);
 
     this.getObjetosCompletosParaLista(pagamentosFatura);
@@ -161,6 +164,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.pagamentosFatura.valorJuros = 0;
     this.pagamentosFatura.valorMulta = 0;
     this.pagamentosFatura.valorPagamento = 0;
+    this.pagamentosFatura.valorDesconto = 0;
     this.pagamentosFatura.contaBancaria = new ContasBancaria();
     this.pagamentosFatura.reembolsos = [];
     this.pagamentosFatura.rateioPagamento = [];
@@ -195,6 +199,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     pagamentosFatura.valorPagamento = pagamentosFatura.valorPagamento || 0;
     pagamentosFatura.valorJuros     = pagamentosFatura.valorJuros || 0;
     pagamentosFatura.valorMulta     = pagamentosFatura.valorMulta || 0;
+    pagamentosFatura.valorDesconto  = pagamentosFatura.valorDesconto || 0;
   }
 
   getValorTotal() {
@@ -304,8 +309,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.pagamentoInvalido = false;
     if(this.pagamentosFatura.idFatura) {
       const fatura = this.getDadosFatura(this.pagamentosFatura.idFatura);
-      if(Number(this.pagamentosFatura.valorPagamento.toFixed(2)) != Number(fatura.valor.toFixed(2))) {
-        this.pagamentoInvalido = true;
+      if((Number(this.pagamentosFatura.valorPagamento.toFixed(2)) - 
+               Number(this.pagamentosFatura.valorDesconto.toFixed(2))) != Number(fatura.valor.toFixed(2))) {
+        this.pagamentoInvalido = false;
       }
     }else{
       this.pagamentoInvalido = true;

@@ -119,6 +119,13 @@
                                [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
                         <span matPrefix>R$&nbsp;</span>
                     </mat-form-field>
+                    <mat-form-field fxFlex="150px">
+                        <input [(ngModel)]="pagamentosFatura.valorDesconto" 
+                               currencyMask name="valorDesconto"
+                               placeholder="Valor do Desconto:" matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <span matPrefix>R$&nbsp;</span>
+                    </mat-form-field>
                 </div>
 
 

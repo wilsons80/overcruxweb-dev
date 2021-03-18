@@ -93,7 +93,7 @@
 
                 <mat-form-field fxFlex="20%" fxFlexOffset="20px">
                     <mat-label>Tipo de sangue:</mat-label>
-                    <mat-select [(ngModel)]="pessoaFisica.tipoSangue" name="raca">
+                    <mat-select [(ngModel)]="pessoaFisica.tipoSangue" name="tipoSangue">
                         <mat-option *ngFor="let m of tipoSanguineo" [value]="m">
                             {{m}}
                         </mat-option>
@@ -192,12 +192,17 @@
     <div fxLayout="row" fxLayoutGap="30px" fxFlexFill>
         <mat-form-field fxFlex="20%" fxFlexOffset="20px">
             <input matInput [(ngModel)]="pessoaFisica.foneRecado" name="nr_fone_recado"
-                   placeholder="Telefone Recado" [textMask]="{mask: maskPhone}">
+                   placeholder="Telefone Recado" [textMask]="{mask: maskCelular}"
+                   pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
+
         </mat-form-field>
  
         <mat-form-field fxFlex="20%">
-            <input matInput [(ngModel)]="pessoaFisica.celular2" name="nr_fone_celular_2"
-                   placeholder="Celular" [textMask]="{mask: maskPhone}">
+            <input matInput [(ngModel)]="pessoaFisica.celular2" name="nr_fone_celular_2" 
+            placeholder="Celular 2"
+                [textMask]="{mask: maskCelular}"
+                pattern="^(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$">
         </mat-form-field>
+
     </div>
 </div>

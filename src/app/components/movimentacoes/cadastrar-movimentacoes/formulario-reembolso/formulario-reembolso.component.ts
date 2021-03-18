@@ -40,6 +40,7 @@ export class FormularioReembolsoComponent implements OnInit {
   pinDataReembolso  = Date.now();
   pinValorReembolso = Date.now();
   pinDescricao      = Date.now();
+  pinTransacao      = Date.now();
 
   constructor(private toastService: ToastService,
               private dataUtilService: DataUtilService,

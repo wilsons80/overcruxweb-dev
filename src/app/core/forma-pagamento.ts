@@ -3,7 +3,9 @@ export class FormaPagamento {
         {id: 'A', descricao: 'CARTÃO DE CRÉDITO' },
         {id: 'B', descricao: 'DÉBITO EM CONTA CORRENTE' },
         {id: 'C', descricao: 'CHEQUE' },
-        {id: 'D', descricao: 'EM DINHEIRO' }
+        {id: 'D', descricao: 'EM DINHEIRO' }, 
+        {id: 'E', descricao: 'CRÉDITO EM CONTA CORRENTE' } 
+        
      ];
 
 

@@ -104,9 +104,12 @@ export class CadastarAlunoComponent implements OnInit {
 
   tratarDados() {
     this.aluno.pessoaFisica.cep = this.aluno.pessoaFisica.cep ? this.retiraMascara(this.aluno.pessoaFisica.cep.toString()) : null
-    this.aluno.pessoaFisica.celular = this.aluno.pessoaFisica.celular ? this.retiraMascara(this.aluno.pessoaFisica.celular.toString()) : null
     this.aluno.pessoaFisica.cpf = this.aluno.pessoaFisica.cpf ? this.retiraMascara(this.aluno.pessoaFisica.cpf.toString()) : null
+
+    this.aluno.pessoaFisica.celular = this.aluno.pessoaFisica.celular ? this.retiraMascara(this.aluno.pessoaFisica.celular.toString()) : null
     this.aluno.pessoaFisica.telefoneResidencial = this.aluno.pessoaFisica.telefoneResidencial ? this.retiraMascara(this.aluno.pessoaFisica.telefoneResidencial.toString()) : null
+    this.aluno.pessoaFisica.foneRecado = this.aluno.pessoaFisica.foneRecado ? this.retiraMascara(this.aluno.pessoaFisica.foneRecado.toString()) : null
+    this.aluno.pessoaFisica.celular2 = this.aluno.pessoaFisica.celular2 ? this.retiraMascara(this.aluno.pessoaFisica.celular2.toString()) : null
   }
 
   limpar() {

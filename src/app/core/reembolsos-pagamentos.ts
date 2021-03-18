@@ -10,4 +10,5 @@ export class ReembolsosPagamentos{
 	valor: number;
 	usuarioAlteracao: number;
 	contaBancariaDestino:ContasBancaria;
+	transacao: string;
 }
