@@ -18,6 +18,8 @@ import { SharedDirectivesModule } from 'src/app/directives/shared-directives.mod
 import { CadastroEnderecoModule } from '../cadastro-endereco/cadastro-endereco.module';
 import { FormularioEncaminhamentoComponent } from './formulario-encaminhamento/formulario-encaminhamento.component';
 import { ComboPesquisavelModule } from '../combo-pesquisavel/combo-pesquisavel.module';
+import { ComboProgramaModule } from '../combo-programa/combo-programa.module';
+import { ComboProjetoModule } from '../combo-projeto/combo-projeto.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ComboPesquisavelModule } from '../combo-pesquisavel/combo-pesquisavel.m
     NgxCurrencyModule,
     SharedDirectivesModule,
     CadastroEnderecoModule,
-    ComboPesquisavelModule
+    ComboPesquisavelModule,
+    ComboProgramaModule,
+    ComboProjetoModule,
   ],
   exports:[
     DadosPessoaisComponent,

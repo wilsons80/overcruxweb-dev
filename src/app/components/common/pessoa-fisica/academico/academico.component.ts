@@ -119,4 +119,12 @@ export class AcademicoComponent implements OnInit {
   onMascaraDataInput(event) {
     return this.dataUtilService.onMascaraDataInput(event);
   }
+
+  onValorChangePrograma(event: any) {
+    this.aluno.programa = event;
+  }
+
+  onValorChangeProjeto(event: any) {
+    this.aluno.projeto = event;
+  }
 }
