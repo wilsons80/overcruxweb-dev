@@ -309,9 +309,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.pagamentoInvalido = false;
     if(this.pagamentosFatura.idFatura) {
       const fatura = this.getDadosFatura(this.pagamentosFatura.idFatura);
-      if((Number(this.pagamentosFatura.valorPagamento.toFixed(2)) - 
+      if((Number(this.pagamentosFatura.valorPagamento.toFixed(2)) + 
                Number(this.pagamentosFatura.valorDesconto.toFixed(2))) != Number(fatura.valor.toFixed(2))) {
-        this.pagamentoInvalido = false;
+        this.pagamentoInvalido = true;
       }
     }else{
       this.pagamentoInvalido = true;
