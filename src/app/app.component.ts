@@ -35,9 +35,6 @@ export class AppComponent {
     loadingIndicatorService.onLoadingChanged.subscribe(
       isLoading => setTimeout(() => this.toolbarPrincipalService.setLoadingCompleto(!isLoading), 0)
     );
-
-    this.limparCacheToken();
-
   }
 
   ngOnInit(): void {
