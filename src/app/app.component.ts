@@ -29,7 +29,7 @@ export class AppComponent {
   constructor(
     private menuPrincipalService: MenuPrincipalService,
     loadingIndicatorService: LoadingIndicatorService,
-    private toolbarPrincipalService: ToolbarPrincipalService,
+    toolbarPrincipalService: ToolbarPrincipalService,
     private authGuard: AuthGuard,
   ) {
     loadingIndicatorService.onLoadingChanged.subscribe(
