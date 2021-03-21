@@ -28,7 +28,7 @@ export class AppComponent {
 
   constructor(
     private menuPrincipalService: MenuPrincipalService,
-    private loadingIndicatorService: LoadingIndicatorService,
+    loadingIndicatorService: LoadingIndicatorService,
     private toolbarPrincipalService: ToolbarPrincipalService,
     private authGuard: AuthGuard,
   ) {
