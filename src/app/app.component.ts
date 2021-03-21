@@ -1,7 +1,5 @@
-import { AutenticadorService } from './services/autenticador/autenticador.service';
 import { Component, ViewChild, HostListener } from '@angular/core';
 import { LoadingIndicatorService } from 'src/app/services/loadingIndicator/loading-indicator.service';
-import { LoadingPopupService } from './services/loadingPopup/loading-popup.service';
 import { MenuPrincipalService } from './services/menuPrincipal/menu-principal.service';
 import { ToolbarPrincipalService } from './services/toolbarPrincipal/toolbar-principal.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -30,33 +28,26 @@ export class AppComponent {
 
   constructor(
     private menuPrincipalService: MenuPrincipalService,
-    loadingIndicatorService: LoadingIndicatorService,
-    loadingPopupService: LoadingPopupService,
-    public toolbarPrincipalService: ToolbarPrincipalService,
+    private loadingIndicatorService: LoadingIndicatorService,
+    private toolbarPrincipalService: ToolbarPrincipalService,
     private authGuard: AuthGuard,
-    private autenticadorService: AutenticadorService,
   ) {
+    loadingIndicatorService.onLoadingChanged.subscribe(
+      isLoading => setTimeout(() => this.toolbarPrincipalService.setLoadingCompleto(!isLoading), 0)
+    );
 
-    loadingIndicatorService
-      .onLoadingChanged
-      .subscribe(isLoading =>
-        setTimeout(() => this.toolbarPrincipalService.setLoadingCompleto(!isLoading), 0)
-      );
-
+    this.limparCacheToken();
 
   }
 
   ngOnInit(): void {
-
-
     this.authGuard.mostrarMenu.subscribe(resultado => this.mostrarMenu = resultado);
 
     this.menuPrincipalService.toggle.subscribe((resposta) => {
       if (resposta && resposta.logout == true) {
         this.close()
-      } else
-      this.teste = true
-        // this.menuPrincipal.toggle()
+      } 
+      // else this.menuPrincipal.toggle()
     });
   }
 
@@ -64,12 +55,24 @@ export class AppComponent {
     this.menuPrincipal.close();
   }
 
-//   @HostListener('document:keypress', ['$event']) 
-//   onKeydownHandler(event: KeyboardEvent) {
-//     if(this.autenticadorService.usuarioEstaLogado){
-//       this.autenticadorService.refreshToken();
-//     }
-// }
+
+  limparCacheToken() {
+    if(localStorage.getItem('expires_at')) {
+      localStorage.removeItem('expires_at');
+    }
+
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+    }
+
+    if(localStorage.getItem('IDSESSIONUSUARIO')) {
+      localStorage.removeItem('IDSESSIONUSUARIO');
+    }
+  }
 
 
+  ngOnDestroy(): void {
+    this.limparCacheToken();
+  }
+  
 }

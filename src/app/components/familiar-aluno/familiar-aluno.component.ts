@@ -12,6 +12,9 @@ import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.
 import { Acesso } from 'src/app/core/acesso';
 import * as _ from 'lodash';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { ComboFamiliar } from 'src/app/core/combo-familiar';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { LoadingPopupService } from 'src/app/services/loadingPopup/loading-popup.service';
 
 
 @Component({
@@ -23,8 +26,8 @@ export class FamiliarAlunoComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  familiares: Familiares[];
-  familiar: Familiares = new Familiares();
+  comboFamiliares: ComboFamiliar[];
+  familiar: ComboFamiliar = new ComboFamiliar();
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil  = new CarregarPerfil();
@@ -41,6 +44,7 @@ export class FamiliarAlunoComponent implements OnInit {
     private familiarService: FamiliarAlunoService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private loadingPopupService: LoadingPopupService,
     private dialog: MatDialog,
   ) { }
 
@@ -54,25 +58,11 @@ export class FamiliarAlunoComponent implements OnInit {
 
   limpar() {
     this.mostrarTabela = false;
-    this.familiar = new Familiares();
+    this.familiar = new ComboFamiliar();
     this.dataSource.data = [];
   }
 
-  consultar() {
-    if (this.familiar.id) {
-      this.familiarService.getById(this.familiar.id).subscribe((familiar: any) => {
-        if (!familiar || familiar.length === 0) {
-          this.mostrarTabela = false;
-          this.msg = 'Nenhum registro para a pesquisa selecionada';
-        } else {
-          this.dataSource.data = [familiar];
-          this.mostrarTabela = true;
-        }
-      });
-    } else {
-      this.getAll();
-    }
-  }
+  
 
   atualizar(familiar: Familiares) {
     this.router.navigate(['/familiaraluno/cadastrar'], { queryParams: { id: familiar.id } });
@@ -104,18 +94,8 @@ export class FamiliarAlunoComponent implements OnInit {
   }
 
   getAll() {
-    this.familiarService.getAll().subscribe((familiares: Familiares[]) => {
-      this.familiares = familiares;
-
-      this.familiares.forEach(a => a.nome = a.pessoasFisica.nome);
-      this.familiares.sort((a,b) => {
-        if (a.nome > b.nome) {return 1;}
-        if (a.nome < b.nome) {return -1;}
-        return 0;
-      }); 
-
-      this.dataSource.data = familiares ? familiares : [];
-      this.verificaMostrarTabela(familiares);
+    this.familiarService.getAllCombo().subscribe((comboFamiliares: ComboFamiliar[]) => {
+      this.comboFamiliares = comboFamiliares;
     });
   }
 
@@ -145,7 +125,6 @@ export class FamiliarAlunoComponent implements OnInit {
 
   isResponsavelFinanceiro(familiar: Familiares) {
     const hoje = new Date().getTime();
-
     const responsavel = _.find(familiar.responsaveis, (r) =>
                         r.dataDesvinculacao === undefined
                         ||
@@ -170,5 +149,24 @@ export class FamiliarAlunoComponent implements OnInit {
 
     return (responsavel && responsavel.transportaAluno) ? 'Sim' : 'Não';
   }
+
+
+  consultar() {
+    if(this.familiar?.id) {
+      this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
+      this.familiarService.getById(this.familiar.id).subscribe( 
+        (familiar: Familiares) => {
+          this.loadingPopupService.closeDialog();
+          this.dataSource.data = familiar ? [familiar] : [];
+          this.verificaMostrarTabela([familiar]);
+        },
+        (error) => {
+          this.loadingPopupService.closeDialog();
+        }); 
+    } else {
+      this.verificaMostrarTabela(null);
+    }
+  }
+
 
 }

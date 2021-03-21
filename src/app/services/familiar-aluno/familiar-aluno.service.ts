@@ -15,6 +15,10 @@ export class FamiliarAlunoService extends BaseService<Familiares> {
   }
 
 
+  getAllCombo() {
+    return this.http.get(`${Rotas.FAMILIARES}combo`);
+  }
+
   getFamiliaresPorAluno(id: number) {
     return this.http.get(`${Rotas.FAMILIARES}aluno/${id}`);
   }

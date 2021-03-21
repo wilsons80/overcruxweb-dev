@@ -8,7 +8,7 @@
                 <div ngModelGroup="comboFamiliar" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="40px">
                     <combo-pesquisavel #comboFamiliar 
                                        nome="familiar" 
-                                       [itens]="familiares" 
+                                       [itens]="comboFamiliares" 
                                        itemDescricao="nome"
                                        itemId="id"
                                        [showDisplayId]="false" 
@@ -81,7 +81,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div [hidden]="!mostrarTabela">
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[40, 60, 80, 100, 200 ]" showFirstLastButtons></mat-paginator>
         </div>
         <ng-template #tabelaSemDados>
             <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
