@@ -43,13 +43,14 @@
 
 
     <div fxFlex="10%" style="margin-top: 22px; margin-left: 20px;" >
+ <!--
         <mat-checkbox color="primary"
                       title="Escolha a forma de reembolso entre % ou R$" 
                       name="checkReembolso_{{pinCheckReembolso}}" 
                       [(ngModel)]="reembolso.statusPercentual">
             (%)
         </mat-checkbox>
-    
+-->    
         <button mat-icon-button 
                 *ngIf="perfilAcesso.deleta" 
                 (click)="deletar()"
