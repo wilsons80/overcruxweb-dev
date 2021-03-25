@@ -42,7 +42,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
   maxDataPagamento = new Date();
   formasPagamento: FormaPagamento = new FormaPagamento();
 
-  displayedColumns: string[] = ['fatura', 'formaPagamento', 'dataPagamento', 'valorPagamento', 'acoes'];
+  displayedColumns: string[] = ['fatura', 'formaPagamento', 'dataPagamento', 'valorPagamento','valorDesconto', 'acoes'];
   dataSource: MatTableDataSource<PagamentosFatura> = new MatTableDataSource();
 
   pagamentosFatura: PagamentosFatura;
@@ -206,6 +206,7 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.valoresSuperiorValorMovimento = false;
     if(this.movimentacoes.pagamentosFatura && this.movimentacoes.pagamentosFatura.length > 0) {
       const valorTotal = this.movimentacoes.pagamentosFatura.map(v => v.valorPagamento).reduce( (valor, total) => total += valor) 
+                          + this.movimentacoes.pagamentosFatura.map(v => v.valorDesconto).reduce( (valor, total) => total += valor) 
       if(Number(valorTotal.toFixed(2)) != Number(this.movimentacoes.valorMovimentacao.toFixed(2))) {
         this.valoresSuperiorValorMovimento = true;
       }      
@@ -309,10 +310,9 @@ export class PagamentosMovimentacaoComponent implements OnInit {
     this.pagamentoInvalido = false;
     if(this.pagamentosFatura.idFatura) {
       const fatura = this.getDadosFatura(this.pagamentosFatura.idFatura);
-      if((Number(this.pagamentosFatura.valorPagamento.toFixed(2)) + 
-               Number(this.pagamentosFatura.valorDesconto.toFixed(2))) != Number(fatura.valor.toFixed(2))) {
-        this.pagamentoInvalido = true;
-      }
+      if( ( Number(this.pagamentosFatura.valorPagamento + this.pagamentosFatura.valorDesconto).toFixed(2) ) 
+        != Number(fatura.valor).toFixed(2) ) {
+        this.pagamentoInvalido = true; }
     }else{
       this.pagamentoInvalido = true;
     }
