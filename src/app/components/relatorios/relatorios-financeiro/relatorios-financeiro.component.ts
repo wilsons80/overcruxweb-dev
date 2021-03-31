@@ -100,6 +100,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   ];
   tipoRelatorioSelecionado: TipoRelatorio;
 
+  valorTotalMovimentos: number;
 
   constructor(
     private toastService: ToastService,
@@ -212,6 +213,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   consultar() {
     this.prepararBusca();    
 
+    this.valorTotalMovimentos = 0;
     this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
     this.servicoBusca$
     .subscribe(
@@ -220,6 +222,12 @@ export class RelatoriosFinanceiroComponent implements OnInit {
         this.dadosDataSource = dados;
       
         this.dataSource.data = dados ? dados : [];
+
+        if(this.isRelatorioNormativaPagamento()){
+          this.dadosDataSource.forEach(mov => {
+            this.valorTotalMovimentos = this.valorTotalMovimentos + mov.valorMovimentacao;
+          });
+        }
         
         this.selection.clear();
         this.dataSource.data.forEach(row => this.selection.select(row))
@@ -406,4 +414,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     return this.tipoRelatorioSelecionado.tipo === 'NP'
   }
 
+  isRelatorioNormativaPagamento(): boolean {
+    return this.tipoRelatorioSelecionado.tipo === 'NP'
+  }
 }
