@@ -38,7 +38,8 @@
                         <div style="margin-top: 25px;">
                             <mat-checkbox  name="rubricaAdicional" [(ngModel)]="filtro.rubricaAdicional">Rubrica adicional</mat-checkbox>
                         </div>
-                    </div>                    
+                    </div>  
+                    
                 </div> 
 
                 <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill *ngIf="showFiltroContaBancaria()">
@@ -151,6 +152,9 @@
 
                 </div>
     
+                <div  [fxHide]="!isRelatorioNormativaPagamento() || !mostrarTabela" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                    <span fxFlexOffset="20px" style="font-weight: bold;">Valor Total Movimentação:</span> {{valorTotalMovimentos | currency: 'BRL'}}
+                </div>
     
                 <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                     <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" 
