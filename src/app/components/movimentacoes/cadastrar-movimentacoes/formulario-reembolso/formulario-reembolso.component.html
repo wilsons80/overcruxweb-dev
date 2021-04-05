@@ -5,7 +5,6 @@
                matInput 
                #campoDataReembolso
                name="dataReembolso_{{pinDataReembolso}}"
-               [min]="pagamentosFatura.dataPagamento"
                [required]="reembolso.contaBancaria.id"
                [matDatepicker]="dataReembolso"
                placeholder="Data do reembolso" 
@@ -13,7 +12,6 @@
                >
         <mat-datepicker-toggle matSuffix [for]="dataReembolso"></mat-datepicker-toggle>
         <mat-datepicker #dataReembolso></mat-datepicker>
-        <mat-error *ngIf="campoDataReembolso.value">A data deve ser maior ou igual a data do pagamento</mat-error>
     </mat-form-field>
 
     <!-- VALOR -->
