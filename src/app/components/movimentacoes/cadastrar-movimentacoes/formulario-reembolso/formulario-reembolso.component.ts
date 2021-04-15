@@ -92,8 +92,8 @@ export class FormularioReembolsoComponent implements OnInit {
       }
     }
 
-
-    const contaReembolsoConflitante = this.pagamentosFatura.reembolsos
+/*
+/    const contaReembolsoConflitante = this.pagamentosFatura.reembolsos
                                                            .filter(r => r.contaBancaria.id === this.reembolso.contaBancaria.id);
     if(contaReembolsoConflitante && contaReembolsoConflitante.length > 1) {
       this.toastService.showAlerta('Essa conta de reembolso já está cadastrada para esse pagamento.');
@@ -101,7 +101,7 @@ export class FormularioReembolsoComponent implements OnInit {
       return;
     }
 
-
+*/
     this.onContaReembolsoValida.emit(true);
   }
 
