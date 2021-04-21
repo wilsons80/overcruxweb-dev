@@ -15,11 +15,13 @@ import { PessoaFisica } from 'src/app/core/pessoa-fisica';
 import { startWith, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ComboAluno } from 'src/app/core/combo-aluno';
+import { DataSimplesPipe } from 'src/app/pipes/data-simples.pipe';
 
 @Component({
   selector: 'app-escolha-familiar',
   templateUrl: './escolha-familiar.component.html',
-  styleUrls: ['./escolha-familiar.component.css']
+  styleUrls: ['./escolha-familiar.component.css'],
+  providers: [DataSimplesPipe],
 })
 export class EscolhaFamiliarComponent implements OnInit {
 
@@ -49,6 +51,7 @@ export class EscolhaFamiliarComponent implements OnInit {
               private toastService: ToastService,
               private route: ActivatedRoute,
               private location: Location,
+              private dataSimplesPipe: DataSimplesPipe,
               private arquivoPessoaFisicaService: ArquivoPessoaFisicaService,
               private fileUtils: FileUtils,
               private familiarAlunoService: FamiliarAlunoService
@@ -65,7 +68,10 @@ export class EscolhaFamiliarComponent implements OnInit {
       this.comboAluno = alunos;
       this.preencherNomeAluno();
 
-      this.comboAluno.forEach(a => a.nome = a.nome);
+      this.comboAluno.forEach(a => {
+        a.descricaoCombo = a.nome + ' - Data entrada: ' + (a.dataEntrada ? this.dataSimplesPipe.transform(a.dataEntrada) : '') + ' - Data saída: ' +  (a.dataDesligamento ? this.dataSimplesPipe.transform(a.dataDesligamento) : '') 
+      });
+
       this.comboAluno.sort((a,b) => {
         if (a.nome > b.nome) {return 1;}
         if (a.nome < b.nome) {return -1;}
