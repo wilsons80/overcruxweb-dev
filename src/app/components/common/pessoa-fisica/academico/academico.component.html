@@ -124,9 +124,18 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="35%" fxFlexOffset="20px">
+  <mat-form-field fxFlex="30%" fxFlexOffset="20px">
     <mat-label>Pais do beneficiário são casados ?</mat-label>
     <mat-select [(ngModel)]="aluno.paisCasados" name="paisCasados">
+      <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
+        {{m.tipo}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="30%" fxFlexOffset="20px">
+    <mat-label>Pode participar de apresentações externas ?</mat-label>
+    <mat-select [(ngModel)]="aluno.participaApresentacaoExterna" name="participaApresentacaoExterna">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
         {{m.tipo}}
       </mat-option>

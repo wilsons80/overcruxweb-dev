@@ -52,7 +52,7 @@ export class Aluno {
 	dataDeclaracaoPasse: Date;
 	observacaoDeclaracaoMatricula: string;
 	dataDeclaracaoMatricula: Date;
-	participaApresentacaoExterna: boolean;
+	participaApresentacaoExterna: string;
 
 
 	nome?: string;
