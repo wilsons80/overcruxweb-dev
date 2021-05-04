@@ -134,7 +134,7 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="30%" fxFlexOffset="20px">
-    <mat-label>Pode participar de apresentações externas ?</mat-label>
+    <mat-label>Pode participar de apresentações externas e publicidades em geral ?</mat-label>
     <mat-select [(ngModel)]="aluno.participaApresentacaoExterna" name="participaApresentacaoExterna">
       <mat-option *ngFor="let m of sim_nao" [value]="m.flag">
         {{m.tipo}}
