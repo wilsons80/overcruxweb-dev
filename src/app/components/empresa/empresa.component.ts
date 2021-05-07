@@ -10,6 +10,9 @@ import { Acesso } from 'src/app/core/acesso';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { FilterEmpresa } from 'src/app/core/filter-empresa';
+import { ComboEmpresa } from 'src/app/core/combo-empresa';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'empresa',
@@ -25,9 +28,10 @@ export class EmpresaComponent implements OnInit {
 
   empresas: Empresa[];
   mostrarTabela = false;
-  empresa: Empresa = new Empresa();
   msg: string;
+  campoPesquisavelCnpj = 'cnpj';
 
+  filtroEmpresa: FilterEmpresa;
 
   displayedColumns: string[] = ['codigo', 'nomeRazaoSocial', 'cnpj', 'telefone', 'ativa', 'acoes'];
 
@@ -47,21 +51,26 @@ export class EmpresaComponent implements OnInit {
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
 
+    this.initFilter();
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
   }
 
+  initFilter(){
+    this.filtroEmpresa = new FilterEmpresa();
+    this.filtroEmpresa.empresa = new ComboEmpresa();
+  }
 
   limpar() {
     this.mostrarTabela = false;
-    this.empresa = new Empresa()
     this.dataSource.data = [];
+    this.initFilter();
   }
 
   consultar() {
-    if (this.empresa.id) {
-      this.empresaService.getById(this.empresa.id).subscribe((empresa: Empresa) => {
+    if (this.filtroEmpresa.empresa.id) {
+      this.empresaService.getById(this.filtroEmpresa.empresa.id).subscribe((empresa: Empresa) => {
         if (!empresa) {
           this.mostrarTabela = false
           this.msg = "Nenhum registro para a pesquisa selecionada"
@@ -96,7 +105,6 @@ export class EmpresaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirma => {
       if (confirma) {
         this.empresaService.excluir(empresa.id).subscribe(() => {
-          this.empresa.id = null;
           this.consultar();
         })
       } else {
@@ -128,4 +136,18 @@ export class EmpresaComponent implements OnInit {
   go() {
     this.router.navigateByUrl(`/${this.rotaCadastrar}`);
   };
+
+
+  onValorChangeEmpresa(registro: any) {
+    if (registro) {
+      this.filtroEmpresa = registro;
+      this.mostrarDadosEmpresa(registro.id);
+    } else {
+      this.initFilter();
+    }
+  }
+
+  mostrarDadosEmpresa(id: number) {
+    this.filtroEmpresa.empresa = _.find(this.empresas, { id: id });
+  }
 }

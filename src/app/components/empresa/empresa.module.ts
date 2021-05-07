@@ -12,17 +12,26 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { CadastrarParceirasComponent } from './parceiras/cadastrar-parceiras/cadastrar-parceiras.component';
 import { CadastrarFornecedorasComponent } from './fornecedoras/cadastrar-fornecedoras/cadastrar-fornecedoras.component';
 import { CadastrarClientesComponent } from './clientes/cadastrar-clientes/cadastrar-clientes.component';
+import { ComboEmpresaModule } from '../common/combo-empresa/combo-empresa.module';
 
 
 
 @NgModule({
-  declarations: [EmpresaComponent, CadastrarEmpresaComponent, ParceirasComponent, FornecedorasComponent, ClientesComponent, CadastrarParceirasComponent, CadastrarFornecedorasComponent, CadastrarClientesComponent],
+  declarations: [EmpresaComponent, 
+                 CadastrarEmpresaComponent, 
+                 ParceirasComponent, 
+                 FornecedorasComponent, 
+                 ClientesComponent, 
+                 CadastrarParceirasComponent, 
+                 CadastrarFornecedorasComponent, 
+                 CadastrarClientesComponent],
   imports: [
     CommonModule,
     EmpresaRoutingModule,
     MaterialCommonModule,
     SharedDirectivesModule,
-    CadastroEnderecoModule
+    CadastroEnderecoModule,
+    ComboEmpresaModule
   ]
 })
 export class EmpresaModule { }

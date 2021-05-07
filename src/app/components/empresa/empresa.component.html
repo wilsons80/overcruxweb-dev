@@ -2,20 +2,36 @@
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultarDepartamento="ngForm">
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                        <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione uma empresa</mat-label>
-                    <mat-select fxFlexOffset="20px" [(ngModel)]="empresa" name="unidade">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of empresas" [value]="d">
-                            {{d.nomeFantasia}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-toolbar class="titulopartes">Nome empresa</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <div ngModelGroup="comboEmpresa" 
+                         fxLayoutGap="50px" 
+                         style="margin-top: 10px; margin-bottom: 10px"
+                         fxFlexFill>
+                        <combo-empresa  [selecionado]="filtroEmpresa.empresa"
+                                        [tipoEmpresa]="tipo"
+                                        (valorChange)="onValorChangeEmpresa($event)">
+                        </combo-empresa>
+                    </div>
+                </div> 
             </div>
 
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <mat-toolbar class="titulopartes">CNPJ Empresa</mat-toolbar>
+                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+                    <div ngModelGroup="comboCnpjEmpresa" 
+                         fxLayoutGap="50px" 
+                         style="margin-top: 10px; margin-bottom: 10px"
+                         fxFlexFill>
+                        <combo-empresa  [selecionado]="filtroEmpresa.empresa"
+                                        [tipoEmpresa]="tipo"
+                                        [campoPesquisavel]="campoPesquisavelCnpj"
+                                        (valorChange)="onValorChangeEmpresa($event)">
+                        </combo-empresa>
+                    </div>
+                </div> 
+            </div>
 
             <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
                 fxFlexFill>

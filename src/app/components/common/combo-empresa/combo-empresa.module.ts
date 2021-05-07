@@ -4,6 +4,7 @@ import { MaterialCommonModule } from 'src/app/material-modules/material-common.m
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ComboPesquisavelModule } from '../combo-pesquisavel/combo-pesquisavel.module';
 import { ComboEmpresaComponent } from './combo-empresa.component';
+import { SharedPipesModule } from 'src/app/pipes/shared-pipes.module';
 
 
 
@@ -12,6 +13,7 @@ import { ComboEmpresaComponent } from './combo-empresa.component';
   imports: [
     CommonModule,
     MaterialCommonModule,
+    SharedPipesModule,
     MatExpansionModule,
     ComboPesquisavelModule
   ],

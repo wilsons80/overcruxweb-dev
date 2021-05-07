@@ -2,7 +2,7 @@
     <combo-pesquisavel #comboEmpresa 
                        nome="empresa-{{data}}" 
                        [itens]="dados" 
-                       itemDescricao="nomeRazaoSocial"
+                       [itemDescricao]="campoPesquisavel"
                        itemId="id"
                        [showDisplayId]="showDisplayId" 
                        label="{{label}}"

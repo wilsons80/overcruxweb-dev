@@ -71,9 +71,9 @@
             <div ngModelGroup="comboEmpresa" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px"
                 fxFlexFill>
                 <combo-empresa    [showDisplayId]="true" 
-                                        [obrigatorio]="!fornecedor.pessoasFisica.id" 
-                                        [selecionado]="filtroEmpresa.empresa"
-                                        (valorChange)="onValorChangeEmpresa($event)">
+                                  [obrigatorio]="!fornecedor.pessoasFisica.id" 
+                                  [selecionado]="filtroEmpresa.empresa"
+                                  (valorChange)="onValorChangeEmpresa($event)">
                 </combo-empresa>
             </div>
         </div> 
