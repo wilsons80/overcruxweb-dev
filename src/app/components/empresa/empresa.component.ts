@@ -33,7 +33,7 @@ export class EmpresaComponent implements OnInit {
 
   filtroEmpresa: FilterEmpresa;
 
-  displayedColumns: string[] = ['codigo', 'nomeRazaoSocial', 'cnpj', 'telefone', 'ativa', 'acoes'];
+  displayedColumns: string[] = ['nomeRazaoSocial', 'cnpj', 'telefone', 'ativa', 'acoes'];
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil  = new CarregarPerfil();
