@@ -236,17 +236,19 @@ export class CategoriasMovimentosComponent implements OnInit {
 
   validarValor() {
     this.valorCategoriaInvalido = false;
-    if(this.categoriaMovimento.id) {
-      const fatura = this.getDadosCategoriaMovimento(this.categoriaMovimento.id);
-      if( ( Number(this.categoriaMovimento.valor).toFixed(2) ) != Number(fatura.valor).toFixed(2) ) {
-        this.valorCategoriaInvalido = true; 
+
+    if(this.movimentacoes.categoriasMovimentos && this.movimentacoes.categoriasMovimentos.length > 0) {
+      const valorTotal = this.movimentacoes.categoriasMovimentos.map(v => v.valor).reduce( (valor, total) => total += valor) 
+      if(Number(valorTotal.toFixed(2)) != Number(this.movimentacoes.valorMovimentacao.toFixed(2))) {
+        this.valorCategoriaInvalido = true;
       }
-    }else{
-      this.valorCategoriaInvalido = true;
+      this.onCategoriaMovimentoInvalido.emit(this.valorCategoriaInvalido);
+      return Number(valorTotal.toFixed(2));
     }
 
     this.onCategoriaMovimentoInvalido.emit(this.valorCategoriaInvalido);
   }
+
 
   selecionaRubrica(id: number) {
     if(this.planosContas) {
