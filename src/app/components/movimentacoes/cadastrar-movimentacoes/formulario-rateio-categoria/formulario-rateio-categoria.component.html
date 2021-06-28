@@ -1,0 +1,36 @@
+<div ngModelGroup="cbPrograma" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+    <combo-programa [showDisplayId]="false" #campoPrograma
+                    [obrigatorio]="!rateio.projeto.id" 
+                    [selecionado]="filtro.programa"
+                    (valorChange)="onValorChangePrograma($event)">
+    </combo-programa>
+</div>
+
+<div ngModelGroup="cbProjeto" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+    <combo-projeto [showDisplayId]="false" #campoProjeto
+                   [obrigatorio]="!rateio.programa.id" 
+                   [selecionado]="filtro.projeto"
+                   (valorChange)="onValorChangeProjeto($event)">
+    </combo-projeto>
+</div>
+
+
+<mat-form-field fxFlex fxFlexOffset="20px">
+    <input [(ngModel)]=rateio.valorRateio 
+           currencyMask 
+           name="valor_{{pinValor}}"
+           placeholder={{rateio.placeHolderRateio}}
+           matInput 
+           maxlength="13"
+           [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+    <span matPrefix>R$&nbsp;</span>    
+</mat-form-field> 
+
+<div fxFlex="10%" style="margin-top: 18px;margin-left: 26px;" >
+    <button mat-icon-button 
+            *ngIf="perfilAcesso.deleta" 
+            (click)="deletarRateio()"
+            style="padding: 0px;">
+        <mat-icon>delete_forever</mat-icon>
+    </button>                                
+</div>

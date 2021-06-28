@@ -42,6 +42,26 @@
             </div>
         </mat-step>
 
+        <!-- ------------------ ATIVO / PASSIVO  ------------------------ -->
+        <mat-step style="padding-bottom: 20px" [stepControl]="formAtivoPassivo" >
+            <form #formAtivoPassivo="ngForm">
+                <ng-template matStepLabel>ATIVO/PASSIVO</ng-template>
+                <categorias-movimentos [movimentacoes]="movimentacoes"
+                                       [perfilAcesso]="perfilAcesso"
+                                       (onCategoriaMovimentoInvalido)="getValorTotalCategoriasMovimentosInvalidos($event)">
+                </categorias-movimentos>
+            </form>
+            <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
+                fxFlexFill>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperNext>
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+                <button mat-mini-fab name="botaoConfirmar" color="primary" matStepperPrevious>
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </div>
+        </mat-step>
+        
         <!-- ------------------ FATURAS ------------------------ -->
         <mat-step style="padding-bottom: 20px" [stepControl]="formFaturas">
             <form #formFaturas="ngForm">

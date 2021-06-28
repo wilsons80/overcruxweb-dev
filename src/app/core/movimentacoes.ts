@@ -12,6 +12,7 @@ import { RateiosMovimentacoesUnidades } from './rateios-movimentacoes-unidades';
 import { Doadores } from './doadores';
 import { TributoMovimentacao } from './tributo-movimentacao';
 import { PessoaFisica } from './pessoa-fisica';
+import { CategoriasMovimentos } from './categorias-movimentos';
 
 export class Movimentacoes{
     id:number;
@@ -30,6 +31,7 @@ export class Movimentacoes{
 	pagamentosFatura:PagamentosFatura[];
 	rateios: RateiosMovimentacoes[];
 	rateiosUnidades: RateiosMovimentacoesUnidades[];
+	categoriasMovimentos: CategoriasMovimentos[];
 
 	contaBancaria: ContasBancaria;
 	contaBancariaDestino: ContasBancaria;

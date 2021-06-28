@@ -21,6 +21,8 @@ import { TableRateiosProgramaProjetoComponent } from './table-rateios-programa-p
 import { QtdServicosPendentesComponent } from './qtd-servicos-pendentes-cell/qtd-servicos-pendentes-cell.component';
 import { ComboProgramaModule } from '../common/combo-programa/combo-programa.module';
 import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module';
+import { FormularioRateioCategoriaComponent } from './cadastrar-movimentacoes/formulario-rateio-categoria/formulario-rateio-categoria.component';
+import { CategoriasMovimentosComponent } from './cadastrar-movimentacoes/categorias-movimentos/categorias-movimentos.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module
                  FormularioRateioPagamentoComponent, 
                  FormularioTributoComponent, 
                  TableRateiosProgramaProjetoComponent,
-                 QtdServicosPendentesComponent],
+                 QtdServicosPendentesComponent,
+                 CategoriasMovimentosComponent,
+                 FormularioRateioCategoriaComponent],
   imports: [
     CommonModule,
     MovimentacoesRoutingModule,

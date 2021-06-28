@@ -39,6 +39,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   mostrarBotaoCadastrar = true;
   mostrarBotaoAtualizar = true;
 
+  isValorTotalCategoriasMovimentosInvalido  = false;
   isValorTotalItensInvalido  = false;
   isValorTotalFaturaInvalido = false;
   isPagamentoInvalido        = false;
@@ -97,7 +98,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
       this.isAtualizar = true;
       this.movimentacoesService.getById(id).subscribe((movimentacoes: Movimentacoes) => {
         this.movimentacoes = movimentacoes;
-        
+                
         BroadcastEventService.get('ON_CARREGAR_COMBO_PESQUISAVEL').emit(this.movimentacoes);
 
         if (!this.movimentacoes.contaBancaria) {
@@ -184,6 +185,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
     this.movimentacoes.rateios = []
     this.movimentacoes.rateiosUnidades = [];
     this.movimentacoes.itensMovimentacoes = [];
+    this.movimentacoes.categoriasMovimentos = [];
     this.movimentacoes.faturas = [];
     this.movimentacoes.pagamentosFatura = [];
     this.movimentacoes.contaBancaria = new ContasBancaria();
@@ -299,6 +301,9 @@ export class CadastrarMovimentacoesComponent implements OnInit {
    
   }
 
+  getValorTotalCategoriasMovimentosInvalidos(valor: boolean) {
+    this.isValorTotalCategoriasMovimentosInvalido = valor;
+  }
 
   getValorTotalItensInvalidos(valor: boolean) {
     this.isValorTotalItensInvalido = valor;
@@ -311,7 +316,7 @@ export class CadastrarMovimentacoesComponent implements OnInit {
   }
 
   isDesabilitaBotao(): boolean {
-    return this.isValorTotalItensInvalido || this.isValorTotalFaturaInvalido || this.isPagamentoInvalido;
+    return this.isValorTotalCategoriasMovimentosInvalido || this.isValorTotalItensInvalido || this.isValorTotalFaturaInvalido || this.isPagamentoInvalido;
   }
 
   getLabelABA(){
