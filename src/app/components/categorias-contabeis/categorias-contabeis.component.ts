@@ -60,10 +60,11 @@ export class CategoriasContabeisComponent implements OnInit {
     this.mostrarTabela = false;
     this.categoriasContabeis = new CategoriasContabeis()
     this.dataSource.data = [];
+    this.selecionado = null;
   }
 
   consultar() {
-    if (this.selecionado.id) {
+    if (this.selecionado && this.selecionado.id) {
       this.categoriasContabeisService.getById(this.selecionado.id).subscribe((categoriasContabeis: CategoriasContabeis) => {
         if (!categoriasContabeis) {
           this.mostrarTabela = false
@@ -101,6 +102,7 @@ export class CategoriasContabeisComponent implements OnInit {
       if (confirma) {
         this.categoriasContabeisService.excluir(categoriasContabeis.id).subscribe(() => {
           this.categoriasContabeis.id = null;
+          this.limpar();
           this.consultar();
         })
 
@@ -137,7 +139,7 @@ export class CategoriasContabeisComponent implements OnInit {
 
 
   getHierarquiaPlanoContabil(id) {
-    if(id) {
+    if(id && this.listaPlanosContas) {
       const plano:any = this.listaPlanosContas.find(l => l.id === id);
       return plano ? plano.planoConta : '';
     }
