@@ -47,7 +47,7 @@
             </div>
         </form>
 
-        <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
+        <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 20px">
             <div>
                 <button matTooltip="Adicionar nova rubrica" mat-fab color="primary"
                     [routerLink]="['/planoscontascontabeis/cadastrar']" routerLinkActive="router-link-active">
@@ -55,7 +55,7 @@
                 </button>
             </div>
         </div>
-        
+
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
             <ng-container matColumnDef="tipo" style="width: 20%">
