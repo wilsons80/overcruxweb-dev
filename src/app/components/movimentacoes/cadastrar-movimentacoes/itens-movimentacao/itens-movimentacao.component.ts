@@ -136,7 +136,7 @@ export class ItensMovimentacaoComponent implements OnInit {
     //if (changes["movimentacoes.itensMovimentacoes"] && changes["movimentacoes.itensMovimentacoes"].currentValue) {
       this.carregarLista();
     //}
-  }
+ }
 
   adicionar() {
     const contasCentrosCustoSelecionada = new ItensMovimentacoes();
@@ -191,8 +191,8 @@ export class ItensMovimentacaoComponent implements OnInit {
 
   initObjetos() {
     this.itensMovimentacoes = new ItensMovimentacoes();
-    this.itensMovimentacoes.categoria = new CategoriasContabeis();
-    this.itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
+    this.itensMovimentacoes.categoria = new PlanosContas();
+    this.itensMovimentacoes.categoriaAdicional = new PlanosContas();
     this.itensMovimentacoes.material = new Material();
     this.itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
     this.itensMovimentacoes.quantidadeMaterial = 0;
@@ -224,6 +224,9 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.itensMovimentacoes = itensMovimentacoes;
     this.openFormCadastro = true;
     this.isAtualizar = true;
+
+    this.carregarContaContabil(itensMovimentacoes.categoria.id);
+    this.carregarContaContabilAdicional(itensMovimentacoes.categoriaAdicional.id);
   }
 
   preencherObjetosVazios(itensMovimentacoes: ItensMovimentacoes){
@@ -256,18 +259,18 @@ export class ItensMovimentacaoComponent implements OnInit {
     return 0;
   }
 
-  carregarContaContabil(event){
-    if (event) {
-      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
+  carregarContaContabil(id){
+    if (id) {
+      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === id));
     } else {
-      this.itensMovimentacoes.categoria = new CategoriasContabeis();
+      this.itensMovimentacoes.categoria = new PlanosContas();
     }
   }
-  carregarContaContabilAdicional(event){
-    if (event) {
-      this.itensMovimentacoes.categoriaAdicional = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
+  carregarContaContabilAdicional(id){
+    if (id) {
+      this.itensMovimentacoes.categoriaAdicional = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === id));
     } else {
-      this.itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
+      this.itensMovimentacoes.categoriaAdicional = new PlanosContas();
     }
   }
 

@@ -20,7 +20,7 @@
                                        [obrigatorio]="true"
                                        placeholder="Escolha..."
                                        [(valor)]="itensMovimentacoes.categoria"
-                                       (valorChange)="carregarContaContabil($event)"
+                                       (valorChange)="carregarContaContabil($event.id)"
                                        style="margin-top: 10px;">
                     </combo-pesquisavel>
                 </div> 
@@ -55,7 +55,7 @@
                                        [obrigatorio]="false"
                                        placeholder="Escolha..."
                                        [(valor)]="itensMovimentacoes.categoriaAdicional"
-                                       (valorChange)="carregarContaContabilAdicional($event)"
+                                       (valorChange)="carregarContaContabilAdicional($event.id)"
                                        style="margin-top: 10px;">
                     </combo-pesquisavel>
                 </div> 
