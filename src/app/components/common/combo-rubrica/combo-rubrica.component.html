@@ -1,0 +1,16 @@
+<div ngModelGroup="comboRubrica-{{data}}" fxFlex="100" fxLayoutGap="20px" fxFlexOffset="20px">
+    <combo-pesquisavel #comboRubrica
+                       nome="rubrica-{{data}}" 
+                       [itens]="dados" 
+                       [label]="label"
+                       itemDescricao="planoConta"
+                       itemId="id"
+                       [showDisplayId]="showDisplayId" 
+                       [obrigatorio]="obrigatorio"
+                       [desabilitado]="desabilitado"
+                       [placeholder]="placeholder"
+                       [(valor)]="selecionado"
+                       (valorChange)="onValorChange($event)">
+    </combo-pesquisavel>
+</div>
+

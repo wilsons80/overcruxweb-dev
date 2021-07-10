@@ -23,6 +23,7 @@ import { ComboProgramaModule } from '../common/combo-programa/combo-programa.mod
 import { ComboProjetoModule } from '../common/combo-projeto/combo-projeto.module';
 import { FormularioRateioCategoriaComponent } from './cadastrar-movimentacoes/formulario-rateio-categoria/formulario-rateio-categoria.component';
 import { CategoriasMovimentosComponent } from './cadastrar-movimentacoes/categorias-movimentos/categorias-movimentos.component';
+import { ComboRubricaModule } from '../common/combo-rubrica/combo-rubrica.module';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { CategoriasMovimentosComponent } from './cadastrar-movimentacoes/categor
     ComboPesquisavelModule,
     ComboProgramaModule,
     ComboProjetoModule,
+    ComboRubricaModule
   ]
 })
 export class MovimentacoesModule { }

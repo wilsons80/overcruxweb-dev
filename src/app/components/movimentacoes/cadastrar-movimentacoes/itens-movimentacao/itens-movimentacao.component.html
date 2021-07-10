@@ -6,23 +6,17 @@
                 <mat-panel-title>Dados do Item</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <!-- DADOS INICIAIS -->
             <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill>
-                <div ngModelGroup="comboRubrica" 
-                     fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
-                    <combo-pesquisavel #comboRubrica 
-                                       nome="rubrica" 
-                                       [itens]="planosContas" 
-                                       itemDescricao="planoConta"
-                                       itemId="id"
-                                       label="Rubrica"
-                                       [obrigatorio]="true"
-                                       placeholder="Escolha..."
-                                       [(valor)]="itensMovimentacoes.categoria"
-                                       (valorChange)="carregarContaContabil($event.id)"
-                                       style="margin-top: 10px;">
-                    </combo-pesquisavel>
+                <div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
+                    <combo-rubrica  [showDisplayId]="false"
+                                    [obrigatorio]="true"
+                                    [hasSintetica]="false"
+                                    [selecionado]="itensMovimentacoes.categoria"
+                                    (valorChange)="carregarContaContabil($event)"
+                                    [label]="placeHolderRubrica"
+                                    [placeholder]="placeHolderRubrica">
+                    </combo-rubrica>
                 </div> 
             </div> 
 
@@ -39,25 +33,20 @@
                                        placeholder="Escolha..."
                                        [(valor)]="itensMovimentacoes.pedidosMateriais"
                                        style="margin-top: 10px;">
-                    </combo-pesquisavel>
+                    </combo-pesquisavel>                    
                 </div>                
             </div>
     
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill>
-                <div ngModelGroup="comboRubricaAdicional" 
-                     fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
-                    <combo-pesquisavel #comboRubricaAdicional 
-                                       nome="rubricaAdicional" 
-                                       [itens]="planosContas" 
-                                       itemDescricao="planoConta"
-                                       itemId="id"
-                                       label="Rubrica Adicional"
-                                       [obrigatorio]="false"
-                                       placeholder="Escolha..."
-                                       [(valor)]="itensMovimentacoes.categoriaAdicional"
-                                       (valorChange)="carregarContaContabilAdicional($event.id)"
-                                       style="margin-top: 10px;">
-                    </combo-pesquisavel>
+                <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
+                    <combo-rubrica  [showDisplayId]="false"
+                                    [obrigatorio]="true"
+                                    [hasSintetica]="false"
+                                    [selecionado]="itensMovimentacoes.categoriaAdicional"
+                                    (valorChange)="carregarContaContabilAdicional($event)"
+                                    [label]="placeHolderRubricaAdicional"
+                                    [placeholder]="placeHolderRubricaAdicional">
+                    </combo-rubrica>                    
                 </div> 
             </div>   
 

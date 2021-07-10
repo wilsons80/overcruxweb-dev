@@ -50,6 +50,9 @@ export class ItensMovimentacaoComponent implements OnInit {
 
   valorItensSuperiorValorMovimento = false;
 
+  placeHolderRubrica = "Rúbrica";
+  placeHolderRubricaAdicional = "Rúbrica Adicional";
+
   constructor(
     private materialService: MaterialService,
     private categoriasContabeisService: CategoriasContabeisService,
@@ -64,12 +67,12 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.materiais = materiais;
     })
 
-    this.categoriasContabeisService.getAllView(false).subscribe((planosContas: PlanosContas[]) => {
-      this.planosContas = planosContas;
-    })
-
     this.pedidosMateriaisService.getAllCombo().subscribe((pedidosMateriais: PedidosMateriais[]) => {
       this.pedidosMateriais = pedidosMateriais;
+    })
+
+    this.categoriasContabeisService.getAllView(false).subscribe((planosContas: PlanosContas[]) => {
+      this.planosContas = planosContas;
     })
 
     BroadcastEventService.get('ON_CARREGAR_MOVIMENTACOES').subscribe((movimentacao: Movimentacoes) => {
@@ -85,32 +88,9 @@ export class ItensMovimentacaoComponent implements OnInit {
       this.selecionaPedidoMaterial(this.itensMovimentacoes.pedidosMateriais.id);
     }
 
-    if(this.itensMovimentacoes.categoria && this.itensMovimentacoes.categoria.id) {
-      this.selecionaRubrica(this.itensMovimentacoes.categoria.id);
-    }
-
-    if(this.itensMovimentacoes.categoriaAdicional && this.itensMovimentacoes.categoriaAdicional.id) {
-      this.selecionaRubricaAdicional(this.itensMovimentacoes.categoriaAdicional.id);
-    }
-
   }
 
-  selecionaRubrica(id: number) {
-    if(this.planosContas) {
-      const registro = this.planosContas.find((reg: any) => reg.id === id);
-      if (!!registro) {
-        this.onValorRubricaChange(registro);
-      }
-    }
-  }
-  selecionaRubricaAdicional(id: number) {
-    if(this.planosContas) {
-      const registro = this.planosContas.find((reg: any) => reg.id === id);
-      if (!!registro) {
-        this.onValorRubricaAdicionalChange(registro);
-      }
-    }
-  }
+  
 
   selecionaPedidoMaterial(id: number) {
     if(this.pedidosMateriais) {
@@ -125,12 +105,6 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.itensMovimentacoes.pedidosMateriais = registro;
   }
 
-  onValorRubricaChange(registro){
-    this.itensMovimentacoes.categoria = registro;
-  }
-  onValorRubricaAdicionalChange(registro){
-    this.itensMovimentacoes.categoriaAdicional = registro;
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     //if (changes["movimentacoes.itensMovimentacoes"] && changes["movimentacoes.itensMovimentacoes"].currentValue) {
@@ -224,9 +198,6 @@ export class ItensMovimentacaoComponent implements OnInit {
     this.itensMovimentacoes = itensMovimentacoes;
     this.openFormCadastro = true;
     this.isAtualizar = true;
-
-    this.carregarContaContabil(itensMovimentacoes.categoria.id);
-    this.carregarContaContabilAdicional(itensMovimentacoes.categoriaAdicional.id);
   }
 
   preencherObjetosVazios(itensMovimentacoes: ItensMovimentacoes){
@@ -236,6 +207,10 @@ export class ItensMovimentacaoComponent implements OnInit {
 
     if(!itensMovimentacoes.categoria){
       itensMovimentacoes.categoria = new CategoriasContabeis();
+    }
+    
+    if(!itensMovimentacoes.categoriaAdicional){
+      itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
     }
 
     if(!itensMovimentacoes.pedidosMateriais){
@@ -259,21 +234,7 @@ export class ItensMovimentacaoComponent implements OnInit {
     return 0;
   }
 
-  carregarContaContabil(id){
-    if (id) {
-      this.itensMovimentacoes.categoria = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === id));
-    } else {
-      this.itensMovimentacoes.categoria = new PlanosContas();
-    }
-  }
-  carregarContaContabilAdicional(id){
-    if (id) {
-      this.itensMovimentacoes.categoriaAdicional = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === id));
-    } else {
-      this.itensMovimentacoes.categoriaAdicional = new PlanosContas();
-    }
-  }
-
+  
   getRubricaPlanoConta(id): string {
     const registro = _.find(this.planosContas,  (c) => c.id === id);
     return registro ? registro.planoConta : "";
@@ -290,6 +251,14 @@ export class ItensMovimentacaoComponent implements OnInit {
     tributoMovimentacao.id             = undefined;
 
     this.itensMovimentacoes.tributos.push(tributoMovimentacao);
+  }
+
+
+  carregarContaContabil(event: any){
+      this.itensMovimentacoes.categoria = event;
+  }
+  carregarContaContabilAdicional(event: any){
+    this.itensMovimentacoes.categoriaAdicional = event;
   }
 
 }
