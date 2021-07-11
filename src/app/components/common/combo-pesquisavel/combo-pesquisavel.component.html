@@ -15,15 +15,15 @@
                     #comboCtrl="ngModel"
                     >
                 <mat-option>
-                        <ngx-mat-select-search ngModel #itemSearch
-                                [placeholderLabel]="itensSelect.placeholder"
+                    <ngx-mat-select-search ngModel #itemSearch
+                                
                                 clearSearchInput="true"
                                 noEntriesFoundLabel="Nenhum elemento encontrado."
                                 (input)="filtrarItens(itemSearch.value)"
                                 [ngModelOptions]="{standalone: true}">
                         <mat-icon fontIcon="limpar" ngxMatSelectSearchClear></mat-icon>
                     </ngx-mat-select-search>
-                    </mat-option>
+                </mat-option>
         
                 <cdk-virtual-scroll-viewport itemSize="20" [ngStyle]="{height: !!itens?.length ? '200px': '20px'}">
                     <mat-option></mat-option>
