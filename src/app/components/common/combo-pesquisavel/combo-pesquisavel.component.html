@@ -2,7 +2,7 @@
     <mat-form-field ngModelGroup="grupoCombo" #grupoCombo="ngModelGroup" [ngStyle]="{width: '100%'}">
         <mat-label>{{label}}</mat-label>
         <mat-select class="combopesquisavel" [ngClass]="{'invalid': obrigatorio && grupoCombo?.control?.touched && !item}"  id="combo"
-                    #itensSelect="ngModel"
+                    #itensSelect
                     [placeholder]="placeholder"
                     name="{{nome}}-{{data}}"
                     style="border-bottom: 1px solid; margin: 8px 0;"            
