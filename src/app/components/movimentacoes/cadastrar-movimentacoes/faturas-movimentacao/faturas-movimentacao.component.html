@@ -30,7 +30,7 @@
                             matInput maxlength="13"
                             [options]="{ prefix: '', thousands: '.', decimal: ',' }" 
                             required/>
-                    <span matPrefix>R$&nbsp;</span>
+                    <span matPrefix> R$&nbsp; </span>
                 </mat-form-field>
 
                 <mat-form-field fxFlex="80px" >
@@ -43,13 +43,13 @@
                 </mat-form-field>
 
                 <div ngModelGroup="comboTributos" 
-                     fxFlex="200px"
-                     style="padding-top: 12px;">
+                     fxFlex="200px">
                     <combo-pesquisavel #comboTributos 
                                        nome="tributos" 
                                        [itens]="tributos" 
                                        itemDescricao="codigo"
                                        itemId="id"
+                                       label="Tributo"
                                        placeholder="Tributo..."
                                        [(valor)]="fatura.tributoMovimentacao.tributo"
                                        (valorChange)="onValorTributoChange($event)">

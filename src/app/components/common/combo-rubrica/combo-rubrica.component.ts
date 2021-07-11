@@ -27,14 +27,12 @@ export class ComboRubricaComponent implements OnInit {
   @Output() valorChange = new EventEmitter();
   
   dados = [];
-  data: any = {};
+  data = Date.now();
 
   constructor(private categoriasContabeisService: CategoriasContabeisService) { 
   }
 
   ngOnInit(): void {
-    this.data = Date.now();
-    
     setTimeout(() => {
       this.categoriasContabeisService.getAllView(this.hasSintetica).subscribe((planosContas: PlanosContas[]) => {
         this.dados = planosContas;
@@ -51,13 +49,12 @@ export class ComboRubricaComponent implements OnInit {
   private preencherCombo(){
     if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
+      this.valorChange.emit(this.selecionado);
     }
   } 
   
-  onValorChange(registro: any) {
-    this.valorChange.emit(registro);
+  onValorChange(registro: any) {    
     this.preencherCombo();
   }
-
 
 }

@@ -9,12 +9,12 @@
             <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill>
                 <div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
-                    <combo-rubrica  [showDisplayId]="false"
+                    <combo-rubrica  [showDisplayId]="true"
                                     [obrigatorio]="true"
                                     [hasSintetica]="false"
-                                    [selecionado]="itensMovimentacoes.categoria"
-                                    (valorChange)="carregarContaContabil($event)"
+                                    [(selecionado)]="itensMovimentacoes.categoria"
                                     [label]="placeHolderRubrica"
+                                    (valorChange)="carregarContaContabil($event)"
                                     [placeholder]="placeHolderRubrica">
                     </combo-rubrica>
                 </div> 
@@ -37,14 +37,14 @@
                 </div>                
             </div>
     
-            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill>
+            <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill >
                 <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
-                    <combo-rubrica  [showDisplayId]="false"
+                    <combo-rubrica  [showDisplayId]="true"
                                     [obrigatorio]="true"
                                     [hasSintetica]="false"
-                                    [selecionado]="itensMovimentacoes.categoriaAdicional"
-                                    (valorChange)="carregarContaContabilAdicional($event)"
+                                    [(selecionado)]="itensMovimentacoes.categoriaAdicional"
                                     [label]="placeHolderRubricaAdicional"
+                                    (valorChange)="carregarContaContabilAdicional($event)"
                                     [placeholder]="placeHolderRubricaAdicional">
                     </combo-rubrica>                    
                 </div> 
@@ -147,8 +147,7 @@
             </mat-expansion-panel-header>
 
 
-            <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource"
-                style="margin-top: 20px">
+            <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
                 <ng-container matColumnDef="categoriaContabil">
                     <th mat-header-cell *matHeaderCellDef> Rubrica </th>

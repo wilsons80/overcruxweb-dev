@@ -10,6 +10,7 @@
                                        [itens]="empresas" 
                                        itemDescricao="nomeRazaoSocial"
                                        itemId="id"
+                                       label="Empresa"
                                        [showDisplayId]="false" 
                                        [obrigatorio]="false"
                                        placeholder="Informe a empresa..."
@@ -19,9 +20,9 @@
 
                 <div ngModelGroup="comboPrograma" fxFlex="33%" fxLayoutGap="20px" fxFlexOffset="20px">
                     <combo-programa [showDisplayId]="false" 
-                                        [obrigatorio]="false" 
-                                        [selecionado]="filtro.programa"
-                                        (valorChange)="onValorChangePrograma($event)">
+                                    [obrigatorio]="false" 
+                                    [selecionado]="filtro.programa"
+                                    (valorChange)="onValorChangePrograma($event)">
                     </combo-programa>
                 </div>
 

@@ -4,6 +4,7 @@ import { Departamento } from './departamento';
 import { Material } from './material';
 import { Unidade } from './unidade';
 import { TributoItemMovimentacao } from './tributo-item-movimentacao';
+import { PlanosContas } from './planos-contas';
 export class ItensMovimentacoes{
 
     id:number;

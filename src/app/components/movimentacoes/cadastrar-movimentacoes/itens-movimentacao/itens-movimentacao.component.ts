@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -25,6 +26,7 @@ import { PedidosMateriaisService } from './../../../../services/pedidosMateriais
 })
 export class ItensMovimentacaoComponent implements OnInit {
 
+  @ViewChild('formulario', { read: NgForm, static: true }) formulario: NgForm;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   @Input() movimentacoes:Movimentacoes;
@@ -205,13 +207,15 @@ export class ItensMovimentacaoComponent implements OnInit {
       itensMovimentacoes.material = new Material();
     }
 
+    /*
     if(!itensMovimentacoes.categoria){
-      itensMovimentacoes.categoria = new CategoriasContabeis();
+      itensMovimentacoes.categoria = new PlanosContas();
     }
     
     if(!itensMovimentacoes.categoriaAdicional){
       itensMovimentacoes.categoriaAdicional = new CategoriasContabeis();
     }
+    */
 
     if(!itensMovimentacoes.pedidosMateriais){
       itensMovimentacoes.pedidosMateriais = new PedidosMateriais();
@@ -255,10 +259,10 @@ export class ItensMovimentacaoComponent implements OnInit {
 
 
   carregarContaContabil(event: any){
-      this.itensMovimentacoes.categoria = event;
+    this.itensMovimentacoes.categoria = _.find(this.planosContas, { id: event.id});
   }
   carregarContaContabilAdicional(event: any){
-    this.itensMovimentacoes.categoriaAdicional = event;
+    this.itensMovimentacoes.categoriaAdicional = _.find(this.planosContas, { id: event.id});
   }
 
 }

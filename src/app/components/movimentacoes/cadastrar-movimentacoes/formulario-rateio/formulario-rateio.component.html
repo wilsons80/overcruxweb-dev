@@ -1,4 +1,4 @@
-<div ngModelGroup="cbPrograma" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+<div ngModelGroup="cbPrograma" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px">
     <combo-programa [showDisplayId]="false" #campoPrograma
                     [obrigatorio]="!rateio.projeto.id" 
                     [selecionado]="filtro.programa"
@@ -6,7 +6,7 @@
     </combo-programa>
 </div>
 
-<div ngModelGroup="cbProjeto" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px" style="margin-top: 15px;">
+<div ngModelGroup="cbProjeto" fxFlex="40%" fxLayoutGap="20px" fxFlexOffset="20px">
     <combo-projeto [showDisplayId]="false" #campoProjeto
                    [obrigatorio]="!rateio.programa.id" 
                    [selecionado]="filtro.projeto"

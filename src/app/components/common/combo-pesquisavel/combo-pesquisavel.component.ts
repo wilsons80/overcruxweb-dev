@@ -1,3 +1,4 @@
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, NgForm, NgModel, NgModelGroup } from '@angular/forms';
 import * as _ from 'lodash';
@@ -28,12 +29,15 @@ export class ComboPesquisavelComponent implements OnInit, OnChanges {
   @Input() showDisplayId: boolean = false;
   @Input() showDisplayItemLabel: boolean = false;
   @Input() label = ' '; // label que será mostrada após seleção do item na combo
+  @Input() mostraCodigo = true;
+  @Input() errorMessage = 'É preciso selecionar uma opção';
 
   placeHolderPesquise = "Pesquise...";
   @Input() valor: any = null;
   @Output() valorChange = new EventEmitter();
 
   @ViewChild('itensSelect', { static: true }) itensSelect: NgModel;
+  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
   data: any = {};
   item = null;
