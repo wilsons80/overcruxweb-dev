@@ -22,7 +22,7 @@
         </mat-step>
 
         <!-- ------------------ ITENS  ------------------------ -->
-        <mat-step style="padding-bottom: 20px" [stepControl]="formItens" >
+        <mat-step style="padding-bottom: 20px" [stepControl]="formItens">
             <form #formItens="ngForm">
                 <ng-template matStepLabel>ITENS</ng-template>
                 <itens-movimentacao [movimentacoes]="movimentacoes"
@@ -43,7 +43,7 @@
         </mat-step>
 
         <!-- ------------------ ATIVO / PASSIVO  ------------------------ -->
-        <mat-step style="padding-bottom: 20px" [stepControl]="formAtivoPassivo" >
+        <mat-step style="padding-bottom: 20px" [stepControl]="formAtivoPassivo">
             <form #formAtivoPassivo="ngForm">
                 <ng-template matStepLabel>ATIVO/PASSIVO</ng-template>
                 <categorias-movimentos [movimentacoes]="movimentacoes"
@@ -109,8 +109,7 @@
 
 
  <!-- BOTOES -->
- <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px"
-      fxFlexFill>
+ <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
     <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" 
             [disabled]="formDadosMovimentacao.invalid || isDesabilitaBotao()"
             mat-raised-button name="botaoConfirmar" fxFlex="20%" color="primary" (click)="cadastrar()">

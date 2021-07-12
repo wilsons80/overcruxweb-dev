@@ -42,17 +42,19 @@
                             required/>
                 </mat-form-field>
 
-                <div ngModelGroup="comboTributos" 
-                     fxFlex="200px">
+                <div ngModelGroup="comboTributos" fxFlex="200px">
                     <combo-pesquisavel #comboTributos 
-                                       nome="tributos" 
-                                       [itens]="tributos" 
-                                       itemDescricao="codigo"
-                                       itemId="id"
-                                       label="Tributo"
-                                       placeholder="Tributo..."
-                                       [(valor)]="fatura.tributoMovimentacao.tributo"
-                                       (valorChange)="onValorTributoChange($event)">
+                                        nome="tributos" 
+                                        [itens]="tributos" 
+                                        itemDescricao="codigo"
+                                        itemId="id"
+                                        label="Tributo"
+                                        [showDisplayId]="false" 
+                                        [showDisplayItemLabel]="false"                                        
+                                        [obrigatorio]="false"
+                                        placeholder="Escolha..."
+                                        [(valor)]="fatura.tributoMovimentacao.tributo"
+                                        (valorChange)="onValorTributoChange($event)">
                     </combo-pesquisavel>
                 </div>
 

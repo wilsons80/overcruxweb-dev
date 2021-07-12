@@ -61,7 +61,7 @@ export class FaturasMovimentacaoComponent implements OnInit {
   }
 
   ngAfterContentChecked(): void {
-    this.carregarTributos();
+    //this.carregarTributos();
   }
 
   carregarTributos() {
