@@ -9,7 +9,7 @@
             <mat-toolbar class="titulopartes">Dados Iniciais</mat-toolbar>
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 10px !important;" fxFlexFill>
                 <div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
-                    <combo-rubrica  [showDisplayId]="true"
+                    <combo-rubrica  [showDisplayId]="false"
                                     [obrigatorio]="true"
                                     [hasSintetica]="false"
                                     [(selecionado)]="itensMovimentacoes.categoria"
@@ -39,7 +39,7 @@
     
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill >
                 <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
-                    <combo-rubrica  [showDisplayId]="true"
+                    <combo-rubrica  [showDisplayId]="false"
                                     [obrigatorio]="true"
                                     [hasSintetica]="false"
                                     [(selecionado)]="itensMovimentacoes.categoriaAdicional"

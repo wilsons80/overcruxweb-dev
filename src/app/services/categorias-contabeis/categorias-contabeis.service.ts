@@ -13,9 +13,16 @@ export class CategoriasContabeisService extends BaseService<CategoriasContabeis>
     super(http, Rotas.PLANOS_CONTAS_CONTABEIS);
   }
   
+  getViewById(id:number) {
+    return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'view/' + id);
+  }
+
+  getAllViewPlanosContas() {
+    return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'view/all');
+  }
+  
   getAllView(hasSintetica:boolean) {
     let params = new HttpParams().set("hasSintetica",`${hasSintetica}`);
-
     return this.http.get(Rotas.PLANOS_CONTAS_CONTABEIS+'view',{params: params});
   }
 

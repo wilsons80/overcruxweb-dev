@@ -1,41 +1,27 @@
 <mat-toolbar class="subtitulo">Planos de Contas</mat-toolbar>
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
-        <form #formConsultarDepartamento="ngForm">
-            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-
-                <mat-form-field fxFlex="100%" fxFlexOffset="20px">
-                        <mat-icon matPrefix>search</mat-icon>
-                    <mat-label fxFlexOffset="20px">Selecione uma rubrica</mat-label>
-                    <mat-select fxFlexOffset="20px" [(ngModel)]="categoriasContabeis" name="categoriasContabeis">
-                        <mat-option></mat-option>
-                        <mat-option *ngFor="let d of listaCategoriasContabeis" [value]="d">
-                            {{d.nome}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
+        <form #formulario="ngForm">
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
-                    <mat-icon matPrefix>search</mat-icon>
-                <div ngModelGroup="comboPlanosContas" fxFlex="100%" fxLayoutGap="20px" >
-                            <combo-pesquisavel #comboPlanosContas 
-                                    nome="planosContas" 
-                                    [itens]="listaPlanosContas" 
-                                    itemDescricao="planoConta"
-                                    itemId="id"
-                                    [showDisplayId]="false" 
-                                    [obrigatorio]="false"
-                                    placeholder="Selecione uma rubrica"
-                                    [(valor)]="selecionado">
-                        </combo-pesquisavel>
-                    </div>
+                <mat-icon matPrefix>search</mat-icon>
+                <div ngModelGroup="mgComboPlanosContas" fxFlex="100%" fxLayoutGap="20px" >
+                    <combo-pesquisavel #cbPlanosContas 
+                                        nome="planosContas" 
+                                        [itens]="comboPlanosContas" 
+                                        itemDescricao="planoConta"
+                                        itemId="id"
+                                        [showDisplayId]="false" 
+                                        [obrigatorio]="false"
+                                        label="Rúbrica"
+                                        placeholder="Selecione uma rubrica"
+                                        [(valor)]="selecionado">
+                    </combo-pesquisavel>
+                </div>
             </div>        
             
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
-
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                 <button mat-raised-button fxFlex="20%" (click)="consultar()">
                     CONSULTAR
                 </button>
@@ -49,7 +35,7 @@
 
         <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 20px">
             <div>
-                <button matTooltip="Adicionar nova rubrica" mat-fab color="primary"
+                <button matTooltip="Adicionar nova rúbrica" mat-fab color="primary"
                     [routerLink]="['/planoscontascontabeis/cadastrar']" routerLinkActive="router-link-active">
                     <mat-icon>add</mat-icon>
                 </button>
@@ -58,20 +44,16 @@
 
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
-            <ng-container matColumnDef="tipo" style="width: 20%">
-                <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                <td mat-cell *matCellDef="let element"> {{tiposDespesas.getDescricao(element.tipo)}} </td>
+            <ng-container matColumnDef="planoconta" style="width: 60%">
+                <th mat-header-cell *matHeaderCellDef> Conta Contábil </th>
+                <td mat-cell *matCellDef="let element"> {{element.planoConta}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="nome" style="width: 40%">
-                <th mat-header-cell *matHeaderCellDef> Nome</th>
-                <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            <ng-container matColumnDef="sintetico" style="width: 25%">
+                <th mat-header-cell *matHeaderCellDef> Sintética</th>
+                <td mat-cell *matCellDef="let element"> {{element.sintetica ? 'Sim' : 'Não'}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="categoria" style="width: 20%">
-                <th mat-header-cell *matHeaderCellDef> Categoria Superior</th>
-                <td mat-cell *matCellDef="let element"> {{getHierarquiaPlanoContabil(element.categoriaSuperior?.id)}} </td>
-            </ng-container>
                 
             <ng-container matColumnDef="acoes">
                 <th mat-header-cell *matHeaderCellDef> Ações </th>

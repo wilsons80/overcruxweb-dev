@@ -3,4 +3,5 @@ export class PlanosContas {
 	planoConta:string;
 	categoriaContabil:string;
 	idInstituicao:number;
+	sintetica: boolean;
 }

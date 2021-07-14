@@ -52,8 +52,8 @@ export class ItensMovimentacaoComponent implements OnInit {
 
   valorItensSuperiorValorMovimento = false;
 
-  placeHolderRubrica = "Rúbrica";
-  placeHolderRubricaAdicional = "Rúbrica Adicional";
+  placeHolderRubrica = "Conta Contábil";
+  placeHolderRubricaAdicional = "Conta Contábil Adicional";
 
   constructor(
     private materialService: MaterialService,
