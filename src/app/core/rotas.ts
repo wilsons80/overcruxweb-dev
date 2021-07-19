@@ -83,4 +83,5 @@ export enum Rotas {
     BENEFICIOS_SOCIAIS              = 'api/beneficiossociais/',
     FORNECEDORES                    = 'api/fornecedores/',
     GRUPO_ACOES                     = 'api/grupoacoes/',
+    MOVIMENTACOES_CONTABEIS         = 'api/movimentacoescontabeis/',
 }

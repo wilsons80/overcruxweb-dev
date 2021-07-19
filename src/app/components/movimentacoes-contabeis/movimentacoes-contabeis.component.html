@@ -1,0 +1,167 @@
+<mat-toolbar class="subtitulo">Movimentações Contábeis</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <div class="painel-consultar">
+        <form #formulario="ngForm">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
+                <mat-form-field fxFlex= "120px" fxFlexOffset="20px">
+                    <input matInput name= "dataInicio"
+                            [matDatepicker]="dataInicio" 
+                            placeholder="Data início" 
+                            [(ngModel)]="filtro.dataInicio"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataInicio"></mat-datepicker-toggle>
+                    <mat-datepicker #dataInicio></mat-datepicker>
+                </mat-form-field>
+            
+                <mat-form-field fxFlex= "120px" >
+                    <input matInput name= "dataFim"
+                            [matDatepicker]="dataFim" 
+                            [min]="filtro.dataFim"
+                            placeholder="Data fim" 
+                            [(ngModel)]="filtro.dataFim"
+                            (input)="onMascaraDataInput($event)">
+                    <mat-datepicker-toggle matSuffix [for]="dataFim"></mat-datepicker-toggle>
+                    <mat-datepicker #dataFim></mat-datepicker>
+                    <mat-error>Não pode ser inferior a data de início</mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex= "120px" fxFlexOffset="20px">
+                    <input [(ngModel)]="filtro.valor"
+                            currencyMask 
+                            name="valor"
+                            placeholder="Valor"
+                            matInput 
+                            maxlength="13"
+                            [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                    <span matPrefix>R$&nbsp;</span>
+                </mat-form-field>
+            </div>  
+            
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+                <div ngModelGroup="comboPrograma" fxFlex="50%">
+                    <combo-programa [showDisplayId]="false" 
+                                    [obrigatorio]="false" 
+                                    [selecionado]="filtro.programa"
+                                    (valorChange)="onValorChangePrograma($event)">
+                    </combo-programa>
+                </div>
+
+                <div ngModelGroup="comboProjeto" fxFlex="50%">
+                    <combo-projeto [showDisplayId]="false" 
+                                   [obrigatorio]="false" 
+                                   [selecionado]="filtro.projeto"
+                                   (valorChange)="onValorChangeProjeto($event)">
+                    </combo-projeto>
+                </div>
+            </div>
+
+            <div fxLayout="row">
+                <div ngModelGroup="comboRubricaDestino" fxFlex="50%" class="marginCombo">
+                    <combo-rubrica  [showDisplayId]="false"
+                                    [obrigatorio]="false"                                    
+                                    [(selecionado)]="filtro.contaDestino"
+                                    label="Conta Destino (Débito)"
+                                    placeholder="Conta Destino (Débito)"
+                                    (valorChange)="onValorChangeContaDestino($event)">
+                    </combo-rubrica>
+                </div> 
+
+                <div ngModelGroup="comboRubricaOrigem" fxFlex="50%" class="marginCombo">
+                    <combo-rubrica  [showDisplayId]="false"
+                                    [obrigatorio]="false"                                    
+                                    [(selecionado)]="filtro.contaOrigem"
+                                    label="Conta Origem (Crédito)"
+                                    placeholder="Conta Origem (Crédito)"
+                                    (valorChange)="onValorChangeContaOrigem($event)">
+                    </combo-rubrica>
+                </div> 
+            </div> 
+
+
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                <button mat-raised-button fxFlex="20%" (click)="consultar()">
+                    CONSULTAR
+                </button>
+
+                <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
+                    LIMPAR
+                </button>
+            </div>
+        </form>
+
+        <div fxLayout="row" *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
+            <div>
+                <button matTooltip="Adicionar nova movimentação contábil" mat-fab color="primary"
+                    [routerLink]="['/movimentacoescontabeis/cadastrar']" routerLinkActive="router-link-active">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
+            <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef> Data </th>
+                <td mat-cell *matCellDef="let element"> {{element.data | dataSimples}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef> Valor </th>
+                <td mat-cell *matCellDef="let element"> {{element.valor  | currency: 'BRL'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="programaprojeto01">
+                <th mat-header-cell *matHeaderCellDef> Programa/Projeto (01) </th>
+                <td mat-cell *matCellDef="let element"> {{getDescricaoProgramaProjeto01(element)}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="contacontabil01">
+                <th mat-header-cell *matHeaderCellDef> Contas Contábeis (01) </th>
+                <td mat-cell *matCellDef="let element"> 
+                    Conta Destino: {{element.planoContaDestino01}} <br/>
+                    Conta Origem : {{element.planoContaOrigem01}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="programaprojeto02">
+                <th mat-header-cell *matHeaderCellDef> Programa/Projeto (02) </th>
+                <td mat-cell *matCellDef="let element"> {{getDescricaoProgramaProjeto02(element)}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="contacontabil02">
+                <th mat-header-cell *matHeaderCellDef> Contas Contábeis (02) </th>
+                <td mat-cell *matCellDef="let element"> 
+                    Conta Destino: {{element.planoContaDestino02}}  <br/>
+                    Conta Origem : {{element.planoContaOrigem02}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="perfilAcesso.deleta"  mat-button (click)="deletar(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button *ngIf="perfilAcesso.consulta" mat-button (click)="atualizar(element)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div [hidden]="!mostrarTabela">
+            <mat-paginator [pageSizeOptions]="[50, 100, 200, 500,1000]" showFirstLastButtons></mat-paginator>
+        </div>
+        <ng-template #tabelaSemDados>
+            <div fxLayout="row" fxLayoutAlign="center center" style="padding-top: 20px">
+                {{msg}}
+            </div>
+        </ng-template>
+
+    </div>
+
+
+
+</div>

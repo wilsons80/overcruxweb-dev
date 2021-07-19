@@ -14,14 +14,14 @@ import { CategoriasContabeisService } from 'src/app/services/categorias-contabei
 })
 export class ComboRubricaComponent implements OnInit {
 
-  @ViewChild('comboRubrica', {static: false}) comboPrograma;
+  @ViewChild('comboRubrica', {static: false}) comboRubrica;
   
   @Input() showDisplayId;
   @Input() obrigatorio;
   @Input() selecionado;
   @Input() desabilitado;
   @Input() placeholder;
-  @Input() hasSintetica = true;
+  @Input() hasSintetica;
   @Input() label;
   
   @Output() valorChange = new EventEmitter();
@@ -34,7 +34,15 @@ export class ComboRubricaComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.categoriasContabeisService.getAllView(this.hasSintetica).subscribe((planosContas: PlanosContas[]) => {
+      let _planoConta$;
+
+      if(!!this.hasSintetica) {
+        _planoConta$ = this.categoriasContabeisService.getAllView(this.hasSintetica) ; 
+      } else {
+        _planoConta$ = this.categoriasContabeisService.getAllViewPlanosContas();
+      }
+
+      _planoConta$.subscribe((planosContas: PlanosContas[]) => {
         this.dados = planosContas;
         this.preencherCombo();
       })

@@ -28,6 +28,9 @@
             <!-- PROVISAO -->
             <sub-menu *ngIf="verificaAcesso(getModulos().PROVISAO)" icone="local_atm" titulo="Provisão" rota="provisao" toolTip="Provisão"></sub-menu>
 
+            <!-- MOVIMENTACOES_CONTABIES -->
+            <sub-menu *ngIf="verificaAcesso(getModulos().MOVIMENTACOES_CONTABIES)" icone="price_check" titulo="Movimentações Contábeis" rota="movimentacoescontabeis" toolTip="Movimentações Contábeis"></sub-menu>
+
             <!-- RELATORIOS -->
             <sub-menu-relatorio-financeiro *ngIf="verificaAcesso(getModulos().RELATORIO_GESTAO_FINANCEIRA)"></sub-menu-relatorio-financeiro>
 

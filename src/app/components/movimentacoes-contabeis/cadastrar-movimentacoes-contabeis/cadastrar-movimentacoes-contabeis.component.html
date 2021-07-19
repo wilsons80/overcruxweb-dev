@@ -1,0 +1,181 @@
+<mat-toolbar class="subtitulo">Movimentações Contábeis</mat-toolbar>
+<div class="painel-principal" style="padding: 10px;">
+    <form #formCadastro="ngForm">
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+            <mat-form-field fxFlex="20%">
+                <input matInput 
+                       [(ngModel)]="movimentacaoContabil.dataMovimentacao"
+                       name="dataMovimentacao" 
+                       [matDatepicker]="dataMovimentacao" 
+                       placeholder="Data do movimento"  
+                       [max]="maxDate"
+                       [min]="minDate" 
+                       (input)="onMascaraDataInput($event)">
+                <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dataMovimentacao></mat-datepicker>
+            </mat-form-field>
+            
+            <mat-form-field fxFlex="20%">
+                <input [(ngModel)]="movimentacaoContabil.valorMovimentacao"
+                       currencyMask 
+                       name="valorMovimentacao" 
+                       placeholder="Valor do movimento" 
+                       #valorMovimentacao
+                       (blur)="validarValorMovimento(valorMovimentacao.value)"
+                       matInput maxlength="13"
+                       [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                <span matPrefix>R$&nbsp;</span>
+            </mat-form-field>        
+        </div>    
+
+        <div fxLayout="row">
+            <fieldset fxFlex="100%" fxLayoutGap="20px">
+                <legend>Movimentação 1</legend>
+                <div fxLayout="row">
+                    <div ngModelGroup="cbPrograma" fxFlex="50%">
+                        <combo-programa [showDisplayId]="false" #campoPrograma01
+                                        [obrigatorio]="!movimentacaoContabil.projeto01?.id" 
+                                        [selecionado]="movimentacaoContabil.programa01"
+                                        (valorChange)="onValorChangePrograma($event)">
+                        </combo-programa>
+                    </div>
+                    
+                    <div ngModelGroup="cbProjeto" fxFlex="50%">
+                        <combo-projeto [showDisplayId]="false" #campoProjeto01
+                                        [obrigatorio]="!movimentacaoContabil.programa01?.id" 
+                                        [selecionado]="movimentacaoContabil.projeto01"
+                                        (valorChange)="onValorChangeProjeto($event)">
+                        </combo-projeto>
+                    </div>                
+                </div>
+    
+
+                <div fxLayout="row" fxLayoutGap="20px">
+                    <div ngModelGroup="categoriaDestino01" fxFlex="50%" class="marginCombo" fxFlexOffset="20px">
+                        <combo-pesquisavel #campoCategoriaDestino01
+                                           nome="campoCategoriaDestino01" 
+                                           [itens]="planosContas" 
+                                           label="Conta Destino (Débito)"
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           obrigatorio="true"
+                                           placeholder="Conta Destino (Débito)"
+                                           [(valor)]="movimentacaoContabil.categoriaDestino01"
+                                           (valorChange)="carregarContaDestino01($event.id)">
+                        </combo-pesquisavel>                        
+                    </div> 
+
+                    <div ngModelGroup="categoriaOrigem01" fxFlex="50%" class="marginCombo">
+                        <combo-pesquisavel #campoCategoriaOrigem01
+                                           nome="campoCategoriaOrigem01" 
+                                           [itens]="planosContas" 
+                                           label="Conta Origem (Crédito)"
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           obrigatorio="true"
+                                           placeholder="Conta Origem (Crédito)"
+                                           [(valor)]="movimentacaoContabil.categoriaOrigem01"
+                                           (valorChange)="carregarContaOrigem01($event.id)">
+                        </combo-pesquisavel>                        
+                    </div> 
+                </div> 
+            </fieldset>
+        </div>
+        
+
+        <div fxLayout="row">
+            <fieldset fxFlex="100%" fxLayoutGap="20px">
+                <legend>Movimentação 2</legend>
+                <div fxLayout="row">
+                    <div ngModelGroup="cbPrograma02" fxFlex="50%">
+                        <combo-programa [showDisplayId]="false" #campoPrograma02
+                                        [obrigatorio]="!movimentacaoContabil.projeto02?.id" 
+                                        [selecionado]="movimentacaoContabil.programa02"
+                                        (valorChange)="onValorChangePrograma02($event)">
+                        </combo-programa>
+                    </div>
+                    
+                    <div ngModelGroup="cbProjeto02" fxFlex="50%">
+                        <combo-projeto [showDisplayId]="false" #campoProjeto02
+                                        [obrigatorio]="!movimentacaoContabil.programa02?.id" 
+                                        [selecionado]="movimentacaoContabil.projeto02"
+                                        (valorChange)="onValorChangeProjeto02($event)">
+                        </combo-projeto>
+                    </div>                
+                </div>
+    
+
+                <div fxLayout="row" fxLayoutGap="20px" >
+                    <div ngModelGroup="cbCategoriaDestino02" fxFlex="50%" class="marginCombo" fxFlexOffset="20px">
+                        <combo-pesquisavel #campoCategoriaDestino02
+                                           nome="campoCategoriaDestino02" 
+                                           [itens]="planosContas" 
+                                           label="Conta Destino (Débito)"
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           obrigatorio="true"
+                                           placeholder="Conta Destino (Débito)"
+                                           [(valor)]="movimentacaoContabil.categoriaDestino02"
+                                           (valorChange)="carregarContaDestino02($event.id)">
+                        </combo-pesquisavel>                        
+                    </div> 
+
+                    <div ngModelGroup="cbCategoriaOrigem02" fxFlex="50%" class="marginCombo">
+                        <combo-pesquisavel #campoCategoriaOrigem02
+                                           nome="campoCategoriaOrigem02" 
+                                           [itens]="planosContas" 
+                                           label="Conta Origem (Crédito)"
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           [showDisplayId]="false" 
+                                           obrigatorio="true"
+                                           placeholder="Conta Origem (Crédito)"
+                                           [(valor)]="movimentacaoContabil.categoriaOrigem02"
+                                           (valorChange)="carregarContaOrigem02($event.id)">
+                        </combo-pesquisavel>                        
+                    </div> 
+                </div> 
+            </fieldset>
+        </div>
+
+        <div fxLayout="row">
+            <mat-form-field fxFlex="100%" appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea #descricao matInput name="descricao" 
+                          [(ngModel)]="movimentacaoContabil.descricao" 
+                          cdkTextareaAutosize
+                          #autosize="cdkTextareaAutosize" 
+                          cdkAutosizeMinRows="3" 
+                          maxlength="200">
+                </textarea>
+                <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+            </mat-form-field>
+        </div>
+
+        
+        <!-- BOTOES -->
+        <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
+            <button *ngIf="!isAtualizar && mostrarBotaoCadastrar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="cadastrar()"> Cadastrar
+            </button>
+
+            <button *ngIf="isAtualizar && mostrarBotaoAtualizar" mat-raised-button name="botaoConfirmar" fxFlex="20%"
+                color="primary" [disabled]="formCadastro.invalid" (click)="atualizar()">
+                Atualizar
+            </button>
+
+            <button *ngIf="mostrarBotaoLimpar()" mat-raised-button fxFlex="20%" (click)="limpar()">
+                Limpar
+            </button>
+            <button mat-raised-button fxFlex="20%" (click)="cancelar()">
+                Cancelar
+            </button>
+        </div>
+    </form>
+
+</div>
