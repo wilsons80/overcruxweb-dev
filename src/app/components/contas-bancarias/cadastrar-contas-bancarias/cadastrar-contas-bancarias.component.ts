@@ -10,6 +10,8 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { UnidadeService } from 'src/app/services/unidade/unidade.service';
 import { Unidade } from 'src/app/core/unidade';
 import * as _ from 'lodash';
+import { PlanosContas } from 'src/app/core/planos-contas';
+import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
 
 @Component({
   selector: 'cadastrar-contas-bancarias',
@@ -41,9 +43,11 @@ export class CadastrarContasBancariasComponent implements OnInit {
   mostrarBotaoAtualizar = true;
 
   listaBancos: Banco[];
+  planosContas: PlanosContas[];
 
   constructor(
     private contasBancariaService: ContasBancariaService,
+    private categoriasContabeisService: CategoriasContabeisService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
@@ -74,6 +78,9 @@ export class CadastrarContasBancariasComponent implements OnInit {
       this.unidades = unidades;
     });
 
+    this.categoriasContabeisService.getAllViewPlanosContas().subscribe((planosContas: PlanosContas[]) => {
+      this.planosContas = planosContas;
+    })
 
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
@@ -159,6 +166,11 @@ export class CadastrarContasBancariasComponent implements OnInit {
       const conta = _.cloneDeep(_.find(this.contasAssociadas,  (c: ContasBancaria) => c.id === this.contaBancaria.id));
       this.contaBancaria.contaAssociada = conta ? conta.id : null;
     }
+  }
+
+  
+  carregarContaContabil(event: any){
+    this.contaBancaria.categoriasContabeis = _.find(this.planosContas, { id: event.id});
   }
 
 }

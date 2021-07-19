@@ -10,6 +10,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmDialogComponent } from '../common/confirm-dialog/confirm-dialog.component';
 import { ContasBancaria } from 'src/app/core/contas-bancaria';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
+import { PlanosContas } from 'src/app/core/planos-contas';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'contas-bancarias',
@@ -25,14 +28,16 @@ export class ContasBancariasComponent implements OnInit {
   contasBancaria: ContasBancaria = new ContasBancaria();
   msg: string;
 
-  displayedColumns: string[] = ['banco', 'numeroAgencia', 'numeroContaBancaria','nomeTitular', 'acoes'];
+  displayedColumns: string[] = ['banco', 'numeroAgencia', 'numeroContaBancaria','nomeTitular', 'codigoPlanoConta', 'acoes'];
   dataSource: MatTableDataSource<ContasBancaria> = new MatTableDataSource();
   
-   perfilAcesso: Acesso = new Acesso();
-   carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+  perfilAcesso: Acesso = new Acesso();
+  carregarPerfil: CarregarPerfil  = new CarregarPerfil();
+  planosContas: PlanosContas[];
 
   constructor(
     private contasBancariaService: ContasBancariaService,
+    private categoriasContabeisService: CategoriasContabeisService,
     private router: Router,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute
@@ -40,6 +45,10 @@ export class ContasBancariasComponent implements OnInit {
 
   ngOnInit() {
     this.carregarPerfil.carregar(this.activatedRoute.snapshot.data.perfilAcesso, this.perfilAcesso);
+
+    this.categoriasContabeisService.getAllViewPlanosContas().subscribe((planosContas: PlanosContas[]) => {
+      this.planosContas = planosContas;
+    })
 
     this.dataSource.paginator = this.paginator;
     this.getAll();
@@ -122,6 +131,10 @@ export class ContasBancariasComponent implements OnInit {
       this.mostrarTabela = true;
     }
   }
-  
+
+  getPlanoConta(id): string {
+    const registro = _.find(this.planosContas,  (c) => c.id === id);
+    return registro ? registro.codigoCategoriaContabil : "";
+  }
 
 }

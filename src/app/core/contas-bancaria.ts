@@ -1,4 +1,5 @@
 import { Banco } from './banco';
+import { CategoriasContabeis } from './categorias-contabeis';
 import { SaldosContasBancaria } from './saldos-contas-bancaria';
 import { Unidade } from './unidade';
 
@@ -16,6 +17,7 @@ export class ContasBancaria {
 	telefoneTitular: string;
     emailTitular: string;
     contaAssociada: number;
+    categoriasContabeis: any;
 
     descricaoCompleta?:string; // usado em combo pesquisavel
 

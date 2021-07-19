@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { ContasBancariasRoutingModule } from './contas-bancarias-routing.module';
 import { CadastrarContasBancariasComponent } from './cadastrar-contas-bancarias/cadastrar-contas-bancarias.component';
+import { ComboRubricaModule } from '../common/combo-rubrica/combo-rubrica.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CadastrarContasBancariasComponent } from './cadastrar-contas-bancarias/
     CommonModule,
     ContasBancariasRoutingModule,
     MaterialCommonModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    ComboRubricaModule
   ]
 })
 export class ContasBancariasModule { }
