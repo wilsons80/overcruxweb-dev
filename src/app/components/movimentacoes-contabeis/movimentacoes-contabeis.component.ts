@@ -43,7 +43,7 @@ export class MovimentacoesContabeisComponent implements OnInit {
 
   msg: string;  
   mostrarTabela: boolean = false;
-  displayedColumns: string[] = ['data', 'valor', 'programaprojeto01','contacontabil01', 'programaprojeto02','contacontabil02','acoes'];
+  displayedColumns: string[] = ['data', 'valor', 'programaprojeto01','contacontabil01','acoes'];
   dataSource: MatTableDataSource<MovimentacoesContabeisDto> = new MatTableDataSource();
   
   perfilAcesso: Acesso = new Acesso();
