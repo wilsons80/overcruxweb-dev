@@ -136,6 +136,8 @@ export class CategoriasMovimentosComponent implements OnInit {
   }
 
   carregarLista() {
+    this.minDate = this.movimentacoes.dataDocumento;
+    
     if (this.movimentacoes.categoriasMovimentos.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhum registro adicionado.';
