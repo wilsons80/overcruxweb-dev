@@ -10,7 +10,6 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { DataUtilService } from 'src/app/services/commons/data-util.service';
 import { BroadcastEventService } from 'src/app/services/broadcast-event/broadcast-event.service';
 import { CategoriasMovimentos } from 'src/app/core/categorias-movimentos';
-import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { RateiosCategoriasMovimentos } from 'src/app/core/rateios-categorias-movimentos';
 import { PlanosContas } from 'src/app/core/planos-contas';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
