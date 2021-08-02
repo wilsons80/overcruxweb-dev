@@ -154,6 +154,7 @@ export class CategoriasMovimentosComponent implements OnInit {
     this.categoriaMovimento.valor = 0;
     this.categoriaMovimento.descricao = '';    
     this.categoriaMovimento.rateioCategoriasMovimentos = [];
+    this.minDate = this.movimentacoes.dataMovimentacao;
   }
 
   deletar(categoriasMovimentos: CategoriasMovimentos): void {

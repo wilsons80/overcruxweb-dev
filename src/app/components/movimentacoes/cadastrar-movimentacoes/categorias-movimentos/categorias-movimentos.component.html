@@ -56,6 +56,23 @@
             </div>
 
             <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                    <combo-pesquisavel #campoCategoriaDestino 
+                                       nome="rubricaAdicional" 
+                                       [itens]="planosContas" 
+                                       itemDescricao="planoConta"
+                                       itemId="id"
+                                       label="Conta Contábil Destino"
+                                       [obrigatorio]="true"
+                                       placeholder="Escolha..."
+                                       [(valor)]="categoriaMovimento.categoriaDestino"
+                                       (valorChange)="carregarContaDestino($event.id)"
+                                       style="margin-top: 10px;">
+                    </combo-pesquisavel>
+                </div> 
+            </div>   
+
+            <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
                 <div ngModelGroup="comboRubricaOriginal" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
                     <combo-pesquisavel #campoCategoriaOrigem 
                                        nome="rubricaOriginal" 
@@ -72,22 +89,6 @@
                 </div> 
             </div> 
 
-           <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-                <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
-                    <combo-pesquisavel #campoCategoriaDestino 
-                                       nome="rubricaAdicional" 
-                                       [itens]="planosContas" 
-                                       itemDescricao="planoConta"
-                                       itemId="id"
-                                       label="Conta Contábil Destino"
-                                       [obrigatorio]="true"
-                                       placeholder="Escolha..."
-                                       [(valor)]="categoriaMovimento.categoriaDestino"
-                                       (valorChange)="carregarContaDestino($event.id)"
-                                       style="margin-top: 10px;">
-                    </combo-pesquisavel>
-                </div> 
-            </div>   
 
             <div fxLayout="row">
                 <mat-form-field fxFlex="100%" appearance="outline" fxFlexOffset="20px">
