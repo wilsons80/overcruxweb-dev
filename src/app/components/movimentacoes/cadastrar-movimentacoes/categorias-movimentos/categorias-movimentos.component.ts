@@ -14,6 +14,8 @@ import { CategoriasContabeis } from 'src/app/core/categorias-contabeis';
 import { RateiosCategoriasMovimentos } from 'src/app/core/rateios-categorias-movimentos';
 import { PlanosContas } from 'src/app/core/planos-contas';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
+import { Programa } from 'src/app/core/programa';
+import { Projeto } from 'src/app/core/projeto';
 
 @Component({
   selector: 'categorias-movimentos',
@@ -21,6 +23,12 @@ import { CategoriasContabeisService } from 'src/app/services/categorias-contabei
   styleUrls: ['./categorias-movimentos.component.css']
 })
 export class CategoriasMovimentosComponent implements OnInit {
+
+  @ViewChild('campoPrograma') campoPrograma;
+  @ViewChild('campoProjeto') campoProjeto;
+  @ViewChild('campoCategoriaOrigem') campoCategoriaOrigem;
+  @ViewChild('campoCategoriaDestino') campoCategoriaDestino;
+
 
   @Input() movimentacoes:Movimentacoes;
   @Input() idMovimentacao: number;
@@ -34,7 +42,7 @@ export class CategoriasMovimentosComponent implements OnInit {
 
   maxDataPagamento = new Date();
 
-  displayedColumns: string[] = ['categoriaOrigem', 'categoriaDestino', 'valor', 'acoes'];
+  displayedColumns: string[] = ['data', 'valor', 'programaprojeto','contacontabil','acoes'];
   dataSource: MatTableDataSource<CategoriasMovimentos> = new MatTableDataSource();
 
   categoriaMovimento: CategoriasMovimentos;
@@ -279,20 +287,64 @@ export class CategoriasMovimentosComponent implements OnInit {
     return registro ? registro.planoConta : "";
   }
 
-  carregarContaContabil(event){
-    if (event) {
-      this.categoriaMovimento.categoriaOrigem = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
-    } else {
-      this.categoriaMovimento.categoriaOrigem = new PlanosContas();
-    }
+
+  onMascaraDataInput(event) {
+    return this.dataUtilService.onMascaraDataInput(event);
   }
-  carregarContaContabilAdicional(event){
-    if (event) {
-      this.categoriaMovimento.categoriaDestino = _.cloneDeep(_.find(this.planosContas,  (c) => c.id === event.id));
-    } else {
-      this.categoriaMovimento.categoriaDestino = new PlanosContas();
+
+  validarValorMovimento(valor) {
+    if (valor.includes("-")) {
+      this.categoriaMovimento.valor = null;
+      this.toastService.showAlerta('O valor do documento não pode ser negativo, informe outro valor.');
     }
   }
 
+
+  carregarContaOrigem(idConta: number){
+    this.categoriaMovimento.categoriaOrigem = _.cloneDeep(_.find(this.planosContas, { id: idConta}));
+
+    if(idConta && this.categoriaMovimento.categoriaDestino?.id && idConta === this.categoriaMovimento.categoriaDestino.id ){
+      this.categoriaMovimento.categoriaOrigem = null;
+      this.campoCategoriaOrigem.itensSelect.ngControl.control.setValue(null);  
+      this.toastService.showAlerta('A conta de origem não pode ser a mesma de destino.');
+    }
+    
+  }
+
+  carregarContaDestino(idConta: number){
+    this.categoriaMovimento.categoriaDestino = _.cloneDeep(_.find(this.planosContas, { id: idConta}));
+
+    if(idConta && this.categoriaMovimento.categoriaOrigem?.id && idConta === this.categoriaMovimento.categoriaOrigem.id ){
+      this.categoriaMovimento.categoriaDestino = null;
+      this.campoCategoriaDestino.itensSelect.ngControl.control.setValue(null);    
+      this.toastService.showAlerta('A conta de destino não pode ser a mesma da origem.');  
+    }  
+  }
+
+  onValorChangePrograma(registro: any) {
+    this.categoriaMovimento.programa = registro;    
+    if(registro) {
+      this.categoriaMovimento.programa.id = registro.id;
+      this.campoProjeto.comboProjeto.itensSelect.ngControl.reset()
+      this.categoriaMovimento.projeto = new Projeto();
+    } else{  
+      this.categoriaMovimento.programa = new Programa();
+    }
+  }
+
+  onValorChangeProjeto(registro: any) {
+    this.categoriaMovimento.projeto = registro;    
+    if(registro) {
+      this.categoriaMovimento.projeto.id = registro.id;
+      this.campoPrograma.comboPrograma.itensSelect.ngControl.reset();      
+      this.categoriaMovimento.programa = new Programa();
+    } else{
+      this.categoriaMovimento.projeto = new Projeto();
+    }
+  }
+
+  getDescricaoProgramaProjeto(registro: CategoriasMovimentos){
+    return registro.programa?.nome || registro.projeto?.nome;
+  }
 
 }
