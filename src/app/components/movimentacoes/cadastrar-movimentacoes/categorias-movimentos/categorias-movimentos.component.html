@@ -12,6 +12,7 @@
                            name="dataMovimentacao" 
                            [matDatepicker]="dataMovimentacao" 
                            placeholder="Data"  
+                           required
                            [max]="maxDate"
                            [min]="minDate" 
                            (input)="onMascaraDataInput($event)">
@@ -24,7 +25,8 @@
                     <input [(ngModel)]="categoriaMovimento.valor"
                            currencyMask 
                            name="valorMovimentacao" 
-                           placeholder="Valor" 
+                           placeholder="Valor"
+                           required 
                            #valorMovimentacao
                            (blur)="validarValorMovimento(valorMovimentacao.value)"
                            matInput maxlength="13"
