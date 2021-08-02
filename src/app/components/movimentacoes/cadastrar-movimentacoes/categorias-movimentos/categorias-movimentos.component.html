@@ -1,6 +1,5 @@
-<form #formulario="ngForm">
+<div ngModelGroup="formulario">    
     <mat-accordion>
-
         <mat-expansion-panel [expanded]="openFormCadastro" (closed)="openFormCadastro = false">
             <mat-expansion-panel-header>
                 <mat-panel-title>Dados</mat-panel-title>
@@ -231,4 +230,4 @@
         </mat-expansion-panel>
 
     </mat-accordion>
-</form>
+</div>

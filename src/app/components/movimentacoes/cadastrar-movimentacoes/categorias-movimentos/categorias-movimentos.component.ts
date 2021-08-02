@@ -15,11 +15,13 @@ import { PlanosContas } from 'src/app/core/planos-contas';
 import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
 import { Programa } from 'src/app/core/programa';
 import { Projeto } from 'src/app/core/projeto';
+import { ControlContainer, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'categorias-movimentos',
   templateUrl: './categorias-movimentos.component.html',
-  styleUrls: ['./categorias-movimentos.component.css']
+  styleUrls: ['./categorias-movimentos.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class CategoriasMovimentosComponent implements OnInit {
 
@@ -137,7 +139,7 @@ export class CategoriasMovimentosComponent implements OnInit {
 
   carregarLista() {
     this.minDate = this.movimentacoes.dataDocumento;
-    
+
     if (this.movimentacoes.categoriasMovimentos.length === 0) {
       this.mostrarTabela = false;
       this.msg = 'Nenhum registro adicionado.';
