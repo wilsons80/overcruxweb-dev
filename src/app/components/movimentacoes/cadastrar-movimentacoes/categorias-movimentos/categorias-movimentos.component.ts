@@ -39,6 +39,9 @@ export class CategoriasMovimentosComponent implements OnInit {
   mostrarTabela = false;
   msg = "Nenhuma registro adicionado.";
 
+  maxDate = new Date(9999, 12, 31);
+  minDate = new Date(1753, 1, 1);
+
   maxDataPagamento = new Date();
 
   displayedColumns: string[] = ['data', 'valor', 'programaprojeto','contacontabil','acoes'];
