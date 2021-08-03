@@ -5,132 +5,136 @@
                 <mat-panel-title>Dados</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-                <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-                    <input matInput 
-                           [(ngModel)]="categoriaMovimento.dataMovimentacao"
-                           name="dataMovimentacao" 
-                           [matDatepicker]="dataMovimentacao" 
-                           placeholder="Data"  
-                           required
-                           [max]="maxDate"
-                           [min]="minDate" 
-                           (input)="onMascaraDataInput($event)">
-                    <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
-                    </mat-datepicker-toggle>
-                    <mat-datepicker #dataMovimentacao></mat-datepicker>
-                </mat-form-field>
-                
-                <mat-form-field fxFlex="20%">
-                    <input [(ngModel)]="categoriaMovimento.valor"
-                           currencyMask 
-                           name="valorMovimentacao" 
-                           placeholder="Valor"
-                           required 
-                           #valorMovimentacao
-                           (blur)="validarValorMovimento(valorMovimentacao.value)"
-                           matInput maxlength="13"
-                           [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
-                    <span matPrefix>R$&nbsp;</span>
-                </mat-form-field>        
-            </div>    
-
-
-            <div fxLayout="row">
-                <div fxFlex="100%" fxLayoutGap="20px">
-                    <div ngModelGroup="cbPrograma" fxFlex="50%">
-                        <combo-programa [showDisplayId]="false" #campoPrograma
-                                        [obrigatorio]="!categoriaMovimento.projeto?.id" 
-                                        [selecionado]="categoriaMovimento.programa"
-                                        (valorChange)="onValorChangePrograma($event)">
-                        </combo-programa>
-                    </div>
+            <div *ngIf="openFormCadastro">
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <mat-form-field fxFlex="20%" fxFlexOffset="20px">
+                        <input matInput 
+                               [(ngModel)]="categoriaMovimento.dataMovimentacao"
+                               name="dataMovimentacao" 
+                               [matDatepicker]="dataMovimentacao" 
+                               placeholder="Data"  
+                               required
+                               [max]="maxDate"
+                               [min]="minDate" 
+                               (input)="onMascaraDataInput($event)">
+                        <mat-datepicker-toggle matSuffix [for]="dataMovimentacao">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dataMovimentacao></mat-datepicker>
+                    </mat-form-field>
                     
-                    <div ngModelGroup="cbProjeto" fxFlex="50%">
-                        <combo-projeto [showDisplayId]="false" #campoProjeto
-                                        [obrigatorio]="!categoriaMovimento.programa?.id" 
-                                        [selecionado]="categoriaMovimento.projeto"
-                                        (valorChange)="onValorChangeProjeto($event)">
-                        </combo-projeto>
-                    </div>                
-                </div>
-            </div>
-
-            <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-                <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
-                    <combo-pesquisavel #campoCategoriaDestino 
-                                       nome="rubricaAdicional" 
-                                       [itens]="planosContas" 
-                                       itemDescricao="planoConta"
-                                       itemId="id"
-                                       label="Conta Destino (Débito)"
-                                       [obrigatorio]="true"
-                                       placeholder="Escolha..."
-                                       [(valor)]="categoriaMovimento.categoriaDestino"
-                                       (valorChange)="carregarContaDestino($event.id)"
-                                       style="margin-top: 10px;">
-                    </combo-pesquisavel>
-                </div> 
-            </div>   
-
-            <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
-                <div ngModelGroup="comboRubricaOriginal" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
-                    <combo-pesquisavel #campoCategoriaOrigem 
-                                       nome="rubricaOriginal" 
-                                       [itens]="planosContas" 
-                                       itemDescricao="planoConta"
-                                       itemId="id"
-                                       label="Conta Origem (Crédito)"
-                                       [obrigatorio]="true"
-                                       placeholder="Escolha..."
-                                       [(valor)]="categoriaMovimento.categoriaOrigem"
-                                       (valorChange)="carregarContaOrigem($event.id)"
-                                       style="margin-top: 10px;">
-                    </combo-pesquisavel>
-                </div> 
-            </div> 
-
-
-            <div fxLayout="row">
-                <mat-form-field fxFlex="100%" appearance="outline" fxFlexOffset="20px">
-                    <mat-label>Descrição</mat-label>
-                    <textarea #descricao matInput name="descricao" 
-                              [(ngModel)]="categoriaMovimento.descricao" 
-                              cdkTextareaAutosize
-                              #autosize="cdkTextareaAutosize" 
-                              cdkAutosizeMinRows="3" 
-                              maxlength="200">
-                    </textarea>
-                    <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
-                </mat-form-field>
-            </div>
-            
-
-            <!--
-            <mat-toolbar class="titulopartes">
-                <span>Rateio entre Programas/Projetos</span>
-                <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior && categoriaMovimento.rateioCategoriasMovimentos.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
-                <span *ngIf="valorRateioSuperior && categoriaMovimento.rateioCategoriasMovimentos.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está diferente ao valor da categoria.</span>
-            </mat-toolbar>
-            <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
-                <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateio">
-                    <div *ngFor="let rateio of categoriaMovimento.rateioCategoriasMovimentos; let index = index">
-                        <formulario-rateio-categoria [rateio]="rateio" 
-                                                     [index]="index"
-                                                     [rateios]="categoriaMovimento.rateioCategoriasMovimentos"   
-                                                     [perfilAcesso]="perfilAcesso">
-                        </formulario-rateio-categoria>
-                    </div>
-                    <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
-                        <div>
-                            <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addRateio()">
-                                <mat-icon>add</mat-icon>
-                            </button>
+                    <mat-form-field fxFlex="20%">
+                        <input [(ngModel)]="categoriaMovimento.valor"
+                               currencyMask 
+                               name="valorMovimentacao" 
+                               placeholder="Valor"
+                               required 
+                               #valorMovimentacao
+                               (blur)="validarValorMovimento(valorMovimentacao.value)"
+                               matInput maxlength="13"
+                               [options]="{ prefix: '', thousands: '.', decimal: ',' }" />
+                        <span matPrefix>R$&nbsp;</span>
+                    </mat-form-field>        
+                </div>    
+    
+    
+                <div fxLayout="row">
+                    <div fxFlex="100%" fxLayoutGap="20px">
+                        <div ngModelGroup="cbPrograma" fxFlex="50%">
+                            <combo-programa [showDisplayId]="false" #campoPrograma
+                                            [obrigatorio]="!categoriaMovimento.projeto?.id" 
+                                            [selecionado]="categoriaMovimento.programa"
+                                            (valorChange)="onValorChangePrograma($event)">
+                            </combo-programa>
                         </div>
-                    </div>                
+                        
+                        <div ngModelGroup="cbProjeto" fxFlex="50%">
+                            <combo-projeto [showDisplayId]="false" #campoProjeto
+                                            [obrigatorio]="!categoriaMovimento.programa?.id" 
+                                            [selecionado]="categoriaMovimento.projeto"
+                                            (valorChange)="onValorChangeProjeto($event)">
+                            </combo-projeto>
+                        </div>                
+                    </div>
                 </div>
+    
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pesquisavel #campoCategoriaDestino 
+                                           nome="rubricaAdicional" 
+                                           [itens]="planosContas" 
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           label="Conta Destino (Débito)"
+                                           [obrigatorio]="true"
+                                           placeholder="Escolha..."
+                                           [(valor)]="categoriaMovimento.categoriaDestino"
+                                           (valorChange)="carregarContaDestino($event.id)"
+                                           style="margin-top: 10px;">
+                        </combo-pesquisavel>
+                    </div> 
+                </div>   
+    
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <div ngModelGroup="comboRubricaOriginal" fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" class="marginCombo">
+                        <combo-pesquisavel #campoCategoriaOrigem 
+                                           nome="rubricaOriginal" 
+                                           [itens]="planosContas" 
+                                           itemDescricao="planoConta"
+                                           itemId="id"
+                                           label="Conta Origem (Crédito)"
+                                           [obrigatorio]="true"
+                                           placeholder="Escolha..."
+                                           [(valor)]="categoriaMovimento.categoriaOrigem"
+                                           (valorChange)="carregarContaOrigem($event.id)"
+                                           style="margin-top: 10px;">
+                        </combo-pesquisavel>
+                    </div> 
+                </div> 
+    
+    
+                <div fxLayout="row">
+                    <mat-form-field fxFlex="100%" appearance="outline" fxFlexOffset="20px">
+                        <mat-label>Descrição</mat-label>
+                        <textarea #descricao matInput name="descricao" 
+                                  [(ngModel)]="categoriaMovimento.descricao" 
+                                  cdkTextareaAutosize
+                                  #autosize="cdkTextareaAutosize" 
+                                  cdkAutosizeMinRows="3" 
+                                  maxlength="200">
+                        </textarea>
+                        <mat-hint align="end">{{descricao.value.length}} / 200</mat-hint>
+                    </mat-form-field>
+                </div>
+                
+    
+                <!--
+                <mat-toolbar class="titulopartes">
+                    <span>Rateio entre Programas/Projetos</span>
+                    <span style="font-weight: 800; padding-left: 10px;" [style.color]="valorRateioSuperior && categoriaMovimento.rateioCategoriasMovimentos.length > 0 ? 'red' : 'green'">(Total: {{getValorTotalRateio()}})</span>
+                    <span *ngIf="valorRateioSuperior && categoriaMovimento.rateioCategoriasMovimentos.length > 0" style="color: orangered; padding-left: 10px;">ATENÇÃO !!! O valor do rateio está diferente ao valor da categoria.</span>
+                </mat-toolbar>
+                <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
+                    <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoRateio">
+                        <div *ngFor="let rateio of categoriaMovimento.rateioCategoriasMovimentos; let index = index">
+                            <formulario-rateio-categoria [rateio]="rateio" 
+                                                         [index]="index"
+                                                         [rateios]="categoriaMovimento.rateioCategoriasMovimentos"   
+                                                         [perfilAcesso]="perfilAcesso">
+                            </formulario-rateio-categoria>
+                        </div>
+                        <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                            <div>
+                                <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addRateio()">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+                -->
             </div>
-            -->
+
+
 
             <div dir="rtl" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px"
                 style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>
