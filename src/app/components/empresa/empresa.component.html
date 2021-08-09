@@ -2,13 +2,10 @@
 <div class="painel-principal" style="padding: 10px;">
     <div class="painel-consultar">
         <form #formConsultarDepartamento="ngForm">
-            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+            <div fxLayout="column" fxLayoutAlign="start center">
                 <mat-toolbar class="titulopartes">Nome empresa</mat-toolbar>
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                    <div ngModelGroup="comboEmpresa" 
-                         fxLayoutGap="50px" 
-                         style="margin-top: 10px; margin-bottom: 10px"
-                         fxFlexFill>
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <div ngModelGroup="comboEmpresa" fxLayoutGap="50px" fxFlexFill>
                         <combo-empresa  [selecionado]="filtroEmpresa.empresa"
                                         [tipoEmpresa]="tipo"
                                         (valorChange)="onValorChangeEmpresa($event)">
@@ -17,13 +14,10 @@
                 </div> 
             </div>
 
-            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px" fxFlexFill>
+            <div fxLayout="column" fxLayoutAlign="start center">
                 <mat-toolbar class="titulopartes">CNPJ Empresa</mat-toolbar>
-                <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
-                    <div ngModelGroup="comboCnpjEmpresa" 
-                         fxLayoutGap="50px" 
-                         style="margin-top: 10px; margin-bottom: 10px"
-                         fxFlexFill>
+                <div fxLayout="row" fxLayoutGap="50px" fxFlexFill>
+                    <div ngModelGroup="comboCnpjEmpresa" fxLayoutGap="50px" fxFlexFill>
                         <combo-empresa  [selecionado]="filtroEmpresa.empresa"
                                         [tipoEmpresa]="tipo"
                                         [campoPesquisavel]="campoPesquisavelCnpj"
@@ -33,9 +27,7 @@
                 </div> 
             </div>
 
-            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;"
-                fxFlexFill>
-
+            <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                 <button mat-raised-button fxFlex="20%" (click)="consultar()">
                     CONSULTAR
                 </button>
@@ -43,20 +35,19 @@
                 <button mat-raised-button fxFlex="20%" style="padding-right: 20px" (click)="limpar()" route>
                     LIMPAR
                 </button>
-
             </div>
         </form>
+        <div fxLayout="row"  *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 5px">
+            <button matTooltip="Adicionar" mat-fab color="primary"
+                (click)="go()" >
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
 
         <table *ngIf="mostrarTabela; else tabelaSemDados" mat-table [dataSource]="dataSource" style="margin-top: 20px">
 
-
- <!--
-              <ng-container matColumnDef="codigo">
-                <th mat-header-cell *matHeaderCellDef> Nome: </th>
-                <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
-              </ng-container>
-            -->
-              <ng-container matColumnDef="nomeRazaoSocial">
+             <ng-container matColumnDef="nomeRazaoSocial">
                 <th mat-header-cell *matHeaderCellDef> Razão Social: </th>
                 <td mat-cell *matCellDef="let element"> {{element.nomeRazaoSocial}} </td>
               </ng-container>
@@ -100,14 +91,6 @@
             </div>
         </ng-template>
 
-        <div fxLayout="row"  *ngIf="perfilAcesso.insere" fxLayoutAlign="end center" fxLayoutGap="16px" style="padding-top: 50px">
-            <div>
-                <button matTooltip="Adicionar" mat-fab color="primary"
-                    (click)="go()" >
-                    <mat-icon>add</mat-icon>
-                </button>
-            </div>
-        </div>
     </div>
 </div>
 

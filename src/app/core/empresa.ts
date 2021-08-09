@@ -26,5 +26,6 @@ export class Empresa {
 	cep:number;
 	uf:string;
     usuarioAlteracao:number;
+	categoria: any;
 }
 

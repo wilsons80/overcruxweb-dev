@@ -13,6 +13,7 @@ import { CadastrarParceirasComponent } from './parceiras/cadastrar-parceiras/cad
 import { CadastrarFornecedorasComponent } from './fornecedoras/cadastrar-fornecedoras/cadastrar-fornecedoras.component';
 import { CadastrarClientesComponent } from './clientes/cadastrar-clientes/cadastrar-clientes.component';
 import { ComboEmpresaModule } from '../common/combo-empresa/combo-empresa.module';
+import { ComboRubricaModule } from '../common/combo-rubrica/combo-rubrica.module';
 
 
 
@@ -31,7 +32,8 @@ import { ComboEmpresaModule } from '../common/combo-empresa/combo-empresa.module
     MaterialCommonModule,
     SharedDirectivesModule,
     CadastroEnderecoModule,
-    ComboEmpresaModule
+    ComboEmpresaModule,
+    ComboRubricaModule
   ]
 })
 export class EmpresaModule { }

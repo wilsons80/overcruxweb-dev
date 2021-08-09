@@ -13,27 +13,31 @@
             </mat-form-field>
 -->
             <mat-form-field fxFlex="80%"  fxFlexOffset="20px">
-                <input matInput maxlength="200" name="nomeRazaoSocial" placeholder="Razão Social:"
-                    [(ngModel)]="empresa.nomeRazaoSocial" required>
+                <input matInput maxlength="200" name="nomeRazaoSocial" 
+                       placeholder="Razão Social"
+                       [(ngModel)]="empresa.nomeRazaoSocial" 
+                       required>
             </mat-form-field>
 
             <mat-form-field fxFlexOffset="20px" fxFlex="20%">
-                <input matInput [(ngModel)]="empresa.valorIcms" name="valorIcms" placeholder="Valor ICMS:">
+                <input matInput [(ngModel)]="empresa.valorIcms" name="valorIcms" placeholder="Valor ICMS">
                 <span matSuffix>%</span>
             </mat-form-field>
 
         </div>
 
-        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center"
-             style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill>
 
             <mat-form-field fxFlex="20%" fxFlexOffset="20px">
-                <input matInput [(ngModel)]="empresa.cnpj" name="cnpj" placeholder="CNPJ"
-                    [textMask]="{mask: maskCNPJ}" [cnpjValidator]>
+                <input matInput [(ngModel)]="empresa.cnpj" name="cnpj" 
+                       placeholder="CNPJ"
+                       [textMask]="{mask: maskCNPJ}" 
+                       [cnpjValidator]>
             </mat-form-field>
 
             <mat-form-field fxFlex="54%">
-                <input matInput maxlength="200" name="nomeFantasia" placeholder="Nome Fantasia"
+                <input matInput maxlength="200" name="nomeFantasia" 
+                       placeholder="Nome Fantasia"
                        [(ngModel)]="empresa.nomeFantasia">
             </mat-form-field>
 
@@ -44,6 +48,21 @@
                 Ativa
             </mat-checkbox>
 
+        </div>
+
+
+        <div fxLayout="row" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px" fxFlexFill
+             *ngIf="showContaContabil">
+            <div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
+                <combo-rubrica  [showDisplayId]="false"
+                                [obrigatorio]="false"
+                                [hasSintetica]="false"
+                                [selecionado]="empresa.categoria"
+                                label="Conta contábil"
+                                (valorChange)="carregarContaContabil($event)"
+                                placeholder="Conta contábil">
+                </combo-rubrica>
+            </div> 
         </div>
 
 

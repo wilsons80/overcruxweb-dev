@@ -11,6 +11,7 @@ import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { EnderecoService } from 'src/app/services/endereco/endereco.service';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'cadastrar-empresa',
@@ -22,6 +23,7 @@ export class CadastrarEmpresaComponent implements OnInit {
 
   @Input() tiposEmpresa:any[];
   @Input() titulo:String;
+  @Input() showContaContabil:boolean = false;
 
   categoriaEmpresa: CategoriaEmpresa;
 
@@ -135,4 +137,7 @@ export class CadastrarEmpresaComponent implements OnInit {
     this.empresa.ativa = this.empresa.ativa ? 'S' : 'N'
   }
 
+  carregarContaContabil(event: any){
+    this.empresa.categoria= event;
+  }
 }
