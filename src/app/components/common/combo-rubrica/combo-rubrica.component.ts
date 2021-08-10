@@ -57,8 +57,8 @@ export class ComboRubricaComponent implements OnInit {
   private preencherCombo(){
     if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
-      this.valorChange.emit(this.selecionado);
     }
+    this.valorChange.emit(this.selecionado);
   } 
   
   onValorChange(registro: any) {    
