@@ -1,6 +1,6 @@
 import { TipoEmpresa } from './../../../core/tipo-empresa';
 import { Location } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { CategoriaEmpresa } from 'src/app/core/categoria-empresa';
 import { Empresa } from 'src/app/core/empresa';
 import { MetasService } from 'src/app/services/metas/metas.service';
@@ -12,6 +12,9 @@ import { EnderecoService } from 'src/app/services/endereco/endereco.service';
 import { Acesso } from 'src/app/core/acesso';
 import { CarregarPerfil } from 'src/app/core/carregar-perfil';
 import * as _ from 'lodash';
+import { CategoriasContabeisEmpresas } from 'src/app/core/categorias-contabeis-empresas';
+import { CategoriasContabeisService } from 'src/app/services/categorias-contabeis/categorias-contabeis.service';
+import { PlanosContas } from 'src/app/core/planos-contas';
 
 @Component({
   selector: 'cadastrar-empresa',
@@ -26,6 +29,7 @@ export class CadastrarEmpresaComponent implements OnInit {
   @Input() showContaContabil:boolean = false;
 
   categoriaEmpresa: CategoriaEmpresa;
+  planosContas: PlanosContas[];
 
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil  = new CarregarPerfil();
@@ -54,11 +58,13 @@ export class CadastrarEmpresaComponent implements OnInit {
   isAtualizar = false;
 
   constructor(
+    private drc: ChangeDetectorRef,
     private empresaService: EmpresaService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private toastService: ToastService,
-    private enderecoService: EnderecoService
+    private enderecoService: EnderecoService,
+    private categoriasContabeisService: CategoriasContabeisService
   ) { }
 
 
@@ -74,6 +80,9 @@ export class CadastrarEmpresaComponent implements OnInit {
       this.mostrarBotaoAtualizar = false;
     }
 
+    this.categoriasContabeisService.getAllViewPlanosContas().subscribe((planosContas: PlanosContas[]) => {
+      this.planosContas = planosContas;
+    })
 
     this.enderecoService.getAllEstados().subscribe((ufs:any)=> {
       this.ufs = ufs;
@@ -89,6 +98,11 @@ export class CadastrarEmpresaComponent implements OnInit {
     }
 
   }
+
+  ngAfterContentChecked(): void {
+    this.drc.detectChanges();
+  }
+
   mostrarBotaoLimpar(){
     if(this.isAtualizar) return false;
     if(!this.mostrarBotaoAtualizar) return false;
@@ -137,7 +151,19 @@ export class CadastrarEmpresaComponent implements OnInit {
     this.empresa.ativa = this.empresa.ativa ? 'S' : 'N'
   }
 
-  carregarContaContabil(event: any){
-    this.empresa.categoria= event;
+
+  
+  addCategoriaContabil() {
+    if (!this.empresa.categoriasContabeis) {
+      this.empresa.categoriasContabeis = [];
+    }
+
+    const categoriaContabil:CategoriasContabeisEmpresas = new CategoriasContabeisEmpresas();    
+    categoriaContabil.id          = undefined;
+    categoriaContabil.idCategoria = undefined;
+    categoriaContabil.idEmpresa   = this.empresa.id;
+    this.empresa.categoriasContabeis.push(categoriaContabil);
   }
+
+
 }

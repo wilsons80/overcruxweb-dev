@@ -1,5 +1,6 @@
 import { TipoEmpresa } from './tipo-empresa';
 import { CategoriaEmpresa } from './categoria-empresa';
+import { CategoriasContabeisEmpresas } from './categorias-contabeis-empresas';
 
 export class Empresa {
 
@@ -26,6 +27,6 @@ export class Empresa {
 	cep:number;
 	uf:string;
     usuarioAlteracao:number;
-	categoria: any;
+	categoriasContabeis: CategoriasContabeisEmpresas[];
 }
 

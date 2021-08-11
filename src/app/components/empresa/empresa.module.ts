@@ -14,6 +14,7 @@ import { CadastrarFornecedorasComponent } from './fornecedoras/cadastrar-fornece
 import { CadastrarClientesComponent } from './clientes/cadastrar-clientes/cadastrar-clientes.component';
 import { ComboEmpresaModule } from '../common/combo-empresa/combo-empresa.module';
 import { ComboRubricaModule } from '../common/combo-rubrica/combo-rubrica.module';
+import { FormularioCategoriaContabilComponent } from './formulario-categoria-contabil/formulario-categoria-contabil.component';
 
 
 
@@ -25,7 +26,8 @@ import { ComboRubricaModule } from '../common/combo-rubrica/combo-rubrica.module
                  ClientesComponent, 
                  CadastrarParceirasComponent, 
                  CadastrarFornecedorasComponent, 
-                 CadastrarClientesComponent],
+                 CadastrarClientesComponent,
+                 FormularioCategoriaContabilComponent],
   imports: [
     CommonModule,
     EmpresaRoutingModule,

@@ -16,6 +16,7 @@ export class ComboRubricaComponent implements OnInit {
 
   @ViewChild('comboRubrica', {static: false}) comboRubrica;
   
+  @Input() itens;
   @Input() showDisplayId;
   @Input() obrigatorio;
   @Input() selecionado;
@@ -34,34 +35,41 @@ export class ComboRubricaComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      let _planoConta$;
 
-      if(!!this.hasSintetica) {
-        _planoConta$ = this.categoriasContabeisService.getAllView(this.hasSintetica) ; 
+      if(!!this.itens){
+        this.dados = this.itens;
       } else {
-        _planoConta$ = this.categoriasContabeisService.getAllViewPlanosContas();
+        let _planoConta$;
+  
+        if(!!this.hasSintetica) {
+          _planoConta$ = this.categoriasContabeisService.getAllView(this.hasSintetica) ; 
+        } else {
+          _planoConta$ = this.categoriasContabeisService.getAllViewPlanosContas();
+        }
+  
+        _planoConta$.subscribe((planosContas: PlanosContas[]) => {
+          this.dados = planosContas;
+          this.preencherCombo();
+        })
       }
 
-      _planoConta$.subscribe((planosContas: PlanosContas[]) => {
-        this.dados = planosContas;
-        this.preencherCombo();
-      })
     }, 0);
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
-    this.preencherCombo();
+    if (changes["selecionado"] && this.selecionado && this.selecionado.id) {
+      this.preencherCombo();
+    }
   }
 
   private preencherCombo(){
     if (this.selecionado && this.selecionado.id && this.dados.length) {
       this.selecionado = _.find(this.dados, { id: this.selecionado.id});
     }
-    this.valorChange.emit(this.selecionado);
   } 
   
-  onValorChange(registro: any) {    
+  onValorChange(registro: any) {   
+    this.valorChange.emit(registro); 
     this.preencherCombo();
   }
 

@@ -1,0 +1,22 @@
+<div ngModelGroup="comboRubrica" fxFlex="100%" fxLayoutGap="20px" class="marginCombo" >
+    <combo-rubrica  #campoCategoriaContabil
+                    [showDisplayId]="false"
+                    [itens]="planosContas"
+                    [obrigatorio]="false"
+                    [hasSintetica]="false"
+                    [selecionado]="categoriaContabilSelecionado"
+                    label="Conta contábil"
+                    (valorChange)="onCarregarContaContabil($event)"
+                    placeholder="Conta contábil">
+    </combo-rubrica>
+</div> 
+
+
+<div fxFlex="10%" style="margin-top: 18px;margin-left: 26px;" >
+    <button mat-icon-button 
+            *ngIf="perfilAcesso.deleta" 
+            (click)="deletar()"
+            style="padding: 0px;">
+        <mat-icon>delete_forever</mat-icon>
+    </button>                                
+</div>
