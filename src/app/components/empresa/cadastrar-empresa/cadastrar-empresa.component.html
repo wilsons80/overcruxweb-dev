@@ -137,29 +137,27 @@
             </mat-form-field>
         </div>
 
-        <div *ngIf="showContaContabil">
-            <mat-toolbar class="titulopartes"><span>Contas Contábeis</span></mat-toolbar>
-            <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
-                <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoCategoriasContabeis">
-                    <div *ngFor="let categoriaContabil of empresa.categoriasContabeis; let index = index">
-                        <formulario-categoria-contabil [categoriaContabil]="categoriaContabil" 
-                                                       [index]="index"
-                                                       [categoriasContabeis]="empresa.categoriasContabeis"   
-                                                       [planosContas]="planosContas"
-                                                       [perfilAcesso]="perfilAcesso">
-                        </formulario-categoria-contabil>
-                    </div>
-                    <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
-                        <div>
-                            <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addCategoriaContabil()">
-                                <mat-icon>add</mat-icon>
-                            </button>
-                        </div>
-                    </div>                
+        
+        <mat-toolbar class="titulopartes"><span>Contas Contábeis</span></mat-toolbar>
+        <div fxLayout="column" fxLayoutGap="50px" style="margin-top: 10px; margin-bottom: 10px;" fxFlexFill>
+            <div fxFlex="100%" fxLayoutGap="20px" fxFlexOffset="20px" ngModelGroup="grupoCategoriasContabeis">
+                <div *ngFor="let categoriaContabil of empresa.categoriasContabeis; let index = index">
+                    <formulario-categoria-contabil [categoriaContabil]="categoriaContabil" 
+                                                   [index]="index"
+                                                   [categoriasContabeis]="empresa.categoriasContabeis"   
+                                                   [planosContas]="planosContas"
+                                                   [perfilAcesso]="perfilAcesso">
+                    </formulario-categoria-contabil>
                 </div>
+                <div *ngIf="perfilAcesso.insere" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10px; padding-left: 20px;">
+                    <div>
+                        <button matTooltip="Novo" mat-mini-fab color="primary" (click)="addCategoriaContabil()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+                </div>                
             </div>
-        </div>               
-                
+        </div>
 
         <!-- BOTOES -->
         <div dir="rtl" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 10px; padding-right: 20px" fxFlexFill>

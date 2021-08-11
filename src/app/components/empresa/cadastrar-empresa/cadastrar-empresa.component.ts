@@ -26,7 +26,6 @@ export class CadastrarEmpresaComponent implements OnInit {
 
   @Input() tiposEmpresa:any[];
   @Input() titulo:String;
-  @Input() showContaContabil:boolean = false;
 
   categoriaEmpresa: CategoriaEmpresa;
   planosContas: PlanosContas[];
