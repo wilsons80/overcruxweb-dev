@@ -12,7 +12,7 @@
                     <combo-rubrica  [showDisplayId]="false"
                                     [obrigatorio]="true"
                                     [hasSintetica]="false"
-                                    [(selecionado)]="itensMovimentacoes.categoria"
+                                    [selecionado]="itensMovimentacoes.categoria"
                                     [label]="placeHolderRubrica"
                                     (valorChange)="carregarContaContabil($event)"
                                     [placeholder]="placeHolderRubrica">
@@ -40,9 +40,8 @@
             <div fxLayout="row" fxLayoutGap="50px" style="padding-top: 15px !important;" fxFlexFill >
                 <div ngModelGroup="comboRubricaAdicional" fxFlex="100%" fxLayoutGap="20px" class="marginCombo">
                     <combo-rubrica  [showDisplayId]="false"
-                                    [obrigatorio]="true"
                                     [hasSintetica]="false"
-                                    [(selecionado)]="itensMovimentacoes.categoriaAdicional"
+                                    [selecionado]="itensMovimentacoes.categoriaAdicional"
                                     [label]="placeHolderRubricaAdicional"
                                     (valorChange)="carregarContaContabilAdicional($event)"
                                     [placeholder]="placeHolderRubricaAdicional">

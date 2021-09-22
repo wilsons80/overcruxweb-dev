@@ -259,10 +259,18 @@ export class ItensMovimentacaoComponent implements OnInit {
 
 
   carregarContaContabil(event: any){
-    this.itensMovimentacoes.categoria = _.find(this.planosContas, { id: event.id});
+    if(!!event) {
+      this.itensMovimentacoes.categoria = _.find(this.planosContas, { id: event.id});
+    }else {
+      this.itensMovimentacoes.categoria = null;
+    }
   }
   carregarContaContabilAdicional(event: any){
-    this.itensMovimentacoes.categoriaAdicional = _.find(this.planosContas, { id: event.id});
+    if(!!event) {
+      this.itensMovimentacoes.categoriaAdicional = _.find(this.planosContas, { id: event.id});
+    }else {
+      this.itensMovimentacoes.categoriaAdicional = null;
+    }
   }
 
 }
