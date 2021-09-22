@@ -40,7 +40,7 @@ export class ProvisionamentoComponent implements OnInit {
   provisoes: Provisao[];
   filtro = new Filter();
   
-  displayedColumns: string[] = ['select', 'situacao', 'documento', 'valor', 'dataprovisao',   'complemento', 'categoria', 'centroCusto', 'grupoContas', 'descricaoFornecedor', 'nomeFornecedor'];
+  displayedColumns: string[] = ['select', 'situacao', 'dataprovisao', 'documento',  'complemento', 'descricaoFornecedor', 'categoria', 'valor', 'centroCusto', 'grupoContas',  'nomeFornecedor'];
   dataSource: MatTableDataSource<Provisao> = new MatTableDataSource();
   mostrarTabela: boolean = false;
   msg: string;
