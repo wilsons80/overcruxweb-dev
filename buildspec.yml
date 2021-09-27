@@ -10,9 +10,9 @@ phases:
       - echo Build iniciado em `date`
       - npm run build
   post_build:
-  	commands:
-  	  - echo Build finalizado em `date`	
+    commands:
+      - echo Build finalizado em `date`	
       - npm rum producao
- artifacts:
-   files:
-     - build/**/*
+artifacts:
+  files:
+    - build/**/*
