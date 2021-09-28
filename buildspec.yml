@@ -12,7 +12,6 @@ phases:
   post_build:
     commands:
       - echo Build finalizado em `date`	
-      - sudo chmod 777 Script/*
 artifacts:
   files:
     - dist/**/*
