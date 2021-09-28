@@ -1,3 +1,3 @@
 #!/bin/bash
-touch /var/www/html/teste.txt
-rm -R /var/www/html/*
+sudo touch /var/www/html/teste.txt
+sudo rm -R /var/www/html/*
