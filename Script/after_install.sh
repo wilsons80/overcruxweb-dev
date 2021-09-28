@@ -1,2 +1,2 @@
 #!/bin/bash
-cp -R /home/ubuntu/s3manager/* /var/www/html/   
+sudo cp -R /home/ubuntu/s3manager/* /var/www/html/   
