@@ -5,14 +5,14 @@ files:
     destination: /home/ubuntu/s3manager
 hooks:
   BeforeInstall:
-    - location: Scripts/before_install.sh
+    - location: Script/before_install.sh
       timeout: 180
-      runas: ubuntu
+      runas: root
   AfterInstall:
-    - location: Scripts/after_install.sh
+    - location: Script/after_install.sh
       timeout: 180
-      runas: ubuntu
+      runas: root
   ApplicationStart:
-    - location: Scripts/app_start.sh
+    - location: Script/app_start.sh
       timeout: 3600
-      runas: ubuntu
+      runas: root
