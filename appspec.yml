@@ -7,12 +7,12 @@ hooks:
   BeforeInstall:
     - location: Scripts/before_install.sh
       timeout: 180
-      runas: root
+      runas: sudo
   AfterInstall:
     - location: Scripts/after_install.sh
       timeout: 180
-      runas: root
+      runas: sudo
   ApplicationStart:
     - location: Scripts/app_start.sh
       timeout: 3600
-      runas: root
+      runas: sudo
