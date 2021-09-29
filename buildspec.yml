@@ -3,7 +3,7 @@ phases:
   pre_build:
     commands:
       - echo Instalando dependencias
-      - sudo apt install npm
+      - sudo install npm
       - sudo npm install @angular/cli@11.0.0 -g > /dev/null
   build:
     commands:
