@@ -3,12 +3,12 @@ phases:
   pre_build:
     commands:
       - echo Instalando dependencias
-      - sudo npm install
-      - sudo npm install @angular/cli@11.0.0 -g > /dev/null
+      - npm install
+      - npm install @angular/cli@11.0.0 -g > /dev/null
   build:
     commands:
       - echo Build iniciado em `date`
-      - sudo npm run build
+      - npm run build
   post_build:
     commands:
       - echo Build finalizado em `date`	
