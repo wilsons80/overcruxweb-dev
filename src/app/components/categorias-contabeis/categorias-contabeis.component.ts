@@ -27,7 +27,7 @@ export class CategoriasContabeisComponent implements OnInit {
   mostrarTabela: boolean = false;
   msg: string;
 
-  displayedColumns: string[] = ['planoconta', 'sintetico', 'acoes'];
+  displayedColumns: string[] = ['id', 'planoconta', 'sintetico', 'acoes'];
   dataSource: MatTableDataSource<PlanosContas> = new MatTableDataSource();
 
   perfilAcesso: Acesso = new Acesso();
