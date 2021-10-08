@@ -121,5 +121,6 @@ export enum Modulos{
     , EMPRESAS_CLIENTES                     = 'EMPRESAS_CLIENTES'
     , RELATORIO_FINANCEIRO                  = 'RELATORIO_FINANCEIRO'
     , MOVIMENTACOES_CONTABIES               = 'MOVIMENTACOES_CONTABIES'
+    , BENEFICIOS_SOCIAIS                    = 'BENEFICIOS_SOCIAIS'
 
 }
