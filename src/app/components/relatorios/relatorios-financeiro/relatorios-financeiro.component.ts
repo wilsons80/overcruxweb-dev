@@ -30,6 +30,7 @@ import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ComboEmpresa } from 'src/app/core/combo-empresa';
 import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
+import { RelatorioMovimentacaoContabilService } from 'src/app/services/relatorio-financeiro/movimentacao-contabil/relatorio-movimentacao-contabil.service';
 
 export interface TipoRelatorio {
   tipo: string;
@@ -65,6 +66,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  comboPlanosContasAll: PlanosContas[];
   comboPlanosContas: PlanosContas[];
   comboContasBancarias: ContasBancaria[];
 
@@ -78,6 +80,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'numerotransacao', 'datapagamento', 'rubrica'];
   displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
   displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','tipo', 'descricao','parceiro','numerodocumento', 'dataoperacao', 'valoroperacao', 'bancoagenciaconta', 'saldo'];
+  displayColunasMovimentacaoContabil: string[] = ['select', 'programaprojeto',  'numerodocumento', 'datadocumento','descricaoCategoria','dataMovimentacao','valorCategoria','contaDestino','contaOrigem'];
 
 
   displayedColumns: string[] = [];
@@ -96,7 +99,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   tiposRelatorios: TipoRelatorio[] = [
     {tipo: 'NP', descricao: 'Relação Nominativa de Pagamentos', nomeRelatorio: 'Relação Nominativa de Pagamentos'},
     {tipo: 'FP', descricao: 'Faturas a Pagar', nomeRelatorio: 'faturas_pagar'},
-    {tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'}
+    {tipo: 'SP', descricao: 'Saldo por Projeto', nomeRelatorio: 'saldo_projeto'},
+    {tipo: 'MC', descricao: 'Movimentações Contábeis', nomeRelatorio: 'movimentacao_contabil'},
   ];
   tipoRelatorioSelecionado: TipoRelatorio;
 
@@ -114,6 +118,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     private relatorioFaturasPagarService: RelatorioFaturasPagarService,
     private relatorioNormativaPagamentosService: RelatorioNormativaPagamentosService,
     private relatorioSaldoProjetoService: RelatorioSaldoProjetoService,
+    private relatorioMovimentacaoContabilService: RelatorioMovimentacaoContabilService,
     private contasBancariaService: ContasBancariaService,
     private categoriasContabeisService: CategoriasContabeisService,
   ) { 
@@ -140,6 +145,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   }
 
   prepararBusca() {
+    this.comboPlanosContas = this.comboPlanosContasAll.filter(c => !c.sintetica);
+
     if(this.tipoRelatorioSelecionado) {
       switch(this.tipoRelatorioSelecionado.tipo) { 
         case 'NP': { 
@@ -157,6 +164,12 @@ export class RelatoriosFinanceiroComponent implements OnInit {
           this.prepararBuscaSaldoProjeto();
           break; 
         } 
+        case 'MC': { 
+          this.displayedColumns = this.displayColunasMovimentacaoContabil;
+          this.prepararBuscaMovimentacaoContabil();
+          this.comboPlanosContas = this.comboPlanosContasAll;
+          break; 
+        }         
         default: { 
           this.displayedColumns = [];
           break; 
@@ -164,8 +177,6 @@ export class RelatoriosFinanceiroComponent implements OnInit {
      } 
     }
   }
-
-
   
   prepararBuscaNormativaPagamentos(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'NP') { 
@@ -198,7 +209,6 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     return this.servicoBusca$;
   }
 
-
   prepararBuscaSaldoProjeto(): Observable<any>{
     if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'SP') { 
       this.servicoBusca  = this.relatorioSaldoProjetoService;
@@ -206,6 +216,18 @@ export class RelatoriosFinanceiroComponent implements OnInit {
                                                                        this.filtro.projeto?.id,
                                                                        this.filtro.dataInicio, 
                                                                        this.filtro.dataFim);
+    }
+    return this.servicoBusca$;
+  }
+  
+  prepararBuscaMovimentacaoContabil(): Observable<any>{
+    if(this.tipoRelatorioSelecionado && this.tipoRelatorioSelecionado.tipo === 'MC') { 
+      this.servicoBusca  = this.relatorioMovimentacaoContabilService;
+      this.servicoBusca$ = this.relatorioMovimentacaoContabilService.getFilter(this.filtro.planoConta?.id,
+                                                                               this.filtro.programa?.id,
+                                                                               this.filtro.projeto?.id,
+                                                                               this.filtro.dataInicio, 
+                                                                               this.filtro.dataFim);
     }
     return this.servicoBusca$;
   }
@@ -324,8 +346,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
 
   private carregarCombos(){
-    this.categoriasContabeisService.getAllView(false).subscribe((planosContas: PlanosContas[]) => {
-      this.comboPlanosContas = planosContas;
+    this.categoriasContabeisService.getAllViewPlanosContas().subscribe((planosContas: PlanosContas[]) => {
+      this.comboPlanosContasAll = planosContas;
     });
 
     this.contasBancariaService.getAllComboByInstituicaoLogada().subscribe((contasBancarias: ContasBancaria[]) => {
@@ -395,7 +417,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
 
   showFiltroFornecedor(): boolean {
-    return this.tipoRelatorioSelecionado.tipo !== 'SP'
+    return this.tipoRelatorioSelecionado.tipo !== 'SP' && this.tipoRelatorioSelecionado.tipo !== 'MC'
   }
 
   showFiltroCategoria(): boolean {
