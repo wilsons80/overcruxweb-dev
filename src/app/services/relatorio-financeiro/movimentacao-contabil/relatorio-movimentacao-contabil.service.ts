@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_BYPASS_INTERCEPTOR } from 'src/app/components/common/http-mgmt/http-mgmt.module';
-
+import * as moment from 'moment';
 
 const rootPath = 'api/movimentacaocontabil/';
 
@@ -19,6 +19,16 @@ export class RelatorioMovimentacaoContabilService {
     return this.http.post(`${rootPath}mimetype/${mimetype}`, dados , {responseType: 'arraybuffer'});
   }
 
+  getSaldoContaContabil(idPlanoConta: number, dataFim: any) {
+    const p_dataFim = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
+
+    return this.http.get(`${rootPath}saldocontacontabil`, { 
+      params: {
+        idPlanoConta: `${idPlanoConta}`,
+        data: `${p_dataFim}`
+      }
+    });
+  }
   
   getFilter(idcategoria: string|number,
             idPrograma: string|number,

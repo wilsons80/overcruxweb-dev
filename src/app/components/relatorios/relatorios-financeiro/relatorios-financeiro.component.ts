@@ -105,6 +105,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   tipoRelatorioSelecionado: TipoRelatorio;
 
   valorTotalMovimentos: number;
+  valorSaldoMovimentos: number;
 
   constructor(
     private toastService: ToastService,
@@ -236,6 +237,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     this.prepararBusca();    
 
     this.valorTotalMovimentos = 0;
+    this.valorSaldoMovimentos = 0;
+
     this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
     this.servicoBusca$
     .subscribe(
@@ -249,6 +252,12 @@ export class RelatoriosFinanceiroComponent implements OnInit {
           this.dadosDataSource.forEach(mov => {
             this.valorTotalMovimentos = this.valorTotalMovimentos + mov.valorMovimentacao;
           });
+        }
+
+        if(this.isRelatorioMovimentacaoContabil() && this.isShowSaldoContabil()) {
+          this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataFim).subscribe((valor: number) => {
+            this.valorSaldoMovimentos = valor;
+          })
         }
         
         this.selection.clear();
@@ -335,6 +344,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     this.dadosDataSource = [];
     this.dataSource.data = [];
     this.mostrarTabela = false;
+    this.valorSaldoMovimentos = 0;
+    this.valorTotalMovimentos = 0;
   }
 
   limpar() {
@@ -412,31 +423,43 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
 
   isRequiredFiltroData(): boolean {
-    return this.tipoRelatorioSelecionado.tipo !== 'FP'
+    return this.tipoRelatorioSelecionado.tipo !== 'FP';
   }
 
 
   showFiltroFornecedor(): boolean {
-    return this.tipoRelatorioSelecionado.tipo !== 'SP' && this.tipoRelatorioSelecionado.tipo !== 'MC'
+    return this.tipoRelatorioSelecionado.tipo !== 'SP' && this.tipoRelatorioSelecionado.tipo !== 'MC';
   }
 
   showFiltroCategoria(): boolean {
-    return this.tipoRelatorioSelecionado.tipo !== 'SP'
+    return this.tipoRelatorioSelecionado.tipo !== 'SP';
   }
 
   showFiltroContaBancaria(): boolean {
-    return this.tipoRelatorioSelecionado.tipo === 'SP'
+    return this.tipoRelatorioSelecionado.tipo === 'SP';
   }
 
   showFiltroDataVencimento(): boolean {
-    return this.tipoRelatorioSelecionado.tipo === 'FP'
+    return this.tipoRelatorioSelecionado.tipo === 'FP';
   }
 
   showFiltroRubricaAdicional(): boolean {
-    return this.tipoRelatorioSelecionado.tipo === 'NP'
+    return this.tipoRelatorioSelecionado.tipo === 'NP';
   }
 
   isRelatorioNormativaPagamento(): boolean {
-    return this.tipoRelatorioSelecionado.tipo === 'NP'
+    return this.tipoRelatorioSelecionado.tipo === 'NP';
+  }
+
+  isRelatorioMovimentacaoContabil(): boolean {
+    return this.tipoRelatorioSelecionado.tipo === 'MC';
+  }
+
+  isShowSaldoContabil(): boolean{
+    return !!this.filtro.planoConta?.id && !!this.filtro.dataFim;
+  }
+
+  limparSaldoContaContabil(){
+    this.valorSaldoMovimentos = null;
   }
 }

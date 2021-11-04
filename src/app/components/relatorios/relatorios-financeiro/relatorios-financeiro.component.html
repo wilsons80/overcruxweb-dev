@@ -30,6 +30,7 @@
                                            label="Conta Contábil"
                                            placeholder="Escolha..."
                                            [(valor)]="filtro.planoConta"
+                                           (valorChange)="limparSaldoContaContabil()"
                                            style="margin-top: 10px;">
                         </combo-pesquisavel>
                     </div>
@@ -152,8 +153,14 @@
 
                 </div>
     
-                <div  *ngIf="isRelatorioNormativaPagamento() && mostrarTabela" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                <div *ngIf="isRelatorioNormativaPagamento() && mostrarTabela" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                     <span fxFlexOffset="20px" style="font-weight: bold;">Valor Total Movimentação: </span> <label style="padding-left:5px">{{valorTotalMovimentos | currency: 'BRL'}}</label> 
+                </div>
+                <div *ngIf="isRelatorioMovimentacaoContabil() && isShowSaldoContabil()" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+                    <span fxFlexOffset="20px" style="font-weight: bold;">Saldo Conta Contábil: </span> 
+                    <span [ngStyle]="{'color': valorSaldoMovimentos < 0 ? 'red' : '' }">
+                        <label style="padding-left:5px">{{valorSaldoMovimentos | currency: 'BRL'}}</label>
+                    </span>
                 </div>
     
                 <div dir="rtl" class="botoes" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
