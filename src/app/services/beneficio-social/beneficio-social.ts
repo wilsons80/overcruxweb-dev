@@ -7,14 +7,21 @@ import { Rotas } from 'src/app/core/rotas';
 import { BaseService } from '../base/base.service';
 
 
-const rootPath = 'api/cargos/';
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class BeneficioSocialService  extends BaseService<BeneficioSocial> {
 
   constructor(http: HttpClient) {
     super(http, Rotas.BENEFICIOS_SOCIAIS);
+  }
+
+  getAllByCombo() {
+    return this.http.get(`${Rotas.BENEFICIOS_SOCIAIS}`);
+  }
+
+  getById(idBeneficilSocial:number){
+    return this.http.get(Rotas.BENEFICIOS_SOCIAIS +`${idBeneficilSocial}`)
   }
 }
