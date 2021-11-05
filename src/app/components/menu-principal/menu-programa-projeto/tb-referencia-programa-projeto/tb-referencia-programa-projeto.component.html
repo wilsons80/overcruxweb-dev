@@ -14,7 +14,7 @@
 <mat-nav-list [ngClass]="{'expandido': menuPrincipalService.expandido}">
 
     <div [hidden]="!isMostrarSubMenu" [@menuState]="currentState">
-        
+
         <!-- TIPOS_DOADORES -->
         <div style="padding-left: 15px">
             <sub-menu *ngIf="verificaAcesso(getModulos().TIPOS_DOADORES)" icone="list" titulo="Tipos de doadores"
@@ -26,13 +26,13 @@
             <sub-menu *ngIf="verificaAcesso(getModulos().DOADORES)" icone="list" titulo="Doadores"
             rota="doadores" toolTip="Doadores"></sub-menu>
         </div>
-        
+
         <!-- BENEFICIOS_SOCIAIS -->
         <div style="padding-left: 15px">
-            <sub-menu *ngIf="verificaAcesso(getModulos().BENEFICIOS_SOCIAIS)" 
+            <sub-menu *ngIf="verificaAcesso(getModulos().BENEFICIOS_SOCIAIS)"
                       icone="list" titulo="Benefícios Sociais"
                       rota="beneficiossociais" toolTip="Benefícios Sociais"></sub-menu>
         </div>
-        
+
     </div>
 </mat-nav-list>
