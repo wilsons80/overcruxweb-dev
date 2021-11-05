@@ -77,10 +77,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   perfilAcesso: Acesso = new Acesso();
   carregarPerfil: CarregarPerfil;
 
-  displayColunasNormativa: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'numerotransacao', 'datapagamento', 'rubrica'];
-  displayColunasFaturaPagar: string[] = ['select', 'programaprojeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
-  displayColunasSaldoProjeto: string[] = ['select', 'programaprojeto','tipo', 'descricao','parceiro','numerodocumento', 'dataoperacao', 'valoroperacao', 'bancoagenciaconta', 'saldo'];
-  displayColunasMovimentacaoContabil: string[] = ['select', 'programaprojeto',  'numerodocumento', 'datadocumento','descricaoCategoria','dataMovimentacao','valorCategoria','contaDestino','contaOrigem'];
+  displayColunasNormativa: string[] = ['select', 'nomeProgramaProjeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'numerotransacao', 'datapagamento', 'rubrica'];
+  displayColunasFaturaPagar: string[] = ['select', 'nomeProgramaProjeto','fornecedor','numerodocumento','cnpjcpf', 'datadocumento', 'valormovimentacao', 'datavencimento', 'rubrica'];
+  displayColunasSaldoProjeto: string[] = ['select', 'nomeProgramaProjeto','tipo', 'descricao','parceiro','numerodocumento', 'dataoperacao', 'valoroperacao', 'bancoagenciaconta', 'saldo'];
+  displayColunasMovimentacaoContabil: string[] = ['select', 'nomeProgramaProjeto',  'numerodocumento', 'datadocumento','descricaoCategoria','dataMovimentacao','valorCategoria','contaDestino','contaOrigem'];
 
 
   displayedColumns: string[] = [];

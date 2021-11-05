@@ -167,7 +167,8 @@
                     <button mat-raised-button fxFlex="150px" (click)="getRelatorio(MIMETYPE_PDF)" 
                             [ngStyle]="{'background-color' : mostrarTabela ? 'green' : ''}" 
                             style="color: rgb(252, 250, 250);" 
-                            [fxHide]="!mostrarTabela">
+                            [fxHide]="!mostrarTabela"
+                            *ngIf="!isRelatorioMovimentacaoContabil()">
                         GERAR PDF
                     </button>
     
@@ -175,7 +176,7 @@
                             (click)="getRelatorio(MIMETYPE_EXCEL)" 
                             [ngStyle]="{'background-color' : mostrarTabela ? 'green' : ''}" 
                             style="color: rgb(255, 254, 254);" 
-                            [fxHide]="!mostrarTabela">
+                            [fxHide]="!mostrarTabela" >
                         GERAR EXCEL
                     </button>
     
@@ -218,7 +219,7 @@
 
             
 
-            <ng-container matColumnDef="programaprojeto" >
+            <ng-container matColumnDef="nomeProgramaProjeto" >
                 <th mat-header-cell mat-sort-header *matHeaderCellDef style="text-align: center; width: 300px">Programa/Projeto</th>
                 <td mat-cell *matCellDef="let element"> {{element.nomeProgramaProjeto }} </td>
             </ng-container>
