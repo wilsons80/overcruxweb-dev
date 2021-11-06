@@ -21,7 +21,4 @@ export class BeneficioSocialService  extends BaseService<BeneficioSocial> {
     return this.http.get(`${Rotas.BENEFICIOS_SOCIAIS}`);
   }
 
-  getById(idBeneficilSocial:number){
-    return this.http.get(Rotas.BENEFICIOS_SOCIAIS +`${idBeneficilSocial}`)
-  }
 }

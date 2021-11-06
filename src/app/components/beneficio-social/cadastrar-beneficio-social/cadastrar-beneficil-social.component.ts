@@ -68,11 +68,9 @@ export class CadastrarBeneficilSocialComponent implements OnInit {
 
     const id = this.activatedRoute.snapshot.queryParams.id ? this.activatedRoute.snapshot.queryParams.id : null;
     if (id) {
-      console.log("Atualizar", id);
       this.isAtualizar = true;
       this.beneficioSocialService.getById(id).subscribe((beneficioSocial: BeneficioSocial) => {
         this.beneficioSocial = beneficioSocial;
-      console.log("aqui", this.beneficioSocial);
       });
     }
   }
@@ -106,40 +104,11 @@ export class CadastrarBeneficilSocialComponent implements OnInit {
   }
 
   atualizar() {
-
     this.beneficioSocialService.alterar(this.beneficioSocial).subscribe(() => {
-      this.toastService.showSucesso("Registro atualizado com sucesso");
+      this.router.navigate(['beneficiossociais']);
+      this.toastService.showSucesso("Beneficio social atualizado com sucesso");
     });
 
-  }
-
-
-  // onValorChangeEmpresa(registro: any) {
-  //   this.filtroEmpresa = registro;
-  //   if (registro) {
-  //     this.mostrarDadosEmpresa(registro.id);
-  //   }
-  // }
-
-  // mostrarDadosEmpresa(id: number) {
-  //   this.doadores.empresa = _.find(this.listaEmpresas, { id: id });
-  // }
-
-  // onValorChangePessoa(registro: any) {
-  //   this.filtroPessoa = registro;
-  //   if (registro) {
-  //     this.mostrarDadosPessoa(registro.id);
-  //   }
-  // }
-
-  // mostrarDadosPessoa(id: number) {
-  //   this.pessoaFisicaService.getById(id).subscribe((pessoa: PessoaFisica) => {
-  //     this.doadores.pessoasFisica = pessoa;
-  //   })
-  // }
-
-  onMascaraDataInput(event) {
-    return this.dataUtilService.onMascaraDataInput(event);
   }
 
   isObrigatorio(elm:any){
