@@ -31,6 +31,7 @@ import { ProgramaService } from 'src/app/services/programa/programa.service';
 import { ComboEmpresa } from 'src/app/core/combo-empresa';
 import { ComboPessoaFisica } from 'src/app/core/combo-pessoa-fisica';
 import { RelatorioMovimentacaoContabilService } from 'src/app/services/relatorio-financeiro/movimentacao-contabil/relatorio-movimentacao-contabil.service';
+import { switchMap } from 'rxjs/operators';
 
 export interface TipoRelatorio {
   tipo: string;
@@ -105,7 +106,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   tipoRelatorioSelecionado: TipoRelatorio;
 
   valorTotalMovimentos: number;
-  valorSaldoMovimentos: number;
+  valorSaldoInicioMovimentos: number;
+  valorSaldoFinalMovimentos: number;
+  valorTotalOrigem: number;
+  valorTotalDestino: number;
 
   constructor(
     private toastService: ToastService,
@@ -235,9 +239,9 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   consultar() {
     this.prepararBusca();    
+    this.limparSaldoContaContabil();
 
     this.valorTotalMovimentos = 0;
-    this.valorSaldoMovimentos = 0;
 
     this.loadingPopupService.mostrarMensagemDialog('Buscando, aguarde...');
     this.servicoBusca$
@@ -255,15 +259,34 @@ export class RelatoriosFinanceiroComponent implements OnInit {
         }
 
         if(this.isRelatorioMovimentacaoContabil() && this.isShowSaldoContabil()) {
-          this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataFim).subscribe((valor: number) => {
-            this.valorSaldoMovimentos = valor;
+          this.carregarValoresTotalOrigemAndDestino();
+
+          this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim)
+          .subscribe((objSaldos: any) => {
+            this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
+            this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
+
+            // Valida se o saldo final está correto, senão chama a função para atualizar
+            const somatorioSaldos = this.valorSaldoInicioMovimentos + this.valorTotalOrigem + this.valorTotalDestino 
+            if(Number(this.valorSaldoFinalMovimentos.toFixed(2)) != Number(somatorioSaldos.toFixed(2))) {
+              this.relatorioMovimentacaoContabilService.atualizarSaldoContabil(this.filtro.planoConta.id, this.filtro.dataInicio)
+              .pipe(
+                switchMap(() => this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim))
+              ).subscribe((objSaldos: any) => {
+                this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
+                this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
+                this.verificaMostrarTabela(dados);
+              });
+            } else {
+              this.verificaMostrarTabela(dados);
+            }
           })
+        } else {
+          this.verificaMostrarTabela(dados);
         }
         
         this.selection.clear();
         this.dataSource.data.forEach(row => this.selection.select(row))
-
-        this.verificaMostrarTabela(dados);
     },
     (error) => {
       this.toastService.showAlerta("Não foi possível recuperar os dados.")
@@ -271,6 +294,20 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     });
   }
 
+  private carregarValoresTotalOrigemAndDestino() {
+    if(!!this.filtro.planoConta?.id) {
+      const valoresOrigem  = this.dataSource.data.filter(d => d.idCategoriaOrigem  === this.filtro.planoConta.id);
+      const valoresDestino = this.dataSource.data.filter(d => d.idCategoriaDestino === this.filtro.planoConta.id);
+  
+      valoresOrigem.forEach(mov => {
+        this.valorTotalOrigem = this.valorTotalOrigem + mov.valorCategoria;
+      });
+
+      valoresDestino.forEach(mov => {
+        this.valorTotalDestino = this.valorTotalDestino + mov.valorCategoria;
+      });
+    }
+  }
 
   
   /** Whether the number of selected elements matches the total number of rows. */
@@ -287,7 +324,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  verificaMostrarTabela(lista: ColaboradoresGestaoPessoal[]) {
+  verificaMostrarTabela(lista: any[]) {
     if (!lista || lista.length == 0) {
       this.mostrarTabela = false;
       this.msg = "Nenhuma registro encontrado para o relatório."
@@ -344,8 +381,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     this.dadosDataSource = [];
     this.dataSource.data = [];
     this.mostrarTabela = false;
-    this.valorSaldoMovimentos = 0;
     this.valorTotalMovimentos = 0;
+    this.limparSaldoContaContabil();
   }
 
   limpar() {
@@ -460,6 +497,10 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   }
 
   limparSaldoContaContabil(){
-    this.valorSaldoMovimentos = null;
+    this.valorSaldoInicioMovimentos = 0;
+    this.valorSaldoFinalMovimentos  = 0;
+    this.valorTotalOrigem = 0;
+    this.valorTotalDestino = 0;
+  
   }
 }

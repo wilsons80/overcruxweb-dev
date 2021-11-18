@@ -156,10 +156,26 @@
                 <div *ngIf="isRelatorioNormativaPagamento() && mostrarTabela" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
                     <span fxFlexOffset="20px" style="font-weight: bold;">Valor Total Movimentação: </span> <label style="padding-left:5px">{{valorTotalMovimentos | currency: 'BRL'}}</label> 
                 </div>
-                <div *ngIf="isRelatorioMovimentacaoContabil() && isShowSaldoContabil()" fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
-                    <span fxFlexOffset="20px" style="font-weight: bold;">Saldo Conta Contábil: </span> 
-                    <span [ngStyle]="{'color': valorSaldoMovimentos < 0 ? 'red' : '' }">
-                        <label style="padding-left:5px">{{valorSaldoMovimentos | currency: 'BRL'}}</label>
+
+                <div fxLayout="row" *ngIf="isRelatorioMovimentacaoContabil() && isShowSaldoContabil()" 
+                     fxLayoutGap="20px" style="padding-top: 20px; padding-bottom: 20px;" fxFlexFill>
+
+                    <span [ngStyle]="{'color': valorSaldoInicioMovimentos < 0 ? 'red' : '' }">
+                        <label fxFlexOffset="20px" style="font-weight: bold;">Saldo Anterior:</label> 
+                        <label style="padding-left:5px">{{valorSaldoInicioMovimentos | currency: 'BRL'}}</label>
+                    </span>
+                    <span [ngStyle]="{'color': valorTotalDestino < 0 ? 'red' : '' }">
+                        <label fxFlexOffset="20px" style="font-weight: bold;">Total Destino:</label> 
+                        <label style="padding-left:5px">{{valorTotalDestino | currency: 'BRL'}}</label>
+                    </span>
+
+                    <span [ngStyle]="{'color': valorTotalOrigem < 0 ? 'red' : '' }">
+                        <label fxFlexOffset="20px" style="font-weight: bold;">Total Origem:</label> 
+                        <label style="padding-left:5px">{{valorTotalOrigem | currency: 'BRL'}}</label>
+                    </span>
+                    <span [ngStyle]="{'color': valorSaldoFinalMovimentos < 0 ? 'red' : '' }">
+                        <label fxFlexOffset="20px" style="font-weight: bold;">Saldo Final:</label> 
+                        <label style="padding-left:5px">{{valorSaldoFinalMovimentos | currency: 'BRL'}}</label>
                     </span>
                 </div>
     

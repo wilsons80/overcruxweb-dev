@@ -19,13 +19,24 @@ export class RelatorioMovimentacaoContabilService {
     return this.http.post(`${rootPath}mimetype/${mimetype}`, dados , {responseType: 'arraybuffer'});
   }
 
-  getSaldoContaContabil(idPlanoConta: number, dataFim: any) {
-    const p_dataFim = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
 
+  
+  atualizarSaldoContabil(idPlanoConta: number, dataInicio: any){
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    return this.http.put(`${rootPath}atualizarsaldocontacontabil/${idPlanoConta}/${p_dataInicio}`, {});
+  }
+
+
+  getSaldoContaContabil(idPlanoConta: number, dataInicio: any, dataFim: any) {
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    const p_dataFim    = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
+
+    
     return this.http.get(`${rootPath}saldocontacontabil`, { 
       params: {
         idPlanoConta: `${idPlanoConta}`,
-        data: `${p_dataFim}`
+        dataInicio: `${p_dataInicio}`,
+        dataFim: `${p_dataFim}`
       }
     });
   }
