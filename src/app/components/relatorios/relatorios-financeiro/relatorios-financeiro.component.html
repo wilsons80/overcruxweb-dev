@@ -173,7 +173,7 @@
                         <label fxFlexOffset="20px" style="font-weight: bold;">Total Origem:</label> 
                         <label style="padding-left:5px">{{valorTotalOrigem | currency: 'BRL'}}</label>
                     </span>
-                    <span [ngStyle]="{'color': valorSaldoFinalMovimentos < 0 ? 'red' : '' }">
+                    <span [ngStyle]="{'color': valorTotalFinal < 0 ? 'red' : '' }">
                         <label fxFlexOffset="20px" style="font-weight: bold;">Saldo Final:</label> 
                         <label style="padding-left:5px">{{valorTotalFinal | currency: 'BRL'}}</label>
                     </span>
