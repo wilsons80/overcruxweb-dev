@@ -110,6 +110,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
   valorSaldoFinalMovimentos: number;
   valorTotalOrigem: number;
   valorTotalDestino: number;
+  valorTotalFinal: number;
+
 
   constructor(
     private toastService: ToastService,
@@ -265,6 +267,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
           .subscribe((objSaldos: any) => {
             this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
             this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
+            this.valorTotalFinal = this.valorSaldoInicioMovimentos + this.valorTotalDestino + this.valorTotalOrigem;
+
 
             // Valida se o saldo final está correto, senão chama a função para atualizar
             const somatorioSaldos = this.valorSaldoInicioMovimentos + this.valorTotalOrigem + this.valorTotalDestino 
@@ -278,6 +282,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
                 this.loadingPopupService.closeDialog();
                 this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
                 this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
+                this.valorTotalFinal = this.valorSaldoInicioMovimentos + this.valorTotalDestino + this.valorTotalOrigem;
                 this.verificaMostrarTabela(dados);
               },
               (error)=> {
@@ -312,6 +317,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
       valoresDestino.forEach(mov => {
         this.valorTotalDestino = this.valorTotalDestino + mov.valorCategoria;
       });
+
     }
   }
 
@@ -507,6 +513,7 @@ export class RelatoriosFinanceiroComponent implements OnInit {
     this.valorSaldoFinalMovimentos  = 0;
     this.valorTotalOrigem = 0;
     this.valorTotalDestino = 0;
+    this.valorTotalFinal = 0;
   
   }
 }
