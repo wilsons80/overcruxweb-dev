@@ -93,6 +93,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   servicoBusca: any;
   servicoBusca$: any;
+  servicoBuscaSaldo$: any;
+  atualizarSaldoContabil$: any;
 
   filtro: Filter = new Filter();
   dadosDataSource: any[]
@@ -107,7 +109,6 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   valorTotalMovimentos: number;
   valorSaldoInicioMovimentos: number;
-  valorSaldoFinalMovimentos: number;
   valorTotalOrigem: number;
   valorTotalDestino: number;
   valorTotalFinal: number;
@@ -263,25 +264,31 @@ export class RelatoriosFinanceiroComponent implements OnInit {
         if(this.isRelatorioMovimentacaoContabil() && this.isShowSaldoContabil()) {
           this.carregarValoresTotalOrigemAndDestino();
 
-          this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim)
-          .subscribe((objSaldos: any) => {
-            this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
-            this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
-            this.valorTotalFinal = this.valorSaldoInicioMovimentos + this.valorTotalDestino + this.valorTotalOrigem;
+          if(this.filtro.programa?.id) {
+            this.servicoBuscaSaldo$ = this.relatorioMovimentacaoContabilService.getSaldoContaContabilPrograma(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim, this.filtro.programa.id);
+            this.atualizarSaldoContabil$ = this.relatorioMovimentacaoContabilService.atualizarSaldoContabilPrograma(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.programa.id);
+          } else if (this.filtro.projeto?.id){
+            this.servicoBuscaSaldo$ = this.relatorioMovimentacaoContabilService.getSaldoContaContabilProjeto(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim, this.filtro.projeto.id);
+            this.atualizarSaldoContabil$ = this.relatorioMovimentacaoContabilService.atualizarSaldoContabilProjeto(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.projeto.id);
+          } else {
+            this.servicoBuscaSaldo$ = this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim);
+            this.atualizarSaldoContabil$ = this.relatorioMovimentacaoContabilService.atualizarSaldoContabil(this.filtro.planoConta.id, this.filtro.dataInicio);
+          }
 
+          this.servicoBuscaSaldo$.subscribe((objSaldos: any) => {
+            this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
+            this.valorTotalFinal = this.valorSaldoInicioMovimentos + this.valorTotalDestino + this.valorTotalOrigem;
 
             // Valida se o saldo final está correto, senão chama a função para atualizar
             const somatorioSaldos = this.valorSaldoInicioMovimentos + this.valorTotalOrigem + this.valorTotalDestino 
-            if(Number(this.valorSaldoFinalMovimentos.toFixed(2)) != Number(somatorioSaldos.toFixed(2))) {
-              
+            if(Number(objSaldos.saldoDataFim.toFixed(2)) != Number(somatorioSaldos.toFixed(2))) {              
               this.loadingPopupService.mostrarMensagemDialog('Atualizando o saldo da conta contábil, aguarde...');
-              this.relatorioMovimentacaoContabilService.atualizarSaldoContabil(this.filtro.planoConta.id, this.filtro.dataInicio)
+              this.atualizarSaldoContabil$
               .pipe(
-                switchMap(() => this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim))
+                switchMap(() => this.servicoBuscaSaldo$)
               ).subscribe((objSaldos: any) => {
                 this.loadingPopupService.closeDialog();
                 this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
-                this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
                 this.valorTotalFinal = this.valorSaldoInicioMovimentos + this.valorTotalDestino + this.valorTotalOrigem;
                 this.verificaMostrarTabela(dados);
               },
@@ -307,16 +314,21 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   private carregarValoresTotalOrigemAndDestino() {
     if(!!this.filtro.planoConta?.id) {
-      const valoresOrigem  = this.dataSource.data.filter(d => d.idCategoriaOrigem  === this.filtro.planoConta.id);
-      const valoresDestino = this.dataSource.data.filter(d => d.idCategoriaDestino === this.filtro.planoConta.id);
-  
-      valoresOrigem.forEach(mov => {
-        this.valorTotalOrigem = this.valorTotalOrigem + mov.valorCategoria;
-      });
 
-      valoresDestino.forEach(mov => {
-        this.valorTotalDestino = this.valorTotalDestino + mov.valorCategoria;
-      });
+      this.relatorioMovimentacaoContabilService.getContasContabeisSubordinadas(this.filtro.planoConta.id)
+      .subscribe((contas: any[]) => {
+        const valoresOrigem  = this.dataSource.data.filter(d => contas.find((conta) => conta === d.idCategoriaOrigem));
+        const valoresDestino = this.dataSource.data.filter(d => contas.find((conta) => conta === d.idCategoriaDestino));
+    
+        valoresOrigem.forEach(mov => {
+          this.valorTotalOrigem = this.valorTotalOrigem + mov.valorCategoria;
+        });
+  
+        valoresDestino.forEach(mov => {
+          this.valorTotalDestino = this.valorTotalDestino + mov.valorCategoria;
+        });
+      })
+
 
     }
   }
@@ -510,10 +522,8 @@ export class RelatoriosFinanceiroComponent implements OnInit {
 
   limparSaldoContaContabil(){
     this.valorSaldoInicioMovimentos = 0;
-    this.valorSaldoFinalMovimentos  = 0;
     this.valorTotalOrigem = 0;
     this.valorTotalDestino = 0;
     this.valorTotalFinal = 0;
-  
   }
 }

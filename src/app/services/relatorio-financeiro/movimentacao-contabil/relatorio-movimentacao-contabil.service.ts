@@ -19,19 +19,58 @@ export class RelatorioMovimentacaoContabilService {
     return this.http.post(`${rootPath}mimetype/${mimetype}`, dados , {responseType: 'arraybuffer'});
   }
 
-
+  getContasContabeisSubordinadas(idPlanoConta: number){
+    return this.http.get(`${rootPath}contascontabeissubordinadas/${idPlanoConta}`);
+  }
   
   atualizarSaldoContabil(idPlanoConta: number, dataInicio: any){
     const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
     return this.http.put(`${rootPath}atualizarsaldocontacontabil/${idPlanoConta}/${p_dataInicio}`, {});
   }
 
+  atualizarSaldoContabilPrograma(idPlanoConta: number, dataInicio: any, idPrograma: number){
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    return this.http.put(`${rootPath}atualizarsaldocontacontabilprograma/${idPlanoConta}/${p_dataInicio}/${idPrograma}`, {});
+  }
+
+  atualizarSaldoContabilProjeto(idPlanoConta: number, dataInicio: any, idProjeto: number){
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    return this.http.put(`${rootPath}atualizarsaldocontacontabilprojeto/${idPlanoConta}/${p_dataInicio}/${idProjeto}`, {});
+  }
+
+
+  getSaldoContaContabilPrograma(idPlanoConta: number, dataInicio: any, dataFim: any, idPrograma: number) {
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    const p_dataFim    = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
+   
+    return this.http.get(`${rootPath}saldocontacontabilprograma`, { 
+      params: {
+        idPlanoConta: `${idPlanoConta}`,
+        dataInicio: `${p_dataInicio}`,
+        dataFim: `${p_dataFim}`,
+        idPrograma: `${idPrograma}`,
+      }
+    });
+  }
+
+  getSaldoContaContabilProjeto(idPlanoConta: number, dataInicio: any, dataFim: any, idProjeto: number) {
+    const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
+    const p_dataFim    = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
+   
+    return this.http.get(`${rootPath}saldocontacontabilprojeto`, { 
+      params: {
+        idPlanoConta: `${idPlanoConta}`,
+        dataInicio: `${p_dataInicio}`,
+        dataFim: `${p_dataFim}`,
+        idProjeto: `${idProjeto}`,
+      }
+    });
+  }
 
   getSaldoContaContabil(idPlanoConta: number, dataInicio: any, dataFim: any) {
     const p_dataInicio = dataInicio ? moment(dataInicio).format('YYYY-MM-DD') : '';
     const p_dataFim    = dataFim ? moment(dataFim).format('YYYY-MM-DD') : '';
-
-    
+   
     return this.http.get(`${rootPath}saldocontacontabil`, { 
       params: {
         idPlanoConta: `${idPlanoConta}`,
