@@ -269,13 +269,19 @@ export class RelatoriosFinanceiroComponent implements OnInit {
             // Valida se o saldo final está correto, senão chama a função para atualizar
             const somatorioSaldos = this.valorSaldoInicioMovimentos + this.valorTotalOrigem + this.valorTotalDestino 
             if(Number(this.valorSaldoFinalMovimentos.toFixed(2)) != Number(somatorioSaldos.toFixed(2))) {
+              
+              this.loadingPopupService.mostrarMensagemDialog('Atualizando o saldo da conta contábil, aguarde...');
               this.relatorioMovimentacaoContabilService.atualizarSaldoContabil(this.filtro.planoConta.id, this.filtro.dataInicio)
               .pipe(
                 switchMap(() => this.relatorioMovimentacaoContabilService.getSaldoContaContabil(this.filtro.planoConta.id, this.filtro.dataInicio, this.filtro.dataFim))
               ).subscribe((objSaldos: any) => {
+                this.loadingPopupService.closeDialog();
                 this.valorSaldoInicioMovimentos = objSaldos.saldoDataInicio;
                 this.valorSaldoFinalMovimentos = objSaldos.saldoDataFim;
                 this.verificaMostrarTabela(dados);
+              },
+              (error)=> {
+                this.loadingPopupService.closeDialog();
               });
             } else {
               this.verificaMostrarTabela(dados);
