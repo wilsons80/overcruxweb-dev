@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <mat-form-field fxFlex="85%">
+  <mat-form-field fxFlex="80%">
     <mat-label>Selecione a Unidade</mat-label>
     <mat-select name="unidade" [(ngModel)]="aluno.unidade.idUnidade" required>
       <mat-option *ngFor="let u of unidades" [value]="u.idUnidade">
@@ -24,6 +24,14 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-checkbox fxFlex="10%"
+    style="padding-top: 24px;" 
+    color="primary"
+    name="campoAtivo" 
+    [(ngModel)]="aluno.stAtivo">
+   Ativo?
+  </mat-checkbox>
 
 </div>
 

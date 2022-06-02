@@ -54,6 +54,9 @@ export class Aluno {
 	dataDeclaracaoMatricula: Date;
 	participaApresentacaoExterna: string;
 
+//	stAtivo: boolean;
+	stAtivo:string;
+
 
 	nome?: string;
 	nomeMae?: string;
