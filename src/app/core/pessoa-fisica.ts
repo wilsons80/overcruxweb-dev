@@ -6,6 +6,7 @@ export class PessoaFisica{
 
     id:number;
     nome:string;
+    nomeSocial:string;
     orgaoCi:string;
     classificadorMotivoNaoTrab:string;
     descricaoPessoaFisicaAtendidoOrgaoRede: string;

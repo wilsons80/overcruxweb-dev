@@ -9,7 +9,17 @@
                         [(ngModel)]="pessoaFisica.nome" required>
                 </mat-form-field>
 
-                <mat-form-field fxFlex="20%">
+                <mat-form-field fxFlex="45%" fxFlexOffset="20px">
+                    <input matInput maxlength="255" name="nomeSocial" placeholder="Nome Social:"
+                        [(ngModel)]="pessoaFisica.nomeSocial">
+                </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="20px">
+
+                <mat-form-field fxFlexOffset="20px">
+<!--                <mat-form-field fxFlex="15%">  -->
                     <input matInput name="dataNascimento" 
                            [matDatepicker]="dataNascimento"
                            (input)="onMascaraDataInput($event)"
@@ -38,11 +48,7 @@
                     </mat-select>
                 </mat-form-field>
 
-
-            </div>
-
-            <div fxLayout="row" fxLayoutGap="20px" fxFlexFill>
-                <mat-form-field fxFlex="15%" fxFlexOffset="20px">
+                <mat-form-field fxFlex="10%" fxFlexOffset="20px">
                     <mat-label>Sexo:</mat-label>
                     <mat-select [(ngModel)]="pessoaFisica.sexo" name="sexo">
                         <mat-option *ngFor="let m of sexo" [value]="m.sigla">
