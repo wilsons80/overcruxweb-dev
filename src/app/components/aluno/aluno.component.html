@@ -67,6 +67,11 @@
                 <td mat-cell *matCellDef="let element"> {{element.pessoaFisica.nome}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="stAtivo">
+                <th mat-header-cell *matHeaderCellDef> Aluno Ativo </th>
+                <td mat-cell *matCellDef="let element"> {{element.stAtivo ? 'Sim' : 'Não'}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="turno">
                 <th mat-header-cell *matHeaderCellDef> Turno:  </th>
                 <td mat-cell *matCellDef="let element"> {{element.turno}} </td>
